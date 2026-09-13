@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import "@fontsource-variable/jost";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Optimized Black Hole",
-  description: "A WebGL2 gravitational lensing renderer on a single canvas.",
+  title: "Astro Kshitij",
+  description:
+    "Science communication by Kshitij Pandey. Physics, scepticism and the things school got wrong, for an audience of 90,000 and counting.",
+  openGraph: {
+    title: "Astro Kshitij",
+    description:
+      "Science communication by Kshitij Pandey. Physics, scepticism and the things school got wrong.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -16,10 +24,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
+      className={`dark ${GeistSans.variable} ${GeistMono.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full bg-black">{children}</body>
+      <body className="min-h-full bg-black text-white">{children}</body>
     </html>
   );
 }

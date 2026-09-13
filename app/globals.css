@@ -74,6 +74,8 @@
   --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  /* Display face for the wordmark and section headings. */
+  --font-display: "Jost Variable", var(--font-geist-sans), sans-serif;
 }
 
 @layer base {
