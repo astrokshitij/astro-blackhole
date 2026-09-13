@@ -3,15 +3,23 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "@fontsource-variable/jost";
 import "./globals.css";
+import { SiteHeader } from "@/components/site/site-header";
+import { SiteFooter } from "@/components/site/site-footer";
+import { SITE } from "@/lib/content";
+import { siteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "Astro Kshitij",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${SITE.name} — science communication by ${SITE.person}`,
+    template: `%s — ${SITE.name}`,
+  },
   description:
-    "Science communication by Kshitij Pandey. Physics, scepticism and the things school got wrong, for an audience of 90,000 and counting.",
+    "Physics in Hindi for an audience of ninety thousand. Myth-breaking, explainers and short films by Kshitij Pandey, plus workshops for institutions and the curious.",
   openGraph: {
-    title: "Astro Kshitij",
+    title: SITE.name,
     description:
-      "Science communication by Kshitij Pandey. Physics, scepticism and the things school got wrong.",
+      "Physics in Hindi for an audience of ninety thousand. Myth-breaking, explainers and short films by Kshitij Pandey.",
     type: "website",
   },
 };
@@ -27,7 +35,17 @@ export default function RootLayout({
       className={`dark ${GeistSans.variable} ${GeistMono.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full bg-black text-white">{children}</body>
+      <body className="min-h-full bg-black text-white">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-5 focus:py-2 focus:text-sm focus:text-black"
+        >
+          Skip to content
+        </a>
+        <SiteHeader />
+        <main id="main">{children}</main>
+        <SiteFooter />
+      </body>
     </html>
   );
 }
