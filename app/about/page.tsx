@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHero } from "@/components/site/page-hero";
 import { NextPage, Section } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
-import { CREDENTIALS, STATS } from "@/lib/content";
+import { CREDENTIALS, SITE, STATS } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About",
   description:
     "Kshitij Pandey: MSc in physics, co-author on a paper about high-energy collisions near naked singularities, and the person behind Astro Kshitij.",
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
@@ -64,6 +66,19 @@ export default function AboutPage() {
           </div>
 
           <aside className="space-y-12">
+            {SITE.portrait ? (
+              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-white/12">
+                <Image
+                  src={SITE.portrait}
+                  alt={SITE.portraitAlt}
+                  fill
+                  sizes="(min-width: 1024px) 420px, 100vw"
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            ) : null}
+
             <div>
               <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
                 Background

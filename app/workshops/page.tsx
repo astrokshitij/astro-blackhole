@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHero } from "@/components/site/page-hero";
 import { ButtonLink, NextPage, Section } from "@/components/site/ui";
 import { ArrowGlyph } from "@/components/site/icons";
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   title: "Workshops",
   description:
     "A two-hour live quantum mechanics workshop for anyone curious, and science communication training for research institutions.",
+  alternates: { canonical: "/workshops" },
 };
 
 export default function WorkshopsPage() {
@@ -25,8 +27,21 @@ export default function WorkshopsPage() {
           {WORKSHOPS.map((workshop, i) => (
             <article
               key={workshop.title}
-              className="flex flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-colors duration-200 hover:border-white/25 sm:p-10"
+              className="flex flex-col overflow-hidden rounded-xl border border-white/12 bg-white/[0.02] transition-colors duration-200 hover:border-white/25"
             >
+              {workshop.photo ? (
+                <div className="relative aspect-[16/9] w-full border-b border-white/10">
+                  <Image
+                    src={workshop.photo}
+                    alt={workshop.photoAlt || workshop.title}
+                    fill
+                    sizes="(min-width: 1024px) 560px, 100vw"
+                    className="object-cover opacity-85"
+                  />
+                </div>
+              ) : null}
+
+              <div className="flex flex-1 flex-col p-7 sm:p-10">
               <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                 <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-white/75">
                   {workshop.format}
@@ -59,16 +74,23 @@ export default function WorkshopsPage() {
                 ))}
               </ul>
 
-              <div className="mt-auto pt-9">
+              <div className="mt-auto flex flex-wrap gap-3 pt-9">
+                <ButtonLink
+                  href="/workshops/register"
+                  variant={i === 0 ? "primary" : "secondary"}
+                >
+                  Register
+                  <ArrowGlyph className="h-4 w-4" />
+                </ButtonLink>
                 <ButtonLink
                   href={`mailto:${SITE.email}?subject=${encodeURIComponent(
                     `Enquiry: ${workshop.title}`,
                   )}`}
-                  variant={i === 0 ? "primary" : "secondary"}
+                  variant="ghost"
                 >
-                  Enquire
-                  <ArrowGlyph className="h-4 w-4" />
+                  Ask a question
                 </ButtonLink>
+              </div>
               </div>
             </article>
           ))}

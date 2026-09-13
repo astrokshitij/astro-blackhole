@@ -4,7 +4,7 @@
  * When you point a real domain at this site, change the first string below to
  * it, for example "https://astrokshitij.com". Everything else follows.
  */
-const CANONICAL = "https://astro-blackhole.vercel.app";
+const CANONICAL = "https://astrokshitij.com";
 
 export const siteUrl =
   CANONICAL ||

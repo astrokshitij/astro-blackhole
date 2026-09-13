@@ -16,7 +16,11 @@ export const metadata: Metadata = {
   },
   description:
     "Physics in Hindi for an audience of ninety thousand. Myth-breaking, explainers and short films by Kshitij Pandey, plus workshops for institutions and the curious.",
+  alternates: { canonical: "/" },
   openGraph: {
+    url: "/",
+    siteName: SITE.name,
+    locale: "en_IN",
     title: SITE.name,
     description:
       "Physics in Hindi for an audience of ninety thousand. Myth-breaking, explainers and short films by Kshitij Pandey.",

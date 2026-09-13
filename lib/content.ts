@@ -11,7 +11,21 @@ export const SITE = {
   person: "Kshitij Pandey",
   tagline: "Physics in Hindi, for people who were taught to memorise it.",
   email: "astrokshitij5@gmail.com",
+
+  // A photo of you on the About page. Drop the file in `public/images/`
+  // and put its path here, for example "/images/kshitij.jpg".
+  // Leave it empty and the About page simply has no photo.
+  portrait: "",
+  portraitAlt: "Kshitij Pandey",
 };
+
+/**
+ * Paste your Web3Forms access key here to switch the registration form on.
+ * Get one free at web3forms.com by entering the email you want the
+ * registrations sent to. Nothing to install, no account to manage.
+ * While this is empty the form shows a short notice instead.
+ */
+export const FORM_ACCESS_KEY = "";
 
 // `glyph` picks the icon, `accent` is the brand colour used on hover only.
 export const SOCIALS = [
@@ -48,40 +62,8 @@ export const STATS = [
   { value: "580+", label: "Videos published" },
 ];
 
-/**
- * Blog entries. The first one renders large as the featured piece.
- *
- *  category  one or two words, shown as a tag
- *  readTime  free text, shown next to the category
- *  status    "In progress" or "Published". Published entries need an href.
- *  href      optional. Adding it makes the whole card a link.
- */
-export const POSTS = [
-  {
-    title: "Turn around twice",
-    category: "Quantum",
-    readTime: "9 min",
-    status: "In progress",
-    blurb:
-      "An electron has to rotate a full 720 degrees before it looks like itself again. Not a metaphor, not a simplification for beginners. Here is what that actually means, and why it is the reason matter holds its shape at all.",
-  },
-  {
-    title: "Why you do not fall through your chair",
-    category: "Matter",
-    readTime: "7 min",
-    status: "In progress",
-    blurb:
-      "Atoms are almost entirely empty space, so the honest answer is not electrical repulsion. It is a rule about identity that most explanations skip because it is harder to draw.",
-  },
-  {
-    title: "What school gets wrong about electricity",
-    category: "Myth break",
-    readTime: "6 min",
-    status: "In progress",
-    blurb:
-      "Charges drift through a wire slower than you walk, and the energy is not travelling inside the wire at all. The reel on this reached 1.7 million people who had never been told.",
-  },
-];
+// Blog posts are NOT here. Each post is its own markdown file in
+// `content/blog/`. See the README for the format.
 
 export const WORKSHOPS = [
   {
@@ -95,6 +77,9 @@ export const WORKSHOPS = [
       "No prerequisites beyond school-level curiosity",
       "Built around one idea followed all the way down, not a survey",
     ],
+    // Optional photo, for example "/images/workshop-qm.jpg"
+    photo: "",
+    photoAlt: "",
   },
   {
     title: "Science communication for research institutions",
@@ -107,6 +92,8 @@ export const WORKSHOPS = [
       "Turning a paper into something a stranger will finish",
       "Workshopping each participant's own research live",
     ],
+    photo: "",
+    photoAlt: "",
   },
 ];
 

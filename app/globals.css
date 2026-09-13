@@ -99,6 +99,108 @@
   }
 }
 
+/* Article body. Applied to the rendered markdown of a blog post. */
+.prose-astro {
+  color: color-mix(in oklab, white 72%, transparent);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+@media (min-width: 640px) {
+  .prose-astro {
+    font-size: 1.0625rem;
+  }
+}
+.prose-astro > * + * {
+  margin-top: 1.5rem;
+}
+.prose-astro h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  color: white;
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid color-mix(in oklab, white 10%, transparent);
+}
+@media (min-width: 640px) {
+  .prose-astro h2 {
+    font-size: 1.875rem;
+  }
+}
+.prose-astro h3 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 1.25rem;
+  color: white;
+  margin-top: 2.5rem;
+}
+.prose-astro strong {
+  color: white;
+  font-weight: 500;
+}
+.prose-astro em {
+  font-style: italic;
+}
+.prose-astro a {
+  color: white;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.2s;
+}
+.prose-astro a:hover {
+  opacity: 0.7;
+}
+.prose-astro ul,
+.prose-astro ol {
+  padding-left: 1.35rem;
+}
+.prose-astro ul {
+  list-style: disc;
+}
+.prose-astro ol {
+  list-style: decimal;
+}
+.prose-astro li::marker {
+  color: color-mix(in oklab, white 40%, transparent);
+}
+.prose-astro li + li {
+  margin-top: 0.6rem;
+}
+.prose-astro blockquote {
+  border-left: 2px solid color-mix(in oklab, white 30%, transparent);
+  padding-left: 1.5rem;
+  color: color-mix(in oklab, white 82%, transparent);
+  font-style: italic;
+}
+.prose-astro img {
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in oklab, white 12%, transparent);
+}
+.prose-astro hr {
+  border: 0;
+  border-top: 1px solid color-mix(in oklab, white 12%, transparent);
+  margin-block: 3rem;
+}
+.prose-astro code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: color-mix(in oklab, white 8%, transparent);
+  padding: 0.15em 0.4em;
+  border-radius: 0.3rem;
+}
+.prose-astro pre {
+  background: color-mix(in oklab, white 5%, transparent);
+  border: 1px solid color-mix(in oklab, white 12%, transparent);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  overflow-x: auto;
+}
+.prose-astro pre code {
+  background: none;
+  padding: 0;
+}
+
 /* Respect the system setting rather than animating regardless. */
 @media (prefers-reduced-motion: reduce) {
   html {

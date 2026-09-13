@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Reach Kshitij Pandey about workshops, talks and collaborations, or to point out something he got wrong.",
+  alternates: { canonical: "/contact" },
 };
 
 const REASONS = [
