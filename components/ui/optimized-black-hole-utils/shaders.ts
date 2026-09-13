@@ -34,6 +34,9 @@ uniform float uTime;
 uniform vec2 uCamera;   // pointer-driven azimuth / elevation offset, radians
 uniform float uSteps;   // integration steps, lowered when frames get expensive
 uniform float uMotion;  // 0 when the viewer prefers reduced motion
+uniform vec2 uOffset;   // moves the shadow off centre, in units of screen height
+uniform float uZoom;    // >1 narrows the field of view, making the hole larger
+uniform float uMono;    // 1 desaturates the whole frame to silver
 
 const float HORIZON = 1.0;
 const float DISK_INNER = 3.0;
@@ -75,16 +78,19 @@ vec3 sky(vec3 dir) {
   vec3 id = floor(cell);
   float seed = hash13(id);
   float star = 0.0;
-  if (seed > 0.978) {
+  if (seed > 0.966) {
     vec3 jitter = vec3(hash13(id + 1.7), hash13(id + 3.1), hash13(id + 5.3)) - 0.5;
     float d = length(fract(cell) - 0.5 - jitter * 0.55);
-    star = smoothstep(0.32, 0.0, d) * ((seed - 0.978) / 0.022);
+    star = smoothstep(0.32, 0.0, d) * ((seed - 0.966) / 0.034);
   }
   vec3 tint = mix(vec3(0.72, 0.83, 1.0), vec3(1.0, 0.86, 0.66), hash13(id + 9.1));
-  vec3 col = tint * star * 1.9;
+  vec3 col = tint * star * 2.3;
 
+  // The nebula wash is mostly hue, so it is dialled back in monochrome where it
+  // would only read as grey haze over what should be clean black.
   float n = fbm(dir * 2.1 + 4.0);
-  col += mix(vec3(0.010, 0.013, 0.030), vec3(0.045, 0.018, 0.062), n) * (0.3 + 0.7 * n);
+  col += mix(vec3(0.010, 0.013, 0.030), vec3(0.045, 0.018, 0.062), n)
+       * (0.3 + 0.7 * n) * (1.0 - 0.8 * uMono);
   return col;
 }
 
@@ -95,7 +101,11 @@ vec3 diskColor(float inner) {
 }
 
 void main() {
-  vec2 uv = (gl_FragCoord.xy - 0.5 * uResolution) / uResolution.y;
+  float aspect = uResolution.x / uResolution.y;
+  // Ease the composition back toward centre on narrow screens, or the shadow
+  // slides straight off the side of a phone.
+  vec2 uv = (gl_FragCoord.xy - 0.5 * uResolution) / uResolution.y
+          - uOffset * clamp(aspect / 1.7, 0.28, 1.0);
   float time = uTime * uMotion;
 
   // Camera orbits just above the disk plane, so the disk reads as near edge-on.
@@ -108,7 +118,10 @@ void main() {
   vec3 up = cross(forward, right);
 
   vec3 pos = camPos;
-  vec3 dir = normalize(forward * 1.55 + right * uv.x + up * uv.y);
+  // Widen the field of view on portrait screens too, otherwise a composition
+  // tuned for a 16:9 hero fills an entire phone with shadow.
+  float zoom = uZoom * clamp(aspect / 1.6, 0.62, 1.0);
+  vec3 dir = normalize(forward * (1.55 * zoom) + right * uv.x + up * uv.y);
 
   vec3 angularMomentum = cross(pos, dir);
   float h2 = dot(angularMomentum, angularMomentum);
@@ -174,6 +187,11 @@ void main() {
     float halo = smoothstep(3.0, 1.62, closest) * smoothstep(1.42, 1.62, closest);
     color += transmittance * vec3(1.0, 0.76, 0.46) * 0.22 * halo;
   }
+
+  // Desaturate to silver. Luminance alone reads dimmer than the colour version,
+  // so the mono branch gets a little of its brightness handed back.
+  float lum = dot(color, vec3(0.2126, 0.7152, 0.0722));
+  color = mix(color, vec3(lum) * 1.22, uMono);
 
   // ACES-style filmic curve, then gamma, vignette and a dither to kill banding.
   color *= 0.95;

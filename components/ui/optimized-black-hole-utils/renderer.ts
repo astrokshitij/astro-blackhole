@@ -8,6 +8,16 @@ export interface RendererOptions {
   maxPixels?: number;
   /** Geodesic integration steps at full quality. 120 to 220. Defaults to 180. */
   steps?: number;
+  /**
+   * Moves the shadow away from the centre, in units of screen height.
+   * Positive x pushes it right, positive y pushes it up. Eased back toward
+   * centre automatically on narrow screens. Defaults to centred.
+   */
+  offset?: { x: number; y: number };
+  /** Above 1 narrows the field of view, enlarging the hole. Defaults to 1. */
+  zoom?: number;
+  /** Render in silver rather than amber. Defaults to false. */
+  monochrome?: boolean;
 }
 
 export interface BlackHoleRenderer {
@@ -22,6 +32,9 @@ const UNIFORM_NAMES = [
   "uCamera",
   "uSteps",
   "uMotion",
+  "uOffset",
+  "uZoom",
+  "uMono",
 ] as const;
 
 type UniformName = (typeof UNIFORM_NAMES)[number];
@@ -111,6 +124,9 @@ export function createRenderer(options: RendererOptions): BlackHoleRenderer {
     maxPixelRatio = 2,
     maxPixels = 2_600_000,
     steps = 180,
+    offset = { x: 0, y: 0 },
+    zoom = 1,
+    monochrome = false,
   } = options;
 
   let disposed = false;
@@ -248,6 +264,9 @@ export function createRenderer(options: RendererOptions): BlackHoleRenderer {
     gl.uniform2f(uniforms.uCamera, pointer.x, pointer.y);
     gl.uniform1f(uniforms.uSteps, quality.steps);
     gl.uniform1f(uniforms.uMotion, still ? 0 : 1);
+    gl.uniform2f(uniforms.uOffset, offset.x, offset.y);
+    gl.uniform1f(uniforms.uZoom, zoom);
+    gl.uniform1f(uniforms.uMono, monochrome ? 1 : 0);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     return true;
   }
