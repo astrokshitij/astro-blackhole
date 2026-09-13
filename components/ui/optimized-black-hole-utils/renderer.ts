@@ -16,8 +16,18 @@ export interface RendererOptions {
   offset?: { x: number; y: number };
   /** Above 1 narrows the field of view, enlarging the hole. Defaults to 1. */
   zoom?: number;
-  /** Render in silver rather than amber. Defaults to false. */
-  monochrome?: boolean;
+  /**
+   * Static warm-to-silver mix. `false` (default) is full colour, `true` is
+   * full silver, a number in `[0, 1]` picks any point on the ramp. Overridden
+   * each frame by `getMonochrome` when it is supplied.
+   */
+  monochrome?: boolean | number;
+  /**
+   * Read the current warm-to-silver mix each frame. Return a value in `[0, 1]`
+   * where 0 is the warm disk and 1 is silver. Lets a scroll or timeline drive
+   * the palette without recreating the renderer.
+   */
+  getMonochrome?: () => number;
 }
 
 export interface BlackHoleRenderer {
@@ -39,6 +49,11 @@ const UNIFORM_NAMES = [
 
 type UniformName = (typeof UNIFORM_NAMES)[number];
 type Uniforms = Record<UniformName, WebGLUniformLocation | null>;
+
+function normaliseMono(value: boolean | number | undefined): number {
+  if (typeof value === "number") return Math.min(1, Math.max(0, value));
+  return value ? 1 : 0;
+}
 
 function compile(gl: WebGL2RenderingContext, type: number, source: string) {
   const shader = gl.createShader(type);
@@ -127,7 +142,13 @@ export function createRenderer(options: RendererOptions): BlackHoleRenderer {
     offset = { x: 0, y: 0 },
     zoom = 1,
     monochrome = false,
+    getMonochrome,
   } = options;
+
+  const baseMono = normaliseMono(monochrome);
+  // Eased actual value the shader sees, so a sudden scroll jump does not snap
+  // the palette. Starts at the target to avoid a fade on first paint.
+  let monoCurrent = getMonochrome ? Math.min(1, Math.max(0, getMonochrome())) : baseMono;
 
   let disposed = false;
   let frame = 0;
@@ -259,6 +280,15 @@ export function createRenderer(options: RendererOptions): BlackHoleRenderer {
     pointer.x += (pointer.targetX - pointer.x) * 0.06;
     pointer.y += (pointer.targetY - pointer.y) * 0.06;
 
+    // Ease the palette toward the target so scroll jumps do not snap.
+    const monoTarget = getMonochrome
+      ? Math.min(1, Math.max(0, getMonochrome()))
+      : baseMono;
+    monoCurrent += (monoTarget - monoCurrent) * 0.18;
+    // Snap once close enough, so the shader receives a clean 0 or 1 at the
+    // ends of the ramp rather than a value like 0.9998.
+    if (Math.abs(monoTarget - monoCurrent) < 0.001) monoCurrent = monoTarget;
+
     gl.uniform2f(uniforms.uResolution, width, height);
     gl.uniform1f(uniforms.uTime, elapsed);
     gl.uniform2f(uniforms.uCamera, pointer.x, pointer.y);
@@ -266,7 +296,7 @@ export function createRenderer(options: RendererOptions): BlackHoleRenderer {
     gl.uniform1f(uniforms.uMotion, still ? 0 : 1);
     gl.uniform2f(uniforms.uOffset, offset.x, offset.y);
     gl.uniform1f(uniforms.uZoom, zoom);
-    gl.uniform1f(uniforms.uMono, monochrome ? 1 : 0);
+    gl.uniform1f(uniforms.uMono, monoCurrent);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     return true;
   }

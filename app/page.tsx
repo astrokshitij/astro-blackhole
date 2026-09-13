@@ -37,7 +37,7 @@ export default function Home() {
     <>
       <section className="relative isolate h-[100svh] w-full overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <BlackHole monochrome offset={{ x: 0.54, y: 0.18 }} zoom={0.98} />
+          <BlackHole scrollColorShift offset={{ x: 0.54, y: 0.18 }} zoom={0.98} />
         </div>
 
         <div
