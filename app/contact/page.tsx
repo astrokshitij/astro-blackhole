@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/site/page-hero";
-import { SITE, SOCIALS } from "@/lib/content";
+import { ButtonLink, Section } from "@/components/site/ui";
+import { SocialLinks } from "@/components/site/social-links";
+import { MailGlyph, ArrowGlyph } from "@/components/site/icons";
+import { SITE } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -36,69 +39,59 @@ export default function ContactPage() {
         offset={{ x: 0.5, y: 0.14 }}
       />
 
-      <section className="bg-black">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
-          <div className="grid gap-14 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
-            <div>
-              <p className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
+      <Section>
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
+          <div>
+            <div className="h-full rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-9">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/18 text-white/75">
+                <MailGlyph className="h-5 w-5" />
+              </span>
+              <p className="font-display mt-6 text-2xl font-light leading-snug text-white sm:text-3xl">
                 Email is the reliable one.
               </p>
-              <a
-                href={`mailto:${SITE.email}`}
-                className="font-display mt-5 inline-block text-lg font-light tracking-[0.03em] text-white/80 underline underline-offset-[6px] transition-colors hover:text-white sm:text-xl"
-              >
-                {SITE.email}
-              </a>
-
-              <ul className="mt-12 space-y-8 border-t border-white/10 pt-8">
-                {REASONS.map((reason) => (
-                  <li key={reason.title}>
-                    <h2 className="font-display text-sm font-light uppercase tracking-[0.2em] text-white">
-                      {reason.title}
-                    </h2>
-                    <p className="mt-2 max-w-lg text-sm leading-relaxed text-white/60">
-                      {reason.detail}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="font-display text-[11px] uppercase tracking-[0.3em] text-white/50">
-                Elsewhere
-              </h2>
-              <ul className="mt-5 space-y-px overflow-hidden rounded-lg border border-white/10 bg-white/10">
-                {SOCIALS.map((social) => (
-                  <li key={social.label}>
-                    <a
-                      href={social.href}
-                      className="group flex items-center justify-between gap-4 bg-black px-6 py-5 transition-colors hover:bg-white/[0.05]"
-                    >
-                      <span>
-                        <span className="font-display block text-sm font-light uppercase tracking-[0.2em] text-white">
-                          {social.label}
-                        </span>
-                        <span className="font-mono mt-1 block text-[11px] text-white/55">
-                          {social.handle}
-                        </span>
-                      </span>
-                      <span className="text-white/55 transition-transform group-hover:translate-x-1">
-                        &rarr;
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-
-              <p className="mt-6 text-xs leading-relaxed text-white/55">
-                Instagram DMs are read but pile up quickly. For anything with a
-                date attached, use email.
+              <p className="mt-3 text-sm leading-relaxed text-white/60">
+                Everything with a date attached should come this way. Replies
+                usually take a day or two.
               </p>
+              <ButtonLink href={`mailto:${SITE.email}`} className="mt-7">
+                {SITE.email}
+                <ArrowGlyph className="h-4 w-4" />
+              </ButtonLink>
             </div>
           </div>
+
+          <div>
+            <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+              Elsewhere
+            </h2>
+            <div className="mt-5">
+              <SocialLinks />
+            </div>
+            <p className="mt-5 text-xs leading-relaxed text-white/55">
+              Instagram DMs are read but pile up quickly. For anything with a
+              date attached, use email.
+            </p>
+          </div>
         </div>
-      </section>
+
+        <div className="mt-20 border-t border-white/10 pt-12">
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+            What people write in about
+          </h2>
+          <ul className="mt-8 grid gap-8 sm:grid-cols-3 sm:gap-10">
+            {REASONS.map((reason) => (
+              <li key={reason.title}>
+                <h3 className="font-display text-sm font-light uppercase tracking-[0.2em] text-white">
+                  {reason.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/60">
+                  {reason.detail}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
     </>
   );
 }

@@ -13,10 +13,32 @@ export const SITE = {
   email: "astrokshitij5@gmail.com",
 };
 
+// `glyph` picks the icon, `accent` is the brand colour used on hover only.
 export const SOCIALS = [
-  { label: "YouTube", handle: "@astrokshitij", href: "https://www.youtube.com/@astrokshitij" },
-  { label: "Instagram", handle: "@astro.kshitij", href: "https://www.instagram.com/astro.kshitij" },
-  { label: "LinkedIn", handle: "Kshitij Pandey", href: "https://www.linkedin.com/in/kshitij-pandey-30215314b/" },
+  {
+    label: "YouTube",
+    handle: "@astrokshitij",
+    href: "https://www.youtube.com/@astrokshitij",
+    note: "Long explainers and short films",
+    glyph: "play" as const,
+    accent: "#ff0033",
+  },
+  {
+    label: "Instagram",
+    handle: "@astro.kshitij",
+    href: "https://www.instagram.com/astro.kshitij",
+    note: "Reels, four a week",
+    glyph: "camera" as const,
+    accent: "#e1306c",
+  },
+  {
+    label: "LinkedIn",
+    handle: "Kshitij Pandey",
+    href: "https://www.linkedin.com/in/kshitij-pandey-30215314b/",
+    note: "Talks, workshops and work",
+    glyph: "network" as const,
+    accent: "#0a66c2",
+  },
 ];
 
 export const STATS = [
@@ -26,25 +48,38 @@ export const STATS = [
   { value: "580+", label: "Videos published" },
 ];
 
-// Add href: "https://..." to any post to turn its card into a link.
+/**
+ * Blog entries. The first one renders large as the featured piece.
+ *
+ *  category  one or two words, shown as a tag
+ *  readTime  free text, shown next to the category
+ *  status    "In progress" or "Published". Published entries need an href.
+ *  href      optional. Adding it makes the whole card a link.
+ */
 export const POSTS = [
   {
     title: "Turn around twice",
+    category: "Quantum",
+    readTime: "9 min",
+    status: "In progress",
     blurb:
-      "An electron has to rotate a full 720 degrees before it looks like itself again. Not a metaphor, not a simplification for beginners. Here is what that actually means, and why it is the reason matter holds its shape.",
-    tag: "In progress",
+      "An electron has to rotate a full 720 degrees before it looks like itself again. Not a metaphor, not a simplification for beginners. Here is what that actually means, and why it is the reason matter holds its shape at all.",
   },
   {
     title: "Why you do not fall through your chair",
+    category: "Matter",
+    readTime: "7 min",
+    status: "In progress",
     blurb:
       "Atoms are almost entirely empty space, so the honest answer is not electrical repulsion. It is a rule about identity that most explanations skip because it is harder to draw.",
-    tag: "In progress",
   },
   {
     title: "What school gets wrong about electricity",
+    category: "Myth break",
+    readTime: "6 min",
+    status: "In progress",
     blurb:
-      "Charges drift through a wire slower than you walk. The energy is not travelling inside the wire at all. The reel on this reached 1.7 million people who had never been told.",
-    tag: "In progress",
+      "Charges drift through a wire slower than you walk, and the energy is not travelling inside the wire at all. The reel on this reached 1.7 million people who had never been told.",
   },
 ];
 
