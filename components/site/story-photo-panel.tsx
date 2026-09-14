@@ -10,6 +10,13 @@ export interface StoryPhoto {
   alt: string;
   /** Optional caption drawn as a lower-left mono tag over the photo. */
   caption?: string;
+  /**
+   * Panel aspect ratio while this photo is active. Use the photo's natural
+   * aspect so nothing important is cropped. E.g. "4/3" for a landscape,
+   * "4/5" for a portrait, "1/1" for a near-square. Defaults to "4/5".
+   * The panel animates between aspects smoothly on scroll.
+   */
+  aspect?: string;
   /** Optional CSS object-position, e.g. "center 30%". Defaults to center. */
   position?: string;
 }
@@ -18,14 +25,13 @@ export interface StoryPhoto {
  * Sticky right-column photo that cross-fades between story sections as the
  * reader scrolls. Every photo is rendered on mount and swapped by opacity,
  * so transitions never re-decode an image and there is no request storm
- * when scrolling quickly through the story.
+ * when scrolling quickly through the story. The panel also morphs its
+ * aspect ratio to match each photo, so landscape shots don't get their
+ * sides chopped in a portrait frame.
  *
  * The observer tracks intersectionRatio for every section with a
  * `data-story-section` attribute matching an id in `photos`. Whichever
- * section fills the most of the viewport wins the panel. `initialId`
- * is what the panel shows before any section has intersected, and after
- * the reader has scrolled past the last section (the panel holds the
- * last active photo rather than blinking out).
+ * section fills the most of the viewport wins the panel.
  */
 export function StoryPhotoPanel({
   photos,
@@ -61,8 +67,6 @@ export function StoryPhotoPanel({
           bestId = (el as HTMLElement).dataset.storySection ?? null;
         }
       });
-      // Nothing intersecting means the reader is between sections or past
-      // the last one. Hold the previous active photo rather than blanking.
       if (bestId && bestRatio > 0) setActiveId(bestId);
     };
 
@@ -74,10 +78,6 @@ export function StoryPhotoPanel({
         pickActive();
       },
       {
-        // A viewport-height band centred on the middle third of the screen.
-        // Narrowing here makes the switch feel decisive: the panel changes as
-        // the reader crosses into a new section, not when the section first
-        // brushes the bottom of the viewport.
         rootMargin: "-30% 0px -30% 0px",
         threshold: [0, 0.15, 0.35, 0.55, 0.75, 1],
       },
@@ -87,10 +87,18 @@ export function StoryPhotoPanel({
     return () => observer.disconnect();
   }, [photos]);
 
+  const activePhoto =
+    photos.find((photo) => photo.id === activeId) ?? photos[0];
+  const activeAspect = activePhoto?.aspect ?? "4/5";
+
   return (
     <div
       ref={containerRef}
-      className={`relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-white/12 bg-white/[0.02] ${className}`}
+      className={`relative w-full overflow-hidden rounded-xl border border-white/12 bg-black ${className}`}
+      style={{
+        aspectRatio: activeAspect,
+        transition: "aspect-ratio 700ms ease-in-out",
+      }}
     >
       {photos.map((photo, i) => (
         <div

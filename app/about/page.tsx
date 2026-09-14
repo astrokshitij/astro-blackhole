@@ -12,58 +12,67 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-// Photos keyed by story-section id. The first entry is the initial state
-// (before any section has intersected). Mobile falls back to inline
-// RevealPhotos underneath each section, defined below.
+// Photos keyed by story-section id. Each carries its own aspect ratio so the
+// panel morphs to the shot rather than cropping it. The first entry is the
+// default before any section has intersected. Mobile falls back to inline
+// RevealPhotos underneath each section.
 const STORY_PHOTOS: StoryPhoto[] = [
   {
     id: "obsession",
     src: "/images/story/9th-class-exhibition.jpg",
     alt: "Kshitij at his Class 9 time-travel science exhibition",
     caption: "Class 9. The time-travel exhibition.",
+    aspect: "4/3",
   },
   {
     id: "finding-my-way",
     src: "/images/story/talk-during-bsc.jpg",
     alt: "Kshitij giving a guest lecture during his BSc",
     caption: "Guest lecture, BSc years.",
+    aspect: "4/3",
   },
   {
     id: "before-msc",
     src: "/images/story/iit-bhu-prize.jpg",
     alt: "Kshitij studying at ICFAI Jaipur during his BSc",
     caption: "ICFAI Jaipur.",
+    aspect: "1/1",
   },
   {
     id: "research-degree",
     src: "/images/story/msc-degree.jpg",
     alt: "Kshitij with his M.Sc. Physics degree, Charusat University",
     caption: "M.Sc. Physics. Charusat, 2024.",
-    position: "center 25%",
+    aspect: "3/4",
+    position: "center 20%",
   },
   {
     id: "research-labs",
     src: "/images/story/msc-poster.jpg",
     alt: "Kshitij in front of his research poster on high-energy collisions near naked singularities",
     caption: "The research poster.",
+    aspect: "4/3",
   },
   {
     id: "research-teaching",
     src: "/images/story/after-msc-talk.jpg",
     alt: "Kshitij teaching at a chalkboard during his MSc years",
     caption: "Teaching.",
+    aspect: "4/5",
   },
   {
     id: "detour",
     src: "/images/story/msc-research.jpg",
     alt: "Kshitij at a desk working through data",
     caption: "Heads down.",
+    aspect: "4/3",
   },
   {
     id: "point",
     src: "/images/story/telescope.jpg",
     alt: "Kshitij beside a Celestron telescope at an outdoor observing session",
     caption: "Still going out to look.",
+    aspect: "4/5",
   },
 ];
 
@@ -101,8 +110,6 @@ export default function AboutPage() {
         <div className="grid gap-16 lg:grid-cols-[1.35fr_1fr] lg:gap-24">
           {/* Story column */}
           <div className="max-w-2xl">
-            {/* Intro paragraphs. No data-story-section here; the sticky panel
-                starts on its default (first entry: obsession / 9th class). */}
             <div>
               <p className="font-display text-xl font-light leading-[1.35] text-white sm:text-2xl">
                 Science communicator. TEDx speaker. Physics nerd. Researcher.
@@ -218,9 +225,6 @@ export default function AboutPage() {
                 <MobilePhoto id="before-msc" aspect="aspect-[1/1]" />
               </section>
 
-              {/* The M.Sc chapter is split into three sub-sections so the
-                  sticky panel walks through degree → research → teaching as
-                  the reader scrolls through this part of the story. */}
               <div className="space-y-5">
                 <div data-story-section="research-degree">
                   <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">

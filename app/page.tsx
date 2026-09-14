@@ -2,6 +2,7 @@ import BlackHole from "@/components/ui/optimized-black-hole";
 import { ButtonLink, Section, SectionHeading } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
 import { ArrowGlyph, PlayGlyph } from "@/components/site/icons";
+import { TedxCarousel } from "@/components/site/tedx-carousel";
 import Image from "next/image";
 import Link from "next/link";
 import { SITE, STATS } from "@/lib/content";
@@ -33,6 +34,24 @@ const GATEWAYS = [
     blurb:
       "Always wanted to understand Quantum Mechanics but didn't know where to start? Come explore it with me from the ground up through my \"Quantum Mechanics for Everyone\" workshop.",
     cta: "Explore workshops",
+  },
+];
+
+const TEDX_PHOTOS = [
+  {
+    src: "/images/home/tedx/1.jpg",
+    alt: "Kshitij on the TEDx stage with a Moon slide behind him",
+    position: "center 25%",
+  },
+  {
+    src: "/images/home/tedx/2.jpg",
+    alt: "Kshitij mid-gesture during his TEDx talk",
+    position: "center 30%",
+  },
+  {
+    src: "/images/home/tedx/3.jpg",
+    alt: "Kshitij standing on the TEDx stage",
+    position: "center 30%",
   },
 ];
 
@@ -170,7 +189,17 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
+        {/* TEDx carousel band. A slow rotating rest between the three
+            gateway cards above and the two CTA cards below. */}
+        <div className="mt-12 sm:mt-16">
+          <TedxCarousel
+            photos={TEDX_PHOTOS}
+            className="aspect-[16/9] sm:aspect-[2/1]"
+            ariaLabel="TEDx talk by Kshitij Pandey"
+          />
+        </div>
+
+        <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2 md:items-start">
           <div className="rounded-xl border border-white/12 p-7 sm:p-9">
             <h3 className="font-display text-xl font-light text-white sm:text-2xl">
               Follow Along
@@ -185,32 +214,28 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex flex-col justify-between rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-9">
-            <div>
-              <h3 className="font-display text-xl font-light text-white sm:text-2xl">
-                Want to learn something together?
-              </h3>
-              <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
-                Whether you want to finally understand Quantum Mechanics or
-                you&apos;re looking for someone to make complex science easier
-                to communicate, I&apos;d love to hear from you.
-              </p>
+          <div className="rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-9">
+            <h3 className="font-display text-xl font-light text-white sm:text-2xl">
+              Want to learn something together?
+            </h3>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
+              Whether you want to finally understand Quantum Mechanics or
+              you&apos;re looking for someone to make complex science easier
+              to communicate, I&apos;d love to hear from you.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="/workshops">
+                Explore Workshops
+                <ArrowGlyph className="h-4 w-4" />
+              </ButtonLink>
+              <ButtonLink href="/contact" variant="secondary">
+                Get in Touch
+              </ButtonLink>
             </div>
-            <div className="mt-8">
-              <div className="flex flex-wrap gap-3">
-                <ButtonLink href="/workshops">
-                  Explore Workshops
-                  <ArrowGlyph className="h-4 w-4" />
-                </ButtonLink>
-                <ButtonLink href="/contact" variant="secondary">
-                  Get in Touch
-                </ButtonLink>
-              </div>
-              <p className="mt-5 text-xs leading-relaxed text-white/55">
-                Want to book a workshop, collaborate, or just argue about
-                physics?
-              </p>
-            </div>
+            <p className="mt-5 text-xs leading-relaxed text-white/55">
+              Want to book a workshop, collaborate, or just argue about
+              physics?
+            </p>
           </div>
         </div>
       </Section>
