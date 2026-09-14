@@ -3,7 +3,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { NextPage, Section } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
 import { RevealPhoto } from "@/components/site/reveal-photo";
-import { SITE } from "@/lib/content";
+import { StoryPhotoPanel, type StoryPhoto } from "@/components/site/story-photo-panel";
 
 export const metadata: Metadata = {
   title: "About",
@@ -11,6 +11,75 @@ export const metadata: Metadata = {
     "Kshitij Pandey: MSc in astrophysics and cosmology, TEDx speaker, science communicator, and the person behind Astro Kshitij.",
   alternates: { canonical: "/about" },
 };
+
+// Photos keyed by story-section id. Order defines fallback order when nothing
+// is intersecting yet (first is the default). Mobile falls back to inline
+// RevealPhotos underneath each section — see below.
+const STORY_PHOTOS: StoryPhoto[] = [
+  {
+    id: "intro",
+    src: "/images/portraits/kshitij-bits.jpg",
+    alt: "Kshitij Pandey",
+    caption: "Now.",
+  },
+  {
+    id: "obsession",
+    src: "/images/story/9th-class-exhibition.jpg",
+    alt: "Kshitij at his Class 9 time-travel science exhibition",
+    caption: "Class 9. The time-travel exhibition.",
+  },
+  {
+    id: "finding-my-way",
+    src: "/images/story/talk-during-bsc.jpg",
+    alt: "Kshitij giving a guest lecture during his BSc",
+    caption: "Guest lecture, BSc years.",
+  },
+  {
+    id: "before-msc",
+    src: "/images/story/iit-bhu-prize.jpg",
+    alt: "Kshitij studying at ICFAI Jaipur during his BSc",
+    caption: "ICFAI Jaipur.",
+  },
+  {
+    id: "research",
+    src: "/images/story/after-msc-talk.jpg",
+    alt: "Kshitij teaching at a chalkboard during his MSc years",
+    caption: "Teaching. MSc era.",
+  },
+  {
+    id: "detour",
+    src: "/images/portraits/kshitij-bits.jpg",
+    alt: "Kshitij Pandey",
+    caption: "The detour.",
+  },
+  {
+    id: "point",
+    src: "/images/story/telescope.jpg",
+    alt: "Kshitij beside a Celestron telescope at an outdoor observing session",
+    caption: "In the field with a Celestron.",
+  },
+];
+
+// Map for the mobile inline versions.
+const photosById = Object.fromEntries(
+  STORY_PHOTOS.map((photo) => [photo.id, photo]),
+);
+
+function MobilePhoto({ id, aspect = "aspect-[4/3]" }: { id: string; aspect?: string }) {
+  const photo = photosById[id];
+  if (!photo) return null;
+  return (
+    <div className="mt-10 lg:hidden">
+      <RevealPhoto
+        src={photo.src}
+        alt={photo.alt}
+        caption={photo.caption}
+        aspectClassName={aspect}
+        sizes="100vw"
+      />
+    </div>
+  );
+}
 
 export default function AboutPage() {
   return (
@@ -24,24 +93,27 @@ export default function AboutPage() {
 
       <Section>
         <div className="grid gap-16 lg:grid-cols-[1.35fr_1fr] lg:gap-24">
+          {/* Story column */}
           <div className="max-w-2xl">
-            <p className="font-display text-xl font-light leading-[1.35] text-white sm:text-2xl">
-              Science communicator. TEDx speaker. Physics nerd. Researcher.
-              Marketer. And, apparently, someone who has never been very good
-              at following a conventional path.
-            </p>
+            <div data-story-section="intro">
+              <p className="font-display text-xl font-light leading-[1.35] text-white sm:text-2xl">
+                Science communicator. TEDx speaker. Physics nerd. Researcher.
+                Marketer. And, apparently, someone who has never been very
+                good at following a conventional path.
+              </p>
 
-            <p className="mt-8 text-sm leading-relaxed text-white/70 sm:text-base">
-              Those are the headlines, but they don&apos;t really tell you much
-              about the person behind Astro Kshitij.
-            </p>
-            <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-              Since you&apos;re here to know a little more about me, let me
-              take you through the journey that brought me here.
-            </p>
+              <p className="mt-8 text-sm leading-relaxed text-white/70 sm:text-base">
+                Those are the headlines, but they don&apos;t really tell you
+                much about the person behind Astro Kshitij.
+              </p>
+              <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                Since you&apos;re here to know a little more about me, let me
+                take you through the journey that brought me here.
+              </p>
+            </div>
 
             <div className="mt-14 space-y-14">
-              <section>
+              <section data-story-section="obsession">
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   It started with a weird obsession with science.
                 </h2>
@@ -66,17 +138,10 @@ export default function AboutPage() {
                   an idea that fascinated me and trying to make someone else
                   see why it was fascinating too.
                 </p>
+                <MobilePhoto id="obsession" aspect="aspect-[4/3]" />
               </section>
 
-              <RevealPhoto
-                src="/images/story/9th-class-exhibition.jpg"
-                alt="Kshitij at his Class 9 time-travel science exhibition"
-                caption="Class 9. The time-travel exhibition."
-                aspectClassName="aspect-[4/3]"
-                sizes="(min-width: 1024px) 640px, 100vw"
-              />
-
-              <section>
+              <section data-story-section="finding-my-way">
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Finding my way into physics
                 </h2>
@@ -119,17 +184,10 @@ export default function AboutPage() {
                   while working on WIMP dark matter for my research
                   dissertation.
                 </p>
+                <MobilePhoto id="finding-my-way" aspect="aspect-[4/3]" />
               </section>
 
-              <RevealPhoto
-                src="/images/story/talk-during-bsc.jpg"
-                alt="Kshitij giving a guest lecture during his BSc"
-                caption="Guest lecture, BSc years."
-                aspectClassName="aspect-[4/3]"
-                sizes="(min-width: 1024px) 640px, 100vw"
-              />
-
-              <section>
+              <section data-story-section="before-msc">
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Before my master&apos;s, I got a taste of the bigger research
                   world.
@@ -149,9 +207,10 @@ export default function AboutPage() {
                   pursuing research, which naturally led me towards
                   astrophysics and cosmology.
                 </p>
+                <MobilePhoto id="before-msc" aspect="aspect-[1/1]" />
               </section>
 
-              <section>
+              <section data-story-section="research">
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   From competitions to research
                 </h2>
@@ -200,18 +259,10 @@ export default function AboutPage() {
                   and make it accessible to someone who doesn&apos;t have a
                   physics background.
                 </p>
+                <MobilePhoto id="research" aspect="aspect-[4/5]" />
               </section>
 
-              <RevealPhoto
-                src="/images/story/after-msc-talk.jpg"
-                alt="Kshitij teaching at a chalkboard during his MSc years"
-                caption="Teaching. MSc era."
-                aspectClassName="aspect-[4/5]"
-                className="mx-auto max-w-md"
-                sizes="(min-width: 1024px) 448px, 100vw"
-              />
-
-              <section>
+              <section data-story-section="detour">
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Then I took an unexpected detour.
                 </h2>
@@ -255,7 +306,7 @@ export default function AboutPage() {
                 </p>
               </section>
 
-              <section>
+              <section data-story-section="point">
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Maybe the detour was the point.
                 </h2>
@@ -292,16 +343,8 @@ export default function AboutPage() {
                   And hopefully, still making you curious enough to ask a few
                   of your own.
                 </p>
+                <MobilePhoto id="point" aspect="aspect-[4/5]" />
               </section>
-
-              <RevealPhoto
-                src="/images/story/telescope.jpg"
-                alt="Kshitij beside a Celestron telescope at an outdoor observing session"
-                caption="In the field with a Celestron."
-                aspectClassName="aspect-[4/5]"
-                className="mx-auto max-w-md"
-                sizes="(min-width: 1024px) 448px, 100vw"
-              />
             </div>
 
             <div className="mt-16">
@@ -314,26 +357,17 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <aside className="space-y-12 lg:sticky lg:top-24 lg:self-start">
-            {SITE.portrait ? (
-              <RevealPhoto
-                src={SITE.portrait}
-                alt={SITE.portraitAlt}
-                aspectClassName="aspect-[4/5]"
-                drift
-                eager
-                sizes="(min-width: 1024px) 420px, 100vw"
-              />
-            ) : null}
+          {/* Sticky photo panel, desktop only. Mobile shows inline photos
+              inside each section above. */}
+          <aside className="hidden lg:sticky lg:top-24 lg:block lg:self-start">
+            <StoryPhotoPanel photos={STORY_PHOTOS} initialId="intro" />
 
-            <div>
+            <div className="mt-10">
               <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
                 In short
               </h2>
               <ul className="mt-5 space-y-4 border-t border-white/10 pt-6 text-sm leading-relaxed text-white/70">
-                <li>
-                  M.Sc. Physics, Astrophysics and Cosmology
-                </li>
+                <li>M.Sc. Physics, Astrophysics and Cosmology</li>
                 <li>
                   Peer-reviewed paper on high-energy collisions near naked
                   singularities
@@ -341,12 +375,28 @@ export default function AboutPage() {
                 <li>TEDx speaker</li>
                 <li>Silver Medal, University Physics Competition</li>
                 <li>SLAC Summer Institute alum</li>
-                <li>
-                  Founder of Astro Kshitij, a science-communication brand
-                </li>
+                <li>Founder of Astro Kshitij, a science-communication brand</li>
               </ul>
             </div>
           </aside>
+        </div>
+
+        {/* Mobile-only "In short" list, below the story */}
+        <div className="mt-16 lg:hidden">
+          <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+            In short
+          </h2>
+          <ul className="mt-5 space-y-4 border-t border-white/10 pt-6 text-sm leading-relaxed text-white/70">
+            <li>M.Sc. Physics, Astrophysics and Cosmology</li>
+            <li>
+              Peer-reviewed paper on high-energy collisions near naked
+              singularities
+            </li>
+            <li>TEDx speaker</li>
+            <li>Silver Medal, University Physics Competition</li>
+            <li>SLAC Summer Institute alum</li>
+            <li>Founder of Astro Kshitij, a science-communication brand</li>
+          </ul>
         </div>
 
         <NextPage href="/workshops" title="Workshops and training" />

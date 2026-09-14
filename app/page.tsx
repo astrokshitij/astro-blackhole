@@ -2,7 +2,7 @@ import BlackHole from "@/components/ui/optimized-black-hole";
 import { ButtonLink, Section, SectionHeading } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
 import { ArrowGlyph, PlayGlyph } from "@/components/site/icons";
-import { RevealPhoto } from "@/components/site/reveal-photo";
+import Image from "next/image";
 import Link from "next/link";
 import { SITE, STATS } from "@/lib/content";
 
@@ -103,16 +103,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="border-y border-white/10 bg-black">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+      {/* Stats over a TEDx backdrop. The photo carries the "delivering talks"
+          meaning behind the numbers without needing a caption. */}
+      <section className="relative isolate overflow-hidden border-y border-white/10 bg-black">
+        <div className="absolute inset-0 -z-10" aria-hidden>
+          <Image
+            src="/images/home/tedx-stats.jpg"
+            alt=""
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover"
+            style={{
+              filter: "saturate(0.45) contrast(1.06) brightness(0.55)",
+              objectPosition: "center 25%",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/75" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
+        </div>
+
+        <div className="mx-auto flex min-h-[420px] max-w-6xl items-center px-5 py-20 sm:min-h-[480px] sm:px-8 sm:py-28">
           <dl className="mx-auto grid max-w-2xl grid-cols-2 gap-x-16 gap-y-10 text-center sm:gap-x-28">
             {STATS.map((stat) => (
               <div key={stat.label}>
-                <dt className="font-display text-4xl font-light leading-none text-white sm:text-5xl">
+                <dt className="font-display text-5xl font-light leading-none text-white sm:text-6xl">
                   {stat.value}
                 </dt>
-                <dd className="mt-3 text-[11px] uppercase tracking-[0.18em] text-white/55">
+                <dd className="mt-4 text-[11px] uppercase tracking-[0.22em] text-white/70">
                   {stat.label}
                 </dd>
               </div>
@@ -149,18 +167,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Wide photo band — the human moment between the gateway cards and the
-            two CTA cards below. */}
-        <RevealPhoto
-          src="/images/home/tedx-stage.jpg"
-          alt="Kshitij on stage at TEDx The Modern School"
-          aspectClassName="aspect-[21/9]"
-          className="mt-12 sm:mt-16"
-          drift
-          sizes="(min-width: 1024px) 1152px, 100vw"
-        />
-
-        <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2">
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border border-white/12 p-7 sm:p-9">
             <h3 className="font-display text-xl font-light text-white sm:text-2xl">
               Follow Along
