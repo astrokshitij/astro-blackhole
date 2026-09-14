@@ -99,6 +99,24 @@
   }
 }
 
+/* Slow held-image zoom on hero-ish photos. 30s cycle, unnoticeable frame to
+   frame but keeps the image from feeling frozen. Disabled by the reduced-
+   motion block below. */
+@keyframes slow-drift {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+.animate-slow-drift {
+  animation: slow-drift 30s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+
 /* Article body. Applied to the rendered markdown of a blog post. */
 .prose-astro {
   color: color-mix(in oklab, white 72%, transparent);

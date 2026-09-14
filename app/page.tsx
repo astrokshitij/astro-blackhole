@@ -2,6 +2,7 @@ import BlackHole from "@/components/ui/optimized-black-hole";
 import { ButtonLink, Section, SectionHeading } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
 import { ArrowGlyph, PlayGlyph } from "@/components/site/icons";
+import { RevealPhoto } from "@/components/site/reveal-photo";
 import Link from "next/link";
 import { SITE, STATS } from "@/lib/content";
 
@@ -148,7 +149,18 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="mt-6 grid gap-6 md:grid-cols-2">
+        {/* Wide photo band — the human moment between the gateway cards and the
+            two CTA cards below. */}
+        <RevealPhoto
+          src="/images/home/tedx-stage.jpg"
+          alt="Kshitij on stage at TEDx The Modern School"
+          aspectClassName="aspect-[21/9]"
+          className="mt-12 sm:mt-16"
+          drift
+          sizes="(min-width: 1024px) 1152px, 100vw"
+        />
+
+        <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2">
           <div className="rounded-xl border border-white/12 p-7 sm:p-9">
             <h3 className="font-display text-xl font-light text-white sm:text-2xl">
               Follow Along

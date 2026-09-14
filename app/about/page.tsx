@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHero } from "@/components/site/page-hero";
 import { NextPage, Section } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
+import { RevealPhoto } from "@/components/site/reveal-photo";
 import { SITE } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -41,7 +41,7 @@ export default function AboutPage() {
             </p>
 
             <div className="mt-14 space-y-14">
-              <div>
+              <section>
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   It started with a weird obsession with science.
                 </h2>
@@ -66,9 +66,17 @@ export default function AboutPage() {
                   an idea that fascinated me and trying to make someone else
                   see why it was fascinating too.
                 </p>
-              </div>
+              </section>
 
-              <div>
+              <RevealPhoto
+                src="/images/story/9th-class-exhibition.jpg"
+                alt="Kshitij at his Class 9 time-travel science exhibition"
+                caption="Class 9. The time-travel exhibition."
+                aspectClassName="aspect-[4/3]"
+                sizes="(min-width: 1024px) 640px, 100vw"
+              />
+
+              <section>
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Finding my way into physics
                 </h2>
@@ -111,9 +119,17 @@ export default function AboutPage() {
                   while working on WIMP dark matter for my research
                   dissertation.
                 </p>
-              </div>
+              </section>
 
-              <div>
+              <RevealPhoto
+                src="/images/story/talk-during-bsc.jpg"
+                alt="Kshitij giving a guest lecture during his BSc"
+                caption="Guest lecture, BSc years."
+                aspectClassName="aspect-[4/3]"
+                sizes="(min-width: 1024px) 640px, 100vw"
+              />
+
+              <section>
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Before my master&apos;s, I got a taste of the bigger research
                   world.
@@ -133,9 +149,9 @@ export default function AboutPage() {
                   pursuing research, which naturally led me towards
                   astrophysics and cosmology.
                 </p>
-              </div>
+              </section>
 
-              <div>
+              <section>
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   From competitions to research
                 </h2>
@@ -184,9 +200,18 @@ export default function AboutPage() {
                   and make it accessible to someone who doesn&apos;t have a
                   physics background.
                 </p>
-              </div>
+              </section>
 
-              <div>
+              <RevealPhoto
+                src="/images/story/after-msc-talk.jpg"
+                alt="Kshitij teaching at a chalkboard during his MSc years"
+                caption="Teaching. MSc era."
+                aspectClassName="aspect-[4/5]"
+                className="mx-auto max-w-md"
+                sizes="(min-width: 1024px) 448px, 100vw"
+              />
+
+              <section>
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Then I took an unexpected detour.
                 </h2>
@@ -228,9 +253,9 @@ export default function AboutPage() {
                   what makes an idea travel. And AI is now bringing many of
                   those worlds together.
                 </p>
-              </div>
+              </section>
 
-              <div>
+              <section>
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Maybe the detour was the point.
                 </h2>
@@ -267,7 +292,16 @@ export default function AboutPage() {
                   And hopefully, still making you curious enough to ask a few
                   of your own.
                 </p>
-              </div>
+              </section>
+
+              <RevealPhoto
+                src="/images/story/telescope.jpg"
+                alt="Kshitij beside a Celestron telescope at an outdoor observing session"
+                caption="In the field with a Celestron."
+                aspectClassName="aspect-[4/5]"
+                className="mx-auto max-w-md"
+                sizes="(min-width: 1024px) 448px, 100vw"
+              />
             </div>
 
             <div className="mt-16">
@@ -282,16 +316,14 @@ export default function AboutPage() {
 
           <aside className="space-y-12 lg:sticky lg:top-24 lg:self-start">
             {SITE.portrait ? (
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-white/12">
-                <Image
-                  src={SITE.portrait}
-                  alt={SITE.portraitAlt}
-                  fill
-                  sizes="(min-width: 1024px) 420px, 100vw"
-                  className="object-cover"
-                  priority
-                />
-              </div>
+              <RevealPhoto
+                src={SITE.portrait}
+                alt={SITE.portraitAlt}
+                aspectClassName="aspect-[4/5]"
+                drift
+                eager
+                sizes="(min-width: 1024px) 420px, 100vw"
+              />
             ) : null}
 
             <div>

@@ -12,10 +12,8 @@ export const SITE = {
   tagline: "Physics in Hindi, for people who were taught to memorise it.",
   email: "astrokshitij5@gmail.com",
 
-  // A photo of you on the About page. Drop the file in `public/images/`
-  // and put its path here, for example "/images/kshitij.jpg".
-  // Leave it empty and the About page simply has no photo.
-  portrait: "",
+  // Portrait shown at the top of the About page sidebar.
+  portrait: "/images/portraits/kshitij-bits.jpg",
   portraitAlt: "Kshitij Pandey",
 };
 
