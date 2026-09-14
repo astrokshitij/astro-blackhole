@@ -33,7 +33,7 @@ export const SOCIALS = [
     label: "YouTube",
     handle: "@astrokshitij",
     href: "https://www.youtube.com/@astrokshitij",
-    note: "Long explainers and short films",
+    note: "Long-form explainers and experiments in understanding the universe.",
     glyph: "play" as const,
     accent: "#ff0033",
   },
@@ -41,7 +41,7 @@ export const SOCIALS = [
     label: "Instagram",
     handle: "@astro.kshitij",
     href: "https://www.instagram.com/astro.kshitij",
-    note: "Reels, four a week",
+    note: "Short, curious dives into physics, astronomy and scientific thinking.",
     glyph: "camera" as const,
     accent: "#e1306c",
   },
@@ -49,17 +49,15 @@ export const SOCIALS = [
     label: "LinkedIn",
     handle: "Kshitij Pandey",
     href: "https://www.linkedin.com/in/kshitij-pandey-30215314b/",
-    note: "Talks, workshops and work",
+    note: "Talks, workshops and what I'm building beyond the screen.",
     glyph: "network" as const,
     accent: "#0a66c2",
   },
 ];
 
 export const STATS = [
-  { value: "90K+", label: "Instagram followers" },
-  { value: "35K", label: "YouTube subscribers" },
-  { value: "12M+", label: "Views on reels" },
-  { value: "580+", label: "Videos published" },
+  { value: "100+", label: "Talks Delivered" },
+  { value: "130K+", label: "People Reached" },
 ];
 
 // Blog posts are NOT here. Each post is its own markdown file in

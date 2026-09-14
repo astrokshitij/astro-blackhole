@@ -10,25 +10,28 @@ const GATEWAYS = [
     index: "01",
     label: "About",
     href: "/about",
-    title: "Who is behind this",
+    title: "Who is behind Astro Kshitij?",
     blurb:
-      "An MSc in physics, a paper on naked singularities, and a decision to explain all of it in the language the audience actually thinks in.",
+      "I hold a Master's in Astrophysics and Cosmology, but what really drives me is understanding how the universe works and sharing that curiosity with you.",
+    cta: "Read more",
   },
   {
     index: "02",
     label: "Blog",
     href: "/blog",
-    title: "Written pieces",
+    title: "My Abstract Thoughts",
     blurb:
-      "The arguments that need more room than a reel gives them. Spinors, solidity, and the things textbooks quietly get wrong.",
+      "Some ideas simply refuse to fit into a short video. So, if you're curious to go a little deeper, this is where I put the thoughts, questions and rabbit holes that keep me thinking.",
+    cta: "Read the blog",
   },
   {
     index: "03",
     label: "Workshops",
     href: "/workshops",
-    title: "Sessions and training",
+    title: "Learn With Me",
     blurb:
-      "Two hours on quantum mechanics for anyone curious, and science communication training for research institutions.",
+      "Always wanted to understand Quantum Mechanics but didn't know where to start? Come explore it with me from the ground up through my \"Quantum Mechanics for Everyone\" workshop.",
+    cta: "Explore workshops",
   },
 ];
 
@@ -62,18 +65,23 @@ export default function Home() {
               </h1>
 
               <p className="mt-7 max-w-md text-sm leading-relaxed text-white/70 sm:text-base">
-                {SITE.tagline} Light that passes too close to the shadow behind
-                this text never comes back. Everything here is about the parts
-                that do.
+                I am an absolute physics head, and nothing excites me more than
+                sharing the ideas that boggle my mind with the people around
+                me. Through Astro Kshitij, I want to spark that same curiosity
+                in you.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <ButtonLink href="https://www.youtube.com/@astrokshitij">
+                <ButtonLink href="/about">
+                  More About Me
+                  <ArrowGlyph className="h-4 w-4" />
+                </ButtonLink>
+                <ButtonLink
+                  href="https://www.youtube.com/@astrokshitij"
+                  variant="secondary"
+                >
                   <PlayGlyph className="h-4 w-4" />
                   Watch on YouTube
-                </ButtonLink>
-                <ButtonLink href="/about" variant="secondary">
-                  About me
                 </ButtonLink>
               </div>
 
@@ -94,35 +102,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Reach */}
+      {/* Stats */}
       <section className="border-y border-white/10 bg-black">
-        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-5 py-14 sm:px-8 lg:flex-row lg:items-center lg:justify-between">
-          <dl className="grid flex-1 grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
+        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+          <dl className="mx-auto grid max-w-2xl grid-cols-2 gap-x-16 gap-y-10 text-center sm:gap-x-28">
             {STATS.map((stat) => (
               <div key={stat.label}>
-                <dt className="font-display text-3xl font-light leading-none text-white">
+                <dt className="font-display text-4xl font-light leading-none text-white sm:text-5xl">
                   {stat.value}
                 </dt>
-                <dd className="mt-2 text-[11px] uppercase tracking-[0.14em] text-white/55">
+                <dd className="mt-3 text-[11px] uppercase tracking-[0.18em] text-white/55">
                   {stat.label}
                 </dd>
               </div>
             ))}
           </dl>
-
-          <div className="hidden shrink-0 lg:block">
-            <SocialLinks compact />
-          </div>
         </div>
       </section>
 
-      {/* Gateways */}
+      {/* Explore */}
       <Section>
-        <SectionHeading
-          index="Where to go"
-          title="Three ways in"
-          dek="The background, the writing, and the sessions you can book."
-        />
+        <SectionHeading title="Explore Astro Kshitij" />
 
         <div className="grid gap-6 md:grid-cols-3">
           {GATEWAYS.map((gateway) => (
@@ -141,7 +141,7 @@ export default function Home() {
                 {gateway.blurb}
               </p>
               <span className="font-display mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/80">
-                Read
+                {gateway.cta}
                 <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </span>
             </Link>
@@ -151,10 +151,12 @@ export default function Home() {
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div className="rounded-xl border border-white/12 p-7 sm:p-9">
             <h3 className="font-display text-xl font-light text-white sm:text-2xl">
-              Follow the work
+              Follow Along
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-white/60">
-              Four reels a week, long explainers monthly.
+              I share physics, astronomy, scientific ideas and the occasional
+              rabbit hole across Instagram, YouTube and LinkedIn. If something
+              makes you stop and think, you&apos;ll probably find it here.
             </p>
             <div className="mt-7">
               <SocialLinks />
@@ -164,22 +166,28 @@ export default function Home() {
           <div className="flex flex-col justify-between rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-9">
             <div>
               <h3 className="font-display text-xl font-light text-white sm:text-2xl">
-                Book a session
+                Want to learn something together?
               </h3>
               <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
-                Two hours on quantum mechanics for the curious, or science
-                communication training for a department that needs to be
-                understood outside its own field.
+                Whether you want to finally understand Quantum Mechanics or
+                you&apos;re looking for someone to make complex science easier
+                to communicate, I&apos;d love to hear from you.
               </p>
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="/workshops">
-                See the workshops
-                <ArrowGlyph className="h-4 w-4" />
-              </ButtonLink>
-              <ButtonLink href="/contact" variant="secondary">
-                Contact
-              </ButtonLink>
+            <div className="mt-8">
+              <div className="flex flex-wrap gap-3">
+                <ButtonLink href="/workshops">
+                  Explore Workshops
+                  <ArrowGlyph className="h-4 w-4" />
+                </ButtonLink>
+                <ButtonLink href="/contact" variant="secondary">
+                  Get in Touch
+                </ButtonLink>
+              </div>
+              <p className="mt-5 text-xs leading-relaxed text-white/55">
+                Want to book a workshop, collaborate, or just argue about
+                physics?
+              </p>
             </div>
           </div>
         </div>
