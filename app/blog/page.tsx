@@ -4,6 +4,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/site/page-hero";
 import { ButtonLink, NextPage, Section } from "@/components/site/ui";
 import { ArrowGlyph, PlayGlyph, CameraGlyph } from "@/components/site/icons";
+import { Reveal } from "@/components/site/reveal";
 import { getPosts, type Post } from "@/lib/posts";
 import { SITE } from "@/lib/content";
 
@@ -18,7 +19,7 @@ function FeaturedCard({ post }: { post: Post }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group block overflow-hidden rounded-xl border border-white/12 bg-white/[0.02] transition-colors duration-200 hover:border-white/25 hover:bg-white/[0.045]"
+      className="group block overflow-hidden rounded-xl border border-white/12 bg-white/[0.02] transition-[background-color,border-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.045] hover:shadow-[0_10px_40px_-15px_rgba(255,255,255,0.15)]"
     >
       {post.cover ? (
         <div className="relative aspect-[21/9] w-full overflow-hidden border-b border-white/10">
@@ -73,21 +74,23 @@ function PreviousStrip({ posts }: { posts: Post[] }) {
         Previously
       </h2>
       <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
-        {posts.map((post) => (
+        {posts.map((post, i) => (
           <li key={post.slug}>
-            <Link
-              href={`/blog/${post.slug}`}
-              className="group flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-white/5 py-4 transition-colors hover:border-white/20"
-            >
-              <span className="font-mono min-w-[7.5rem] text-[10px] uppercase tracking-[0.18em] text-white/50">
-                {post.category}
-                {post.readTime ? ` · ${post.readTime}` : ""}
-              </span>
-              <span className="font-display flex-1 text-base font-light leading-snug text-white/85 transition-colors group-hover:text-white sm:text-lg">
-                {post.title}
-              </span>
-              <ArrowGlyph className="h-4 w-4 shrink-0 text-white/40 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white" />
-            </Link>
+            <Reveal delay={i * 80}>
+              <Link
+                href={`/blog/${post.slug}`}
+                className="group flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-white/5 py-4 transition-colors hover:border-white/20"
+              >
+                <span className="font-mono min-w-[7.5rem] text-[10px] uppercase tracking-[0.18em] text-white/50">
+                  {post.category}
+                  {post.readTime ? ` · ${post.readTime}` : ""}
+                </span>
+                <span className="font-display flex-1 text-base font-light leading-snug text-white/85 transition-colors group-hover:text-white sm:text-lg">
+                  {post.title}
+                </span>
+                <ArrowGlyph className="h-4 w-4 shrink-0 text-white/40 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white" />
+              </Link>
+            </Reveal>
           </li>
         ))}
       </ul>
@@ -109,19 +112,21 @@ export default function BlogPage() {
       />
 
       <Section>
-        <div className="max-w-3xl">
-          <p className="text-base leading-relaxed text-white/75 sm:text-lg">
-            Some ideas simply refuse to fit into a short video.
-          </p>
-          <p className="mt-5 text-base leading-relaxed text-white/70 sm:text-base">
-            This is where I go a little deeper. Physics, the universe, strange
-            questions, things I can&apos;t stop thinking about and the
-            occasional rabbit hole that deserves more than a few seconds of
-            your attention.
-          </p>
-        </div>
+        <Reveal>
+          <div className="max-w-3xl">
+            <p className="text-base leading-relaxed text-white/75 sm:text-lg">
+              Some ideas simply refuse to fit into a short video.
+            </p>
+            <p className="mt-5 text-base leading-relaxed text-white/70 sm:text-base">
+              This is where I go a little deeper. Physics, the universe,
+              strange questions, things I can&apos;t stop thinking about and
+              the occasional rabbit hole that deserves more than a few seconds
+              of your attention.
+            </p>
+          </div>
+        </Reveal>
 
-        <div className="mt-16">
+        <Reveal delay={100} className="mt-16">
           {featured ? (
             <FeaturedCard post={featured} />
           ) : (
@@ -135,62 +140,66 @@ export default function BlogPage() {
               </p>
             </div>
           )}
-        </div>
+        </Reveal>
 
         <PreviousStrip posts={previous} />
 
-        <div className="mt-16 rounded-xl border border-white/12 p-8 sm:p-12">
-          <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
-            More coming soon
-          </h2>
-          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
-            I&apos;m working on more pieces.
-          </p>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
-            Until then, you can find the shorter versions of many of these
-            ideas on YouTube and Instagram.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink
-              href="https://www.youtube.com/@astrokshitij"
-              variant="secondary"
-            >
-              <PlayGlyph className="h-4 w-4" />
-              Watch on YouTube
-              <ArrowGlyph className="h-4 w-4" />
-            </ButtonLink>
-            <ButtonLink
-              href="https://www.instagram.com/astro.kshitij"
-              variant="secondary"
-            >
-              <CameraGlyph className="h-4 w-4" />
-              Follow on Instagram
-              <ArrowGlyph className="h-4 w-4" />
-            </ButtonLink>
+        <Reveal className="mt-16">
+          <div className="rounded-xl border border-white/12 p-8 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.02] sm:p-12">
+            <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
+              More coming soon
+            </h2>
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
+              I&apos;m working on more pieces.
+            </p>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
+              Until then, you can find the shorter versions of many of these
+              ideas on YouTube and Instagram.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink
+                href="https://www.youtube.com/@astrokshitij"
+                variant="secondary"
+              >
+                <PlayGlyph className="h-4 w-4" />
+                Watch on YouTube
+                <ArrowGlyph className="h-4 w-4" />
+              </ButtonLink>
+              <ButtonLink
+                href="https://www.instagram.com/astro.kshitij"
+                variant="secondary"
+              >
+                <CameraGlyph className="h-4 w-4" />
+                Follow on Instagram
+                <ArrowGlyph className="h-4 w-4" />
+              </ButtonLink>
+            </div>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="mt-16 rounded-xl border border-white/12 bg-white/[0.02] p-8 sm:p-12">
-          <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
-            Have a question?
-          </h2>
-          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
-            Found something here you want to argue about, question or explore
-            further?
-          </p>
-          <a
-            href={`mailto:${SITE.email}`}
-            className="mt-6 inline-block text-sm text-white underline underline-offset-4 decoration-white/40 transition-colors hover:decoration-white"
-          >
-            {SITE.email}
-          </a>
-          <div className="mt-8">
-            <ButtonLink href="/contact">
-              Get in touch
-              <ArrowGlyph className="h-4 w-4" />
-            </ButtonLink>
+        <Reveal className="mt-16">
+          <div className="rounded-xl border border-white/12 bg-white/[0.02] p-8 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] sm:p-12">
+            <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
+              Have a question?
+            </h2>
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
+              Found something here you want to argue about, question or explore
+              further?
+            </p>
+            <a
+              href={`mailto:${SITE.email}`}
+              className="mt-6 inline-block text-sm text-white underline underline-offset-4 decoration-white/40 transition-colors hover:decoration-white"
+            >
+              {SITE.email}
+            </a>
+            <div className="mt-8">
+              <ButtonLink href="/contact">
+                Get in touch
+                <ArrowGlyph className="h-4 w-4" />
+              </ButtonLink>
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         <NextPage href="/workshops" title="Workshops and training" />
       </Section>

@@ -3,9 +3,11 @@ import { ButtonLink, Section, SectionHeading } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
 import { ArrowGlyph, PlayGlyph } from "@/components/site/icons";
 import { TedxCarousel } from "@/components/site/tedx-carousel";
+import { Reveal } from "@/components/site/reveal";
+import { CountUp } from "@/components/site/count-up";
 import Image from "next/image";
 import Link from "next/link";
-import { SITE, STATS } from "@/lib/content";
+import { SITE } from "@/lib/content";
 
 const GATEWAYS = [
   {
@@ -50,8 +52,10 @@ const TEDX_PHOTOS = [
   },
   {
     src: "/images/home/tedx/3.jpg",
+    // TEDx 3 is nearly square, so anchor the crop at the top of the frame
+    // so his head stays in view in the wide 2:1 band.
     alt: "Kshitij standing on the TEDx stage",
-    position: "center 30%",
+    position: "center top",
   },
 ];
 
@@ -122,13 +126,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats — split layout. Photo on the left carries the story of a room
-          full of people. Numbers on the right hold the eye. No overlay on the
-          photo so it can breathe. */}
+      {/* Stats — split layout with count-up on the numbers. */}
       <section className="border-y border-white/10 bg-black">
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
           <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-20">
-            <div className="mx-auto w-full max-w-sm lg:max-w-none">
+            <Reveal className="mx-auto w-full max-w-sm lg:max-w-none">
               <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-white/12">
                 <Image
                   src="/images/home/stats-audience.jpg"
@@ -143,100 +145,116 @@ export default function Home() {
                   }}
                 />
               </div>
-            </div>
+            </Reveal>
 
-            <dl className="grid grid-cols-2 gap-x-10 gap-y-10 text-center sm:gap-x-16 lg:text-left">
-              {STATS.map((stat) => (
-                <div key={stat.label}>
+            <Reveal delay={150}>
+              <dl className="grid grid-cols-2 gap-x-10 gap-y-10 text-center sm:gap-x-16 lg:text-left">
+                <div>
                   <dt className="font-display text-5xl font-light leading-none text-white sm:text-6xl">
-                    {stat.value}
+                    <CountUp to={100} suffix="+" />
                   </dt>
                   <dd className="mt-4 text-[11px] uppercase tracking-[0.22em] text-white/60">
-                    {stat.label}
+                    Talks Delivered
                   </dd>
                 </div>
-              ))}
-            </dl>
+                <div>
+                  <dt className="font-display text-5xl font-light leading-none text-white sm:text-6xl">
+                    <CountUp to={130} suffix="K+" />
+                  </dt>
+                  <dd className="mt-4 text-[11px] uppercase tracking-[0.22em] text-white/60">
+                    People Reached
+                  </dd>
+                </div>
+              </dl>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* Explore */}
       <Section>
-        <SectionHeading title="Explore Astro Kshitij" />
+        <Reveal>
+          <SectionHeading title="Explore Astro Kshitij" />
+        </Reveal>
 
         <div className="grid gap-6 md:grid-cols-3">
-          {GATEWAYS.map((gateway) => (
-            <Link
-              key={gateway.href}
-              href={gateway.href}
-              className="group flex flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-colors duration-200 hover:border-white/25 hover:bg-white/[0.045] sm:p-9"
-            >
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
-                {gateway.index} / {gateway.label}
-              </span>
-              <h3 className="font-display mt-6 text-xl font-light leading-snug text-white sm:text-2xl">
-                {gateway.title}
-              </h3>
-              <p className="mt-4 flex-1 text-sm leading-relaxed text-white/60">
-                {gateway.blurb}
-              </p>
-              <span className="font-display mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/80">
-                {gateway.cta}
-                <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-              </span>
-            </Link>
+          {GATEWAYS.map((gateway, i) => (
+            <Reveal key={gateway.href} delay={i * 120} className="h-full">
+              <Link
+                href={gateway.href}
+                className="group flex h-full flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-[background-color,border-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] hover:shadow-[0_10px_40px_-15px_rgba(255,255,255,0.15)] sm:p-9"
+              >
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
+                  {gateway.index} / {gateway.label}
+                </span>
+                <h3 className="font-display mt-6 text-xl font-light leading-snug text-white sm:text-2xl">
+                  {gateway.title}
+                </h3>
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-white/60">
+                  {gateway.blurb}
+                </p>
+                <span className="font-display mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/80">
+                  {gateway.cta}
+                  <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </span>
+              </Link>
+            </Reveal>
           ))}
         </div>
 
-        {/* TEDx carousel band. A slow rotating rest between the three
-            gateway cards above and the two CTA cards below. */}
-        <div className="mt-12 sm:mt-16">
+        {/* TEDx carousel band. A slow rotating rest between the gateway
+            cards above and the CTA cards below. */}
+        <Reveal className="mt-12 sm:mt-16">
           <TedxCarousel
             photos={TEDX_PHOTOS}
             className="aspect-[16/9] sm:aspect-[2/1]"
             ariaLabel="TEDx talk by Kshitij Pandey"
           />
-        </div>
+        </Reveal>
 
         <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2 md:items-start">
-          <div className="rounded-xl border border-white/12 p-7 sm:p-9">
-            <h3 className="font-display text-xl font-light text-white sm:text-2xl">
-              Follow Along
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-white/60">
-              I share physics, astronomy, scientific ideas and the occasional
-              rabbit hole across Instagram, YouTube and LinkedIn. If something
-              makes you stop and think, you&apos;ll probably find it here.
-            </p>
-            <div className="mt-7">
-              <SocialLinks />
+          <Reveal>
+            <div className="rounded-xl border border-white/12 p-7 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.02] sm:p-9">
+              <h3 className="font-display text-xl font-light text-white sm:text-2xl">
+                Follow Along
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-white/60">
+                I share physics, astronomy, scientific ideas and the occasional
+                rabbit hole across Instagram, YouTube and LinkedIn. If
+                something makes you stop and think, you&apos;ll probably find
+                it here.
+              </p>
+              <div className="mt-7">
+                <SocialLinks />
+              </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-9">
-            <h3 className="font-display text-xl font-light text-white sm:text-2xl">
-              Want to learn something together?
-            </h3>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
-              Whether you want to finally understand Quantum Mechanics or
-              you&apos;re looking for someone to make complex science easier
-              to communicate, I&apos;d love to hear from you.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="/workshops">
-                Explore Workshops
-                <ArrowGlyph className="h-4 w-4" />
-              </ButtonLink>
-              <ButtonLink href="/contact" variant="secondary">
-                Get in Touch
-              </ButtonLink>
+          <Reveal delay={120}>
+            <div className="rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] sm:p-9">
+              <h3 className="font-display text-xl font-light text-white sm:text-2xl">
+                Want to learn something together?
+              </h3>
+              <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
+                Whether you want to finally understand Quantum Mechanics or
+                you&apos;re looking for someone to make complex science easier
+                to communicate, I&apos;d love to hear from you.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <ButtonLink href="/workshops">
+                  Explore Workshops
+                  <ArrowGlyph className="h-4 w-4" />
+                </ButtonLink>
+                <ButtonLink href="/contact" variant="secondary">
+                  Get in Touch
+                </ButtonLink>
+              </div>
+              <p className="mt-5 text-xs leading-relaxed text-white/55">
+                Want to book a workshop, collaborate, or just argue about
+                physics?
+              </p>
             </div>
-            <p className="mt-5 text-xs leading-relaxed text-white/55">
-              Want to book a workshop, collaborate, or just argue about
-              physics?
-            </p>
-          </div>
+          </Reveal>
         </div>
       </Section>
     </>

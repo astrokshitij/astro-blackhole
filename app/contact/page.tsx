@@ -3,6 +3,7 @@ import { PageHero } from "@/components/site/page-hero";
 import { ButtonLink, Section } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
 import { MailGlyph, ArrowGlyph } from "@/components/site/icons";
+import { Reveal } from "@/components/site/reveal";
 import { SITE } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -42,8 +43,8 @@ export default function ContactPage() {
 
       <Section>
         <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
-          <div>
-            <div className="h-full rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-9">
+          <Reveal>
+            <div className="h-full rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] sm:p-9">
               <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/18 text-white/75">
                 <MailGlyph className="h-5 w-5" />
               </span>
@@ -59,39 +60,43 @@ export default function ContactPage() {
                 <ArrowGlyph className="h-4 w-4" />
               </ButtonLink>
             </div>
-          </div>
+          </Reveal>
 
-          <div>
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
-              Elsewhere
-            </h2>
-            <div className="mt-5">
-              <SocialLinks />
+          <Reveal delay={120}>
+            <div>
+              <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+                Elsewhere
+              </h2>
+              <div className="mt-5">
+                <SocialLinks />
+              </div>
+              <p className="mt-5 text-xs leading-relaxed text-white/55">
+                Instagram DMs are read but pile up quickly. For anything with a
+                date attached, use email.
+              </p>
             </div>
-            <p className="mt-5 text-xs leading-relaxed text-white/55">
-              Instagram DMs are read but pile up quickly. For anything with a
-              date attached, use email.
-            </p>
-          </div>
+          </Reveal>
         </div>
 
-        <div className="mt-20 border-t border-white/10 pt-12">
+        <Reveal className="mt-20 border-t border-white/10 pt-12">
           <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
             What people write in about
           </h2>
-          <ul className="mt-8 grid gap-8 sm:grid-cols-3 sm:gap-10">
-            {REASONS.map((reason) => (
-              <li key={reason.title}>
+        </Reveal>
+        <ul className="mt-8 grid gap-8 sm:grid-cols-3 sm:gap-10">
+          {REASONS.map((reason, i) => (
+            <li key={reason.title}>
+              <Reveal delay={i * 120}>
                 <h3 className="font-display text-sm font-light uppercase tracking-[0.2em] text-white">
                   {reason.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/60">
                   {reason.detail}
                 </p>
-              </li>
-            ))}
-          </ul>
-        </div>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
       </Section>
     </>
   );
