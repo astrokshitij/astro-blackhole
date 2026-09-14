@@ -6,6 +6,9 @@ interface PageHeroProps {
   dek?: string;
   /** Shifts the render so each page is not an identical crop. */
   offset?: { x: number; y: number };
+  /** Skip the uppercase + wide-tracking treatment on the title, so a
+   * sentence-case heading like "Hi, I'm Kshitij." reads naturally. */
+  plainCase?: boolean;
 }
 
 /**
@@ -18,6 +21,7 @@ export function PageHero({
   title,
   dek,
   offset = { x: 0.42, y: 0.1 },
+  plainCase = false,
 }: PageHeroProps) {
   return (
     <section className="relative isolate flex min-h-[340px] items-end overflow-hidden border-b border-white/10 pt-16 sm:min-h-[400px]">
@@ -37,7 +41,11 @@ export function PageHero({
         <p className="font-display text-[11px] uppercase tracking-[0.45em] text-white/55">
           {eyebrow}
         </p>
-        <h1 className="font-display mt-4 text-[clamp(1.9rem,5.5vw,3.5rem)] font-light uppercase leading-[1.08] tracking-[0.1em] text-white">
+        <h1
+          className={`font-display mt-4 text-[clamp(1.9rem,5.5vw,3.5rem)] font-light leading-[1.08] text-white ${
+            plainCase ? "tracking-tight" : "uppercase tracking-[0.1em]"
+          }`}
+        >
           {title}
         </h1>
         {dek ? (
