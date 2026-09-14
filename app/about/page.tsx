@@ -12,16 +12,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-// Photos keyed by story-section id. Order defines fallback order when nothing
-// is intersecting yet (first is the default). Mobile falls back to inline
-// RevealPhotos underneath each section — see below.
+// Photos keyed by story-section id. The first entry is the initial state
+// (before any section has intersected). Mobile falls back to inline
+// RevealPhotos underneath each section, defined below.
 const STORY_PHOTOS: StoryPhoto[] = [
-  {
-    id: "intro",
-    src: "/images/portraits/kshitij-bits.jpg",
-    alt: "Kshitij Pandey",
-    caption: "Now.",
-  },
   {
     id: "obsession",
     src: "/images/story/9th-class-exhibition.jpg",
@@ -41,26 +35,38 @@ const STORY_PHOTOS: StoryPhoto[] = [
     caption: "ICFAI Jaipur.",
   },
   {
-    id: "research",
+    id: "research-degree",
+    src: "/images/story/msc-degree.jpg",
+    alt: "Kshitij with his M.Sc. Physics degree, Charusat University",
+    caption: "M.Sc. Physics. Charusat, 2024.",
+    position: "center 25%",
+  },
+  {
+    id: "research-labs",
+    src: "/images/story/msc-poster.jpg",
+    alt: "Kshitij in front of his research poster on high-energy collisions near naked singularities",
+    caption: "The research poster.",
+  },
+  {
+    id: "research-teaching",
     src: "/images/story/after-msc-talk.jpg",
     alt: "Kshitij teaching at a chalkboard during his MSc years",
-    caption: "Teaching. MSc era.",
+    caption: "Teaching.",
   },
   {
     id: "detour",
-    src: "/images/portraits/kshitij-bits.jpg",
-    alt: "Kshitij Pandey",
-    caption: "The detour.",
+    src: "/images/story/msc-research.jpg",
+    alt: "Kshitij at a desk working through data",
+    caption: "Heads down.",
   },
   {
     id: "point",
     src: "/images/story/telescope.jpg",
     alt: "Kshitij beside a Celestron telescope at an outdoor observing session",
-    caption: "In the field with a Celestron.",
+    caption: "Still going out to look.",
   },
 ];
 
-// Map for the mobile inline versions.
 const photosById = Object.fromEntries(
   STORY_PHOTOS.map((photo) => [photo.id, photo]),
 );
@@ -95,7 +101,9 @@ export default function AboutPage() {
         <div className="grid gap-16 lg:grid-cols-[1.35fr_1fr] lg:gap-24">
           {/* Story column */}
           <div className="max-w-2xl">
-            <div data-story-section="intro">
+            {/* Intro paragraphs. No data-story-section here; the sticky panel
+                starts on its default (first entry: obsession / 9th class). */}
+            <div>
               <p className="font-display text-xl font-light leading-[1.35] text-white sm:text-2xl">
                 Science communicator. TEDx speaker. Physics nerd. Researcher.
                 Marketer. And, apparently, someone who has never been very
@@ -210,57 +218,70 @@ export default function AboutPage() {
                 <MobilePhoto id="before-msc" aspect="aspect-[1/1]" />
               </section>
 
-              <section data-story-section="research">
-                <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
-                  From competitions to research
-                </h2>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  I went on to pursue an{" "}
-                  <strong className="font-normal text-white/85">
-                    M.Sc. in Physics with a focus on Astrophysics and
-                    Cosmology
-                  </strong>
-                  .
-                </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  My master&apos;s changed the scale of the questions I was
-                  working on. I got the opportunity to work with{" "}
-                  <strong className="font-normal text-white/85">
-                    Prof. Kaushik Bhattacharya at IIT Kanpur
-                  </strong>{" "}
-                  on scalar-field dark matter, and with{" "}
-                  <strong className="font-normal text-white/85">
-                    Prof. Pankaj S. Joshi
-                  </strong>{" "}
-                  on high-energy particle collisions in the vicinity of naked
-                  singularities.
-                </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  That work eventually became a{" "}
-                  <a
-                    href="https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948"
-                    className="text-white underline underline-offset-4 decoration-white/40 transition-colors hover:decoration-white"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    peer-reviewed research paper
-                  </a>
-                  .
-                </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  Research is still the part of physics that excites me the
-                  most. I enjoy sitting with difficult problems, digging into
-                  the mathematics and trying to understand what nature is
-                  actually telling us.
-                </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  But I&apos;ve also always enjoyed communicating those ideas,
-                  especially when I can take something that feels intimidating
-                  and make it accessible to someone who doesn&apos;t have a
-                  physics background.
-                </p>
-                <MobilePhoto id="research" aspect="aspect-[4/5]" />
-              </section>
+              {/* The M.Sc chapter is split into three sub-sections so the
+                  sticky panel walks through degree → research → teaching as
+                  the reader scrolls through this part of the story. */}
+              <div className="space-y-5">
+                <div data-story-section="research-degree">
+                  <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
+                    From competitions to research
+                  </h2>
+                  <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                    I went on to pursue an{" "}
+                    <strong className="font-normal text-white/85">
+                      M.Sc. in Physics with a focus on Astrophysics and
+                      Cosmology
+                    </strong>
+                    .
+                  </p>
+                  <MobilePhoto id="research-degree" aspect="aspect-[3/4]" />
+                </div>
+
+                <div data-story-section="research-labs" className="!mt-8">
+                  <p className="text-sm leading-relaxed text-white/70 sm:text-base">
+                    My master&apos;s changed the scale of the questions I was
+                    working on. I got the opportunity to work with{" "}
+                    <strong className="font-normal text-white/85">
+                      Prof. Kaushik Bhattacharya at IIT Kanpur
+                    </strong>{" "}
+                    on scalar-field dark matter, and with{" "}
+                    <strong className="font-normal text-white/85">
+                      Prof. Pankaj S. Joshi
+                    </strong>{" "}
+                    on high-energy particle collisions in the vicinity of naked
+                    singularities.
+                  </p>
+                  <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                    That work eventually became a{" "}
+                    <a
+                      href="https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948"
+                      className="text-white underline underline-offset-4 decoration-white/40 transition-colors hover:decoration-white"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      peer-reviewed research paper
+                    </a>
+                    .
+                  </p>
+                  <MobilePhoto id="research-labs" aspect="aspect-[4/3]" />
+                </div>
+
+                <div data-story-section="research-teaching" className="!mt-8">
+                  <p className="text-sm leading-relaxed text-white/70 sm:text-base">
+                    Research is still the part of physics that excites me the
+                    most. I enjoy sitting with difficult problems, digging into
+                    the mathematics and trying to understand what nature is
+                    actually telling us.
+                  </p>
+                  <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                    But I&apos;ve also always enjoyed communicating those
+                    ideas, especially when I can take something that feels
+                    intimidating and make it accessible to someone who
+                    doesn&apos;t have a physics background.
+                  </p>
+                  <MobilePhoto id="research-teaching" aspect="aspect-[4/5]" />
+                </div>
+              </div>
 
               <section data-story-section="detour">
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
@@ -304,6 +325,7 @@ export default function AboutPage() {
                   what makes an idea travel. And AI is now bringing many of
                   those worlds together.
                 </p>
+                <MobilePhoto id="detour" aspect="aspect-[4/3]" />
               </section>
 
               <section data-story-section="point">
@@ -357,10 +379,9 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Sticky photo panel, desktop only. Mobile shows inline photos
-              inside each section above. */}
+          {/* Sticky photo panel, desktop only. Mobile shows inline photos. */}
           <aside className="hidden lg:sticky lg:top-24 lg:block lg:self-start">
-            <StoryPhotoPanel photos={STORY_PHOTOS} initialId="intro" />
+            <StoryPhotoPanel photos={STORY_PHOTOS} initialId="obsession" />
 
             <div className="mt-10">
               <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
@@ -381,7 +402,6 @@ export default function AboutPage() {
           </aside>
         </div>
 
-        {/* Mobile-only "In short" list, below the story */}
         <div className="mt-16 lg:hidden">
           <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
             In short

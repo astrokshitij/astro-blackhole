@@ -65,9 +65,40 @@ function FeaturedCard({ post }: { post: Post }) {
   );
 }
 
+function PreviousStrip({ posts }: { posts: Post[] }) {
+  if (posts.length === 0) return null;
+  return (
+    <div className="mt-16">
+      <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+        Previously
+      </h2>
+      <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
+        {posts.map((post) => (
+          <li key={post.slug}>
+            <Link
+              href={`/blog/${post.slug}`}
+              className="group flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-white/5 py-4 transition-colors hover:border-white/20"
+            >
+              <span className="font-mono min-w-[7.5rem] text-[10px] uppercase tracking-[0.18em] text-white/50">
+                {post.category}
+                {post.readTime ? ` · ${post.readTime}` : ""}
+              </span>
+              <span className="font-display flex-1 text-base font-light leading-snug text-white/85 transition-colors group-hover:text-white sm:text-lg">
+                {post.title}
+              </span>
+              <ArrowGlyph className="h-4 w-4 shrink-0 text-white/40 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function BlogPage() {
   const posts = getPosts();
   const featured = posts[0];
+  const previous = posts.slice(1);
 
   return (
     <>
@@ -105,6 +136,8 @@ export default function BlogPage() {
             </div>
           )}
         </div>
+
+        <PreviousStrip posts={previous} />
 
         <div className="mt-16 rounded-xl border border-white/12 p-8 sm:p-12">
           <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">

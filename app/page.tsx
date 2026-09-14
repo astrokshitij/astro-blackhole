@@ -103,39 +103,42 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats over a TEDx backdrop. The photo carries the "delivering talks"
-          meaning behind the numbers without needing a caption. */}
-      <section className="relative isolate overflow-hidden border-y border-white/10 bg-black">
-        <div className="absolute inset-0 -z-10" aria-hidden>
-          <Image
-            src="/images/home/tedx-stats.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover"
-            style={{
-              filter: "saturate(0.45) contrast(1.06) brightness(0.55)",
-              objectPosition: "center 25%",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/55 to-black/75" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
-        </div>
-
-        <div className="mx-auto flex min-h-[420px] max-w-6xl items-center px-5 py-20 sm:min-h-[480px] sm:px-8 sm:py-28">
-          <dl className="mx-auto grid max-w-2xl grid-cols-2 gap-x-16 gap-y-10 text-center sm:gap-x-28">
-            {STATS.map((stat) => (
-              <div key={stat.label}>
-                <dt className="font-display text-5xl font-light leading-none text-white sm:text-6xl">
-                  {stat.value}
-                </dt>
-                <dd className="mt-4 text-[11px] uppercase tracking-[0.22em] text-white/70">
-                  {stat.label}
-                </dd>
+      {/* Stats — split layout. Photo on the left carries the story of a room
+          full of people. Numbers on the right hold the eye. No overlay on the
+          photo so it can breathe. */}
+      <section className="border-y border-white/10 bg-black">
+        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-20">
+            <div className="mx-auto w-full max-w-sm lg:max-w-none">
+              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-white/12">
+                <Image
+                  src="/images/home/stats-audience.jpg"
+                  alt="Kshitij talking to a room of students"
+                  fill
+                  sizes="(min-width: 1024px) 460px, (min-width: 640px) 384px, 100vw"
+                  priority
+                  className="object-cover"
+                  style={{
+                    filter: "saturate(0.55) contrast(1.04)",
+                    objectPosition: "center 30%",
+                  }}
+                />
               </div>
-            ))}
-          </dl>
+            </div>
+
+            <dl className="grid grid-cols-2 gap-x-10 gap-y-10 text-center sm:gap-x-16 lg:text-left">
+              {STATS.map((stat) => (
+                <div key={stat.label}>
+                  <dt className="font-display text-5xl font-light leading-none text-white sm:text-6xl">
+                    {stat.value}
+                  </dt>
+                  <dd className="mt-4 text-[11px] uppercase tracking-[0.22em] text-white/60">
+                    {stat.label}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </section>
 

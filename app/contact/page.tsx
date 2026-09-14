@@ -8,7 +8,7 @@ import { SITE } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Reach Kshitij Pandey about workshops, talks and collaborations, or to point out something he got wrong.",
+    "Reach Kshitij Pandey about workshops, talks and collaborations, or to argue about physics.",
   alternates: { canonical: "/contact" },
 };
 
@@ -16,17 +16,17 @@ const REASONS = [
   {
     title: "Workshops and talks",
     detail:
-      "Institutions, colleges, conferences and companies. Say the audience, rough size and the date you have in mind.",
+      "If you're organising something at your university, company or event, this is where you start. Tell me who the audience is and a rough date, and I'll come back within a couple of days.",
   },
   {
     title: "Collaborations",
     detail:
-      "Other communicators, researchers with work worth explaining, and anyone building something in this space.",
+      "If you're a fellow communicator, a researcher with work worth explaining or someone building something interesting in science, I'd love to hear from you.",
   },
   {
     title: "Corrections",
     detail:
-      "If something in a video or a piece here is wrong, this is the fastest way to have it fixed. Bring the source.",
+      "If I got something wrong in a video, a post or a talk, please tell me. This is the fastest way to get it fixed, and I'll credit you if you'd like.",
   },
 ];
 
@@ -48,11 +48,11 @@ export default function ContactPage() {
                 <MailGlyph className="h-5 w-5" />
               </span>
               <p className="font-display mt-6 text-2xl font-light leading-snug text-white sm:text-3xl">
-                Email is the reliable one.
+                Email is the best way.
               </p>
               <p className="mt-3 text-sm leading-relaxed text-white/60">
-                Everything with a date attached should come this way. Replies
-                usually take a day or two.
+                Anything with a date attached goes through here. I usually
+                reply within a couple of days.
               </p>
               <ButtonLink href={`mailto:${SITE.email}`} className="mt-7">
                 {SITE.email}
