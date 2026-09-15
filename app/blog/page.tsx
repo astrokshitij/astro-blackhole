@@ -28,27 +28,22 @@ function FeaturedCard({ post }: { post: Post }) {
       href={`/blog/${post.slug}`}
       className="group block overflow-hidden rounded-xl border border-white/12 bg-white/[0.02] transition-[background-color,border-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.045] hover:shadow-[0_10px_40px_-15px_rgba(255,255,255,0.15)]"
     >
-      {post.cover ? (
-        <div className="relative aspect-[21/9] w-full overflow-hidden border-b border-white/10">
-          <Image
-            src={post.cover}
-            alt={post.coverAlt ?? ""}
-            fill
-            sizes="(min-width: 1024px) 1152px, 100vw"
-            className="object-cover opacity-85 transition-opacity duration-300 group-hover:opacity-100"
-            priority
-          />
-        </div>
-      ) : null}
-
       <div className="p-7 sm:p-12">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <span className="font-mono text-xs uppercase tracking-[0.24em] text-white/75">
-            Featured
+            Latest
           </span>
           <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/75">
             {post.category}
           </span>
+          {post.dateLabel ? (
+            <time
+              dateTime={post.date}
+              className="font-mono text-xs uppercase tracking-[0.16em] text-white/55"
+            >
+              {post.dateLabel}
+            </time>
+          ) : null}
           {post.readTime ? (
             <span className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">
               {post.readTime}
@@ -59,6 +54,19 @@ function FeaturedCard({ post }: { post: Post }) {
         <h2 className="font-display mt-7 max-w-3xl text-3xl font-light leading-[1.12] tracking-[0.01em] text-white sm:text-5xl">
           {post.title}
         </h2>
+
+        {post.cover ? (
+          <div className="relative mt-8 aspect-[21/9] w-full overflow-hidden rounded-lg border border-white/10">
+            <Image
+              src={post.cover}
+              alt={post.coverAlt ?? ""}
+              fill
+              sizes="(min-width: 1024px) 1152px, 100vw"
+              className="object-cover opacity-85 transition-opacity duration-300 group-hover:opacity-100"
+              priority
+            />
+          </div>
+        ) : null}
 
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
           {post.excerpt}

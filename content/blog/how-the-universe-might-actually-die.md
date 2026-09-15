@@ -5,8 +5,8 @@ category: Cosmology
 readTime: 7 min
 date: 2026-09-14
 draft: false
-# cover: /images/blog/universe-death.jpg
-# coverAlt: Description of the image, for screen readers
+cover: /images/blog/universe-death.png
+coverAlt: A visual representation of false vacuum decay spreading through space
 ---
 
 Ask most people how the universe ends, and you'll get one of two answers.

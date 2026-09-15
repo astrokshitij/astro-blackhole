@@ -80,6 +80,13 @@ portraitAlt: "Kshitij Pandey",
 
 **Blog post covers.** Add `cover:` to a post's frontmatter, as shown above.
 
+For the universe-death post, create or open the `public/images/blog/` folder in
+the VS Code Explorer, then drag your image from your computer into that folder.
+Rename it to `universe-death.png` (or use its real filename in the `cover:`
+path), uncomment the `cover` and `coverAlt` lines in
+`content/blog/how-the-universe-might-actually-die.md`, and save. The image will
+then appear on the latest-post tile and at the top of the article page.
+
 **Workshop photos.** In `lib/content.ts`, each workshop has a `photo` field:
 
 ```ts
