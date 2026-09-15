@@ -41,9 +41,24 @@ function toLabel(date: string) {
   });
 }
 
+function headingId(text: string) {
+  return text
+    .replace(/<[^>]*>/g, "")
+    .toLowerCase()
+    .replace(/&amp;/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 function read(fileName: string): Post {
   const raw = fs.readFileSync(path.join(POSTS_DIR, fileName), "utf8");
   const { data, content } = matter(raw);
+
+  const html = marked.parse(content, { async: false }) as string;
+  const htmlWithHeadingIds = html.replace(
+    /<h2>(.*?)<\/h2>/g,
+    (_, text: string) => `<h2 id="${headingId(text)}">${text}</h2>`,
+  );
 
   return {
     slug: fileName.replace(/\.md$/, ""),
@@ -56,7 +71,7 @@ function read(fileName: string): Post {
     cover: data.cover ? String(data.cover) : undefined,
     coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
     draft: data.draft === true,
-    html: marked.parse(content, { async: false }) as string,
+    html: htmlWithHeadingIds,
   };
 }
 

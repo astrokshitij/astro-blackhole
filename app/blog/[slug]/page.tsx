@@ -7,6 +7,7 @@ import { getPost, getPosts } from "@/lib/posts";
 import { SITE } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
 import { socialMeta, OG_IMAGE } from "@/lib/seo";
+import { ArticleReadingTools } from "@/components/site/article-reading-tools";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -49,6 +50,9 @@ export default async function PostPage({ params }: Params) {
   if (!post || post.draft) notFound();
 
   const others = getPosts().filter((p) => p.slug !== post.slug).slice(0, 2);
+  const tocItems = [...post.html.matchAll(/<h2 id="([^"]+)">(.*?)<\/h2>/g)].map(
+    ([, id, title]) => ({ id, title: title.replace(/<[^>]*>/g, "") }),
+  );
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -64,13 +68,13 @@ export default async function PostPage({ params }: Params) {
 
   return (
     <>
+      <ArticleReadingTools items={tocItems} title={post.title} />
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <article>
-        <header className="border-b border-white/10 bg-black pt-32 sm:pt-40">
+      <article className="article-shell">
+        <header className="article-hero border-b border-white/10 bg-black pt-32 sm:pt-40">
           <div className="mx-auto max-w-3xl px-5 pb-14 sm:px-8">
             <Link
               href="/blog"
@@ -106,7 +110,7 @@ export default async function PostPage({ params }: Params) {
               {post.title}
             </h1>
 
-            <p className="mt-6 text-base leading-relaxed text-white/65 sm:text-lg">
+            <p className="article-lede mt-6 leading-relaxed">
               {post.excerpt}
             </p>
 
@@ -117,7 +121,7 @@ export default async function PostPage({ params }: Params) {
         </header>
 
         {post.cover ? (
-          <div className="relative aspect-[21/9] w-full border-b border-white/10">
+          <div className="article-cover relative aspect-[21/9] w-full border-b border-white/10">
             <Image
               src={post.cover}
               alt={post.coverAlt ?? ""}
@@ -129,7 +133,7 @@ export default async function PostPage({ params }: Params) {
           </div>
         ) : null}
 
-        <div className="bg-black">
+        <div id="article-contents" className="article-body bg-black">
           <div
             className="prose-astro mx-auto max-w-[68ch] px-5 py-16 sm:px-8 sm:py-20"
             dangerouslySetInnerHTML={{ __html: post.html }}
@@ -138,31 +142,49 @@ export default async function PostPage({ params }: Params) {
       </article>
 
       {others.length ? (
-        <section className="border-t border-white/10 bg-black">
+        <section className="article-related border-t border-white/10 bg-black">
           <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
             <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
               Read next
             </p>
-            <ul className="mt-6 divide-y divide-white/10 border-y border-white/10">
+            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
               {others.map((other) => (
                 <li key={other.slug}>
                   <Link
                     href={`/blog/${other.slug}`}
-                    className="group flex items-center justify-between gap-6 py-6"
+                    className="group block overflow-hidden rounded-xl border border-white/12 bg-white/[0.02] transition-[background-color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.05]"
                   >
-                    <span>
+                    {other.cover ? (
+                      <div className="relative aspect-[16/7] overflow-hidden border-b border-white/10">
+                        <Image
+                          src={other.cover}
+                          alt={other.coverAlt ?? ""}
+                          fill
+                          sizes="(min-width: 640px) 384px, 100vw"
+                          className="object-cover opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+                        />
+                      </div>
+                    ) : null}
+                    <span className="block p-5">
                       <span className="font-mono text-xs uppercase tracking-[0.18em] text-white/55">
-                        {other.category}
+                        {other.category}{other.readTime ? ` · ${other.readTime}` : ""}
                       </span>
                       <span className="font-display mt-2 block text-lg font-light text-white sm:text-xl">
                         {other.title}
                       </span>
+                      <ArrowGlyph className="mt-5 h-4 w-4 text-white/55 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-white" />
                     </span>
-                    <ArrowGlyph className="h-4 w-4 shrink-0 text-white/55 transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
                 </li>
               ))}
             </ul>
+            <Link
+              href="/blog"
+              className="font-mono mt-10 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/55 transition-colors hover:text-white"
+            >
+              <ArrowGlyph className="h-4 w-4 rotate-180" />
+              Back to all writing
+            </Link>
           </div>
         </section>
       ) : null}

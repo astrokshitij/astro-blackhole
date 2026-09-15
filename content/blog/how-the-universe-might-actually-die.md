@@ -76,7 +76,7 @@ information the bubble's arrival might carry, that information arrives
 at the same instant the bubble does. There is no early warning, no
 gradual change, no time to react.
 
-One instant, everything is fine. The next, it isn't.
+> One instant, everything is fine. The next, it isn't.
 
 ## Should you worry?
 

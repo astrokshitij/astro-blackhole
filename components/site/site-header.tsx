@@ -25,11 +25,14 @@ function isActive(pathname: string, href: string) {
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   // Any navigation closes the panel, including a browser back.
   useEffect(() => {
+    // Navigation changes an external UI state that must reset after routing.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
   }, [pathname]);
 
@@ -55,9 +58,20 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  useEffect(() => {
+    let previousY = window.scrollY;
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      setHidden(currentY > 96 && currentY > previousY);
+      previousY = currentY;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <>
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-black/55 backdrop-blur-md">
+    <header className={`fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-black/55 backdrop-blur-md transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}>
       <nav
         aria-label="Main"
         className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8"
