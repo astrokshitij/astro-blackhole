@@ -44,14 +44,11 @@ export function RevealPhoto({
   const [shown, setShown] = useState(eager);
 
   useEffect(() => {
-    if (eager) {
-      setShown(true);
-      return;
-    }
+    if (eager) return;
     const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") {
-      setShown(true);
-      return;
+      const frame = window.requestAnimationFrame(() => setShown(true));
+      return () => window.cancelAnimationFrame(frame);
     }
     const io = new IntersectionObserver(
       (entries) => {

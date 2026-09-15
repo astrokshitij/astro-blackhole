@@ -38,15 +38,22 @@ export function ArticleReadingTools({ items, title }: ArticleReadingToolsProps) 
   useEffect(() => {
     document.body.dataset.readingTheme = light ? "light" : "dark";
     window.localStorage.setItem("reading-theme", light ? "light" : "dark");
+    return () => {
+      delete document.body.dataset.readingTheme;
+    };
   }, [light]);
 
   const shareUrl = typeof window === "undefined" ? "" : window.location.href;
   const shareText = encodeURIComponent(title);
 
   async function copyLink() {
-    await navigator.clipboard.writeText(shareUrl);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1600);
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1600);
+    } catch {
+      setCopied(false);
+    }
   }
 
   return (
@@ -86,6 +93,12 @@ export function ArticleReadingTools({ items, title }: ArticleReadingToolsProps) 
           {light ? "Dark reading" : "Light reading"}
         </button>
         <a href="#article-contents">Contents</a>
+        <a href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer">
+          Share
+        </a>
+        <button type="button" onClick={copyLink}>
+          {copied ? "Copied" : "Copy"}
+        </button>
       </div>
 
       <button

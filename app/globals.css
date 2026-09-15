@@ -325,6 +325,8 @@ body[data-reading-theme="light"] .reading-theme-toggle {
     z-index: 30;
     display: flex;
     justify-content: space-between;
+    gap: 0.75rem;
+    padding-bottom: calc(0.7rem + env(safe-area-inset-bottom));
     padding: 0.7rem 1rem;
     border: 1px solid rgb(255 255 255 / 15%);
     border-radius: 999px;
@@ -334,6 +336,12 @@ body[data-reading-theme="light"] .reading-theme-toggle {
   }
   .reading-theme-toggle {
     display: none;
+  }
+}
+@media (max-width: 1279px) {
+  .article-body,
+  .article-related {
+    padding-bottom: 4.5rem;
   }
 }
 @media (min-width: 1280px) {

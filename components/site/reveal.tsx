@@ -38,16 +38,16 @@ export function Reveal({
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setShown(true);
-      return;
+      const frame = window.requestAnimationFrame(() => setShown(true));
+      return () => window.cancelAnimationFrame(frame);
     }
     const reducedMotion =
       typeof window.matchMedia === "function"
         ? window.matchMedia("(prefers-reduced-motion: reduce)")
         : null;
     if (reducedMotion?.matches) {
-      setShown(true);
-      return;
+      const frame = window.requestAnimationFrame(() => setShown(true));
+      return () => window.cancelAnimationFrame(frame);
     }
 
     const io = new IntersectionObserver(

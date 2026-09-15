@@ -25,16 +25,16 @@ export function CountUp({
   useEffect(() => {
     const el = ref.current;
     if (!el) {
-      setValue(to);
-      return;
+      const frame = window.requestAnimationFrame(() => setValue(to));
+      return () => window.cancelAnimationFrame(frame);
     }
     const reducedMotion =
       typeof window.matchMedia === "function"
         ? window.matchMedia("(prefers-reduced-motion: reduce)")
         : null;
     if (reducedMotion?.matches || typeof IntersectionObserver === "undefined") {
-      setValue(to);
-      return;
+      const frame = window.requestAnimationFrame(() => setValue(to));
+      return () => window.cancelAnimationFrame(frame);
     }
 
     let disposed = false;
