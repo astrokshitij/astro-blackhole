@@ -54,14 +54,11 @@ export const SOCIALS = [
 ];
 
 /**
- * Shown on the home page. Four fills the column beside the photo; two left a
- * 400px hole in it and undersold the reach besides.
+ * Shown on the home page beside the audience photo.
  */
 export const STATS = [
-  { to: 90, suffix: "K+", label: "Instagram followers" },
-  { to: 12, suffix: "M+", label: "Reel views" },
-  { to: 100, suffix: "+", label: "Talks delivered" },
-  { to: 580, suffix: "+", label: "Videos published" },
+  { to: 100, suffix: "+", label: "Talks" },
+  { to: 137, suffix: "k+", label: "People Reached" },
 ];
 
 // Blog posts are NOT here. Each post is its own markdown file in
