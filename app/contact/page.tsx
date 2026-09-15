@@ -46,6 +46,7 @@ export default function ContactPage() {
         title="Get in touch"
         dek="For workshops, talks, collaborations, or to tell me I got something wrong."
         offset={{ x: 0.5, y: 0.14 }}
+        plainCase
       />
 
       <Section>

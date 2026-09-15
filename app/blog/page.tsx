@@ -122,9 +122,10 @@ export default function BlogPage() {
     <>
       <PageHero
         eyebrow="02 / Blog"
-        title="My Abstract Thoughts"
+        title="My abstract thoughts"
         offset={{ x: 0.46, y: 0.08 }}
         visual="anomalous-matter"
+        plainCase
       />
 
       <Section>

@@ -64,7 +64,7 @@ export function ArticleReadingTools({ items, title }: ArticleReadingToolsProps) 
 
       <aside className="article-tools" aria-label="Article tools">
         <div className="article-tools__group article-toc">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/60">
             In this piece
           </p>
           <nav aria-label="Table of contents">
@@ -81,7 +81,7 @@ export function ArticleReadingTools({ items, title }: ArticleReadingToolsProps) 
         </div>
 
         <div className="article-tools__group article-share">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">Share</p>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/60">Share</p>
           <a href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer" aria-label="Share on X">X</a>
           <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer" aria-label="Share on LinkedIn">in</a>
           <button type="button" onClick={copyLink} aria-label="Copy article link">{copied ? "Done" : "Copy"}</button>

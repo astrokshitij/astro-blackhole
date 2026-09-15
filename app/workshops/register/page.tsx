@@ -46,6 +46,7 @@ export default function RegisterPage() {
         title="Save your seat"
         dek="Registering puts your name down and costs nothing. Payment happens after the date is confirmed."
         offset={{ x: 0.42, y: 0.14 }}
+        plainCase
       />
 
       <Section>

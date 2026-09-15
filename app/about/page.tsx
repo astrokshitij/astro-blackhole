@@ -430,7 +430,7 @@ export default function AboutPage() {
           </ul>
         </div>
 
-        <NextPage href="/workshops" title="Workshops and training" />
+        <NextPage href="/blog" title="My abstract thoughts" />
       </Section>
     </>
   );

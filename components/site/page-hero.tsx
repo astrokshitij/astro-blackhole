@@ -46,7 +46,7 @@ export function PageHero({
       />
 
       <div className="mx-auto w-full max-w-6xl px-5 pb-12 sm:px-8 sm:pb-16">
-        <p className="font-display text-xs uppercase tracking-[0.45em] text-white/55">
+        <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
           {eyebrow}
         </p>
         <h1
