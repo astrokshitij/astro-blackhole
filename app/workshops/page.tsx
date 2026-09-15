@@ -37,7 +37,7 @@ export default function WorkshopsPage() {
       <PageHero
         eyebrow="03 / Workshops"
         title="Learn something that changes how you see the world"
-        offset={{ x: 0.34, y: 0.16 }}
+        visual="raymarch"
         plainCase
       />
 

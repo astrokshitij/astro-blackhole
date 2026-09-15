@@ -1,5 +1,6 @@
 import BlackHole from "@/components/ui/optimized-black-hole";
 import { AnomalousMatterScene } from "@/components/ui/anomalous-matter-hero";
+import { BlackHoleHeroSection } from "@/components/ui/black-hole-hero-section";
 
 interface PageHeroProps {
   eyebrow: string;
@@ -11,7 +12,7 @@ interface PageHeroProps {
    * sentence-case heading like "Hi, I'm Kshitij." reads naturally. */
   plainCase?: boolean;
   /** Choose the atmospheric visual used behind this page heading. */
-  visual?: "black-hole" | "anomalous-matter";
+  visual?: "black-hole" | "anomalous-matter" | "raymarch";
 }
 
 /**
@@ -28,22 +29,39 @@ export function PageHero({
   visual = "black-hole",
 }: PageHeroProps) {
   return (
-    <section className="relative isolate flex min-h-[340px] items-end overflow-hidden border-b border-white/10 pt-16 sm:min-h-[400px]">
+    <section className="relative isolate flex min-h-[360px] items-end overflow-hidden border-b border-white/10 pt-16 sm:min-h-[440px]">
       <div className="absolute inset-0 -z-10" aria-hidden>
         {visual === "anomalous-matter" ? (
           <AnomalousMatterScene />
+        ) : visual === "raymarch" ? (
+          <BlackHoleHeroSection
+            className="h-full w-full"
+            focus={[0.74, 0.44]}
+            scrim="left"
+            scrimStrength={0.88}
+          />
         ) : (
           <BlackHole monochrome offset={offset} zoom={0.92} />
         )}
       </div>
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-black/55"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/40 to-black/20"
-      />
+      {visual !== "raymarch" && (
+        <>
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 bg-black/55"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/40 to-black/20"
+          />
+        </>
+      )}
+      {visual === "raymarch" && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-black via-black/35 to-transparent sm:via-black/20"
+        />
+      )}
 
       <div className="mx-auto w-full max-w-6xl px-5 pb-12 sm:px-8 sm:pb-16">
         <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
