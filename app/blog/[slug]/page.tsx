@@ -8,7 +8,7 @@ import { SITE } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
 import { socialMeta, OG_IMAGE } from "@/lib/seo";
 import { ArticleReadingTools } from "@/components/site/article-reading-tools";
-import BlackHole from "@/components/ui/optimized-black-hole";
+import { AnomalousMatterScene } from "@/components/ui/anomalous-matter-hero";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -77,12 +77,7 @@ export default async function PostPage({ params }: Params) {
       <article className="article-shell">
         <header className="article-hero relative isolate overflow-hidden border-b border-white/10 bg-black pt-32 sm:pt-40">
           <div className="absolute inset-0 -z-10 opacity-70" aria-hidden>
-            <BlackHole
-              monochrome
-              offset={{ x: 0.5, y: 0.08 }}
-              zoom={0.82}
-              className="article-hero-canvas"
-            />
+            <AnomalousMatterScene />
           </div>
           <div className="article-hero-scrim absolute inset-0 -z-10" aria-hidden />
           <div className="mx-auto max-w-3xl px-5 pb-14 sm:px-8">

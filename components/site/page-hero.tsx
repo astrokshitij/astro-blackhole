@@ -1,4 +1,5 @@
 import BlackHole from "@/components/ui/optimized-black-hole";
+import { AnomalousMatterScene } from "@/components/ui/anomalous-matter-hero";
 
 interface PageHeroProps {
   eyebrow: string;
@@ -9,6 +10,8 @@ interface PageHeroProps {
   /** Skip the uppercase + wide-tracking treatment on the title, so a
    * sentence-case heading like "Hi, I'm Kshitij." reads naturally. */
   plainCase?: boolean;
+  /** Choose the atmospheric visual used behind this page heading. */
+  visual?: "black-hole" | "anomalous-matter";
 }
 
 /**
@@ -22,11 +25,16 @@ export function PageHero({
   dek,
   offset = { x: 0.42, y: 0.1 },
   plainCase = false,
+  visual = "black-hole",
 }: PageHeroProps) {
   return (
     <section className="relative isolate flex min-h-[340px] items-end overflow-hidden border-b border-white/10 pt-16 sm:min-h-[400px]">
       <div className="absolute inset-0 -z-10" aria-hidden>
-        <BlackHole monochrome offset={offset} zoom={0.92} />
+        {visual === "anomalous-matter" ? (
+          <AnomalousMatterScene />
+        ) : (
+          <BlackHole monochrome offset={offset} zoom={0.92} />
+        )}
       </div>
       <div
         aria-hidden

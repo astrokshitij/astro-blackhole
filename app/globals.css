@@ -143,11 +143,17 @@
 .article-hero {
   background: linear-gradient(180deg, #000 0%, #050505 100%);
 }
-.article-hero-canvas {
-  background: transparent;
-}
 .article-hero-scrim {
   background: linear-gradient(90deg, rgb(0 0 0 / 94%) 0%, rgb(0 0 0 / 62%) 58%, rgb(0 0 0 / 28%) 100%), linear-gradient(0deg, #000 0%, transparent 55%);
+}
+.anomalous-matter-scene {
+  width: 100%;
+  height: 100%;
+}
+.anomalous-matter-scene canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .article-cover {
   max-width: 900px;

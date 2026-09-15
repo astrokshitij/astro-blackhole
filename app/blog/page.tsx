@@ -124,6 +124,7 @@ export default function BlogPage() {
         eyebrow="02 / Blog"
         title="My Abstract Thoughts"
         offset={{ x: 0.46, y: 0.08 }}
+        visual="anomalous-matter"
       />
 
       <Section>
