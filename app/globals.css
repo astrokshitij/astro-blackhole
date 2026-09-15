@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -75,10 +76,16 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   /* Display face for the wordmark and section headings. */
-  --font-display: "Jost Variable", var(--font-geist-sans), sans-serif;
+  --font-display: var(--font-jost), var(--font-geist-sans), sans-serif;
 }
 
 @layer base {
+  /* Without this the scrollbar and every native control render
+     light grey against a pure black page. */
+  html {
+    color-scheme: dark;
+  }
+
   * {
     @apply border-border;
   }
@@ -120,12 +127,12 @@
 /* Article body. Applied to the rendered markdown of a blog post. */
 .prose-astro {
   color: color-mix(in oklab, white 72%, transparent);
-  font-size: 1rem;
-  line-height: 1.75;
+  font-size: 1.0625rem;
+  line-height: 1.8;
 }
 @media (min-width: 640px) {
   .prose-astro {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
   }
 }
 .prose-astro > * + * {

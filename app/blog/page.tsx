@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialMeta } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/site/page-hero";
@@ -13,6 +14,12 @@ export const metadata: Metadata = {
   description:
     "My Abstract Thoughts: physics, the universe, strange questions and rabbit holes that need more room than a short video.",
   alternates: { canonical: "/blog" },
+  ...socialMeta({
+    path: "/blog",
+    title: "My Abstract Thoughts",
+    description:
+      "Physics, the universe, strange questions and rabbit holes that need more room than a short video.",
+  }),
 };
 
 function FeaturedCard({ post }: { post: Post }) {
@@ -36,14 +43,14 @@ function FeaturedCard({ post }: { post: Post }) {
 
       <div className="p-7 sm:p-12">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/75">
+          <span className="font-mono text-xs uppercase tracking-[0.24em] text-white/75">
             Featured
           </span>
-          <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-white/75">
+          <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/75">
             {post.category}
           </span>
           {post.readTime ? (
-            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/55">
+            <span className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">
               {post.readTime}
             </span>
           ) : null}
@@ -57,7 +64,7 @@ function FeaturedCard({ post }: { post: Post }) {
           {post.excerpt}
         </p>
 
-        <span className="font-display mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white">
+        <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white">
           Read the full piece
           <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
         </span>
@@ -70,9 +77,9 @@ function PreviousStrip({ posts }: { posts: Post[] }) {
   if (posts.length === 0) return null;
   return (
     <div className="mt-16">
-      <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+      <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
         Previously
-      </h2>
+      </p>
       <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
         {posts.map((post, i) => (
           <li key={post.slug}>
@@ -81,7 +88,7 @@ function PreviousStrip({ posts }: { posts: Post[] }) {
                 href={`/blog/${post.slug}`}
                 className="group flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-white/5 py-4 transition-colors hover:border-white/20"
               >
-                <span className="font-mono min-w-[7.5rem] text-[10px] uppercase tracking-[0.18em] text-white/50">
+                <span className="font-mono min-w-[7.5rem] text-xs uppercase tracking-[0.18em] text-white/50">
                   {post.category}
                   {post.readTime ? ` · ${post.readTime}` : ""}
                 </span>

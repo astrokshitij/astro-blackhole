@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialMeta } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { ButtonLink, NextPage, Section } from "@/components/site/ui";
 import { ArrowGlyph } from "@/components/site/icons";
@@ -9,6 +10,12 @@ export const metadata: Metadata = {
   description:
     "Two workshops in development: a two-hour quantum mechanics session open to anyone curious, and a science communication programme for research institutions.",
   alternates: { canonical: "/workshops" },
+  ...socialMeta({
+    path: "/workshops",
+    title: "Workshops with Kshitij Pandey",
+    description:
+      "A two-hour quantum mechanics session open to anyone curious, and a science communication programme for research institutions.",
+  }),
 };
 
 const QM_MAIL = `mailto:${SITE.email}?subject=${encodeURIComponent(
@@ -45,7 +52,7 @@ export default function WorkshopsPage() {
             your institution communicate its research more effectively,
             there&apos;s something here for you.
           </p>
-          <p className="font-mono mt-8 inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-[11px] uppercase tracking-[0.2em] text-white/75">
+          <p className="font-mono mt-8 inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/75">
             <span
               aria-hidden
               className="h-1.5 w-1.5 rounded-full bg-white/70"
@@ -61,7 +68,7 @@ export default function WorkshopsPage() {
             href="#quantum-mechanics-for-everyone"
             className="group flex flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-colors duration-200 hover:border-white/25 hover:bg-white/[0.045] sm:p-9"
           >
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
               01 / For everyone
             </span>
             <h2 className="font-display mt-6 text-2xl font-light leading-snug text-white sm:text-3xl">
@@ -73,10 +80,10 @@ export default function WorkshopsPage() {
             <p className="mt-2 text-sm leading-relaxed text-white/55">
               No mathematical background required.
             </p>
-            <p className="font-mono mt-6 text-[10px] uppercase tracking-[0.2em] text-white/55">
+            <p className="font-mono mt-6 text-xs uppercase tracking-[0.2em] text-white/55">
               Currently in development
             </p>
-            <span className="font-display mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/85">
+            <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/85">
               Learn more
               <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </span>
@@ -86,7 +93,7 @@ export default function WorkshopsPage() {
             href="#science-communication-that-reaches-people"
             className="group flex flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-colors duration-200 hover:border-white/25 hover:bg-white/[0.045] sm:p-9"
           >
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
               02 / For institutions
             </span>
             <h2 className="font-display mt-6 text-2xl font-light leading-snug text-white sm:text-3xl">
@@ -96,10 +103,10 @@ export default function WorkshopsPage() {
               Build better ways to communicate your research, attract students
               and reach audiences beyond your field.
             </p>
-            <p className="font-mono mt-6 text-[10px] uppercase tracking-[0.2em] text-white/55">
+            <p className="font-mono mt-6 text-xs uppercase tracking-[0.2em] text-white/55">
               Currently in development
             </p>
-            <span className="font-display mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/85">
+            <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/85">
               Learn more
               <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </span>
@@ -111,7 +118,7 @@ export default function WorkshopsPage() {
           id="quantum-mechanics-for-everyone"
           className="mt-24 scroll-mt-24 border-t border-white/10 pt-16"
         >
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
+          <span className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
             01 / For everyone
           </span>
           <h2 className="font-display mt-4 text-3xl font-light leading-tight text-white sm:text-4xl">
@@ -215,7 +222,7 @@ export default function WorkshopsPage() {
 
             <aside className="lg:sticky lg:top-24 lg:self-start">
               <div className="rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-8">
-                <p className="font-mono inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-white/70">
+                <p className="font-mono inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/70">
                   <span
                     aria-hidden
                     className="h-1.5 w-1.5 rounded-full bg-white/60"
@@ -245,7 +252,7 @@ export default function WorkshopsPage() {
           id="science-communication-that-reaches-people"
           className="mt-24 scroll-mt-24 border-t border-white/10 pt-16"
         >
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
+          <span className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
             02 / For institutions
           </span>
           <h2 className="font-display mt-4 text-3xl font-light leading-tight text-white sm:text-4xl">
@@ -384,7 +391,7 @@ export default function WorkshopsPage() {
 
             <aside className="lg:sticky lg:top-24 lg:self-start">
               <div className="rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-8">
-                <p className="font-mono inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-white/70">
+                <p className="font-mono inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/70">
                   <span
                     aria-hidden
                     className="h-1.5 w-1.5 rounded-full bg-white/60"

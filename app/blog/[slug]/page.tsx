@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { ArrowGlyph } from "@/components/site/icons";
 import { getPost, getPosts } from "@/lib/posts";
 import { SITE } from "@/lib/content";
+import { siteUrl } from "@/lib/site-url";
+import { socialMeta, OG_IMAGE } from "@/lib/seo";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -22,13 +24,21 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: post.title,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
+    ...socialMeta({
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      path: `/blog/${post.slug}`,
+    }),
     openGraph: {
       type: "article",
       title: post.title,
       description: post.excerpt,
       url: `/blog/${post.slug}`,
+      siteName: SITE.name,
+      locale: "en_IN",
       publishedTime: post.date || undefined,
-      images: post.cover ? [post.cover] : undefined,
+      images: post.cover ? [post.cover] : [OG_IMAGE],
     },
   };
 }
@@ -40,25 +50,42 @@ export default async function PostPage({ params }: Params) {
 
   const others = getPosts().filter((p) => p.slug !== post.slug).slice(0, 2);
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date || undefined,
+    author: { "@type": "Person", name: SITE.person, url: siteUrl },
+    publisher: { "@type": "Person", name: SITE.person, url: siteUrl },
+    mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
+    image: `${siteUrl}${post.cover ?? OG_IMAGE.url}`,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <article>
         <header className="border-b border-white/10 bg-black pt-32 sm:pt-40">
           <div className="mx-auto max-w-3xl px-5 pb-14 sm:px-8">
             <Link
               href="/blog"
-              className="font-mono inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-white/55 transition-colors hover:text-white"
+              className="font-mono inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-white/55 transition-colors hover:text-white"
             >
               <ArrowGlyph className="h-3.5 w-3.5 rotate-180" />
               All writing
             </Link>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2">
-              <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-white/75">
+              <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/75">
                 {post.category}
               </span>
               {post.readTime ? (
-                <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/55">
+                <span className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">
                   {post.readTime}
                 </span>
               ) : null}
@@ -67,7 +94,7 @@ export default async function PostPage({ params }: Params) {
                   <span aria-hidden className="h-px w-4 bg-white/20" />
                   <time
                     dateTime={post.date}
-                    className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/55"
+                    className="font-mono text-xs uppercase tracking-[0.16em] text-white/55"
                   >
                     {post.dateLabel}
                   </time>
@@ -83,7 +110,7 @@ export default async function PostPage({ params }: Params) {
               {post.excerpt}
             </p>
 
-            <p className="font-mono mt-8 text-[11px] uppercase tracking-[0.18em] text-white/55">
+            <p className="font-mono mt-8 text-xs uppercase tracking-[0.18em] text-white/55">
               {SITE.person}
             </p>
           </div>
@@ -104,7 +131,7 @@ export default async function PostPage({ params }: Params) {
 
         <div className="bg-black">
           <div
-            className="prose-astro mx-auto max-w-3xl px-5 py-16 sm:px-8 sm:py-20"
+            className="prose-astro mx-auto max-w-[68ch] px-5 py-16 sm:px-8 sm:py-20"
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
         </div>
@@ -113,9 +140,9 @@ export default async function PostPage({ params }: Params) {
       {others.length ? (
         <section className="border-t border-white/10 bg-black">
           <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
               Read next
-            </h2>
+            </p>
             <ul className="mt-6 divide-y divide-white/10 border-y border-white/10">
               {others.map((other) => (
                 <li key={other.slug}>
@@ -124,7 +151,7 @@ export default async function PostPage({ params }: Params) {
                     className="group flex items-center justify-between gap-6 py-6"
                   >
                     <span>
-                      <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/55">
+                      <span className="font-mono text-xs uppercase tracking-[0.18em] text-white/55">
                         {other.category}
                       </span>
                       <span className="font-display mt-2 block text-lg font-light text-white sm:text-xl">

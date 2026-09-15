@@ -19,7 +19,7 @@ export const buttonStyles = cva(
         ghost: "text-white/70 hover:text-white",
       },
       size: {
-        sm: "px-5 py-2.5 text-[11px]",
+        sm: "px-5 py-2.5 text-xs",
         md: "px-6 py-3 text-xs",
       },
     },
@@ -78,7 +78,7 @@ export function Section({
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+    <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
       {children}
     </p>
   );
@@ -114,7 +114,7 @@ export function NextPage({ href, title }: { href: string; title: string }) {
       className="group mt-20 flex items-center justify-between gap-6 border-t border-white/10 pt-8 transition-colors hover:border-white/40"
     >
       <span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
+        <span className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
           Next
         </span>
         <span className="font-display mt-2 block text-xl font-light text-white sm:text-2xl">

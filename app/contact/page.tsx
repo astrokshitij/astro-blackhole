@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialMeta } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { ButtonLink, Section } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
@@ -11,6 +12,12 @@ export const metadata: Metadata = {
   description:
     "Reach Kshitij Pandey about workshops, talks and collaborations, or to argue about physics.",
   alternates: { canonical: "/contact" },
+  ...socialMeta({
+    path: "/contact",
+    title: "Get in touch with Kshitij Pandey",
+    description:
+      "Workshops, talks, collaborations, or telling me I got something wrong.",
+  }),
 };
 
 const REASONS = [
@@ -64,9 +71,9 @@ export default function ContactPage() {
 
           <Reveal delay={120}>
             <div>
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
                 Elsewhere
-              </h2>
+              </p>
               <div className="mt-5">
                 <SocialLinks />
               </div>
@@ -79,9 +86,9 @@ export default function ContactPage() {
         </div>
 
         <Reveal className="mt-20 border-t border-white/10 pt-12">
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
             What people write in about
-          </h2>
+          </p>
         </Reveal>
         <ul className="mt-8 grid gap-8 sm:grid-cols-3 sm:gap-10">
           {REASONS.map((reason, i) => (

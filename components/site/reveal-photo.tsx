@@ -87,7 +87,7 @@ export function RevealPhoto({
         />
       </div>
       {caption ? (
-        <figcaption className="font-mono mt-3 text-[11px] uppercase tracking-[0.18em] text-white/55">
+        <figcaption className="font-mono mt-3 text-xs uppercase tracking-[0.18em] text-white/55">
           {caption}
         </figcaption>
       ) : null}

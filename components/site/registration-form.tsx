@@ -10,33 +10,52 @@ type Status = "idle" | "sending" | "sent" | "error";
 const field =
   "w-full rounded-lg border border-white/15 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/35 transition-colors focus:border-white/45 focus:bg-white/[0.06] focus:outline-none";
 const label =
-  "font-mono block text-[10px] uppercase tracking-[0.18em] text-white/55";
+  "font-mono block text-xs uppercase tracking-[0.18em] text-white/55";
 
 export function RegistrationForm({ preselect }: { preselect?: string }) {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
+  // No access key configured, so registration runs on email. The visitor is
+  // never shown that distinction: they get a working way to sign up either way.
   if (!FORM_ACCESS_KEY) {
+    const body = [
+      "Hi Kshitij,",
+      "",
+      "I would like to register for:",
+      preselect ?? WORKSHOPS[0]?.title ?? "",
+      "",
+      "Name:",
+      "Phone, with country code:",
+      "City:",
+      "",
+      "What I want to get out of it (optional):",
+      "",
+    ].join("\n");
+
     return (
       <div className="rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-9">
-        <p className="font-display text-lg font-light text-white">
-          The form is not switched on yet.
+        <p className="font-display text-lg font-light text-white sm:text-xl">
+          Registration runs on email.
         </p>
-        <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/60">
-          Add a free Web3Forms access key to{" "}
-          <code className="font-mono rounded bg-white/10 px-1.5 py-0.5 text-[0.85em]">
-            FORM_ACCESS_KEY
-          </code>{" "}
-          in <code className="font-mono text-[0.85em]">lib/content.ts</code> and
-          this becomes a working registration form. Until then, email works.
+        <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/65">
+          Send your name, phone number and which session you want. I put you on
+          the list and reply with the date and how to pay. Registering commits
+          you to nothing.
         </p>
         <a
-          href={`mailto:${SITE.email}?subject=${encodeURIComponent("Workshop registration")}`}
-          className={`${buttonStyles({ variant: "secondary" })} mt-7`}
+          href={`mailto:${SITE.email}?subject=${encodeURIComponent(
+            "Workshop registration",
+          )}&body=${encodeURIComponent(body)}`}
+          className={`${buttonStyles({ variant: "primary" })} mt-7`}
         >
-          {SITE.email}
+          Email to register
           <ArrowGlyph className="h-4 w-4" />
         </a>
+        <p className="mt-5 text-xs leading-relaxed text-white/55">
+          The message opens pre-written. Usually a reply within a couple of
+          days, from {SITE.email}.
+        </p>
       </div>
     );
   }

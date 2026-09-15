@@ -5,6 +5,10 @@ import { GLYPHS, ArrowGlyph } from "./icons";
  * The site is monochrome by design, so brand colour appears only on hover.
  * That keeps the palette intact while still making each platform recognisable
  * the moment a pointer lands on it.
+ *
+ * The note under each handle used to be clipped with `truncate`, which cut it
+ * mid-word at every viewport including a 1440px desktop. It wraps now, and the
+ * handle is on its own line so the two never compete for the same row.
  */
 export function SocialLinks({ compact = false }: { compact?: boolean }) {
   return (
@@ -37,24 +41,26 @@ export function SocialLinks({ compact = false }: { compact?: boolean }) {
           <li key={social.label}>
             <a
               href={social.href}
-              className="group flex items-center gap-5 bg-black px-6 py-5 transition-colors duration-200 hover:bg-white/[0.05]"
+              className="group flex items-start gap-5 bg-black px-6 py-5 transition-colors duration-200 hover:bg-white/[0.05]"
               style={{ "--accent": social.accent } as React.CSSProperties}
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/18 text-white/70 transition-colors duration-200 group-hover:border-[var(--accent)] group-hover:text-[var(--accent)]">
+              <span className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/18 text-white/70 transition-colors duration-200 group-hover:border-[var(--accent)] group-hover:text-[var(--accent)]">
                 <Glyph className="h-5 w-5" />
               </span>
 
               <span className="min-w-0 flex-1">
-                <span className="font-display block text-sm font-light uppercase tracking-[0.2em] text-white">
+                <span className="font-display flex flex-wrap items-baseline gap-x-3 text-sm font-light uppercase tracking-[0.2em] text-white">
                   {social.label}
+                  <span className="font-mono break-all text-xs normal-case tracking-normal text-white/55">
+                    {social.handle}
+                  </span>
                 </span>
-                <span className="font-mono mt-1 block truncate text-[11px] text-white/55">
-                  {social.handle}
-                  <span className="hidden sm:inline"> &middot; {social.note}</span>
+                <span className="mt-1.5 block text-xs leading-relaxed text-white/55">
+                  {social.note}
                 </span>
               </span>
 
-              <ArrowGlyph className="h-4 w-4 shrink-0 text-white/40 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white" />
+              <ArrowGlyph className="mt-3.5 h-4 w-4 shrink-0 text-white/40 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white" />
             </a>
           </li>
         );

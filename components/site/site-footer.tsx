@@ -28,7 +28,7 @@ export function SiteFooter() {
           </div>
 
           <nav aria-label="Footer" className="shrink-0">
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/55">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
               Pages
             </p>
             <ul className="mt-5 space-y-2.5">

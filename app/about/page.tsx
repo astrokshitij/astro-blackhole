@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialMeta } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { NextPage, Section } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
@@ -10,6 +11,12 @@ export const metadata: Metadata = {
   description:
     "Kshitij Pandey: MSc in astrophysics and cosmology, TEDx speaker, science communicator, and the person behind Astro Kshitij.",
   alternates: { canonical: "/about" },
+  ...socialMeta({
+    path: "/about",
+    title: "About Kshitij Pandey",
+    description:
+      "MSc in astrophysics and cosmology, TEDx speaker, science communicator, and the person behind Astro Kshitij.",
+  }),
 };
 
 // Photos keyed by story-section id. Each carries its own aspect ratio so the
@@ -374,9 +381,9 @@ export default function AboutPage() {
             </div>
 
             <div className="mt-16">
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
                 Where the work lives
-              </h2>
+              </p>
               <div className="mt-5">
                 <SocialLinks />
               </div>
@@ -388,9 +395,9 @@ export default function AboutPage() {
             <StoryPhotoPanel photos={STORY_PHOTOS} initialId="obsession" />
 
             <div className="mt-10">
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
                 In short
-              </h2>
+              </p>
               <ul className="mt-5 space-y-4 border-t border-white/10 pt-6 text-sm leading-relaxed text-white/70">
                 <li>M.Sc. Physics, Astrophysics and Cosmology</li>
                 <li>
@@ -407,9 +414,9 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-16 lg:hidden">
-          <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
             In short
-          </h2>
+          </p>
           <ul className="mt-5 space-y-4 border-t border-white/10 pt-6 text-sm leading-relaxed text-white/70">
             <li>M.Sc. Physics, Astrophysics and Cosmology</li>
             <li>

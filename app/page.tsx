@@ -7,7 +7,7 @@ import { Reveal } from "@/components/site/reveal";
 import { CountUp } from "@/components/site/count-up";
 import Image from "next/image";
 import Link from "next/link";
-import { SITE } from "@/lib/content";
+import { SITE, STATS } from "@/lib/content";
 
 const GATEWAYS = [
   {
@@ -73,19 +73,17 @@ export default function Home() {
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-black via-black/70 to-transparent sm:h-2/5 sm:via-black/25"
+          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-3/5 bg-gradient-to-t from-black via-black/85 to-transparent sm:h-2/5 sm:via-black/25"
         />
 
         <div className="flex h-full items-end pb-24 sm:items-center sm:pb-0">
           <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
             <div className="max-w-lg">
-              <h1 className="font-display font-light text-white">
-                <span className="block text-[11px] uppercase tracking-[0.5em] text-white/60">
-                  Welcome to
-                </span>
-                <span className="mt-4 block text-[clamp(1.75rem,6.6vw,4.25rem)] uppercase leading-[1.05] tracking-[0.16em]">
-                  {SITE.name}
-                </span>
+              <p className="font-display text-xs uppercase tracking-[0.42em] text-white/60">
+                Welcome to
+              </p>
+              <h1 className="font-display mt-4 text-[clamp(1.75rem,6.6vw,4.25rem)] font-light uppercase leading-[1.05] tracking-[0.16em] text-white">
+                {SITE.name}
               </h1>
 
               <p className="mt-7 max-w-md text-sm leading-relaxed text-white/70 sm:text-base">
@@ -120,7 +118,7 @@ export default function Home() {
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-7 hidden justify-center sm:flex"
         >
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">
+          <span className="font-mono text-xs uppercase tracking-[0.3em] text-white/55">
             Scroll
           </span>
         </div>
@@ -129,7 +127,7 @@ export default function Home() {
       {/* Stats — split layout with count-up on the numbers. */}
       <section className="border-y border-white/10 bg-black">
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-20">
+          <div className="grid items-stretch gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-20">
             <Reveal className="mx-auto w-full max-w-sm lg:max-w-none">
               <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-white/12">
                 <Image
@@ -147,25 +145,27 @@ export default function Home() {
               </div>
             </Reveal>
 
-            <Reveal delay={150}>
-              <dl className="grid grid-cols-2 gap-x-10 gap-y-10 text-center sm:gap-x-16 lg:text-left">
-                <div>
-                  <dt className="font-display text-5xl font-light leading-none text-white sm:text-6xl">
-                    <CountUp to={100} suffix="+" />
-                  </dt>
-                  <dd className="mt-4 text-[11px] uppercase tracking-[0.22em] text-white/60">
-                    Talks Delivered
-                  </dd>
-                </div>
-                <div>
-                  <dt className="font-display text-5xl font-light leading-none text-white sm:text-6xl">
-                    <CountUp to={130} suffix="K+" />
-                  </dt>
-                  <dd className="mt-4 text-[11px] uppercase tracking-[0.22em] text-white/60">
-                    People Reached
-                  </dd>
-                </div>
-              </dl>
+            <Reveal delay={150} className="flex">
+              <div className="flex w-full flex-col justify-center">
+                <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
+                  Reach
+                </p>
+                <p className="font-display mt-5 max-w-md text-xl font-light leading-snug text-white sm:text-2xl">
+                  Physics in Hindi, in front of rooms and on the feed.
+                </p>
+                <dl className="mt-10 grid grid-cols-2 gap-x-10 gap-y-9 text-center sm:gap-x-16 lg:text-left">
+                  {STATS.map((stat) => (
+                    <div key={stat.label}>
+                      <dt className="font-display text-4xl font-light leading-none text-white sm:text-5xl">
+                        <CountUp to={stat.to} suffix={stat.suffix} />
+                      </dt>
+                      <dd className="mt-3 text-xs uppercase tracking-[0.22em] text-white/60">
+                        {stat.label}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
             </Reveal>
           </div>
         </div>
@@ -179,12 +179,12 @@ export default function Home() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {GATEWAYS.map((gateway, i) => (
-            <Reveal key={gateway.href} delay={i * 120} className="h-full">
+            <Reveal key={gateway.href} delay={i * 120} className="h-full min-w-0">
               <Link
                 href={gateway.href}
                 className="group flex h-full flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-[background-color,border-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] hover:shadow-[0_10px_40px_-15px_rgba(255,255,255,0.15)] sm:p-9"
               >
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
                   {gateway.index} / {gateway.label}
                 </span>
                 <h3 className="font-display mt-6 text-xl font-light leading-snug text-white sm:text-2xl">
@@ -193,7 +193,7 @@ export default function Home() {
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-white/60">
                   {gateway.blurb}
                 </p>
-                <span className="font-display mt-8 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-white/80">
+                <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/80">
                   {gateway.cta}
                   <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </span>
@@ -212,9 +212,9 @@ export default function Home() {
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2 md:items-start">
-          <Reveal>
-            <div className="rounded-xl border border-white/12 p-7 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.02] sm:p-9">
+        <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2 md:items-stretch">
+          <Reveal className="h-full min-w-0">
+            <div className="flex h-full min-w-0 flex-col rounded-xl border border-white/12 p-7 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.02] sm:p-9">
               <h3 className="font-display text-xl font-light text-white sm:text-2xl">
                 Follow Along
               </h3>
@@ -230,8 +230,8 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <Reveal delay={120}>
-            <div className="rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] sm:p-9">
+          <Reveal delay={120} className="h-full min-w-0">
+            <div className="flex h-full min-w-0 flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] sm:p-9">
               <h3 className="font-display text-xl font-light text-white sm:text-2xl">
                 Want to learn something together?
               </h3>

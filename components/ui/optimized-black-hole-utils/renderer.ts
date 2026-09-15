@@ -2,9 +2,9 @@ import { FRAGMENT_SHADER, VERTEX_SHADER } from "./shaders";
 
 export interface RendererOptions {
   canvas: HTMLCanvasElement;
-  /** Upper bound on devicePixelRatio. Defaults to 2. */
+  /** Upper bound on devicePixelRatio. Defaults to 1.5. */
   maxPixelRatio?: number;
-  /** Upper bound on backing-store pixels. Defaults to 2.6 million. */
+  /** Upper bound on backing-store pixels. Defaults to 2.1 million. */
   maxPixels?: number;
   /** Geodesic integration steps at full quality. 120 to 220. Defaults to 180. */
   steps?: number;
@@ -136,8 +136,8 @@ function paintFallback(canvas: HTMLCanvasElement) {
 export function createRenderer(options: RendererOptions): BlackHoleRenderer {
   const {
     canvas,
-    maxPixelRatio = 2,
-    maxPixels = 2_600_000,
+    maxPixelRatio = 1.5,
+    maxPixels = 2_100_000,
     steps = 180,
     offset = { x: 0, y: 0 },
     zoom = 1,

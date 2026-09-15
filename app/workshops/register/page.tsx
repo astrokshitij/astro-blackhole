@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { socialMeta } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { Section } from "@/components/site/ui";
 import { RegistrationForm } from "@/components/site/registration-form";
@@ -9,6 +10,12 @@ export const metadata: Metadata = {
   description:
     "Register your interest in a live quantum mechanics session or science communication training with Kshitij Pandey.",
   alternates: { canonical: "/workshops/register" },
+  ...socialMeta({
+    path: "/workshops/register",
+    title: "Save your seat",
+    description:
+      "Put your name down for a live quantum mechanics session or science communication training. Registering costs nothing.",
+  }),
 };
 
 const STEPS = [
@@ -44,13 +51,13 @@ export default function RegisterPage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
           <div>
-            <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
               How it works
-            </h2>
+            </p>
             <ol className="mt-6 space-y-8 border-t border-white/10 pt-8">
               {STEPS.map((item) => (
                 <li key={item.step} className="flex gap-5">
-                  <span className="font-mono shrink-0 text-[11px] text-white/55">
+                  <span className="font-mono shrink-0 text-xs text-white/55">
                     {item.step}
                   </span>
                   <span>
@@ -66,16 +73,16 @@ export default function RegisterPage() {
             </ol>
 
             <div className="mt-10 border-t border-white/10 pt-8">
-              <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+              <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
                 Sessions
-              </h2>
+              </p>
               <ul className="mt-5 space-y-4">
                 {WORKSHOPS.map((workshop) => (
                   <li key={workshop.title}>
                     <p className="font-display text-sm font-light text-white">
                       {workshop.title}
                     </p>
-                    <p className="font-mono mt-1 text-[10px] uppercase tracking-[0.16em] text-white/55">
+                    <p className="font-mono mt-1 text-xs uppercase tracking-[0.16em] text-white/55">
                       {workshop.format} &middot; {workshop.audience}
                     </p>
                   </li>
