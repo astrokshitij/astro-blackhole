@@ -8,6 +8,8 @@ import { ArrowGlyph, PlayGlyph, CameraGlyph } from "@/components/site/icons";
 import { Reveal } from "@/components/site/reveal";
 import { getPosts, type Post } from "@/lib/posts";
 import { SITE } from "@/lib/content";
+import { SpotlightCard, SpotlightLink } from "@/components/site/spotlight-card";
+import { HorizonDivider } from "@/components/site/horizon-divider";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -24,60 +26,58 @@ export const metadata: Metadata = {
 
 function FeaturedCard({ post }: { post: Post }) {
   return (
-    <Link
+    <SpotlightLink
       href={`/blog/${post.slug}`}
-      className="group block overflow-hidden rounded-xl border border-white/12 bg-white/[0.02] transition-[background-color,border-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.045] hover:shadow-[0_10px_40px_-15px_rgba(255,255,255,0.15)]"
+      className="p-7 sm:p-12"
     >
-      <div className="p-7 sm:p-12">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <span className="font-mono text-xs uppercase tracking-[0.24em] text-white/75">
-            Latest
-          </span>
-          <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/75">
-            {post.category}
-          </span>
-          {post.dateLabel ? (
-            <time
-              dateTime={post.date}
-              className="font-mono text-xs uppercase tracking-[0.16em] text-white/55"
-            >
-              {post.dateLabel}
-            </time>
-          ) : null}
-          {post.readTime ? (
-            <span className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">
-              {post.readTime}
-            </span>
-          ) : null}
-        </div>
-
-        <h2 className="font-display mt-7 max-w-3xl text-3xl font-light leading-[1.12] tracking-[0.01em] text-white sm:text-5xl">
-          {post.title}
-        </h2>
-
-        {post.cover ? (
-          <div className="relative mt-8 aspect-[21/9] w-full overflow-hidden rounded-lg border border-white/10">
-            <Image
-              src={post.cover}
-              alt={post.coverAlt ?? ""}
-              fill
-              sizes="(min-width: 1024px) 1152px, 100vw"
-              className="object-cover opacity-85 transition-opacity duration-300 group-hover:opacity-100"
-              priority
-            />
-          </div>
-        ) : null}
-
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
-          {post.excerpt}
-        </p>
-
-        <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white">
-          Read the full piece
-          <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <span className="font-mono text-xs uppercase tracking-[0.24em] text-white/75">
+          Latest
         </span>
+        <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/75">
+          {post.category}
+        </span>
+        {post.dateLabel ? (
+          <time
+            dateTime={post.date}
+            className="font-mono text-xs uppercase tracking-[0.16em] text-white/55"
+          >
+            {post.dateLabel}
+          </time>
+        ) : null}
+        {post.readTime ? (
+          <span className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">
+            {post.readTime}
+          </span>
+        ) : null}
       </div>
-    </Link>
+
+      <h2 className="font-display mt-7 max-w-3xl text-3xl font-light leading-[1.12] tracking-[0.01em] text-white sm:text-5xl">
+        {post.title}
+      </h2>
+
+      {post.cover ? (
+        <div className="relative mt-8 aspect-[21/9] w-full overflow-hidden rounded-lg border border-white/10">
+          <Image
+            src={post.cover}
+            alt={post.coverAlt ?? ""}
+            fill
+            sizes="(min-width: 1024px) 1152px, 100vw"
+            className="object-cover opacity-85 transition-opacity duration-300 group-hover:opacity-100"
+            priority
+          />
+        </div>
+      ) : null}
+
+      <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
+        {post.excerpt}
+      </p>
+
+      <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white transition-colors group-hover:text-white">
+        Read the full piece
+        <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+      </span>
+    </SpotlightLink>
   );
 }
 
@@ -161,8 +161,10 @@ export default function BlogPage() {
 
         <PreviousStrip posts={previous} />
 
-        <Reveal className="mt-16">
-          <div className="rounded-xl border border-white/12 p-8 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.02] sm:p-12">
+        <HorizonDivider className="my-16 sm:my-20" />
+
+        <Reveal>
+          <SpotlightCard className="p-8 sm:p-12">
             <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
               More coming soon
             </h2>
@@ -191,11 +193,11 @@ export default function BlogPage() {
                 <ArrowGlyph className="h-4 w-4" />
               </ButtonLink>
             </div>
-          </div>
+          </SpotlightCard>
         </Reveal>
 
         <Reveal className="mt-16">
-          <div className="rounded-xl border border-white/12 bg-white/[0.02] p-8 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] sm:p-12">
+          <SpotlightCard className="p-8 sm:p-12">
             <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
               Have a question?
             </h2>
@@ -215,7 +217,7 @@ export default function BlogPage() {
                 <ArrowGlyph className="h-4 w-4" />
               </ButtonLink>
             </div>
-          </div>
+          </SpotlightCard>
         </Reveal>
 
         <NextPage href="/workshops" title="Workshops and training" />

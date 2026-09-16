@@ -8,6 +8,8 @@ import { CountUp } from "@/components/site/count-up";
 import Image from "next/image";
 import Link from "next/link";
 import { SITE, STATS } from "@/lib/content";
+import { SpotlightCard, SpotlightLink } from "@/components/site/spotlight-card";
+import { HorizonDivider } from "@/components/site/horizon-divider";
 
 const GATEWAYS = [
   {
@@ -180,9 +182,9 @@ export default function Home() {
         <div className="grid gap-6 md:grid-cols-3">
           {GATEWAYS.map((gateway, i) => (
             <Reveal key={gateway.href} delay={i * 120} className="h-full min-w-0">
-              <Link
+              <SpotlightLink
                 href={gateway.href}
-                className="group flex h-full flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-[background-color,border-color,transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] hover:shadow-[0_10px_40px_-15px_rgba(255,255,255,0.15)] sm:p-9"
+                className="h-full"
               >
                 <span className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
                   {gateway.index} / {gateway.label}
@@ -193,18 +195,20 @@ export default function Home() {
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-white/60">
                   {gateway.blurb}
                 </p>
-                <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/80">
+                <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/80 transition-colors group-hover:text-white">
                   {gateway.cta}
                   <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </span>
-              </Link>
+              </SpotlightLink>
             </Reveal>
           ))}
         </div>
 
+        <HorizonDivider className="my-14 sm:my-20" />
+
         {/* TEDx carousel band. A slow rotating rest between the gateway
             cards above and the CTA cards below. */}
-        <Reveal className="mt-12 sm:mt-16">
+        <Reveal>
           <TedxCarousel
             photos={TEDX_PHOTOS}
             className="aspect-[16/9] sm:aspect-[2/1]"
@@ -214,7 +218,7 @@ export default function Home() {
 
         <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2 md:items-stretch">
           <Reveal className="h-full min-w-0">
-            <div className="flex h-full min-w-0 flex-col rounded-xl border border-white/12 p-7 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.02] sm:p-9">
+            <SpotlightCard className="h-full min-w-0">
               <h3 className="font-display text-xl font-light text-white sm:text-2xl">
                 Follow Along
               </h3>
@@ -227,11 +231,11 @@ export default function Home() {
               <div className="mt-7">
                 <SocialLinks />
               </div>
-            </div>
+            </SpotlightCard>
           </Reveal>
 
           <Reveal delay={120} className="h-full min-w-0">
-            <div className="flex h-full min-w-0 flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-[border-color,background-color,transform] duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.05] sm:p-9">
+            <SpotlightCard className="h-full min-w-0">
               <h3 className="font-display text-xl font-light text-white sm:text-2xl">
                 Want to learn something together?
               </h3>
@@ -253,7 +257,7 @@ export default function Home() {
                 Want to book a workshop, collaborate, or just argue about
                 physics?
               </p>
-            </div>
+            </SpotlightCard>
           </Reveal>
         </div>
       </Section>

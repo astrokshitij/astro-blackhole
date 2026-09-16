@@ -4,6 +4,8 @@ import { PageHero } from "@/components/site/page-hero";
 import { ButtonLink, NextPage, Section } from "@/components/site/ui";
 import { ArrowGlyph } from "@/components/site/icons";
 import { SITE } from "@/lib/content";
+import { SpotlightCard, SpotlightLink } from "@/components/site/spotlight-card";
+import { HorizonDivider } from "@/components/site/horizon-divider";
 
 export const metadata: Metadata = {
   title: "Workshops",
@@ -64,9 +66,9 @@ export default function WorkshopsPage() {
 
         {/* Overview tiles */}
         <div className="mt-16 grid gap-6 lg:grid-cols-2">
-          <a
+          <SpotlightLink
             href="#quantum-mechanics-for-everyone"
-            className="group flex flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-colors duration-200 hover:border-white/25 hover:bg-white/[0.045] sm:p-9"
+            className="h-full"
           >
             <span className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
               01 / For everyone
@@ -83,15 +85,15 @@ export default function WorkshopsPage() {
             <p className="font-mono mt-6 text-xs uppercase tracking-[0.2em] text-white/55">
               Currently in development
             </p>
-            <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/85">
+            <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/85 transition-colors group-hover:text-white">
               Learn more
               <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </span>
-          </a>
+          </SpotlightLink>
 
-          <a
+          <SpotlightLink
             href="#science-communication-that-reaches-people"
-            className="group flex flex-col rounded-xl border border-white/12 bg-white/[0.02] p-7 transition-colors duration-200 hover:border-white/25 hover:bg-white/[0.045] sm:p-9"
+            className="h-full"
           >
             <span className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
               02 / For institutions
@@ -106,11 +108,11 @@ export default function WorkshopsPage() {
             <p className="font-mono mt-6 text-xs uppercase tracking-[0.2em] text-white/55">
               Currently in development
             </p>
-            <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/85">
+            <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/85 transition-colors group-hover:text-white">
               Learn more
               <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
             </span>
-          </a>
+          </SpotlightLink>
         </div>
 
         {/* Detail: Quantum Mechanics for Everyone */}
@@ -221,7 +223,7 @@ export default function WorkshopsPage() {
             </div>
 
             <aside className="lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-8">
+              <SpotlightCard className="p-7 sm:p-8">
                 <p className="font-mono inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/70">
                   <span
                     aria-hidden
@@ -242,7 +244,7 @@ export default function WorkshopsPage() {
                     Ask a question
                   </ButtonLink>
                 </div>
-              </div>
+              </SpotlightCard>
             </aside>
           </div>
         </article>
@@ -358,7 +360,7 @@ export default function WorkshopsPage() {
 
                 <p className="mt-8">Especially institutions looking to:</p>
                 <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                  <div className="rounded-lg border border-white/12 p-5">
+                  <SpotlightCard className="p-5">
                     <p className="font-display text-sm font-normal uppercase tracking-[0.14em] text-white">
                       Attract students
                     </p>
@@ -366,8 +368,8 @@ export default function WorkshopsPage() {
                       Show prospective students why a career in science is
                       worth pursuing.
                     </p>
-                  </div>
-                  <div className="rounded-lg border border-white/12 p-5">
+                  </SpotlightCard>
+                  <SpotlightCard className="p-5">
                     <p className="font-display text-sm font-normal uppercase tracking-[0.14em] text-white">
                       Improve outreach
                     </p>
@@ -375,8 +377,8 @@ export default function WorkshopsPage() {
                       Make research more understandable and engaging for wider
                       audiences.
                     </p>
-                  </div>
-                  <div className="rounded-lg border border-white/12 p-5">
+                  </SpotlightCard>
+                  <SpotlightCard className="p-5">
                     <p className="font-display text-sm font-normal uppercase tracking-[0.14em] text-white">
                       Build communication skills
                     </p>
@@ -384,13 +386,13 @@ export default function WorkshopsPage() {
                       Help researchers communicate effectively beyond their
                       immediate academic field.
                     </p>
-                  </div>
+                  </SpotlightCard>
                 </div>
               </div>
             </div>
 
             <aside className="lg:sticky lg:top-24 lg:self-start">
-              <div className="rounded-xl border border-white/12 bg-white/[0.02] p-7 sm:p-8">
+              <SpotlightCard className="p-7 sm:p-8">
                 <p className="font-mono inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/70">
                   <span
                     aria-hidden
@@ -416,13 +418,15 @@ export default function WorkshopsPage() {
                     Get in touch
                   </ButtonLink>
                 </div>
-              </div>
+              </SpotlightCard>
             </aside>
           </div>
         </article>
 
+        <HorizonDivider className="my-16 sm:my-24" />
+
         {/* Final contact */}
-        <div className="mt-24 rounded-xl border border-white/12 bg-white/[0.02] p-8 sm:p-12">
+        <SpotlightCard className="p-8 sm:p-12">
           <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
             Want to learn something together?
           </h2>
@@ -446,7 +450,7 @@ export default function WorkshopsPage() {
           <p className="mt-6 text-xs leading-relaxed text-white/55">
             Want to book a workshop, collaborate, or just argue about physics?
           </p>
-        </div>
+        </SpotlightCard>
 
         <NextPage href="/contact" title="Get in touch" />
       </Section>
