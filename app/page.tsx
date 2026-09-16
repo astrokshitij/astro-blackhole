@@ -1,7 +1,7 @@
 import { BlackHoleHeroSection } from "@/components/ui/black-hole-hero-section";
 import { ButtonLink, Section, SectionHeading } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
-import { ArrowGlyph, PlayGlyph } from "@/components/site/icons";
+import { ArrowGlyph, YoutubeGlyph } from "@/components/site/icons";
 import { TedxCarousel } from "@/components/site/tedx-carousel";
 import { Reveal } from "@/components/site/reveal";
 import { CountUp } from "@/components/site/count-up";
@@ -104,7 +104,7 @@ export default function Home() {
                   href="https://www.youtube.com/@astrokshitij"
                   variant="secondary"
                 >
-                  <PlayGlyph className="h-4 w-4" />
+                  <YoutubeGlyph className="h-4 w-4" />
                   Watch on YouTube
                 </ButtonLink>
               </div>

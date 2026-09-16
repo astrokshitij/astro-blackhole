@@ -13,6 +13,7 @@ import { AnomalousMatterScene } from "@/components/ui/anomalous-matter-hero";
 type Params = { params: Promise<{ slug: string }> };
 
 // Drafts get no route at all, so an unfinished post can never be stumbled on.
+export const dynamicParams = false;
 export function generateStaticParams() {
   return getPosts().map((post) => ({ slug: post.slug }));
 }
@@ -20,7 +21,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return { title: "Not found" };
+  if (!post || post.draft) return { title: "Not found" };
 
   return {
     title: post.title,
@@ -72,7 +73,7 @@ export default async function PostPage({ params }: Params) {
       <ArticleReadingTools items={tocItems} title={post.title} />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c") }}
       />
       <article className="article-shell">
         <header className="article-hero relative isolate overflow-hidden border-b border-white/10 bg-black pt-32 sm:pt-40">

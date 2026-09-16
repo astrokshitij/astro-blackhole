@@ -32,7 +32,7 @@ export const SOCIALS = [
     handle: "@astrokshitij",
     href: "https://www.youtube.com/@astrokshitij",
     note: "Long-form explainers and experiments in understanding the universe.",
-    glyph: "play" as const,
+    glyph: "youtube" as const,
     accent: "#ff0033",
   },
   {
@@ -40,7 +40,7 @@ export const SOCIALS = [
     handle: "@astro.kshitij",
     href: "https://www.instagram.com/astro.kshitij",
     note: "Short, curious dives into physics, astronomy and scientific thinking.",
-    glyph: "camera" as const,
+    glyph: "instagram" as const,
     accent: "#e1306c",
   },
   {
@@ -48,7 +48,7 @@ export const SOCIALS = [
     handle: "Kshitij Pandey",
     href: "https://www.linkedin.com/in/kshitij-pandey-30215314b/",
     note: "Talks, workshops and what I'm building beyond the screen.",
-    glyph: "network" as const,
+    glyph: "linkedin" as const,
     accent: "#0a66c2",
   },
 ];

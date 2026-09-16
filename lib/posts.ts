@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
+import DOMPurify from "isomorphic-dompurify";
 
 /**
  * Blog posts are plain markdown files in `content/blog/`.
@@ -54,7 +55,8 @@ function read(fileName: string): Post {
   const raw = fs.readFileSync(path.join(POSTS_DIR, fileName), "utf8");
   const { data, content } = matter(raw);
 
-  const html = marked.parse(content, { async: false }) as string;
+  const rawHtml = marked.parse(content, { async: false }) as string;
+  const html = DOMPurify.sanitize(rawHtml);
   const htmlWithHeadingIds = html.replace(
     /<h2>(.*?)<\/h2>/g,
     (_, text: string) => `<h2 id="${headingId(text)}">${text}</h2>`,
@@ -88,7 +90,10 @@ export function getPosts(): Post[] {
 
 
 export function getPost(slug: string): Post | null {
+  if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) return null;
   const file = `${slug}.md`;
-  if (!fs.existsSync(path.join(POSTS_DIR, file))) return null;
+  const resolved = path.resolve(POSTS_DIR, file);
+  if (!resolved.startsWith(POSTS_DIR)) return null;
+  if (!fs.existsSync(resolved)) return null;
   return read(file);
 }

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PageHero } from "@/components/site/page-hero";
 import { ButtonLink, NextPage, Section } from "@/components/site/ui";
-import { ArrowGlyph, PlayGlyph, CameraGlyph } from "@/components/site/icons";
+import { ArrowGlyph, YoutubeGlyph, InstagramGlyph } from "@/components/site/icons";
 import { Reveal } from "@/components/site/reveal";
 import { getPosts, type Post } from "@/lib/posts";
 import { SITE } from "@/lib/content";
@@ -180,7 +180,7 @@ export default function BlogPage() {
                 href="https://www.youtube.com/@astrokshitij"
                 variant="secondary"
               >
-                <PlayGlyph className="h-4 w-4" />
+                <YoutubeGlyph className="h-4 w-4" />
                 Watch on YouTube
                 <ArrowGlyph className="h-4 w-4" />
               </ButtonLink>
@@ -188,7 +188,7 @@ export default function BlogPage() {
                 href="https://www.instagram.com/astro.kshitij"
                 variant="secondary"
               >
-                <CameraGlyph className="h-4 w-4" />
+                <InstagramGlyph className="h-4 w-4" />
                 Follow on Instagram
                 <ArrowGlyph className="h-4 w-4" />
               </ButtonLink>

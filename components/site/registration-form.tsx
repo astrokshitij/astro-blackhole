@@ -151,6 +151,7 @@ export function RegistrationForm({ preselect }: { preselect?: string }) {
             id="name"
             name="name"
             required
+            maxLength={100}
             autoComplete="name"
             placeholder="Kshitij Pandey"
             className={`${field} mt-2.5`}
@@ -166,6 +167,7 @@ export function RegistrationForm({ preselect }: { preselect?: string }) {
             name="email"
             type="email"
             required
+            maxLength={254}
             autoComplete="email"
             placeholder="you@example.com"
             className={`${field} mt-2.5`}
@@ -181,6 +183,8 @@ export function RegistrationForm({ preselect }: { preselect?: string }) {
             name="phone"
             type="tel"
             required
+            pattern="^[+]?[0-9\s\-()]{7,20}$"
+            maxLength={20}
             autoComplete="tel"
             placeholder="+91 90000 00000"
             className={`${field} mt-2.5`}
@@ -194,6 +198,7 @@ export function RegistrationForm({ preselect }: { preselect?: string }) {
           <input
             id="city"
             name="city"
+            maxLength={100}
             autoComplete="address-level2"
             placeholder="Gurgaon"
             className={`${field} mt-2.5`}
@@ -208,6 +213,7 @@ export function RegistrationForm({ preselect }: { preselect?: string }) {
             id="goal"
             name="goal"
             rows={4}
+            maxLength={500}
             placeholder="A sentence is plenty. It genuinely shapes what I cover."
             className={`${field} mt-2.5 resize-y`}
           />
