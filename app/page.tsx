@@ -1,4 +1,4 @@
-import BlackHole from "@/components/ui/optimized-black-hole";
+import { BlackHoleHeroSection } from "@/components/ui/black-hole-hero-section";
 import { ButtonLink, Section, SectionHeading } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
 import { ArrowGlyph, PlayGlyph } from "@/components/site/icons";
@@ -66,16 +66,16 @@ export default function Home() {
     <>
       <section className="relative isolate h-[100svh] w-full overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <BlackHole scrollColorShift offset={{ x: 0.54, y: 0.18 }} zoom={0.98} />
+          <BlackHoleHeroSection
+            focus={[0.70, 0.44]}
+            scrim="left"
+            scrimStrength={0.88}
+          />
         </div>
 
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-black via-black/75 to-black/10 sm:via-black/60 sm:to-transparent"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-3/5 bg-gradient-to-t from-black via-black/85 to-transparent sm:h-2/5 sm:via-black/25"
+          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-2/5 bg-gradient-to-t from-black via-black/80 to-transparent"
         />
 
         <div className="flex h-full items-end pb-24 sm:items-center sm:pb-0">

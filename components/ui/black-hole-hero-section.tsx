@@ -369,7 +369,7 @@ void main() {
   // every step: one fixed offset per pixel is not enough, because the steps
   // themselves shorten in a smooth pattern as the ray nears the disc and a
   // fixed offset rides that pattern instead of breaking it up.
-  float jitter = fract(sin(dot(gl_FragCoord.xy + uSeed, vec2(12.9898, 78.233))) * 43758.5453);
+  float jitter = fract(sin(dot(gl_FragCoord.xy + vec2(uSeed), vec2(12.9898, 78.233))) * 43758.5453);
 
   for (int i = 0; i < MAX_STEPS; i++) {
     if (float(i) >= uSteps) break;
@@ -569,7 +569,7 @@ void main() {
   }
 
   // A grain of dither. Without it these long dark ramps band into rings.
-  float n = fract(sin(dot(gl_FragCoord.xy + uSeed, vec2(12.9898, 78.233))) * 43758.5453);
+  float n = fract(sin(dot(gl_FragCoord.xy + vec2(uSeed), vec2(12.9898, 78.233))) * 43758.5453);
   c += (n - 0.5) / 255.0;
 
   gl_FragColor = vec4(c, 1.0);
