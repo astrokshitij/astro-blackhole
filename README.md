@@ -111,18 +111,23 @@ Google reads.
 The Contact page and workshop-interest page share the enquiry form. They collect
 name, email, enquiry type, organisation, audience, approximate date and message.
 
-With no delivery key configured, visitors prepare a draft, review it and open
-their own email app or copy the message. Nothing is submitted from the site.
+Every valid submission is stored in the `registrations` table in Postgres.
 Both workshops are in development, so this is interest, not a confirmed booking.
 
-To enable direct delivery:
+To connect the database in Vercel:
 
-1. Get a free access key from web3forms.com for your existing email address.
-2. Set `FORM_ACCESS_KEY` in `lib/content.ts`.
-3. Test a real enquiry after deployment to confirm it reaches your inbox.
+1. Open the Astro Kshitij project in Vercel.
+2. Open **Storage**, choose **Create Database**, and select **Neon Postgres**.
+3. Connect it to this project. Vercel adds `DATABASE_URL` automatically.
+4. Redeploy the site and send one test enquiry. The table is created on the
+   first submission.
+5. Open the Neon table view (from Vercel Storage) to see, filter and export all
+   registrations.
 
-The form then displays success and failure states. No payment is collected.
-If email delivery is not configured, the email-draft flow continues to work.
+Email alerts are optional. Add `WEB3FORMS_ACCESS_KEY` in Vercel's environment
+variables to receive an email after each successful database save. The alert is
+not the source of truth: a mail outage does not lose the stored registration.
+No payment is collected.
 
 ---
 

@@ -15,7 +15,7 @@ Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/workshops`,
 
 ## Where things are
 
-- `lib/content.ts` — **all editable text**: SITE, FORM_ACCESS_KEY, SOCIALS,
+- `lib/content.ts` — **all editable text**: SITE, SOCIALS,
   STATS, PROGRAMMES, EDITORIAL and PAGE_COPY. Change copy here, not in components.
 - `lib/seo.ts` — `socialMeta()`. Every route must build its `openGraph` and
   `twitter` blocks from this. See the trap below.
@@ -79,9 +79,9 @@ Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/workshops`,
 
 ## Open items
 
-1. **Direct form delivery is off.** Set a valid Web3Forms key in
-   `FORM_ACCESS_KEY` in `lib/content.ts` and verify delivery. Until then the
-   enquiry form prepares an email draft for the visitor to review and send.
+1. **Database setup is required in Vercel.** Connect Neon Postgres so Vercel
+   provides `DATABASE_URL`. Add `WEB3FORMS_ACCESS_KEY` as an environment
+   variable only if email notifications are wanted.
 2. **Contact is a gmail address.** Set up mail on the domain, then change
    `SITE.email` in one place.
 3. **`public/images/home/tedx/1.jpg` is 1408px wide** for a band that displays

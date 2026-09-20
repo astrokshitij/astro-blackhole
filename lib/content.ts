@@ -16,14 +16,6 @@ export const SITE = {
   portraitAlt: "Kshitij Pandey",
 };
 
-/**
- * Paste your Web3Forms access key here to switch the registration form on.
- * Get one free at web3forms.com by entering the email you want the
- * registrations sent to. Nothing to install, no account to manage.
- * While this is empty the form shows a short notice instead.
- */
-export const FORM_ACCESS_KEY = "";
-
 // `glyph` picks the icon, `accent` is the brand colour used on hover only.
 export const SOCIALS = [
   {
@@ -258,9 +250,6 @@ export const CONTACT = {
 export const PAGE_COPY = {
   home: {
     headline: ["The universe is", "stranger than", "you think."],
-    footnote: "Curiosity is a good place to start.",
-    simulation: "Light bending around a black hole · Simulation",
-    scroll: "Scroll to explore ↓",
     workLabel: "01 / Selected explorations",
     workTitle: ["Follow a question.", "See where it takes you."],
     workIntro:

@@ -343,7 +343,7 @@ img {
   justify-content: center;
   position: relative;
   padding-top: 85px;
-  padding-bottom: 100px;
+  padding-bottom: 60px;
 }
 .hero-copy {
   max-width: 660px;
@@ -372,24 +372,10 @@ img {
   gap: 12px;
   margin-top: 30px;
 }
-.hero-footnote {
-  position: absolute;
-  bottom: 28px;
-  inset-inline: 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 25px;
-  font-family: var(--font-geist-mono);
-  font-size: 12px;
-  color: #a8adb7;
-}
-.hero-science {
-  max-width: 260px;
-}
 .motion-toggle {
   position: absolute;
   z-index: 3;
-  bottom: 108px;
+  top: 108px;
   right: max(48px, calc((100vw - 1200px) / 2));
   font-family: var(--font-geist-mono);
   font-size: 12px;
@@ -1044,12 +1030,6 @@ footer {
       ),
       linear-gradient(0deg, #08090c, transparent 50%);
   }
-  .hero-science {
-    display: none;
-  }
-  .hero-footnote {
-    font-size: 12px;
-  }
   .hero-copy {
     max-width: 600px;
   }
@@ -1132,7 +1112,7 @@ footer {
   .hero-composition {
     justify-content: flex-start;
     padding-top: 142px;
-    padding-bottom: 110px;
+    padding-bottom: 72px;
     min-height: 850px;
   }
   .hero-copy h1 {
@@ -1180,13 +1160,9 @@ footer {
   .hero-actions > a {
     min-height: 48px;
   }
-  .hero-footnote {
-    bottom: 30px;
-    flex-direction: column;
-    gap: 12px;
-    max-width: 280px;
-  }
   .motion-toggle {
+    top: auto;
+    /* The mobile artwork extends 95px past the viewport edge. */
     right: 115px;
     bottom: 25px;
     font-size: 12px;
@@ -1199,8 +1175,7 @@ footer {
   .hero-composition {
     pointer-events: none;
   }
-  .hero-copy,
-  .hero-footnote {
+  .hero-copy {
     pointer-events: auto;
   }
   .credibility-inner {

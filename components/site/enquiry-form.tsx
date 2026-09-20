@@ -1,51 +1,26 @@
 "use client";
 import { useState } from "react";
-import { CONTACT, FORM_ACCESS_KEY, SITE } from "@/lib/content";
+import { CONTACT, SITE } from "@/lib/content";
 import { buttonStyles } from "./ui";
 
 export function EnquiryForm({ preselect }: { preselect?: string }) {
   const [status, setStatus] = useState<
-    "idle" | "sending" | "sent" | "error" | "draft"
+    "idle" | "sending" | "sent" | "error"
   >("idle");
-  const [draft, setDraft] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [subject, setSubject] = useState("");
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
     if (data.get("botcheck")) return;
-    const topic = String(data.get("type"));
-    const body = [
-      "Hi Kshitij,",
-      "",
-      ...["name", "email", "organisation", "audience", "date", "message"].map(
-        (key) =>
-          key[0].toUpperCase() +
-          key.slice(1) +
-          ": " +
-          String(data.get(key) || "Not specified"),
-      ),
-      "",
-    ].join("\n");
-    setSubject(topic);
-    setDraft(body);
-    setCopied(false);
-    if (!FORM_ACCESS_KEY) {
-      setStatus("draft");
-      return;
-    }
     setStatus("sending");
-    data.append("access_key", FORM_ACCESS_KEY);
-    data.append("subject", "Astro Kshitij enquiry: " + topic);
-    data.append("from_name", "Astro Kshitij website");
+    data.append("source", window.location.pathname);
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/registrations", {
         method: "POST",
         body: data,
       });
-      const result = (await res.json()) as { success?: boolean };
-      if (!res.ok || !result.success) throw new Error("Delivery failed");
+      const result = (await res.json()) as { ok?: boolean };
+      if (!res.ok || !result.ok) throw new Error("Registration failed");
       setStatus("sent");
       form.reset();
     } catch {
@@ -54,9 +29,9 @@ export function EnquiryForm({ preselect }: { preselect?: string }) {
   }
   return (
     <form
-      action={`mailto:${SITE.email}`}
+      action="/api/registrations"
       method="post"
-      encType="text/plain"
+      encType="multipart/form-data"
       onSubmit={submit}
       className="enquiry-form"
       onChange={() => {
@@ -121,9 +96,9 @@ export function EnquiryForm({ preselect }: { preselect?: string }) {
         </label>
       </div>
       <p className="form-note">
-        {FORM_ACCESS_KEY
-          ? "Your enquiry is delivered by Web3Forms to Kshitij’s inbox. Please include only the details needed to discuss your enquiry."
-          : CONTACT.draftNote}
+        Your details are stored securely so Kshitij can respond and follow up
+        about this enquiry. Please include only the information needed to discuss
+        it.
       </p>
       <button
         type="submit"
@@ -132,9 +107,7 @@ export function EnquiryForm({ preselect }: { preselect?: string }) {
       >
         {status === "sending"
           ? "Sending…"
-          : FORM_ACCESS_KEY
-            ? "Send enquiry"
-            : "Prepare email"}{" "}
+          : "Send enquiry"}{" "}
         <span aria-hidden="true">↗</span>
       </button>
       <noscript>
@@ -153,40 +126,6 @@ export function EnquiryForm({ preselect }: { preselect?: string }) {
           Your enquiry could not be sent. Your details are still here. Please
           try again or email {SITE.email} directly.
         </p>
-      )}
-      {status === "draft" && (
-        <div className="email-draft" role="status">
-          <p>
-            Your draft is ready. Open it in your email app, or copy it into an
-            email to {SITE.email}.
-          </p>
-          <a
-            className="text-link"
-            href={`mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(draft)}`}
-          >
-            Open email draft ↗
-          </a>
-          <button
-            className="text-link ml-5"
-            type="button"
-            onClick={async () => {
-              try {
-                await navigator.clipboard.writeText(subject + "\n\n" + draft);
-                setCopied(true);
-              } catch {
-                setCopied(false);
-              }
-            }}
-          >
-            {copied ? "Copied" : "Copy draft"}
-          </button>
-          <details className="form-note">
-            <summary className="cursor-pointer py-3">View draft</summary>
-            <pre className="whitespace-pre-wrap break-words font-sans">
-              {draft}
-            </pre>
-          </details>
-        </div>
       )}
     </form>
   );

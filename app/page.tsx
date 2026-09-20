@@ -42,13 +42,6 @@ export default function Home() {
               </ButtonLink>
             </div>
           </div>
-          <div className="hero-footnote">
-            <span>{PAGE_COPY.home.footnote}</span>
-            <span className="hero-science">{PAGE_COPY.home.simulation}</span>
-            <a href="#work" aria-label="Scroll to selected explorations">
-              {PAGE_COPY.home.scroll}
-            </a>
-          </div>
         </div>
       </section>
       <section className="credibility" aria-label="Background and reach">
