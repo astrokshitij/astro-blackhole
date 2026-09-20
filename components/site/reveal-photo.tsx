@@ -41,7 +41,7 @@ export function RevealPhoto({
   sizes = "(min-width: 1024px) 768px, 100vw",
 }: RevealPhotoProps) {
   const ref = useRef<HTMLElement>(null);
-  const [shown, setShown] = useState(eager);
+  const [shown, setShown] = useState(true);
 
   useEffect(() => {
     if (eager) return;
@@ -71,7 +71,7 @@ export function RevealPhoto({
       }`}
     >
       <div
-        className={`relative w-full overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] ${aspectClassName}`}
+        className={`relative w-full overflow-hidden border border-white/10 bg-white/[0.02] ${aspectClassName}`}
       >
         <Image
           src={src}

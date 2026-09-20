@@ -94,7 +94,7 @@ export function StoryPhotoPanel({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full overflow-hidden rounded-xl border border-white/12 bg-black ${className}`}
+      className={`story-photo relative w-full overflow-hidden border border-white/12 bg-black ${className}`}
       style={{
         aspectRatio: activeAspect,
         transition: "aspect-ratio 700ms ease-in-out",

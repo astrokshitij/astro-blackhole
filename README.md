@@ -106,25 +106,23 @@ Google reads.
 
 ---
 
-## 3. Turning on the registration form
+## 3. Enquiries and workshop interest
 
-`/workshops/register` has a real registration form. It is switched off until you
-add a key, and shows your email address instead.
+The Contact page and workshop-interest page share the enquiry form. They collect
+name, email, enquiry type, organisation, audience, approximate date and message.
 
-To switch it on:
+With no delivery key configured, visitors prepare a draft, review it and open
+their own email app or copy the message. Nothing is submitted from the site.
+Both workshops are in development, so this is interest, not a confirmed booking.
 
-1. Go to **web3forms.com**
-2. Enter the email address where you want registrations delivered
-3. They email you an access key, a long string of characters
-4. Paste it into `FORM_ACCESS_KEY` in `lib/content.ts`
-5. Commit and push
+To enable direct delivery:
 
-Every registration then arrives in your inbox. Free for 250 a month, no account
-to manage. The form collects name, email, phone, city, which session, and what
-the person wants out of it.
+1. Get a free access key from web3forms.com for your existing email address.
+2. Set `FORM_ACCESS_KEY` in `lib/content.ts`.
+3. Test a real enquiry after deployment to confirm it reaches your inbox.
 
-It does **not** take payment. You confirm the date and send payment details by
-email. If you later want payment on the page, Razorpay is the route.
+The form then displays success and failure states. No payment is collected.
+If email delivery is not configured, the email-draft flow continues to work.
 
 ---
 
@@ -163,8 +161,8 @@ lib/content.ts                                      site text, socials, workshop
 lib/site-url.ts                                     canonical domain
 lib/posts.ts                                        reads the markdown files
 components/site/ui.tsx                              buttons, sections, headings
-components/site/                                    header, footer, banner, form
-components/ui/optimized-black-hole.tsx              the renderer component
+components/site/                                    header, footer, banner, enquiry form
+components/ui/black-hole-hero-section.tsx            the renderer component
 app/page.tsx                                        home
 app/about|blog|workshops|contact/page.tsx           pages
 app/blog/[slug]/page.tsx                            a single post
@@ -176,19 +174,14 @@ app/globals.css                                     design tokens, article style
 
 ## How the renderer works
 
-Null geodesics are integrated per pixel in a Schwarzschild metric
-(`d2x/dl2 = -1.5 h^2 x / r^5`, units r_s = 1), so the secondary disk image over
-the shadow and the photon ring come out of the physics rather than a faked
-distortion. Horizon at r = 1, photon sphere at 1.5, disk from the ISCO at 3 out
-to 11, with a Keplerian shear and relativistic beaming on the approaching limb.
+The homepage retains the ray-marched black-hole simulation in
+`components/ui/black-hole-hero-section.tsx`. Light paths are integrated through
+Schwarzschild space; the bent disc and photon ring emerge from that calculation.
 
-`<BlackHole />` accepts `offset={{ x, y }}`, `zoom` and `monochrome`. Both
-offset and zoom are eased by aspect ratio inside the shader, so a framing tuned
-for a wide hero does not swallow a phone screen.
+`components/site/hero-visual.tsx` loads it separately from the page text. A small
+still in `public/images/black-hole-still.webp` is visible before loading and when
+WebGL is unavailable. Drawing is capped at 30 fps and 2.1 million backing pixels,
+pauses off screen and when hidden, and has an explicit pause button.
+Reduced-motion preferences produce a still frame. Reading pages use static heroes.
 
-Cost control: attribute-less full-screen triangle, one program, no per-frame
-allocation, devicePixelRatio capped at 2 and backing store capped at 2.6M
-pixels, adaptive render scale and step count driven by a moving average of frame
-cost, paused off screen and on tab hide, a single static frame under
-`prefers-reduced-motion`, context loss handled, and a 2D gradient fallback where
-WebGL2 is missing.
+See `REDESIGN.md` for the redesign audit, scope, validation and content limitations.

@@ -3,6 +3,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import localFont from "next/font/local";
 import "./globals.css";
+import "./editorial.css";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SITE, SOCIALS } from "@/lib/content";
@@ -52,7 +53,7 @@ export const viewport: Viewport = {
   // Without this the scrollbar and every native control render light grey
   // against a pure black page.
   colorScheme: "dark",
-  themeColor: "#000000",
+  themeColor: "#08090C",
 };
 
 /** Identity for search engines. Only facts the site already states. */
@@ -80,7 +81,7 @@ export default function RootLayout({
       className={`dark ${GeistSans.variable} ${GeistMono.variable} ${jost.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full bg-black text-white">
+      <body className="min-h-full bg-background text-foreground">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}

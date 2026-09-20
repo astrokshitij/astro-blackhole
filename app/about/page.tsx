@@ -4,7 +4,11 @@ import { PageHero } from "@/components/site/page-hero";
 import { NextPage, Section } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
 import { RevealPhoto } from "@/components/site/reveal-photo";
-import { StoryPhotoPanel, type StoryPhoto } from "@/components/site/story-photo-panel";
+import {
+  StoryPhotoPanel,
+  type StoryPhoto,
+} from "@/components/site/story-photo-panel";
+import { EDITORIAL } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About",
@@ -87,7 +91,13 @@ const photosById = Object.fromEntries(
   STORY_PHOTOS.map((photo) => [photo.id, photo]),
 );
 
-function MobilePhoto({ id, aspect = "aspect-[4/3]" }: { id: string; aspect?: string }) {
+function MobilePhoto({
+  id,
+  aspect = "aspect-[4/3]",
+}: {
+  id: string;
+  aspect?: string;
+}) {
   const photo = photosById[id];
   if (!photo) return null;
   return (
@@ -114,14 +124,19 @@ export default function AboutPage() {
       />
 
       <Section>
+        <ul className="credential-summary" aria-label="Background at a glance">
+          {EDITORIAL.aboutCredentials.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
         <div className="grid gap-16 lg:grid-cols-[1.35fr_1fr] lg:gap-24">
           {/* Story column */}
           <div className="max-w-2xl">
             <div>
               <p className="font-display text-xl font-light leading-[1.35] text-white sm:text-2xl">
                 Science communicator. TEDx speaker. Physics nerd. Researcher.
-                Marketer. And, apparently, someone who has never been very
-                good at following a conventional path.
+                Marketer. And, apparently, someone who has never been very good
+                at following a conventional path.
               </p>
 
               <p className="mt-8 text-sm leading-relaxed text-white/70 sm:text-base">
@@ -134,7 +149,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="mt-14 space-y-14">
+            <div className="story-chapters mt-14 space-y-14">
               <section data-story-section="obsession">
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   It started with a weird obsession with science.
@@ -143,22 +158,21 @@ export default function AboutPage() {
                   I&apos;ve been fascinated by science for as long as I can
                   remember. I wasn&apos;t exactly the brightest student in
                   school when it came to academics. In fact, I failed Class 6.
-                  But somehow, physics was always different. My teachers
-                  noticed that I was unusually curious about it, and I slowly
-                  realised that I didn&apos;t just want to learn physics. I
-                  wanted to understand it, question it and figure out how
-                  things actually work.
+                  But somehow, physics was always different. My teachers noticed
+                  that I was unusually curious about it, and I slowly realised
+                  that I didn&apos;t just want to learn physics. I wanted to
+                  understand it, question it and figure out how things actually
+                  work.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
                   That became clearer in Class 9, when I was selected by my
-                  school to represent it at a national-level science
-                  exhibition. I presented an idea around time travel,
-                  combining the popular science I was reading with physics
-                  demonstrations I had put together myself. I was only in
-                  Class 9, but I absolutely loved the process. It was probably
-                  one of the first times I realised how much I enjoyed taking
-                  an idea that fascinated me and trying to make someone else
-                  see why it was fascinating too.
+                  school to represent it at a national-level science exhibition.
+                  I presented an idea around time travel, combining the popular
+                  science I was reading with physics demonstrations I had put
+                  together myself. I was only in Class 9, but I absolutely loved
+                  the process. It was probably one of the first times I realised
+                  how much I enjoyed taking an idea that fascinated me and
+                  trying to make someone else see why it was fascinating too.
                 </p>
                 <MobilePhoto id="obsession" aspect="aspect-[4/3]" />
               </section>
@@ -173,16 +187,16 @@ export default function AboutPage() {
                     B.Sc. Physics (Hons.) at The ICFAI University, Jaipur
                   </strong>
                   . By my first year, I already knew that I wanted to do more
-                  than just study for exams. I wanted to get involved in
-                  physics outreach, competitions and research.
+                  than just study for exams. I wanted to get involved in physics
+                  outreach, competitions and research.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  During my first year, I was invited to deliver a guest
-                  lecture on Special Relativity at a college in Banswara,
-                  Rajasthan. I also started participating in physics and
-                  research competitions, winning and presenting work at
-                  institutions including IIT BHU, IIT Kharagpur, BITS Pilani
-                  and LNMIIT, among others.
+                  During my first year, I was invited to deliver a guest lecture
+                  on Special Relativity at a college in Banswara, Rajasthan. I
+                  also started participating in physics and research
+                  competitions, winning and presenting work at institutions
+                  including IIT BHU, IIT Kharagpur, BITS Pilani and LNMIIT,
+                  among others.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
                   One experience stands out. In my second year, I participated
@@ -190,8 +204,8 @@ export default function AboutPage() {
                   <strong className="font-normal text-white/85">
                     University Physics Competition
                   </strong>
-                  , where undergraduate students from around the world work on
-                  a challenging physics problem and turn their solution into a
+                  , where undergraduate students from around the world work on a
+                  challenging physics problem and turn their solution into a
                   research-style paper over 48 hours. I ended up winning a{" "}
                   <strong className="font-normal text-white/85">
                     Silver Medal
@@ -221,13 +235,13 @@ export default function AboutPage() {
                     SLAC Summer Institute
                   </strong>
                   , organised by Stanford. It gave me further exposure to
-                  research, workshops and the wider world of physics beyond
-                  my undergraduate experience.
+                  research, workshops and the wider world of physics beyond my
+                  undergraduate experience.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  That experience further strengthened my interest in
-                  pursuing research, which naturally led me towards
-                  astrophysics and cosmology.
+                  That experience further strengthened my interest in pursuing
+                  research, which naturally led me towards astrophysics and
+                  cosmology.
                 </p>
                 <MobilePhoto id="before-msc" aspect="aspect-[1/1]" />
               </section>
@@ -285,10 +299,10 @@ export default function AboutPage() {
                     actually telling us.
                   </p>
                   <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                    But I&apos;ve also always enjoyed communicating those
-                    ideas, especially when I can take something that feels
-                    intimidating and make it accessible to someone who
-                    doesn&apos;t have a physics background.
+                    But I&apos;ve also always enjoyed communicating those ideas,
+                    especially when I can take something that feels intimidating
+                    and make it accessible to someone who doesn&apos;t have a
+                    physics background.
                   </p>
                   <MobilePhoto id="research-teaching" aspect="aspect-[4/5]" />
                 </div>
@@ -299,9 +313,9 @@ export default function AboutPage() {
                   Then I took an unexpected detour.
                 </h2>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  After my master&apos;s, the obvious next step would have
-                  been a PhD. Instead, I decided to take a break from the
-                  traditional academic path.
+                  After my master&apos;s, the obvious next step would have been
+                  a PhD. Instead, I decided to take a break from the traditional
+                  academic path.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
                   Not because I stopped loving physics or research. I wanted
@@ -321,20 +335,19 @@ export default function AboutPage() {
                   inbound and outbound growth systems.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  On paper, Physics &rarr; astrophysics research &rarr;
-                  science communication &rarr; marketing &rarr; AI probably
-                  looks like a very strange trajectory.
+                  On paper, Physics &rarr; astrophysics research &rarr; science
+                  communication &rarr; marketing &rarr; AI probably looks like a
+                  very strange trajectory.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
                   But I actually think the detour has been useful.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  Physics taught me to question assumptions. Research taught
-                  me to sit with difficult problems. Science communication
-                  taught me to make complicated ideas understandable.
-                  Marketing taught me to understand people, attention and
-                  what makes an idea travel. And AI is now bringing many of
-                  those worlds together.
+                  Physics taught me to question assumptions. Research taught me
+                  to sit with difficult problems. Science communication taught
+                  me to make complicated ideas understandable. Marketing taught
+                  me to understand people, attention and what makes an idea
+                  travel. And AI is now bringing many of those worlds together.
                 </p>
                 <MobilePhoto id="detour" aspect="aspect-[4/3]" />
               </section>
@@ -344,10 +357,10 @@ export default function AboutPage() {
                   Maybe the detour was the point.
                 </h2>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  I don&apos;t see these as completely separate parts of my
-                  life anymore. They&apos;ve given me an unusual way of
-                  looking at problems, and that perspective is probably one
-                  of the things I value most about my journey.
+                  I don&apos;t see these as completely separate parts of my life
+                  anymore. They&apos;ve given me an unusual way of looking at
+                  problems, and that perspective is probably one of the things I
+                  value most about my journey.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
                   And that brings me back to{" "}
@@ -357,24 +370,23 @@ export default function AboutPage() {
                   .
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  I started with a fascination for physics and research.
-                  Along the way, I realised that I also genuinely enjoy
-                  bringing those ideas outside the walls of academia and
-                  sharing them with people who might otherwise never
-                  encounter them.
+                  I started with a fascination for physics and research. Along
+                  the way, I realised that I also genuinely enjoy bringing those
+                  ideas outside the walls of academia and sharing them with
+                  people who might otherwise never encounter them.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  So whether you found me through a reel, a workshop, a
-                  research paper, a talk or simply because you were curious
-                  enough to click &ldquo;About&rdquo;, welcome.
+                  So whether you found me through a reel, a workshop, a research
+                  paper, a talk or simply because you were curious enough to
+                  click &ldquo;About&rdquo;, welcome.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
                   I&apos;m still figuring things out. Still asking questions.
                   Still going down ridiculous rabbit holes.
                 </p>
                 <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                  And hopefully, still making you curious enough to ask a few
-                  of your own.
+                  And hopefully, still making you curious enough to ask a few of
+                  your own.
                 </p>
                 <MobilePhoto id="point" aspect="aspect-[4/5]" />
               </section>
@@ -391,43 +403,9 @@ export default function AboutPage() {
           </div>
 
           {/* Sticky photo panel, desktop only. Mobile shows inline photos. */}
-          <aside className="hidden lg:sticky lg:top-24 lg:block lg:self-start">
+          <aside className="hidden lg:sticky lg:top-28 lg:block lg:self-start">
             <StoryPhotoPanel photos={STORY_PHOTOS} initialId="obsession" />
-
-            <div className="mt-10">
-              <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
-                In short
-              </p>
-              <ul className="mt-5 space-y-4 border-t border-white/10 pt-6 text-sm leading-relaxed text-white/70">
-                <li>M.Sc. Physics, Astrophysics and Cosmology</li>
-                <li>
-                  Peer-reviewed paper on high-energy collisions near naked
-                  singularities
-                </li>
-                <li>TEDx speaker</li>
-                <li>Silver Medal, University Physics Competition</li>
-                <li>SLAC Summer Institute alum</li>
-                <li>Founder of Astro Kshitij, a science-communication brand</li>
-              </ul>
-            </div>
           </aside>
-        </div>
-
-        <div className="mt-16 lg:hidden">
-          <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
-            In short
-          </p>
-          <ul className="mt-5 space-y-4 border-t border-white/10 pt-6 text-sm leading-relaxed text-white/70">
-            <li>M.Sc. Physics, Astrophysics and Cosmology</li>
-            <li>
-              Peer-reviewed paper on high-energy collisions near naked
-              singularities
-            </li>
-            <li>TEDx speaker</li>
-            <li>Silver Medal, University Physics Competition</li>
-            <li>SLAC Summer Institute alum</li>
-            <li>Founder of Astro Kshitij, a science-communication brand</li>
-          </ul>
         </div>
 
         <NextPage href="/blog" title="My abstract thoughts" />

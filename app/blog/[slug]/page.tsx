@@ -8,7 +8,6 @@ import { SITE } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
 import { socialMeta, OG_IMAGE } from "@/lib/seo";
 import { ArticleReadingTools } from "@/components/site/article-reading-tools";
-import { AnomalousMatterScene } from "@/components/ui/anomalous-matter-hero";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -51,7 +50,9 @@ export default async function PostPage({ params }: Params) {
   const post = getPost(slug);
   if (!post || post.draft) notFound();
 
-  const others = getPosts().filter((p) => p.slug !== post.slug).slice(0, 2);
+  const others = getPosts()
+    .filter((p) => p.slug !== post.slug)
+    .slice(0, 2);
   const tocItems = [...post.html.matchAll(/<h2 id="([^"]+)">(.*?)<\/h2>/g)].map(
     ([, id, title]) => ({ id, title: title.replace(/<[^>]*>/g, "") }),
   );
@@ -70,17 +71,19 @@ export default async function PostPage({ params }: Params) {
 
   return (
     <>
-      <ArticleReadingTools items={tocItems} title={post.title} />
+      <ArticleReadingTools
+        items={tocItems}
+        title={post.title}
+        url={`${siteUrl}/blog/${post.slug}`}
+      />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
+        }}
       />
       <article className="article-shell">
         <header className="article-hero relative isolate overflow-hidden border-b border-white/10 bg-black pt-32 sm:pt-40">
-          <div className="absolute inset-0 -z-10 opacity-70" aria-hidden>
-            <AnomalousMatterScene />
-          </div>
-          <div className="article-hero-scrim absolute inset-0 -z-10" aria-hidden />
           <div className="mx-auto max-w-3xl px-5 pb-14 sm:px-8">
             <Link
               href="/blog"
@@ -116,9 +119,7 @@ export default async function PostPage({ params }: Params) {
               {post.title}
             </h1>
 
-            <p className="article-lede mt-6 leading-relaxed">
-              {post.excerpt}
-            </p>
+            <p className="article-lede mt-6 leading-relaxed">{post.excerpt}</p>
 
             <p className="font-mono mt-8 text-xs uppercase tracking-[0.18em] text-white/55">
               {SITE.person}
@@ -173,7 +174,8 @@ export default async function PostPage({ params }: Params) {
                     ) : null}
                     <span className="block p-5">
                       <span className="font-mono text-xs uppercase tracking-[0.18em] text-white/55">
-                        {other.category}{other.readTime ? ` · ${other.readTime}` : ""}
+                        {other.category}
+                        {other.readTime ? ` · ${other.readTime}` : ""}
                       </span>
                       <span className="font-display mt-2 block text-lg font-light text-white sm:text-xl">
                         {other.title}

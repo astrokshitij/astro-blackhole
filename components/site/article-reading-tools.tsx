@@ -7,23 +7,43 @@ type TocItem = { id: string; title: string };
 type ArticleReadingToolsProps = {
   items: TocItem[];
   title: string;
+  url: string;
 };
 
-export function ArticleReadingTools({ items, title }: ArticleReadingToolsProps) {
+export function ArticleReadingTools({
+  items,
+  title,
+  url,
+}: ArticleReadingToolsProps) {
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
   const [progress, setProgress] = useState(0);
-  const [light, setLight] = useState(() =>
-    typeof window !== "undefined" && window.localStorage.getItem("reading-theme") === "light",
-  );
+  const [light, setLight] = useState(false);
+  const [themeReady, setThemeReady] = useState(false);
   const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    let savedLight = false;
+    try {
+      savedLight = window.localStorage.getItem("reading-theme") === "light";
+    } catch {
+      /* Storage can be disabled; keep the default theme. */
+    }
+    const frame = requestAnimationFrame(() => {
+      setLight(savedLight);
+      setThemeReady(true);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     const headings = items
       .map((item) => document.getElementById(item.id))
       .filter((heading): heading is HTMLElement => Boolean(heading));
     const onScroll = () => {
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(scrollable > 0 ? Math.min(100, (window.scrollY / scrollable) * 100) : 0);
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(
+        scrollable > 0 ? Math.min(100, (window.scrollY / scrollable) * 100) : 0,
+      );
       const current = headings
         .filter((heading) => heading.getBoundingClientRect().top <= 160)
         .at(-1);
@@ -36,14 +56,19 @@ export function ArticleReadingTools({ items, title }: ArticleReadingToolsProps) 
   }, [items]);
 
   useEffect(() => {
+    if (!themeReady) return;
     document.body.dataset.readingTheme = light ? "light" : "dark";
-    window.localStorage.setItem("reading-theme", light ? "light" : "dark");
+    try {
+      window.localStorage.setItem("reading-theme", light ? "light" : "dark");
+    } catch {
+      /* The theme still works without persistent storage. */
+    }
     return () => {
       delete document.body.dataset.readingTheme;
     };
-  }, [light]);
+  }, [light, themeReady]);
 
-  const shareUrl = typeof window === "undefined" ? "" : window.location.href;
+  const shareUrl = url;
   const shareText = encodeURIComponent(title);
 
   async function copyLink() {
@@ -71,7 +96,10 @@ export function ArticleReadingTools({ items, title }: ArticleReadingToolsProps) 
             <ol>
               {items.map((item) => (
                 <li key={item.id}>
-                  <a className={activeId === item.id ? "is-active" : ""} href={`#${item.id}`}>
+                  <a
+                    className={activeId === item.id ? "is-active" : ""}
+                    href={`#${item.id}`}
+                  >
                     {item.title}
                   </a>
                 </li>
@@ -81,19 +109,49 @@ export function ArticleReadingTools({ items, title }: ArticleReadingToolsProps) 
         </div>
 
         <div className="article-tools__group article-share">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/60">Share</p>
-          <a href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer" aria-label="Share on X">X</a>
-          <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer" aria-label="Share on LinkedIn">in</a>
-          <button type="button" onClick={copyLink} aria-label="Copy article link">{copied ? "Done" : "Copy"}</button>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/60">
+            Share
+          </p>
+          <a
+            href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Share on X"
+          >
+            X
+          </a>
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Share on LinkedIn"
+          >
+            in
+          </a>
+          <button
+            type="button"
+            onClick={copyLink}
+            aria-label="Copy article link"
+          >
+            {copied ? "Done" : "Copy"}
+          </button>
         </div>
       </aside>
 
       <div className="article-mobile-tools">
-        <button type="button" onClick={() => setLight((value) => !value)} aria-pressed={light}>
+        <button
+          type="button"
+          onClick={() => setLight((value) => !value)}
+          aria-pressed={light}
+        >
           {light ? "Dark reading" : "Light reading"}
         </button>
         <a href="#article-contents">Contents</a>
-        <a href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noreferrer">
+        <a
+          href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`}
+          target="_blank"
+          rel="noreferrer"
+        >
           Share
         </a>
         <button type="button" onClick={copyLink}>
@@ -106,7 +164,9 @@ export function ArticleReadingTools({ items, title }: ArticleReadingToolsProps) 
         className="reading-theme-toggle"
         onClick={() => setLight((value) => !value)}
         aria-pressed={light}
-        aria-label={light ? "Switch to dark reading mode" : "Switch to light reading mode"}
+        aria-label={
+          light ? "Switch to dark reading mode" : "Switch to light reading mode"
+        }
         title={light ? "Dark reading mode" : "Light reading mode"}
       >
         {light ? "◐" : "◑"}

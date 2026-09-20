@@ -8,8 +8,7 @@ that a change took effect.
 ## Stack
 
 Next.js 16 (App Router) + React 19 + TypeScript + Tailwind v4, deployed from
-GitHub to Vercel on push to `main`. Silver-on-black, built around a WebGL2
-black-hole renderer.
+GitHub to Vercel on push to `main`. Warm-white and muted amber on near-black, built around a WebGL black-hole renderer.
 
 Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/workshops`,
 `/workshops/register`, `/contact`, plus 404, sitemap, robots.
@@ -17,7 +16,7 @@ Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/workshops`,
 ## Where things are
 
 - `lib/content.ts` — **all editable text**: SITE, FORM_ACCESS_KEY, SOCIALS,
-  STATS, WORKSHOPS, CREDENTIALS. Change copy here, not in components.
+  STATS, PROGRAMMES, EDITORIAL and PAGE_COPY. Change copy here, not in components.
 - `lib/seo.ts` — `socialMeta()`. Every route must build its `openGraph` and
   `twitter` blocks from this. See the trap below.
 - `lib/posts.ts` — reads `content/blog/*.md` (gray-matter + marked).
@@ -27,16 +26,18 @@ Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/workshops`,
   source of vertical rhythm), `SectionHeading`, `Eyebrow`, `NextPage`. Use these
   rather than writing new inline spacing or button styles.
 - `components/site/site-header.tsx` — nav, with the mobile panel.
-- `components/ui/optimized-black-hole*` — the renderer. Options: `offset`,
-  `zoom`, `monochrome`, `getMonochrome`, `scrollColorShift`. It already caps DPR
-  and backing-store pixels and adapts quality to frame time.
+- `components/ui/black-hole-hero-section.tsx` — the retained ray marcher.
+  `components/site/hero-visual.tsx` loads it and provides motion controls.
+  It caps DPR, backing pixels and frame rate, and respects reduced motion.
+- `app/editorial.css` — editorial layouts, palette and responsive rules.
+- `components/site/enquiry-form.tsx` — shared Contact/workshop-interest form.
 - `content/blog/*.md` — one file per post.
 - `fonts/` — Jost, self-hosted, loaded via `next/font/local` in `app/layout.tsx`.
 
 ## Conventions
 
-- Display face is Jost Light (`font-display`), body is Geist Sans, small labels
-  are Geist Mono. Uppercase display type carries wide tracking.
+- Display face is Jost (`font-display`), body is Geist Sans, small labels are
+  Geist Mono. Large headings use sentence case and tight tracking.
 - **No text below 12px anywhere.** Light strokes on black bloom optically.
 - Mono UI labels ("IN SHORT", "PREVIOUSLY") are `<p>`, never headings. Heading
   levels are for real section titles only.
@@ -78,21 +79,29 @@ Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/workshops`,
 
 ## Open items
 
-1. **Registration form is off.** Needs a free access key from web3forms.com in
-   `FORM_ACCESS_KEY` in `lib/content.ts`. Until then the page shows an
-   email-based registration card, which works but converts worse.
+1. **Direct form delivery is off.** Set a valid Web3Forms key in
+   `FORM_ACCESS_KEY` in `lib/content.ts` and verify delivery. Until then the
+   enquiry form prepares an email draft for the visitor to review and send.
 2. **Contact is a gmail address.** Set up mail on the domain, then change
    `SITE.email` in one place.
 3. **`public/images/home/tedx/1.jpg` is 1408px wide** for a band that displays
    at 1152 CSS px, so it is soft on retina. Needs a re-export. The other two
    sources are ~3000px and fine.
-4. **H1 casing is inconsistent between routes** — uppercase and tracked on home,
-   blog and contact; sentence case on about and workshops. `PageHero` takes a
-   `plainCase` prop. Pick one rule.
-5. **The inner-page hero band renders an almost invisible smudge** on `/blog`
-   and `/contact` while carrying a full WebGL context. Either make it read or
-   replace it with a still.
+4. **Credential years need owner review.** The legacy content list says 2023,
+   while an About photo caption says 2024. New summaries omit years.
+5. **Individual video URLs are not in the repository.** The selected work
+   section links to the existing YouTube channel rather than inventing a video.
 6. **About and blog copy are AI drafts in Kshitij's voice**, not his writing.
 7. **A `/work` portfolio section** was agreed but never built. Before it goes
    public, settle whether employer numbers belong on an indexed page.
 8. **Run PageSpeed Insights** on the live site; real FCP/LCP were never measured.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { socialMeta } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
+import { socialMeta } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
-import { ButtonLink, NextPage, Section } from "@/components/site/ui";
-import { ArrowGlyph, YoutubeGlyph, InstagramGlyph } from "@/components/site/icons";
-import { Reveal } from "@/components/site/reveal";
-import { getPosts, type Post } from "@/lib/posts";
-import { SITE } from "@/lib/content";
-import { SpotlightCard, SpotlightLink } from "@/components/site/spotlight-card";
-import { HorizonDivider } from "@/components/site/horizon-divider";
-
+import { Eyebrow, Section, NextPage } from "@/components/site/ui";
+import { ArrowGlyph } from "@/components/site/icons";
+import { getPosts } from "@/lib/posts";
+import { SOCIALS, PAGE_COPY } from "@/lib/content";
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Writing",
   description:
     "My Abstract Thoughts: physics, the universe, strange questions and rabbit holes that need more room than a short video.",
   alternates: { canonical: "/blog" },
@@ -23,204 +19,81 @@ export const metadata: Metadata = {
       "Physics, the universe, strange questions and rabbit holes that need more room than a short video.",
   }),
 };
-
-function FeaturedCard({ post }: { post: Post }) {
-  return (
-    <SpotlightLink
-      href={`/blog/${post.slug}`}
-      className="p-7 sm:p-12"
-    >
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <span className="font-mono text-xs uppercase tracking-[0.24em] text-white/75">
-          Latest
-        </span>
-        <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/75">
-          {post.category}
-        </span>
-        {post.dateLabel ? (
-          <time
-            dateTime={post.date}
-            className="font-mono text-xs uppercase tracking-[0.16em] text-white/55"
-          >
-            {post.dateLabel}
-          </time>
-        ) : null}
-        {post.readTime ? (
-          <span className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">
-            {post.readTime}
-          </span>
-        ) : null}
-      </div>
-
-      <h2 className="font-display mt-7 max-w-3xl text-3xl font-light leading-[1.12] tracking-[0.01em] text-white sm:text-5xl">
-        {post.title}
-      </h2>
-
-      {post.cover ? (
-        <div className="relative mt-8 aspect-[21/9] w-full overflow-hidden rounded-lg border border-white/10">
-          <Image
-            src={post.cover}
-            alt={post.coverAlt ?? ""}
-            fill
-            sizes="(min-width: 1024px) 1152px, 100vw"
-            className="object-cover opacity-85 transition-opacity duration-300 group-hover:opacity-100"
-            priority
-          />
-        </div>
-      ) : null}
-
-      <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
-        {post.excerpt}
-      </p>
-
-      <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white transition-colors group-hover:text-white">
-        Read the full piece
-        <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-      </span>
-    </SpotlightLink>
-  );
-}
-
-function PreviousStrip({ posts }: { posts: Post[] }) {
-  if (posts.length === 0) return null;
-  return (
-    <div className="mt-16">
-      <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
-        Previously
-      </p>
-      <ul className="mt-6 space-y-3 border-t border-white/10 pt-6">
-        {posts.map((post, i) => (
-          <li key={post.slug}>
-            <Reveal delay={i * 80}>
-              <Link
-                href={`/blog/${post.slug}`}
-                className="group flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-white/5 py-4 transition-colors hover:border-white/20"
-              >
-                <span className="font-mono min-w-[7.5rem] text-xs uppercase tracking-[0.18em] text-white/50">
-                  {post.category}
-                  {post.readTime ? ` · ${post.readTime}` : ""}
-                </span>
-                <span className="font-display flex-1 text-base font-light leading-snug text-white/85 transition-colors group-hover:text-white sm:text-lg">
-                  {post.title}
-                </span>
-                <ArrowGlyph className="h-4 w-4 shrink-0 text-white/40 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white" />
-              </Link>
-            </Reveal>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 export default function BlogPage() {
-  const posts = getPosts();
-  const featured = posts[0];
-  const previous = posts.slice(1);
-
+  const [featured, ...posts] = getPosts();
   return (
     <>
       <PageHero
-        eyebrow="02 / Blog"
-        title="My abstract thoughts"
-        offset={{ x: 0.46, y: 0.08 }}
-        visual="anomalous-matter"
-        plainCase
+        eyebrow={PAGE_COPY.writing.eyebrow}
+        title={PAGE_COPY.writing.title}
+        dek={PAGE_COPY.writing.intro}
       />
-
       <Section>
-        <Reveal>
-          <div className="max-w-3xl">
-            <p className="text-base leading-relaxed text-white/75 sm:text-lg">
-              Some ideas simply refuse to fit into a short video.
-            </p>
-            <p className="mt-5 text-base leading-relaxed text-white/70 sm:text-base">
-              This is where I go a little deeper. Physics, the universe,
-              strange questions, things I can&apos;t stop thinking about and
-              the occasional rabbit hole that deserves more than a few seconds
-              of your attention.
-            </p>
+        {featured && (
+          <article className="essay-feature">
+            {featured.cover && (
+              <Link
+                href={`/blog/${featured.slug}`}
+                className="essay-feature-image"
+                tabIndex={-1}
+                aria-hidden="true"
+              >
+                <Image
+                  src={featured.cover}
+                  alt={featured.coverAlt ?? ""}
+                  fill
+                  sizes="(min-width:900px) 580px, 100vw"
+                  className="object-cover"
+                  preload
+                />
+              </Link>
+            )}
+            <div>
+              <Eyebrow>Featured essay / {featured.category}</Eyebrow>
+              <h2>
+                <Link href={`/blog/${featured.slug}`}>{featured.title}</Link>
+              </h2>
+              <div className="writing-meta">
+                <time dateTime={featured.date}>{featured.dateLabel}</time>
+                <span>/</span>
+                {featured.readTime} read
+              </div>
+              <p className="mt-6">{featured.excerpt}</p>
+              <Link href={`/blog/${featured.slug}`} className="text-link">
+                Read the essay
+                <ArrowGlyph className="h-4 w-4" />
+              </Link>
+            </div>
+          </article>
+        )}
+        {posts.length > 0 && (
+          <div className="essay-grid">
+            {posts.map((post) => (
+              <article key={post.slug}>
+                <Eyebrow>
+                  {post.category} / {post.readTime} read
+                </Eyebrow>
+                <h2>
+                  <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                </h2>
+                <p className="body-copy">{post.excerpt}</p>
+                <Link href={`/blog/${post.slug}`} className="text-link">
+                  Read the essay
+                  <ArrowGlyph className="h-4 w-4" />
+                </Link>
+              </article>
+            ))}
           </div>
-        </Reveal>
-
-        <Reveal delay={100} className="mt-16">
-          {featured ? (
-            <FeaturedCard post={featured} />
-          ) : (
-            <div className="rounded-xl border border-white/12 p-10 text-center sm:p-16">
-              <p className="font-display text-xl font-light text-white sm:text-2xl">
-                Nothing published yet.
-              </p>
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-white/60">
-                Posts appear here the moment a markdown file lands in
-                content/blog with draft set to false.
-              </p>
-            </div>
-          )}
-        </Reveal>
-
-        <PreviousStrip posts={previous} />
-
-        <HorizonDivider className="my-16 sm:my-20" />
-
-        <Reveal>
-          <SpotlightCard className="p-8 sm:p-12">
-            <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
-              More coming soon
-            </h2>
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
-              I&apos;m working on more pieces.
-            </p>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
-              Until then, you can find the shorter versions of many of these
-              ideas on YouTube and Instagram.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink
-                href="https://www.youtube.com/@astrokshitij"
-                variant="secondary"
-              >
-                <YoutubeGlyph className="h-4 w-4" />
-                Watch on YouTube
-                <ArrowGlyph className="h-4 w-4" />
-              </ButtonLink>
-              <ButtonLink
-                href="https://www.instagram.com/astro.kshitij"
-                variant="secondary"
-              >
-                <InstagramGlyph className="h-4 w-4" />
-                Follow on Instagram
-                <ArrowGlyph className="h-4 w-4" />
-              </ButtonLink>
-            </div>
-          </SpotlightCard>
-        </Reveal>
-
-        <Reveal className="mt-16">
-          <SpotlightCard className="p-8 sm:p-12">
-            <h2 className="font-display text-2xl font-light leading-tight text-white sm:text-3xl">
-              Have a question?
-            </h2>
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base">
-              Found something here you want to argue about, question or explore
-              further?
-            </p>
-            <a
-              href={`mailto:${SITE.email}`}
-              className="mt-6 inline-block text-sm text-white underline underline-offset-4 decoration-white/40 transition-colors hover:decoration-white"
-            >
-              {SITE.email}
-            </a>
-            <div className="mt-8">
-              <ButtonLink href="/contact">
-                Get in touch
-                <ArrowGlyph className="h-4 w-4" />
-              </ButtonLink>
-            </div>
-          </SpotlightCard>
-        </Reveal>
-
-        <NextPage href="/workshops" title="Workshops and training" />
+        )}
+        <div className="mt-20 border-t border-white/15 pt-10">
+          <Eyebrow>Prefer to watch?</Eyebrow>
+          <p className="body-copy">{PAGE_COPY.writing.videoIntro}</p>
+          <a href={SOCIALS[0].href} className="text-link">
+            Visit Astro Kshitij on YouTube
+            <ArrowGlyph className="h-4 w-4" />
+          </a>
+        </div>
+        <NextPage href="/workshops" title="Explore ideas together" />
       </Section>
     </>
   );

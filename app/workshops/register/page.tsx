@@ -1,104 +1,42 @@
 import type { Metadata } from "next";
 import { socialMeta } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
-import { Section } from "@/components/site/ui";
-import { RegistrationForm } from "@/components/site/registration-form";
-import { WORKSHOPS } from "@/lib/content";
-
+import { Eyebrow, Section } from "@/components/site/ui";
+import { EnquiryForm } from "@/components/site/enquiry-form";
+import { CONTACT, EDITORIAL, PAGE_COPY } from "@/lib/content";
 export const metadata: Metadata = {
-  title: "Register",
+  title: "Register interest",
   description:
-    "Register your interest in a live quantum mechanics session or science communication training with Kshitij Pandey.",
+    "Register your interest in workshops in development with Kshitij Pandey.",
   alternates: { canonical: "/workshops/register" },
   ...socialMeta({
     path: "/workshops/register",
-    title: "Save your seat",
+    title: "Register workshop interest",
     description:
-      "Put your name down for a live quantum mechanics session or science communication training. Registering costs nothing.",
+      "Express interest in quantum mechanics or science communication training. Dates and registration are not yet available.",
   }),
 };
-
-const STEPS = [
-  {
-    step: "01",
-    title: "You register",
-    detail: "Thirty seconds. Name, email, phone, and which session.",
-  },
-  {
-    step: "02",
-    title: "I confirm the date",
-    detail:
-      "Sessions run once enough people have put their names down, so you hear the date by email rather than picking from a calendar.",
-  },
-  {
-    step: "03",
-    title: "You pay and get the link",
-    detail:
-      "Payment details come in that same email. Registering here commits you to nothing.",
-  },
-];
-
 export default function RegisterPage() {
   return (
     <>
       <PageHero
-        eyebrow="03 / Register"
-        title="Save your seat"
-        dek="Registering puts your name down and costs nothing. Payment happens after the date is confirmed."
-        offset={{ x: 0.42, y: 0.14 }}
-        plainCase
+        eyebrow="Workshops / Register interest"
+        title={PAGE_COPY.interest.title}
+        dek={EDITORIAL.room.note}
       />
-
       <Section>
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+        <div className="contact-grid">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
-              How it works
-            </p>
-            <ol className="mt-6 space-y-8 border-t border-white/10 pt-8">
-              {STEPS.map((item) => (
-                <li key={item.step} className="flex gap-5">
-                  <span className="font-mono shrink-0 text-xs text-white/55">
-                    {item.step}
-                  </span>
-                  <span>
-                    <span className="font-display block text-base font-light text-white">
-                      {item.title}
-                    </span>
-                    <span className="mt-2 block text-sm leading-relaxed text-white/60">
-                      {item.detail}
-                    </span>
-                  </span>
-                </li>
-              ))}
-            </ol>
-
-            <div className="mt-10 border-t border-white/10 pt-8">
-              <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
-                Sessions
-              </p>
-              <ul className="mt-5 space-y-4">
-                {WORKSHOPS.map((workshop) => (
-                  <li key={workshop.title}>
-                    <p className="font-display text-sm font-light text-white">
-                      {workshop.title}
-                    </p>
-                    <p className="font-mono mt-1 text-xs uppercase tracking-[0.16em] text-white/55">
-                      {workshop.format} &middot; {workshop.audience}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <Eyebrow>What happens next</Eyebrow>
+            <h2 className="section-title">
+              Curiosity first.
+              <br />
+              Details next.
+            </h2>
+            <p className="body-copy">{PAGE_COPY.interest.intro}</p>
+            <p className="body-copy">{PAGE_COPY.interest.notice}</p>
           </div>
-
-          <div>
-            <RegistrationForm />
-            <p className="mt-5 text-xs leading-relaxed text-white/55">
-              Your details are emailed to me and nowhere else. No list, no
-              newsletter, no sharing with anyone.
-            </p>
-          </div>
+          <EnquiryForm preselect={CONTACT.types[1]} />
         </div>
       </Section>
     </>

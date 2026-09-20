@@ -1,183 +1,136 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { SITE } from "@/lib/content";
-
 const NAV = [
+  { label: "Work", href: "/#work" },
   { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
+  { label: "Writing", href: "/blog" },
   { label: "Workshops", href: "/workshops" },
   { label: "Contact", href: "/contact" },
 ];
-
-function isActive(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
-/**
- * Below the `sm` breakpoint the four links no longer fit: at a 320px viewport
- * the row overflowed by 24px and the page scrolled sideways. So on phones the
- * links move into a full-screen panel behind a single button, and the wordmark
- * stays spelled out rather than shrinking to initials.
- */
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const panelRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDialogElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-
-  // Any navigation closes the panel, including a browser back.
   useEffect(() => {
-    // Navigation changes an external UI state that must reset after routing.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOpen(false);
+    panelRef.current?.close();
   }, [pathname]);
-
-  // Escape closes, and the page behind must not scroll while it is open.
   useEffect(() => {
-    if (!open) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-        buttonRef.current?.focus();
-      }
+    const desktop = window.matchMedia("(min-width: 640px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) panelRef.current?.close();
     };
-
-    const previousOverflow = document.body.style.overflow;
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
+  useEffect(() => {
+    const dialog = panelRef.current;
+    const trigger = buttonRef.current;
+    if (!dialog || !open) return;
+    dialog.showModal();
+    const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", onKeyDown);
-    panelRef.current?.focus();
-
     return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", onKeyDown);
+      dialog.close();
+      document.body.style.overflow = previous;
+      trigger?.focus();
     };
   }, [open]);
-
-  useEffect(() => {
-    let previousY = window.scrollY;
-    const onScroll = () => {
-      const currentY = window.scrollY;
-      setHidden(currentY > 96 && currentY > previousY);
-      previousY = currentY;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
+  const active = (href: string) =>
+    pathname === href || pathname.startsWith(href + "/");
   return (
     <>
-    <header className={`fixed inset-x-0 top-0 z-50 border-b border-white/8 bg-black/55 backdrop-blur-md transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}>
-      <nav
-        aria-label="Main"
-        className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8"
-      >
-        <Link
-          href="/"
-          className="font-display shrink-0 py-1.5 text-xs font-light uppercase tracking-[0.22em] text-white transition-opacity hover:opacity-70 sm:tracking-[0.3em]"
-        >
-          {SITE.name}
-        </Link>
-
-        {/* Phones: one button. Everything above sm: the links inline. */}
-        <button
-          ref={buttonRef}
-          type="button"
-          onClick={() => setOpen((value) => !value)}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          className="-my-2.5 -mr-2.5 flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors hover:bg-white/10 sm:hidden"
-        >
-          <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-          <span aria-hidden className="relative block h-3.5 w-5">
-            <span
-              className={`absolute left-0 block h-px w-full bg-current transition-transform duration-300 ${
-                open ? "top-1/2 rotate-45" : "top-0"
-              }`}
-            />
-            <span
-              className={`absolute left-0 top-1/2 block h-px w-full bg-current transition-opacity duration-200 ${
-                open ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`absolute left-0 block h-px w-full bg-current transition-transform duration-300 ${
-                open ? "top-1/2 -rotate-45" : "top-full"
-              }`}
-            />
-          </span>
-        </button>
-
-        <ul className="hidden items-center gap-8 sm:flex">
-          {NAV.map((item) => {
-            const active = isActive(pathname, item.href);
-            return (
+      <header className="site-header">
+        <nav className="site-width main-nav" aria-label="Main">
+          <Link className="wordmark" href="/" aria-label={SITE.name + " home"}>
+            <span className="brand-orbit" aria-hidden="true" />
+            {SITE.name}
+          </Link>
+          <ul className="desktop-nav">
+            {NAV.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`font-display relative block py-1.5 text-xs font-light uppercase tracking-[0.2em] transition-colors ${
-                    active ? "text-white" : "text-white/60 hover:text-white"
-                  }`}
+                  aria-current={active(item.href) ? "page" : undefined}
                 >
                   {item.label}
-                  <span
-                    aria-hidden
-                    className={`absolute -bottom-0.5 left-0 h-px w-full origin-left bg-white transition-transform duration-300 ${
-                      active ? "scale-x-100" : "scale-x-0"
-                    }`}
-                  />
                 </Link>
               </li>
-            );
-          })}
-        </ul>
-      </nav>
-    </header>
-
-      {/* Deliberately a sibling of <header>, not a child: the header's
-          backdrop-filter would otherwise become this panel's containing block
-          and collapse it to the height of the header. Rendered always so both
-          transitions animate, but out of the tab order while hidden. */}
-      <div
+            ))}
+          </ul>
+          <Link className="nav-invite" href="/contact?type=speaking">
+            Invite me to speak <span aria-hidden="true">↗</span>
+          </Link>
+          <button
+            className="menu-toggle"
+            type="button"
+            ref={buttonRef}
+            aria-label="Open menu"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            onClick={() => setOpen(true)}
+          >
+            <span /> <span />
+          </button>
+        </nav>
+      </header>
+      <dialog
         id="mobile-nav"
+        className="mobile-menu"
         ref={panelRef}
-        tabIndex={-1}
-        aria-hidden={!open}
-        inert={!open}
-        className={`fixed inset-x-0 bottom-0 top-14 z-40 overflow-y-auto bg-black/95 backdrop-blur-xl transition-opacity duration-300 sm:hidden ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
+        onCancel={() => setOpen(false)}
+        onClose={() => setOpen(false)}
+        aria-label="Navigation menu"
       >
-        <ul className="flex flex-col gap-1 px-5 pt-6">
-          {NAV.map((item, index) => {
-            const active = isActive(pathname, item.href);
-            return (
+        <div className="mobile-menu-top">
+          <Link href="/" className="wordmark" onClick={() => setOpen(false)}>
+            {SITE.name}
+          </Link>
+          <button
+            className="menu-close"
+            aria-label="Close menu"
+            onClick={() => setOpen(false)}
+          >
+            ×
+          </button>
+        </div>
+        <nav aria-label="Mobile">
+          <ul>
+            {NAV.map((item, i) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  aria-current={active ? "page" : undefined}
                   onClick={() => setOpen(false)}
-                  style={{ transitionDelay: open ? `${60 + index * 45}ms` : "0ms" }}
-                  className={`font-display flex min-h-[56px] items-center border-b border-white/10 text-base font-light uppercase tracking-[0.22em] transition-[opacity,transform,color] duration-300 ${
-                    open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
-                  } ${active ? "text-white" : "text-white/70"}`}
+                  aria-current={active(item.href) ? "page" : undefined}
                 >
+                  <span>0{i + 1}</span>
                   {item.label}
+                  <span aria-hidden="true">↗</span>
                 </Link>
               </li>
-            );
-          })}
-        </ul>
-
-        <p className="px-5 pt-8 text-sm leading-relaxed text-white/50">
-          {SITE.tagline}
-        </p>
-      </div>
+            ))}
+          </ul>
+        </nav>
+        <Link
+          className="mobile-invite"
+          href="/contact?type=speaking"
+          onClick={() => setOpen(false)}
+        >
+          Invite me to speak ↗
+        </Link>
+      </dialog>
+      <noscript>
+        <nav className="nojs-nav" aria-label="Mobile navigation">
+          {NAV.map((item) => (
+            <a key={item.href} href={item.href}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </noscript>
     </>
   );
 }

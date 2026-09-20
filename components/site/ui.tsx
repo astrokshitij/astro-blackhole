@@ -9,18 +9,18 @@ import { ArrowGlyph } from "./icons";
  * -------------------------------------------------------------------- */
 
 export const buttonStyles = cva(
-  "font-display inline-flex items-center justify-center gap-2 rounded-full font-light uppercase tracking-[0.18em] transition-[background-color,border-color,color,transform] duration-200 active:translate-y-px",
+  "inline-flex min-h-12 max-w-full items-center justify-center gap-3 rounded-sm font-medium transition-[background-color,border-color,color,transform] duration-200 active:translate-y-px",
   {
     variants: {
       variant: {
-        primary: "bg-white text-black font-medium hover:bg-white/85",
+        primary: "bg-[#CBA775] text-[#08090C] hover:bg-[#dec398]",
         secondary:
           "border border-white/30 text-white/85 hover:border-white hover:text-white hover:bg-white/[0.06]",
         ghost: "text-white/70 hover:text-white",
       },
       size: {
-        sm: "px-5 py-2.5 text-xs",
-        md: "px-6 py-3 text-xs",
+        sm: "px-5 py-2.5 text-sm",
+        md: "px-6 py-3 text-sm",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },
@@ -68,8 +68,8 @@ export function Section({
   id?: string;
 }) {
   return (
-    <section id={id} className={cn("bg-black", className)}>
-      <div className="mx-auto max-w-6xl px-5 pt-16 pb-24 sm:px-8 sm:pt-24 sm:pb-32">
+    <section id={id} className={cn("editorial-section", className)}>
+      <div className="site-width section-inner">
         {children}
       </div>
     </section>
@@ -78,7 +78,7 @@ export function Section({
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
+    <p className="eyebrow">
       {children}
     </p>
   );
@@ -96,7 +96,7 @@ export function SectionHeading({
   return (
     <header className="mb-14 max-w-2xl">
       {index ? <Eyebrow>{index}</Eyebrow> : null}
-      <h2 className="font-display mt-4 text-2xl font-light leading-tight tracking-[0.02em] text-white sm:text-4xl">
+      <h2 className="section-title mt-4">
         {title}
       </h2>
       {dek ? (

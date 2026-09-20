@@ -1,264 +1,259 @@
-import { BlackHoleHeroSection } from "@/components/ui/black-hole-hero-section";
-import { ButtonLink, Section, SectionHeading } from "@/components/site/ui";
-import { SocialLinks } from "@/components/site/social-links";
-import { ArrowGlyph, YoutubeGlyph } from "@/components/site/icons";
-import { TedxCarousel } from "@/components/site/tedx-carousel";
-import { Reveal } from "@/components/site/reveal";
-import { CountUp } from "@/components/site/count-up";
 import Image from "next/image";
 import Link from "next/link";
-import { SITE, STATS } from "@/lib/content";
-import { SpotlightCard, SpotlightLink } from "@/components/site/spotlight-card";
-import { HorizonDivider } from "@/components/site/horizon-divider";
-
-const GATEWAYS = [
-  {
-    index: "01",
-    label: "About",
-    href: "/about",
-    title: "Who is behind Astro Kshitij?",
-    blurb:
-      "I hold a Master's in Astrophysics and Cosmology, but what really drives me is understanding how the universe works and sharing that curiosity with you.",
-    cta: "Read more",
-  },
-  {
-    index: "02",
-    label: "Blog",
-    href: "/blog",
-    title: "My Abstract Thoughts",
-    blurb:
-      "Some ideas simply refuse to fit into a short video. So, if you're curious to go a little deeper, this is where I put the thoughts, questions and rabbit holes that keep me thinking.",
-    cta: "Read the blog",
-  },
-  {
-    index: "03",
-    label: "Workshops",
-    href: "/workshops",
-    title: "Learn With Me",
-    blurb:
-      "Always wanted to understand Quantum Mechanics but didn't know where to start? Come explore it with me from the ground up through my \"Quantum Mechanics for Everyone\" workshop.",
-    cta: "Explore workshops",
-  },
-];
-
-const TEDX_PHOTOS = [
-  {
-    src: "/images/home/tedx/1.jpg",
-    alt: "Kshitij on the TEDx stage with a Moon slide behind him",
-    position: "center 25%",
-  },
-  {
-    src: "/images/home/tedx/2.jpg",
-    alt: "Kshitij mid-gesture during his TEDx talk",
-    position: "center 30%",
-  },
-  {
-    src: "/images/home/tedx/3.jpg",
-    // TEDx 3 is nearly square, so anchor the crop at the top of the frame
-    // so his head stays in view in the wide 2:1 band.
-    alt: "Kshitij standing on the TEDx stage",
-    position: "center top",
-  },
-];
+import { HeroVisual } from "@/components/site/hero-visual";
+import { ButtonLink, Eyebrow, Section } from "@/components/site/ui";
+import { ArrowGlyph, YoutubeGlyph } from "@/components/site/icons";
+import {
+  SITE,
+  STATS,
+  SOCIALS,
+  EDITORIAL as COPY,
+  PAGE_COPY,
+} from "@/lib/content";
+import { getPosts } from "@/lib/posts";
 
 export default function Home() {
+  const essay = getPosts().find(
+    (post) => post.slug === "how-the-universe-might-actually-die",
+  );
   return (
     <>
-      <section className="relative isolate h-[100svh] w-full overflow-hidden">
-        <div className="absolute inset-0 -z-10">
-          <BlackHoleHeroSection
-            focus={[0.70, 0.44]}
-            scrim="left"
-            scrimStrength={0.88}
-          />
+      <section className="home-hero" aria-labelledby="hero-title">
+        <div className="hero-art">
+          <HeroVisual />
         </div>
-
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-2/5 bg-gradient-to-t from-black via-black/80 to-transparent"
-        />
-
-        <div className="flex h-full items-end pb-24 sm:items-center sm:pb-0">
-          <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-            <div className="max-w-lg">
-              <p className="font-display text-xs uppercase tracking-[0.42em] text-white/60">
-                Welcome to
-              </p>
-              <h1 className="font-display mt-4 text-[clamp(1.75rem,6.6vw,4.25rem)] font-light uppercase leading-[1.05] tracking-[0.16em] text-white">
-                {SITE.name}
-              </h1>
-
-              <p className="mt-7 max-w-md text-sm leading-relaxed text-white/70 sm:text-base">
-                I am an absolute physics head, and nothing excites me more than
-                sharing the ideas that boggle my mind with the people around
-                me. Through Astro Kshitij, I want to spark that same curiosity
-                in you.
-              </p>
-
-              <div className="mt-9 flex flex-wrap items-center gap-3">
-                <ButtonLink href="/about">
-                  More About Me
-                  <ArrowGlyph className="h-4 w-4" />
-                </ButtonLink>
-                <ButtonLink
-                  href="https://www.youtube.com/@astrokshitij"
-                  variant="secondary"
-                >
-                  <YoutubeGlyph className="h-4 w-4" />
-                  Watch on YouTube
-                </ButtonLink>
-              </div>
-
-              <div className="mt-10 sm:hidden">
-                <SocialLinks compact />
-              </div>
+        <div className="site-width hero-composition">
+          <div className="hero-copy">
+            <Eyebrow>{COPY.hero.eyebrow}</Eyebrow>
+            <h1 id="hero-title">
+              {PAGE_COPY.home.headline[0]}
+              <br />
+              {PAGE_COPY.home.headline[1]}
+              <br />
+              <span>{PAGE_COPY.home.headline[2]}</span>
+            </h1>
+            <p className="hero-intro">{COPY.hero.intro}</p>
+            <div className="hero-actions">
+              <ButtonLink href="#work">
+                Explore my work <ArrowGlyph className="h-4 w-4" />
+              </ButtonLink>
+              <ButtonLink href={SOCIALS[0].href} variant="ghost">
+                <YoutubeGlyph className="h-4 w-4" /> Watch on YouTube
+              </ButtonLink>
             </div>
           </div>
-        </div>
-
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-7 hidden justify-center sm:flex"
-        >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-white/55">
-            Scroll
-          </span>
-        </div>
-      </section>
-
-      {/* Stats — split layout with count-up on the numbers. */}
-      <section className="border-y border-white/10 bg-black">
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24">
-          <div className="grid items-stretch gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-20">
-            <Reveal className="mx-auto w-full max-w-sm lg:max-w-none">
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-white/12">
-                <Image
-                  src="/images/home/stats-audience.jpg"
-                  alt="Kshitij talking to a room of students"
-                  fill
-                  sizes="(min-width: 1024px) 460px, (min-width: 640px) 384px, 100vw"
-                  priority
-                  className="object-cover"
-                  style={{
-                    filter: "saturate(0.55) contrast(1.04)",
-                    objectPosition: "center 30%",
-                  }}
-                />
-              </div>
-            </Reveal>
-
-            <Reveal delay={150} className="flex">
-              <div className="flex w-full flex-col justify-center">
-                <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
-                  Reach
-                </p>
-                <p className="font-display mt-5 max-w-md text-xl font-light leading-snug text-white sm:text-2xl">
-                  Physics in Hindi, in front of rooms and on the feed.
-                </p>
-                <dl className="mt-10 grid grid-cols-2 gap-x-10 gap-y-9 text-center sm:gap-x-16 lg:text-left">
-                  {STATS.map((stat) => (
-                    <div key={stat.label}>
-                      <dt className="font-display text-4xl font-light leading-none text-white sm:text-5xl">
-                        <CountUp to={stat.to} suffix={stat.suffix} />
-                      </dt>
-                      <dd className="mt-3 text-xs uppercase tracking-[0.22em] text-white/60">
-                        {stat.label}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            </Reveal>
+          <div className="hero-footnote">
+            <span>{PAGE_COPY.home.footnote}</span>
+            <span className="hero-science">{PAGE_COPY.home.simulation}</span>
+            <a href="#work" aria-label="Scroll to selected explorations">
+              {PAGE_COPY.home.scroll}
+            </a>
           </div>
         </div>
       </section>
-
-      {/* Explore */}
-      <Section>
-        <Reveal>
-          <SectionHeading title="Explore Astro Kshitij" />
-        </Reveal>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {GATEWAYS.map((gateway, i) => (
-            <Reveal key={gateway.href} delay={i * 120} className="h-full min-w-0">
-              <SpotlightLink
-                href={gateway.href}
-                className="h-full"
-              >
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
-                  {gateway.index} / {gateway.label}
-                </span>
-                <h3 className="font-display mt-6 text-xl font-light leading-snug text-white sm:text-2xl">
-                  {gateway.title}
-                </h3>
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-white/60">
-                  {gateway.blurb}
-                </p>
-                <span className="font-display mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/80 transition-colors group-hover:text-white">
-                  {gateway.cta}
-                  <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                </span>
-              </SpotlightLink>
-            </Reveal>
+      <section className="credibility" aria-label="Background and reach">
+        <div className="site-width credibility-inner">
+          {COPY.credentials.map((item) => (
+            <p key={item}>{item}</p>
+          ))}
+          {STATS.map((stat) => (
+            <p key={stat.label}>
+              <strong>
+                {stat.to}
+                {stat.suffix}
+              </strong>{" "}
+              {stat.label}
+            </p>
           ))}
         </div>
-
-        <HorizonDivider className="my-14 sm:my-20" />
-
-        {/* TEDx carousel band. A slow rotating rest between the gateway
-            cards above and the CTA cards below. */}
-        <Reveal>
-          <TedxCarousel
-            photos={TEDX_PHOTOS}
-            className="aspect-[16/9] sm:aspect-[2/1]"
-            ariaLabel="TEDx talk by Kshitij Pandey"
-          />
-        </Reveal>
-
-        <div className="mt-12 grid gap-6 sm:mt-16 md:grid-cols-2 md:items-stretch">
-          <Reveal className="h-full min-w-0">
-            <SpotlightCard className="h-full min-w-0">
-              <h3 className="font-display text-xl font-light text-white sm:text-2xl">
-                Follow Along
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/60">
-                I share physics, astronomy, scientific ideas and the occasional
-                rabbit hole across Instagram, YouTube and LinkedIn. If
-                something makes you stop and think, you&apos;ll probably find
-                it here.
-              </p>
-              <div className="mt-7">
-                <SocialLinks />
-              </div>
-            </SpotlightCard>
-          </Reveal>
-
-          <Reveal delay={120} className="h-full min-w-0">
-            <SpotlightCard className="h-full min-w-0">
-              <h3 className="font-display text-xl font-light text-white sm:text-2xl">
-                Want to learn something together?
-              </h3>
-              <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
-                Whether you want to finally understand Quantum Mechanics or
-                you&apos;re looking for someone to make complex science easier
-                to communicate, I&apos;d love to hear from you.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <ButtonLink href="/workshops">
-                  Explore Workshops
+      </section>
+      <Section id="work">
+        <div className="section-top">
+          <div>
+            <Eyebrow>{PAGE_COPY.home.workLabel}</Eyebrow>
+            <h2 className="section-title">
+              {PAGE_COPY.home.workTitle[0]}
+              <br />
+              {PAGE_COPY.home.workTitle[1]}
+            </h2>
+          </div>
+          <p className="section-aside">{PAGE_COPY.home.workIntro}</p>
+        </div>
+        <div className="exploration-grid">
+          {COPY.explorations.map((piece, i) => (
+            <article
+              className={`exploration exploration-${i}`}
+              key={piece.href}
+            >
+              <a
+                href={piece.href}
+                className="image-link"
+                tabIndex={-1}
+                aria-hidden="true"
+              >
+                <div className="editorial-image">
+                  <Image
+                    src={piece.image}
+                    alt={piece.alt}
+                    fill
+                    sizes={
+                      i === 0
+                        ? "(min-width: 900px) 720px, 100vw"
+                        : "(min-width: 900px) 370px, 100vw"
+                    }
+                    className="object-cover"
+                  />
+                </div>
+                <span className="image-badge">{piece.type}</span>
+              </a>
+              <div className="exploration-copy">
+                <Eyebrow>{piece.category}</Eyebrow>
+                <h3>
+                  <a href={piece.href}>{piece.title}</a>
+                </h3>
+                <p>{piece.description}</p>
+                <a className="text-link" href={piece.href}>
+                  {piece.cta}
                   <ArrowGlyph className="h-4 w-4" />
-                </ButtonLink>
-                <ButtonLink href="/contact" variant="secondary">
-                  Get in Touch
-                </ButtonLink>
+                </a>
               </div>
-              <p className="mt-5 text-xs leading-relaxed text-white/55">
-                Want to book a workshop, collaborate, or just argue about
-                physics?
+            </article>
+          ))}
+        </div>
+      </Section>
+      <Section className="room-section">
+        <div className="section-top">
+          <div>
+            <Eyebrow>{PAGE_COPY.home.roomLabel}</Eyebrow>
+            <h2 className="section-title">{COPY.room.title}</h2>
+          </div>
+          <Link className="text-link" href="/contact?type=speaking">
+            Invite Kshitij to speak <ArrowGlyph className="h-4 w-4" />
+          </Link>
+        </div>
+        <figure className="stage-photo">
+          <Image
+            src="/images/home/tedx/2.jpg"
+            alt="Kshitij Pandey speaking on the TEDx stage"
+            fill
+            sizes="(min-width: 1280px) 1200px, 100vw"
+            className="object-cover"
+          />
+          <figcaption>{COPY.room.caption}</figcaption>
+        </figure>
+        <div className="room-details">
+          <div>
+            <h3>{COPY.room.intro}</h3>
+            <p>{COPY.room.body}</p>
+          </div>
+          <div>
+            <ul>
+              {COPY.room.offerings.map((item, i) => (
+                <li key={item}>
+                  <span>0{i + 1}</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="availability-note">{COPY.room.note}</p>
+            <Link className="text-link" href="/workshops">
+              Explore workshops <ArrowGlyph className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </Section>
+      <Section>
+        <div className="about-preview">
+          <figure>
+            <div className="portrait-image">
+              <Image
+                src={SITE.portrait}
+                alt={SITE.portraitAlt}
+                fill
+                sizes="(min-width: 900px) 460px, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <figcaption>{PAGE_COPY.home.portraitCaption}</figcaption>
+          </figure>
+          <div>
+            <Eyebrow>03 / {COPY.about.eyebrow}</Eyebrow>
+            <h2 className="section-title">{COPY.about.title}</h2>
+            <p className="body-copy">{COPY.about.body}</p>
+            <Link className="text-link" href="/about">
+              {COPY.about.cta}
+              <ArrowGlyph className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </Section>
+      {essay && (
+        <Section className="writing-band">
+          <Eyebrow>04 / {COPY.writing.eyebrow}</Eyebrow>
+          <div className="writing-feature">
+            <div>
+              <p className="writing-meta">
+                {essay.category} <span> / </span> {essay.readTime} read{" "}
+                <span> / </span>{" "}
+                <time dateTime={essay.date}>{essay.dateLabel}</time>
               </p>
-            </SpotlightCard>
-          </Reveal>
+              <h2>
+                <Link href={`/blog/${essay.slug}`}>{essay.title}</Link>
+              </h2>
+              <p className="body-copy">{COPY.writing.summary}</p>
+              <Link className="text-link" href={`/blog/${essay.slug}`}>
+                Read the essay <ArrowGlyph className="h-4 w-4" />
+              </Link>
+            </div>
+            <Link
+              href={`/blog/${essay.slug}`}
+              className="essay-image"
+              tabIndex={-1}
+              aria-hidden="true"
+            >
+              <Image
+                src={essay.cover!}
+                alt=""
+                fill
+                sizes="(min-width: 900px) 400px, 100vw"
+                className="object-cover"
+              />
+            </Link>
+          </div>
+        </Section>
+      )}
+      <Section className="channels-section">
+        <div className="section-top">
+          <div>
+            <Eyebrow>{PAGE_COPY.home.channelsLabel}</Eyebrow>
+            <h2 className="section-title">{PAGE_COPY.home.channelsTitle}</h2>
+          </div>
+        </div>
+        <div className="channel-list">
+          {SOCIALS.map((social, i) => (
+            <a href={social.href} key={social.label}>
+              <span className="channel-number">0{i + 1}</span>
+              <h3>{social.label}</h3>
+              <p>{social.note}</p>
+              <span className="channel-handle">{social.handle}</span>
+              <ArrowGlyph className="h-5 w-5" />
+            </a>
+          ))}
+        </div>
+      </Section>
+      <Section className="closing-section">
+        <Eyebrow>{COPY.closing.eyebrow}</Eyebrow>
+        <h2>{COPY.closing.title}</h2>
+        <div className="closing-bottom">
+          <p>{COPY.closing.body}</p>
+          <div className="hero-actions">
+            <ButtonLink href="/contact?type=speaking">
+              Invite me to speak <ArrowGlyph className="h-4 w-4" />
+            </ButtonLink>
+            <ButtonLink href="/contact" variant="secondary">
+              Get in touch
+            </ButtonLink>
+          </div>
         </div>
       </Section>
     </>

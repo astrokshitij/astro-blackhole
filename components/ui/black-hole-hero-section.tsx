@@ -652,12 +652,12 @@ export function BlackHoleHeroSection({
     midColor, coolColor, starBrightness, glow, exposure, vignette, steps,
     resolution, maxDpr, focus, scrim, scrimStrength, paused,
   });
-  props.current = {
+  useEffect(() => { props.current = {
     distance, elevation, azimuth, orbitSpeed, roll, fov, diskInner, diskOuter,
     diskThickness, diskDensity, brightness, spinSpeed, grain, doppler, hotColor,
     midColor, coolColor, starBrightness, glow, exposure, vignette, steps,
     resolution, maxDpr, focus, scrim, scrimStrength, paused,
-  };
+  }; });
 
   useEffect(() => {
     const host = hostRef.current;
@@ -705,7 +705,7 @@ export function BlackHoleHeroSection({
     // dead canvas.
     const dbg = gl.getExtension("WEBGL_debug_renderer_info");
     const renderer = dbg
-      ? String(gl.getParameter((dbg as any).UNMASKED_RENDERER_WEBGL) || "")
+      ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || "")
       : "";
     const software = /swiftshader|llvmpipe|softpipe|software|microsoft basic/i.test(renderer);
     const isGL2 = typeof WebGL2RenderingContext !== "undefined" &&
@@ -774,7 +774,7 @@ export function BlackHoleHeroSection({
     } else {
       const hf = gl.getExtension("OES_texture_half_float");
       const cb = gl.getExtension("EXT_color_buffer_half_float");
-      if (hf && cb) texType = (hf as any).HALF_FLOAT_OES;
+      if (hf && cb) texType = hf.HALF_FLOAT_OES;
       else hdr = false;
     }
     if (!hdr) {
@@ -882,8 +882,9 @@ export function BlackHoleHeroSection({
       const scale = software
         ? 0.34
         : Math.min(1, Math.max(0.4, props.current.resolution));
-      const w = Math.max(2, Math.round(cssW * dpr));
-      const h = Math.max(2, Math.round(cssH * dpr));
+      const pixelBudgetScale = Math.min(1, Math.sqrt(2100000 / (cssW * cssH * dpr * dpr)));
+      const w = Math.max(2, Math.round(cssW * dpr * pixelBudgetScale));
+      const h = Math.max(2, Math.round(cssH * dpr * pixelBudgetScale));
       const sw = Math.max(2, Math.round(w * scale));
       const sh = Math.max(2, Math.round(h * scale));
       if (w === width && h === height && sw === sceneW && sh === sceneH) return;
@@ -960,9 +961,9 @@ export function BlackHoleHeroSection({
       let rx = fz, ry = 0, rz = -fx;          // cross(fwd, worldUp), worldUp = +y
       const rl = Math.hypot(rx, ry, rz) || 1;
       rx /= rl; ry /= rl; rz /= rl;
-      let ux = ry * fz - rz * fy;
-      let uy = rz * fx - rx * fz;
-      let uz = rx * fy - ry * fx;
+      const ux = ry * fz - rz * fy;
+      const uy = rz * fx - rx * fz;
+      const uz = rx * fy - ry * fx;
       const cr = Math.cos(C.roll * RAD);
       const sr = Math.sin(C.roll * RAD);
       const RX = rx * cr + ux * sr, RY = ry * cr + uy * sr, RZ = rz * cr + uz * sr;
@@ -1086,7 +1087,8 @@ export function BlackHoleHeroSection({
     function tick(now: number) {
       if (!running) return;
       raf = requestAnimationFrame(tick);
-      if (!visible) { lastFrame = now; return; }
+      if (!visible || document.hidden || props.current.paused) { lastFrame = now; return; }
+      if (lastFrame && now - lastFrame < 1000 / 30) return;
       const dt = lastFrame ? Math.min(0.05, (now - lastFrame) / 1000) : 0;
       lastFrame = now;
       if (!props.current.paused && !reduced) clock += dt;
@@ -1099,6 +1101,7 @@ export function BlackHoleHeroSection({
     }
     resize();
     settle(reduced ? 16 : 1);
+    canvas.style.opacity = "1";
     if (!reduced) raf = requestAnimationFrame(tick);
 
     /* --- the world ------------------------------------------------------- */
@@ -1172,7 +1175,7 @@ export function BlackHoleHeroSection({
       className={`relative isolate h-full w-full overflow-hidden bg-black ${className}`}
       {...rest}
     >
-      <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full" />
+      <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full opacity-0 transition-opacity duration-700" />
       {children ? <div className="relative z-10 h-full w-full">{children}</div> : null}
     </div>
   );
