@@ -100,7 +100,7 @@ export const CREDENTIALS = [
   {
     year: "2023",
     detail:
-      "Co-authored a peer-reviewed paper on high-energy collisions near naked singularities",
+      "Co-authored a paper on high-energy collisions near naked singularities",
   },
   { year: "—", detail: "TEDx speaker" },
   { year: "—", detail: "Recipient of a Science Communicator Award" },
@@ -117,7 +117,6 @@ export const EDITORIAL = {
   credentials: [
     "MSc Physics · Astrophysics & Cosmology",
     "TEDx speaker",
-    "Peer-reviewed research",
   ],
   explorations: [
     {
@@ -136,7 +135,7 @@ export const EDITORIAL = {
       title: "At the edge of a singularity",
       description:
         "My co-authored work on high-energy particle collisions near naked singularities.",
-      type: "Peer-reviewed paper",
+      type: "Research paper",
       href: "https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948",
       image: "/images/story/msc-poster.jpg",
       alt: "Kshitij presenting his research poster",
@@ -169,7 +168,7 @@ export const EDITORIAL = {
   about: {
     eyebrow: "Behind the questions",
     title: "A physicist. A storyteller. Still a student of the universe.",
-    body: "My path runs through astrophysics and cosmology, dark-matter research, and high-energy collisions near naked singularities. The question that follows me everywhere: how do we make these difficult ideas understandable?",
+    body: "My path runs through studying physics, asking questions about the universe, and sharing what I learn. The question that follows me everywhere: how do we make these difficult ideas understandable?",
     cta: "The story so far",
   },
   writing: {
@@ -185,7 +184,6 @@ export const EDITORIAL = {
   },
   aboutCredentials: [
     "MSc Physics · Astrophysics & Cosmology",
-    "Peer-reviewed research",
     "TEDx speaker",
     "Silver Medal · University Physics Competition",
     "SLAC Summer Institute",

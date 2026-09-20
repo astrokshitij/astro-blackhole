@@ -284,7 +284,7 @@ export default function AboutPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      peer-reviewed research paper
+                      paper I co-authored
                     </a>
                     .
                   </p>
