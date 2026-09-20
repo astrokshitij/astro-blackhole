@@ -7,7 +7,6 @@ const Simulation = dynamic(
 );
 /** CSS paints a still before hydration and whenever WebGL is unavailable. */
 export function HeroVisual() {
-  const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -31,22 +30,9 @@ export function HeroVisual() {
           maxDpr={1.25}
           resolution={0.6}
           steps={220}
-          paused={paused || reduced}
+          paused={reduced}
         />
       </div>
-      <button
-        className="motion-toggle"
-        type="button"
-        aria-pressed={paused || reduced}
-        onClick={() => setPaused((value) => !value)}
-        disabled={reduced}
-      >
-        {reduced
-          ? "Still view · Reduced motion"
-          : paused
-            ? "Play motion"
-            : "Pause motion"}
-      </button>
     </>
   );
 }

@@ -52,7 +52,8 @@ export default function Home() {
           {STATS.map((stat) => (
             <p key={stat.label}>
               <strong>
-                {stat.to}
+                <span className="sr-only">{stat.to}</span>
+                <span aria-hidden="true" data-count-to={stat.to} style={{ display: "inline-block", minWidth: `${String(stat.to).length}ch`, fontVariantNumeric: "tabular-nums" }}>{stat.to}</span>
                 {stat.suffix}
               </strong>{" "}
               {stat.label}

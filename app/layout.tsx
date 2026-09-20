@@ -6,6 +6,7 @@ import "./globals.css";
 import "./editorial.css";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
+import { ScrollMotion } from "@/components/site/scroll-motion";
 import { SITE, SOCIALS } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
 import { socialMeta } from "@/lib/seo";
@@ -95,6 +96,7 @@ export default function RootLayout({
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <ScrollMotion />
       </body>
     </html>
   );
