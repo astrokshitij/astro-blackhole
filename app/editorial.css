@@ -1,4 +1,32 @@
 /* Astro Kshitij — a contemporary observatory, built around the work. */
+.reach-layout { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); align-items:center; gap:clamp(40px,7vw,100px); }
+.reach-photo { position:relative; aspect-ratio:3/4; margin:0; overflow:hidden; border-radius:4px; }
+.reach-copy { min-width:0; }
+.reach-copy .section-title { font-size:clamp(32px,3.5vw,52px); }
+.reach-numbers { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:48px; border-top:1px solid #ffffff24; padding-top:36px; }
+.reach-numbers p { display:flex; flex-direction:column; gap:16px; font-size:12px; text-transform:uppercase; letter-spacing:.14em; color:#a8adb7; }
+.reach-numbers strong { white-space:nowrap; text-transform:none; color:#f2efe8; font-family:var(--font-jost); font-size:clamp(44px,6.3vw,92px); font-weight:350; letter-spacing:-.065em; line-height:1; }
+.reach-numbers strong > span[aria-hidden] { min-width:0!important; }
+.reach-section { border-bottom:1px solid #ffffff18; }
+.action-button, button, .text-link, .header-invite, .channel-list > a { transition:background-color .22s, color .22s, border-color .22s, box-shadow .22s, transform .22s; }
+.action-button svg, .text-link svg, .channel-list > a svg { transition:transform .22s; }
+@media(hover:hover) {
+  .action-button:hover, button:not(:disabled):hover { transform:translateY(-2px); box-shadow:0 8px 25px #cba77518; }
+  .action-button:hover svg, .text-link:hover svg, .channel-list > a:hover svg { transform:translateX(4px); }
+  .text-link:hover { color:#e9bf85; }
+  .channel-list > a:hover { background:#cba77508; }
+}
+.action-button:active, button:not(:disabled):active, .text-link:active { transform:translateY(1px) scale(.98); }
+a:focus-visible, button:focus-visible { outline:2px solid #e9bf85; outline-offset:5px; }
+button:disabled { opacity:.55; }
+@media(max-width:899px) {
+  .reach-layout { grid-template-columns:1fr; gap:40px; }
+  .reach-photo { width:min(100%,480px); margin-inline:auto; }
+  .reach-numbers { margin-top:32px; gap:12px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .action-button, button, .text-link, .channel-list > a, .action-button svg, .text-link svg { transition:none!important; transform:none!important; }
+}
 body[data-reading-theme="light"] .site-header a,
 body[data-reading-theme="light"] .article-shell [class*="text-white"],
 body[data-reading-theme="light"] .article-tools [class*="text-white"] {

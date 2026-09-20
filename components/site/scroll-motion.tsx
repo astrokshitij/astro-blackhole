@@ -14,7 +14,7 @@ export function ScrollMotion() {
     const counters = new Map<HTMLElement, string>();
     const selector = [
       ".hero-copy > *", ".page-hero .site-width > *",
-      ".credibility-inner > p", ".section-top", ".exploration",
+      ".credibility-inner > p", ".reach-copy > .eyebrow", ".reach-copy > h2", ".reach-numbers > p", ".section-top", ".exploration",
       ".room-details > div", ".about-preview > div", ".writing-feature > *",
       ".featured-post", ".post-card", "footer .site-width > div",
       ".section-inner > .eyebrow", ".section-inner > h2",

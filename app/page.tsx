@@ -49,6 +49,17 @@ export default function Home() {
           {COPY.credentials.map((item) => (
             <p key={item}>{item}</p>
           ))}
+        </div>
+      </section>
+      <Section className="reach-section">
+        <div className="reach-layout">
+          <figure className="reach-photo">
+            <Image src="/images/home/stats-audience.jpg" alt="Kshitij discussing physics with an audience" fill sizes="(min-width: 900px) 480px, 90vw" className="object-cover" />
+          </figure>
+          <div className="reach-copy">
+            <Eyebrow>{PAGE_COPY.home.reachLabel}</Eyebrow>
+            <h2 className="section-title">{PAGE_COPY.home.reachTitle}</h2>
+            <div className="reach-numbers">
           {STATS.map((stat) => (
             <p key={stat.label}>
               <strong>
@@ -59,8 +70,10 @@ export default function Home() {
               {stat.label}
             </p>
           ))}
+            </div>
+          </div>
         </div>
-      </section>
+      </Section>
       <Section id="work">
         <div className="section-top">
           <div>

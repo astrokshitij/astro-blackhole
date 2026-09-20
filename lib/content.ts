@@ -249,6 +249,8 @@ export const CONTACT = {
 
 export const PAGE_COPY = {
   home: {
+    reachLabel: "Reach / In rooms and on screen",
+    reachTitle: "Physics in front of rooms. Curiosity beyond them.",
     headline: ["The universe is", "stranger than", "you think."],
     workLabel: "01 / Selected explorations",
     workTitle: ["Follow a question.", "See where it takes you."],

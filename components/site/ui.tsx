@@ -9,7 +9,7 @@ import { ArrowGlyph } from "./icons";
  * -------------------------------------------------------------------- */
 
 export const buttonStyles = cva(
-  "inline-flex min-h-12 max-w-full items-center justify-center gap-3 rounded-sm font-medium transition-[background-color,border-color,color,transform] duration-200 active:translate-y-px",
+  "action-button inline-flex min-h-12 max-w-full items-center justify-center gap-3 rounded-sm font-medium transition-[background-color,border-color,color,transform] duration-200 active:translate-y-px",
   {
     variants: {
       variant: {

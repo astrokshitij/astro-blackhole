@@ -22,9 +22,9 @@ export function HeroVisual() {
           key={String(reduced)}
           focus={[0.68, 0.43]}
           scrim="none"
-          midColor="#CBA775"
-          coolColor="#594332"
-          hotColor="#F2EFE8"
+          midColor="#E99542"
+          coolColor="#8C351B"
+          hotColor="#FFF0D4"
           glow={0.3}
           spinSpeed={0.025}
           maxDpr={1.25}
