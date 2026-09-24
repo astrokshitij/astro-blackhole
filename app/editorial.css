@@ -452,6 +452,17 @@ img {
   border-bottom: 1px solid var(--border);
   transition: background-color 0.3s ease;
 }
+@media (min-width: 900px) {
+  .exploration:nth-child(even) {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+  .exploration:nth-child(even) .exploration-visual {
+    order: 2;
+  }
+  .exploration:nth-child(even) .exploration-copy {
+    order: 1;
+  }
+}
 .exploration-visual {
   min-width: 0;
 }
