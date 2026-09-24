@@ -378,9 +378,9 @@ img {
 .hero-copy h1 {
   font-family: var(--font-jost), sans-serif;
   font-size: clamp(60px, 6.1vw, 88px);
-  font-weight: 350;
-  letter-spacing: -0.055em;
-  line-height: 1.015;
+  font-weight: 380;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
   margin-top: 32px;
 }
 .hero-copy h1 span {
@@ -1223,9 +1223,9 @@ footer {
   }
   .hero-copy h1 {
     font-size: clamp(43px, 11.6vw, 67px);
-    line-height: 1.04;
+    line-height: 1.06;
     margin-top: 27px;
-    letter-spacing: -0.045em;
+    letter-spacing: -0.025em;
   }
   .hero-copy .eyebrow {
     font-size: 12px;
