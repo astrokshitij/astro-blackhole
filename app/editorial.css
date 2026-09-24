@@ -357,8 +357,7 @@ img {
 .simulation-host {
   position: absolute;
   inset: 0;
-  background: #08090c url("/images/black-hole-still.webp") right center / auto
-    85% no-repeat;
+  background: #08090c;
 }
 .simulation-host > div {
   background: transparent !important;
