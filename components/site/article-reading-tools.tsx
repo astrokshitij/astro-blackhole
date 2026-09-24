@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type TocItem = { id: string; title: string };
 
@@ -15,6 +15,7 @@ export function ArticleReadingTools({
   title,
   url,
 }: ArticleReadingToolsProps) {
+  const toolsRef = useRef<HTMLElement>(null);
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
   const [progress, setProgress] = useState(0);
   const [light, setLight] = useState(false);
@@ -48,11 +49,44 @@ export function ArticleReadingTools({
         .filter((heading) => heading.getBoundingClientRect().top <= 160)
         .at(-1);
       if (current) setActiveId(current.id);
+
+      if (toolsRef.current) {
+        const footer = document.querySelector("footer");
+        if (footer) {
+          const footerTop = footer.getBoundingClientRect().top;
+          const defaultTop = 115;
+          const toolsHeight = toolsRef.current.offsetHeight;
+          const margin = 32;
+          const overlap = defaultTop + toolsHeight + margin - footerTop;
+
+          if (overlap > 0) {
+            toolsRef.current.style.transform = `translateY(-${overlap}px)`;
+            const fadeStart = 40;
+            const fadeRange = 80;
+            if (overlap > fadeStart) {
+              const opacity = Math.max(0, 1 - (overlap - fadeStart) / fadeRange);
+              toolsRef.current.style.opacity = `${opacity}`;
+              toolsRef.current.style.pointerEvents = opacity < 0.1 ? "none" : "";
+            } else {
+              toolsRef.current.style.opacity = "1";
+              toolsRef.current.style.pointerEvents = "";
+            }
+          } else {
+            toolsRef.current.style.transform = "";
+            toolsRef.current.style.opacity = "1";
+            toolsRef.current.style.pointerEvents = "";
+          }
+        }
+      }
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [items]);
 
   useEffect(() => {
@@ -87,7 +121,7 @@ export function ArticleReadingTools({
         <span style={{ width: `${progress}%` }} />
       </div>
 
-      <aside className="article-tools" aria-label="Article tools">
+      <aside ref={toolsRef} className="article-tools" aria-label="Article tools">
         <div className="article-tools__group article-toc">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/60">
             In this piece

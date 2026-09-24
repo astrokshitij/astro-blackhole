@@ -1053,6 +1053,8 @@ figcaption {
 }
 .article-tools {
   top: 115px;
+  will-change: transform, opacity;
+  transition: opacity 0.2s ease;
 }
 .prose-astro h2 {
   scroll-margin-top: 110px;
@@ -1061,6 +1063,8 @@ figcaption {
   border-radius: 0 !important;
 }
 footer {
+  position: relative;
+  z-index: 35;
   background: #08090c !important;
 }
 @media (min-width: 1500px) {
