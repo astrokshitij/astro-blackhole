@@ -1,7 +1,7 @@
 ---
 title: The Way the Universe Might Actually Die Is Disturbing
 excerpt: The universe may not be as stable as it looks. Physics suggests it could exist in a metastable state where a random quantum shift, connected to the Higgs boson's mass, could trigger false vacuum decay, a bubble expanding at nearly the speed of light, transforming everything in its path into an unknown new state of reality, with no warning.
-category: Cosmology
+category: Investigation
 readTime: 7 min
 date: 2026-09-14
 draft: false

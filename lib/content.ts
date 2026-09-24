@@ -112,8 +112,8 @@ export const EDITORIAL = {
   ],
   explorations: [
     {
-      category: "Cosmology / Investigation",
-      title: "What if empty space isn’t empty?",
+      category: "Investigation",
+      title: "The Way the Universe Might Actually Die Is Disturbing",
       description:
         "False vacuum decay, the Higgs field, and the unsettling possibility that our universe is only temporarily stable.",
       type: "7 min read",
