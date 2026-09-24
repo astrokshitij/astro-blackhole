@@ -87,45 +87,92 @@ export default function Home() {
           <p className="section-aside">{PAGE_COPY.home.workIntro}</p>
         </div>
         <div className="exploration-grid">
-          {COPY.explorations.map((piece, i) => (
-            <article
-              className={`exploration exploration-${i}`}
-              key={piece.href}
-            >
-              <a
-                href={piece.href}
-                className="image-link"
-                tabIndex={-1}
-                aria-hidden="true"
+          {COPY.explorations.map((piece, i) => {
+            const isExternal = piece.href.startsWith("http");
+            return (
+              <article
+                className={`exploration exploration-${i}`}
+                key={piece.href}
               >
-                <div className="editorial-image">
-                  <Image
-                    src={piece.image}
-                    alt={piece.alt}
-                    fill
-                    sizes={
-                      i === 0
-                        ? "(min-width: 900px) 720px, 100vw"
-                        : "(min-width: 900px) 370px, 100vw"
-                    }
-                    className="object-cover"
-                  />
+                <div className="exploration-visual">
+                  {isExternal ? (
+                    <a
+                      href={piece.href}
+                      className="image-link"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <div className="editorial-image">
+                        <Image
+                          src={piece.image}
+                          alt={piece.alt}
+                          fill
+                          sizes="(min-width: 1200px) 520px, (min-width: 900px) 45vw, 100vw"
+                          className="object-cover"
+                        />
+                      </div>
+                      <span className="image-badge">{piece.type}</span>
+                    </a>
+                  ) : (
+                    <Link
+                      href={piece.href}
+                      className="image-link"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                    >
+                      <div className="editorial-image">
+                        <Image
+                          src={piece.image}
+                          alt={piece.alt}
+                          fill
+                          sizes="(min-width: 1200px) 520px, (min-width: 900px) 45vw, 100vw"
+                          className="object-cover"
+                        />
+                      </div>
+                      <span className="image-badge">{piece.type}</span>
+                    </Link>
+                  )}
                 </div>
-                <span className="image-badge">{piece.type}</span>
-              </a>
-              <div className="exploration-copy">
-                <Eyebrow>{piece.category}</Eyebrow>
-                <h3>
-                  <a href={piece.href}>{piece.title}</a>
-                </h3>
-                <p>{piece.description}</p>
-                <a className="text-link" href={piece.href}>
-                  {piece.cta}
-                  <ArrowGlyph className="h-4 w-4" />
-                </a>
-              </div>
-            </article>
-          ))}
+                <div className="exploration-copy">
+                  <Eyebrow>
+                    0{i + 1} / {piece.category}
+                  </Eyebrow>
+                  <h3>
+                    {isExternal ? (
+                      <a
+                        href={piece.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {piece.title}
+                      </a>
+                    ) : (
+                      <Link href={piece.href}>{piece.title}</Link>
+                    )}
+                  </h3>
+                  <p>{piece.description}</p>
+                  {isExternal ? (
+                    <a
+                      className="text-link"
+                      href={piece.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {piece.cta}
+                      <ArrowGlyph className="h-4 w-4" />
+                    </a>
+                  ) : (
+                    <Link className="text-link" href={piece.href}>
+                      {piece.cta}
+                      <ArrowGlyph className="h-4 w-4" />
+                    </Link>
+                  )}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </Section>
       <Section className="room-section">

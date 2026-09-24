@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { ButtonLink } from "@/components/site/ui";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -20,12 +20,11 @@ export default function NotFound() {
           This page is not here. Nothing that crosses an event horizon comes
           back either, but in that case there is at least a reason.
         </p>
-        <Link
-          href="/"
-          className="font-display mt-9 inline-block rounded-full border border-white/30 px-6 py-3 text-xs font-light uppercase tracking-[0.18em] text-white/85 transition-colors hover:border-white hover:text-white"
-        >
-          Back to the start
-        </Link>
+        <div className="mt-9">
+          <ButtonLink href="/" variant="secondary">
+            Back to the start
+          </ButtonLink>
+        </div>
       </div>
     </section>
   );

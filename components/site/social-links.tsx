@@ -60,7 +60,7 @@ export function SocialLinks({ compact = false }: { compact?: boolean }) {
                 </span>
               </span>
 
-              <ArrowGlyph className="mt-3.5 h-4 w-4 shrink-0 text-white/40 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white" />
+              <ArrowGlyph className="mt-3.5 h-4 w-4 shrink-0 text-white/55 transition-all duration-200 group-hover:translate-x-1 group-hover:text-white" />
             </a>
           </li>
         );
