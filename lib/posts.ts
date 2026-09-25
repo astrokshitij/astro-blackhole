@@ -62,14 +62,19 @@ function read(fileName: string): Post {
     (_, text: string) => `<h2 id="${headingId(text)}">${text}</h2>`,
   );
 
+  const isoDate =
+    data.date instanceof Date
+      ? data.date.toISOString().slice(0, 10)
+      : String(data.date ?? "");
+
   return {
     slug: fileName.replace(/\.md$/, ""),
     title: String(data.title ?? "Untitled"),
     excerpt: String(data.excerpt ?? ""),
     category: String(data.category ?? "Physics"),
     readTime: String(data.readTime ?? ""),
-    date: String(data.date ?? ""),
-    dateLabel: data.date ? toLabel(String(data.date)) : "",
+    date: isoDate,
+    dateLabel: isoDate ? toLabel(isoDate) : "",
     cover: data.cover ? String(data.cover) : undefined,
     coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
     draft: data.draft === true,
