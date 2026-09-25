@@ -68,6 +68,9 @@ export const viewport: Viewport = {
 };
 
 /** Identity and Site Name structured data for Google Search & Knowledge Graph. */
+const SCIENCE_DIRECT_PAPER_URL =
+  "https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948";
+
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -77,6 +80,7 @@ const structuredData = {
       name: SITE.name,
       alternateName: [SITE.person, "astrokshitij.com"],
       url: siteUrl,
+      publisher: { "@id": `${siteUrl}/#person` },
     },
     {
       "@type": "Person",
@@ -84,18 +88,60 @@ const structuredData = {
       name: SITE.person,
       alternateName: SITE.name,
       url: siteUrl,
+      mainEntityOfPage: `${siteUrl}/about`,
       image: `${siteUrl}${SITE.portrait}`,
       email: `mailto:${SITE.email}`,
       jobTitle: "Physicist & Science Communicator",
       description: SOCIAL_DESCRIPTION,
+      alumniOf: [
+        {
+          "@type": "CollegeOrUniversity",
+          name: "Charotar University of Science and Technology (CHARUSAT)",
+        },
+        {
+          "@type": "CollegeOrUniversity",
+          name: "The ICFAI University, Jaipur",
+        },
+      ],
+      hasCredential: {
+        "@type": "EducationalOccupationalCredential",
+        credentialCategory: "degree",
+        name: "M.Sc. in Physics (Astrophysics and Cosmology)",
+      },
+      award: [
+        "Science Communicator Award",
+        "Silver Medal — University Physics Competition",
+      ],
       knowsAbout: [
         "Physics",
         "Astrophysics",
         "Cosmology",
+        "Naked Singularities",
+        "Dark Matter",
         "Quantum Mechanics",
         "Science communication",
       ],
-      sameAs: SOCIALS.map((social) => social.href),
+      sameAs: [
+        ...SOCIALS.map((social) => social.href),
+        SCIENCE_DIRECT_PAPER_URL,
+      ],
+    },
+    {
+      "@type": "ScholarlyArticle",
+      "@id": `${siteUrl}/#paper-naked-singularities`,
+      headline:
+        "High-energy particle collisions in the vicinity of naked singularities",
+      url: SCIENCE_DIRECT_PAPER_URL,
+      author: [
+        { "@id": `${siteUrl}/#person` },
+        { "@type": "Person", name: "Pankaj S. Joshi" },
+      ],
+      about: [
+        "Astrophysics",
+        "Naked Singularities",
+        "General Relativity",
+        "High-Energy Particle Collisions",
+      ],
     },
   ],
 };

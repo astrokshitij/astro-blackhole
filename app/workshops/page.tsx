@@ -4,7 +4,9 @@ import { socialMeta } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { ButtonLink, Eyebrow, NextPage, Section } from "@/components/site/ui";
 import { ArrowGlyph } from "@/components/site/icons";
-import { PROGRAMMES, EDITORIAL, PAGE_COPY } from "@/lib/content";
+import { PROGRAMMES, EDITORIAL, PAGE_COPY, SITE } from "@/lib/content";
+import { siteUrl } from "@/lib/site-url";
+
 export const metadata: Metadata = {
   title: "Workshops",
   description:
@@ -17,9 +19,52 @@ export const metadata: Metadata = {
       "Quantum mechanics for everyone, and science communication training for research institutions. Both programmes are in development.",
   }),
 };
+
+const workshopsJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: `Workshops & Programmes by ${SITE.person} (${SITE.name})`,
+  url: `${siteUrl}/workshops`,
+  itemListElement: PROGRAMMES.map((p, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Course",
+      "@id": `${siteUrl}/workshops#${p.id}`,
+      name: p.title,
+      description: `${p.intro} ${p.description}`,
+      provider: {
+        "@type": "Person",
+        "@id": `${siteUrl}/#person`,
+        name: SITE.person,
+        url: siteUrl,
+      },
+      audience: {
+        "@type": "Audience",
+        audienceType: p.audience,
+      },
+      hasCourseInstance: {
+        "@type": "CourseInstance",
+        courseMode: p.format.toLowerCase().includes("online")
+          ? "online"
+          : "onsite",
+        instructor: {
+          "@id": `${siteUrl}/#person`,
+        },
+      },
+    },
+  })),
+};
+
 export default function WorkshopsPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(workshopsJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <PageHero
         eyebrow={PAGE_COPY.workshops.eyebrow}
         title={PAGE_COPY.workshops.title}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowGlyph } from "@/components/site/icons";
 import { getPost, getPosts } from "@/lib/posts";
-import { SITE } from "@/lib/content";
+import { SITE, SOCIALS } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
 import { socialMeta, OG_IMAGE } from "@/lib/seo";
 import { ArticleReadingTools } from "@/components/site/article-reading-tools";
@@ -69,8 +69,26 @@ export default async function PostPage({ params }: Params) {
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date || undefined,
-    author: { "@type": "Person", name: SITE.person, url: siteUrl },
-    publisher: { "@type": "Person", name: SITE.person, url: siteUrl },
+    author: {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: SITE.person,
+      alternateName: SITE.name,
+      jobTitle: "Physicist & Science Communicator",
+      description:
+        "M.Sc. in Physics (Astrophysics & Cosmology), TEDx speaker, Science Communicator Award recipient, and co-author of peer-reviewed research on high-energy particle collisions near naked singularities.",
+      url: `${siteUrl}/about`,
+      sameAs: [
+        ...SOCIALS.map((s) => s.href),
+        "https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948",
+      ],
+    },
+    publisher: {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: SITE.person,
+      url: siteUrl,
+    },
     mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
     image: `${siteUrl}${post.cover ?? OG_IMAGE.url}`,
   };
@@ -151,6 +169,54 @@ export default async function PostPage({ params }: Params) {
             className="prose-astro mx-auto max-w-[68ch] px-5 py-16 sm:px-8 sm:py-20"
             dangerouslySetInnerHTML={{ __html: post.html }}
           />
+          <aside
+            aria-label="About the author"
+            className="mx-auto max-w-[68ch] px-5 pb-16 sm:px-8 sm:pb-20"
+          >
+            <div className="rounded-2xl border border-white/12 bg-white/[0.02] p-6 sm:p-8">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+                Written by
+              </p>
+              <p className="font-display mt-2 text-xl font-light text-white sm:text-2xl">
+                <Link
+                  href="/about"
+                  className="transition-colors hover:text-[#e6c48a]"
+                >
+                  {SITE.person} ({SITE.name})
+                </Link>
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-white/70 sm:text-base">
+                Physicist (M.Sc. in Physics — Astrophysics &amp; Cosmology),
+                TEDx speaker, and science communicator reaching 137k+ people and
+                100+ live rooms. Co-author of{" "}
+                <a
+                  href="https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white underline decoration-white/35 underline-offset-4 transition-colors hover:decoration-white"
+                >
+                  peer-reviewed research on naked singularities
+                </a>{" "}
+                with Prof. Pankaj S. Joshi.
+              </p>
+              <div className="mt-5 flex flex-wrap items-center gap-5">
+                <Link
+                  href="/about"
+                  className="font-mono inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-white/75 transition-colors hover:text-white"
+                >
+                  Full background &amp; research
+                  <ArrowGlyph className="h-3.5 w-3.5" />
+                </Link>
+                <Link
+                  href="/workshops"
+                  className="font-mono inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-white/55 transition-colors hover:text-white"
+                >
+                  Workshops &amp; talks
+                  <ArrowGlyph className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+          </aside>
         </div>
       </article>
 

@@ -1,0 +1,45 @@
+# Astro Kshitij — Kshitij Pandey
+
+> Personal website and digital publication of Kshitij Pandey (Astro Kshitij), an Indian physicist, astrophysics researcher, TEDx speaker, and science communicator reaching 137k+ people online and 100+ live audiences across universities, schools, and research institutions.
+
+- **Canonical URL**: https://astrokshitij.com
+- **Primary Identity**: Kshitij Pandey (known publicly as "Astro Kshitij")
+- **Role**: Physicist, Science Communicator, TEDx Speaker, Workshop Facilitator
+- **Location**: India
+- **Contact**: astrokshitij5@gmail.com
+
+## Academic & Scientific Credentials
+
+- **M.Sc. in Physics (Astrophysics & Cosmology)** — Charotar University of Science and Technology (CHARUSAT).
+- **B.Sc. in Physics (Hons.)** — The ICFAI University, Jaipur (elected Student Council President; dissertation on WIMP dark matter).
+- **Peer-Reviewed Astrophysics Research**: Co-authored research with Prof. Pankaj S. Joshi on high-energy particle collisions in the vicinity of naked singularities, published in *Physics of the Dark Universe* (ScienceDirect): https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948
+- **Dark Matter Research**: Worked with Prof. Kaushik Bhattacharya at IIT Kanpur on scalar-field dark matter.
+- **Additional Training & Honours**:
+  - Participant, SLAC Summer Institute (Stanford University).
+  - Silver Medal, International University Physics Competition.
+  - Recipient of a Science Communicator Award.
+  - TEDx Speaker (*"Thinking Like a Kid"* — on how adult education dulls natural scientific curiosity).
+
+## Public Reach & Impact
+
+- **137k+ People Reached** across YouTube (`@astrokshitij`), Instagram (`@astro.kshitij`), and digital platforms through deep physics explainers.
+- **100+ Live Talks & Sessions** delivered at IITs, universities, research institutions, and schools across India.
+
+## Key Website Sections & Canonical URLs
+
+- [Home](https://astrokshitij.com/): Overview of Kshitij Pandey's science communication work, live interactive WebGL black hole gravitational lensing simulation, selected explorations, and speaking reach.
+- [About Kshitij Pandey](https://astrokshitij.com/about): Full biographical narrative from Class 9 science exhibitions and undergraduate physics competitions to M.Sc. astrophysics research on naked singularities and science communication.
+- [Blog / Writing](https://astrokshitij.com/blog): Long-form essays and investigations into cosmology, quantum mechanics, and theoretical physics.
+  - [The Way the Universe Might Actually Die Is Disturbing](https://astrokshitij.com/blog/how-the-universe-might-actually-die): A 7-minute deep-dive investigation into false vacuum decay, quantum tunnelling, the Higgs field, and cosmic stability.
+- [Workshops & Programmes](https://astrokshitij.com/workshops):
+  1. **Quantum mechanics, in two hours** (Public workshop / Live online): A two-hour foundational session on superposition, measurement, and wavefunctions without heavy mathematical prerequisites.
+  2. **Science communication for research institutions** (Institutional workshop / On site): Training for physics and STEM departments, labs, and graduate cohorts on translating complex research for non-specialist audiences.
+- [Contact & Speaking Enquiries](https://astrokshitij.com/contact): Direct booking and enquiry form for university talks, keynotes, institutional workshops, and collaborations.
+
+## Official Profiles & Citation Links
+
+- **Website**: https://astrokshitij.com
+- **ScienceDirect Publication**: https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948
+- **YouTube**: https://www.youtube.com/@astrokshitij
+- **Instagram**: https://www.instagram.com/astro.kshitij
+- **LinkedIn**: https://www.linkedin.com/in/kshitij-pandey-30215314b/

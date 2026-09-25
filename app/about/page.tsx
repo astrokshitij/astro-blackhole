@@ -8,7 +8,8 @@ import {
   StoryPhotoPanel,
   type StoryPhoto,
 } from "@/components/site/story-photo-panel";
-import { EDITORIAL } from "@/lib/content";
+import { EDITORIAL, SITE } from "@/lib/content";
+import { siteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "About",
@@ -21,6 +22,19 @@ export const metadata: Metadata = {
     description:
       "MSc in astrophysics and cosmology, TEDx speaker, science communicator, and the person behind Astro Kshitij.",
   }),
+};
+
+const profilePageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": `${siteUrl}/about#profilepage`,
+  name: `About ${SITE.person} (${SITE.name})`,
+  description:
+    "Biographical profile and academic background of Kshitij Pandey (Astro Kshitij): MSc in Physics (Astrophysics & Cosmology), co-author of peer-reviewed research on naked singularities, TEDx speaker, and science communicator.",
+  url: `${siteUrl}/about`,
+  mainEntity: {
+    "@id": `${siteUrl}/#person`,
+  },
 };
 
 // Photos keyed by story-section id. Each carries its own aspect ratio so the
@@ -116,6 +130,12 @@ function MobilePhoto({
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(profilePageJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <PageHero
         eyebrow="01 / About"
         title="Hi, I'm Kshitij."
