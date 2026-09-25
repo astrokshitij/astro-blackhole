@@ -30,10 +30,10 @@ const jost = localFont({
 const TITLE = `${SITE.name} — science communication by ${SITE.person}`;
 
 const DESCRIPTION =
-  "Physics in Hindi for an audience of ninety thousand. Myth-breaking, explainers and short films by Kshitij Pandey, plus workshops for institutions and the curious.";
+  "Kshitij Pandey (Astro Kshitij) — physicist, TEDx speaker, and science communicator reaching 137k+ people and 100+ rooms through deep physics explainers, research, and workshops.";
 
 const SOCIAL_DESCRIPTION =
-  "Physics in Hindi for an audience of ninety thousand. Myth-breaking, explainers and short films by Kshitij Pandey.";
+  "Physicist, TEDx speaker, and science communicator reaching 137k+ people and 100+ rooms through deep physics explainers, research, and workshops.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -67,18 +67,37 @@ export const viewport: Viewport = {
   themeColor: "#08090C",
 };
 
-/** Identity for search engines. Only facts the site already states. */
-const personJsonLd = {
+/** Identity and Site Name structured data for Google Search & Knowledge Graph. */
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: SITE.person,
-  alternateName: SITE.name,
-  url: siteUrl,
-  email: `mailto:${SITE.email}`,
-  jobTitle: "Science communicator",
-  description: SOCIAL_DESCRIPTION,
-  knowsAbout: ["Physics", "Astrophysics", "Cosmology", "Science communication"],
-  sameAs: SOCIALS.map((social) => social.href),
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: SITE.name,
+      alternateName: [SITE.person, "astrokshitij.com"],
+      url: siteUrl,
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: SITE.person,
+      alternateName: SITE.name,
+      url: siteUrl,
+      image: `${siteUrl}${SITE.portrait}`,
+      email: `mailto:${SITE.email}`,
+      jobTitle: "Physicist & Science Communicator",
+      description: SOCIAL_DESCRIPTION,
+      knowsAbout: [
+        "Physics",
+        "Astrophysics",
+        "Cosmology",
+        "Quantum Mechanics",
+        "Science communication",
+      ],
+      sameAs: SOCIALS.map((social) => social.href),
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -95,7 +114,7 @@ export default function RootLayout({
       <body className="min-h-full bg-background text-foreground">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
         />
         <a
           href="#main"
