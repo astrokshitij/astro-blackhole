@@ -88,7 +88,7 @@ export default async function PostPage({ params }: Params) {
     dateModified: post.date || undefined,
     inLanguage: "en-IN",
     articleSection: post.category,
-    abstract: post.summary,
+    abstract: post.summary?.join(" "),
     about: post.topics?.map((name) => ({ "@type": "Thing", name })),
     keywords: post.topics?.join(", "),
     wordCount: post.html
@@ -225,7 +225,7 @@ export default async function PostPage({ params }: Params) {
         ) : null}
 
         <div id="article-contents" className="article-body bg-black">
-          {post.summary ? (
+          {post.summary?.length ? (
             <section
               aria-label="Summary"
               className="article-summary mx-auto max-w-[68ch] px-5 pt-14 sm:px-8 sm:pt-16"
@@ -234,7 +234,11 @@ export default async function PostPage({ params }: Params) {
                 <p className="font-mono text-xs uppercase tracking-[0.2em]">
                   In short
                 </p>
-                <p className="article-summary__text">{post.summary}</p>
+                <ul className="article-summary__list">
+                  {post.summary.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
               </div>
             </section>
           ) : null}

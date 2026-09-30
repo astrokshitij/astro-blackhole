@@ -486,11 +486,19 @@ body[data-reading-theme="light"] .reading-theme-toggle {
 .article-summary__box > p:first-child {
   color: #cba775;
 }
-.article-summary__text {
-  margin-top: 0.6rem;
+.article-summary__list {
+  margin-top: 0.75rem;
+  padding-left: 1.25rem;
+  list-style: disc;
   color: color-mix(in oklab, white 85%, transparent);
   font-size: 1.0625rem;
-  line-height: 1.7;
+  line-height: 1.65;
+}
+.article-summary__list li + li {
+  margin-top: 0.6rem;
+}
+.article-summary__list li::marker {
+  color: #cba775;
 }
 body[data-reading-theme="light"] .article-summary__box {
   border-color: rgb(23 32 42 / 18%);
@@ -500,8 +508,11 @@ body[data-reading-theme="light"] .article-summary__box {
 body[data-reading-theme="light"] .article-summary__box > p:first-child {
   color: #8a6a35;
 }
-body[data-reading-theme="light"] .article-summary__text {
+body[data-reading-theme="light"] .article-summary__list {
   color: #17202a;
+}
+body[data-reading-theme="light"] .article-summary__list li::marker {
+  color: #8a6a35;
 }
 .prose-astro figcaption {
   margin-bottom: 0.75rem;
