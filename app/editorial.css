@@ -845,13 +845,28 @@ figcaption {
 }
 .essay-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 40px;
   margin-top: 75px;
 }
 .essay-grid article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px 56px;
+  align-items: center;
   padding-top: 25px;
   border-top: 1px solid var(--border);
+}
+.essay-grid article.has-cover {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+}
+.essay-grid-image {
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.essay-grid-image img {
+  filter: saturate(0.55);
 }
 .essay-grid h2 {
   font-size: 28px;
@@ -1422,6 +1437,12 @@ footer {
   }
   .essay-grid {
     grid-template-columns: 1fr;
+  }
+  .essay-grid article.has-cover {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .essay-grid-image {
+    order: -1;
   }
   .programme-intro {
     grid-template-columns: 1fr;
