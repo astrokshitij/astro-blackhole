@@ -35,6 +35,13 @@ export default function BlogPage() {
               <Link
                 href={`/blog/${featured.slug}`}
                 className="essay-feature-image"
+                style={
+                  featured.coverSize
+                    ? {
+                        aspectRatio: `${featured.coverSize.width} / ${featured.coverSize.height}`,
+                      }
+                    : undefined
+                }
                 tabIndex={-1}
                 aria-hidden="true"
               >

@@ -28,12 +28,12 @@ export function SiteFooter() {
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
               Pages
             </p>
-            <ul className="mt-5 space-y-2.5">
+            <ul className="mt-3">
               {SITEMAP.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-white/60 transition-colors hover:text-white"
+                    className="inline-flex min-h-11 items-center text-sm text-white/60 transition-colors hover:text-white"
                   >
                     {item.label}
                   </Link>

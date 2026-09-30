@@ -195,6 +195,7 @@ img {
 }
 .wordmark {
   display: flex;
+  min-height: 44px;
   align-items: center;
   gap: 12px;
   font-family: var(--font-jost), sans-serif;
