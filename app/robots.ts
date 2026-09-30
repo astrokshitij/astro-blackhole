@@ -4,7 +4,7 @@ import { siteUrl } from "@/lib/site-url";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: "*", allow: "/" },
+      { userAgent: "*", allow: "/", disallow: ["/api/"] },
       {
         userAgent: [
           "OAI-SearchBot",
@@ -16,6 +16,7 @@ export default function robots(): MetadataRoute.Robots {
           "Applebot-Extended",
         ],
         allow: ["/"],
+        disallow: ["/api/"],
       },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,

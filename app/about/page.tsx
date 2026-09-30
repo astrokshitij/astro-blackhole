@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { socialMeta } from "@/lib/seo";
+import { socialMeta, FEED_ALTERNATE } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { NextPage, Section } from "@/components/site/ui";
 import { SocialLinks } from "@/components/site/social-links";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Kshitij Pandey: MSc in astrophysics and cosmology, TEDx speaker, science communicator, and the person behind Astro Kshitij.",
-  alternates: { canonical: "/about" },
+  alternates: { canonical: "/about", types: FEED_ALTERNATE },
   ...socialMeta({
     path: "/about",
     title: "About Kshitij Pandey",

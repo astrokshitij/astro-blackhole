@@ -6,7 +6,7 @@ import { ArrowGlyph } from "@/components/site/icons";
 import { getPost, getPosts } from "@/lib/posts";
 import { SITE, SOCIALS } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
-import { socialMeta, OG_IMAGE } from "@/lib/seo";
+import { socialMeta, metaDescription, OG_IMAGE, FEED_ALTERNATE } from "@/lib/seo";
 import { ArticleReadingTools } from "@/components/site/article-reading-tools";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -22,31 +22,42 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const post = getPost(slug);
   if (!post || post.draft) return { title: "Not found" };
 
+  const description = metaDescription(post.excerpt);
+  const shareImage = post.ogImage
+    ? { url: post.ogImage, width: 1200, height: 630, alt: post.coverAlt ?? post.title }
+    : post.cover
+      ? { url: post.cover, alt: post.coverAlt ?? post.title }
+      : OG_IMAGE;
+
   return {
     title: post.title,
-    description: post.excerpt,
-    alternates: { canonical: `/blog/${post.slug}` },
+    description,
+    authors: [{ name: SITE.person, url: `${siteUrl}/about` }],
+    alternates: { canonical: `/blog/${post.slug}`, types: FEED_ALTERNATE },
     ...socialMeta({
       type: "article",
       title: post.title,
-      description: post.excerpt,
+      description,
       path: `/blog/${post.slug}`,
     }),
     openGraph: {
       type: "article",
       title: post.title,
-      description: post.excerpt,
+      description,
       url: `/blog/${post.slug}`,
       siteName: SITE.name,
       locale: "en_IN",
       publishedTime: post.date || undefined,
-      images: [post.ogImage ?? post.cover ?? OG_IMAGE],
+      modifiedTime: post.date || undefined,
+      authors: [SITE.person],
+      section: post.category,
+      images: [shareImage],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
-      description: post.excerpt,
-      images: [post.ogImage ?? post.cover ?? OG_IMAGE.url],
+      description,
+      images: [shareImage.url],
     },
   };
 }
@@ -67,8 +78,15 @@ export default async function PostPage({ params }: Params) {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
-    description: post.excerpt,
+    description: metaDescription(post.excerpt),
     datePublished: post.date || undefined,
+    dateModified: post.date || undefined,
+    inLanguage: "en-IN",
+    articleSection: post.category,
+    wordCount: post.html
+      .replace(/<[^>]*>/g, " ")
+      .split(/\s+/)
+      .filter(Boolean).length,
     author: {
       "@type": "Person",
       "@id": `${siteUrl}/#person`,
@@ -90,7 +108,22 @@ export default async function PostPage({ params }: Params) {
       url: siteUrl,
     },
     mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
-    image: `${siteUrl}${post.cover ?? OG_IMAGE.url}`,
+    image: `${siteUrl}${post.ogImage ?? post.cover ?? OG_IMAGE.url}`,
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Writing", item: `${siteUrl}/blog` },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: post.title,
+        item: `${siteUrl}/blog/${post.slug}`,
+      },
+    ],
   };
 
   return (
@@ -104,6 +137,12 @@ export default async function PostPage({ params }: Params) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(articleJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, "\\u003c"),
         }}
       />
       <article className="article-shell">

@@ -9,7 +9,7 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { ScrollMotion } from "@/components/site/scroll-motion";
 import { SITE, SOCIALS } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
-import { socialMeta } from "@/lib/seo";
+import { FEED_ALTERNATE, socialMeta } from "@/lib/seo";
 
 /**
  * The display face carries the wordmark and every heading, so it is almost
@@ -42,7 +42,11 @@ export const metadata: Metadata = {
     template: `%s — ${SITE.name}`,
   },
   description: DESCRIPTION,
-  alternates: { canonical: "/" },
+  authors: [{ name: SITE.person, url: `${siteUrl}/about` }],
+  alternates: {
+    canonical: "/",
+    types: FEED_ALTERNATE,
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
