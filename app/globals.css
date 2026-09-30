@@ -389,6 +389,7 @@ body[data-reading-theme="light"] .reading-theme-toggle {
 @media (min-width: 1280px) {
   /* Title, cover and body all start on the same left edge. */
   .article-hero > div,
+  .article-body .article-summary,
   .article-body .prose-astro {
     margin-left: max(5rem, calc((100vw - 1152px) / 2));
     margin-right: auto;
@@ -474,6 +475,33 @@ body[data-reading-theme="light"] .reading-theme-toggle {
   height: auto;
   border-radius: 0.75rem;
   border: 1px solid color-mix(in oklab, white 12%, transparent);
+}
+.article-summary__box {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid color-mix(in oklab, white 14%, transparent);
+  border-left: 2px solid #cba775;
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, white 3%, transparent);
+}
+.article-summary__box > p:first-child {
+  color: #cba775;
+}
+.article-summary__text {
+  margin-top: 0.6rem;
+  color: color-mix(in oklab, white 85%, transparent);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+body[data-reading-theme="light"] .article-summary__box {
+  border-color: rgb(23 32 42 / 18%);
+  border-left-color: #8a6a35;
+  background: rgb(23 32 42 / 4%);
+}
+body[data-reading-theme="light"] .article-summary__box > p:first-child {
+  color: #8a6a35;
+}
+body[data-reading-theme="light"] .article-summary__text {
+  color: #17202a;
 }
 .prose-astro figcaption {
   margin-bottom: 0.75rem;
