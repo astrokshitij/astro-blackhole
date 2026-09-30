@@ -422,6 +422,30 @@ body[data-reading-theme="light"] .reading-theme-toggle {
   border-radius: 0.75rem;
   border: 1px solid color-mix(in oklab, white 12%, transparent);
 }
+.prose-astro table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.prose-astro th,
+.prose-astro td {
+  min-width: 11rem;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid color-mix(in oklab, white 14%, transparent);
+}
+.prose-astro th {
+  color: white;
+  font-weight: 500;
+  background: color-mix(in oklab, white 6%, transparent);
+}
+body[data-reading-theme="light"] .prose-astro th {
+  color: #17202a;
+}
 .prose-astro hr {
   border: 0;
   border-top: 1px solid color-mix(in oklab, white 12%, transparent);
