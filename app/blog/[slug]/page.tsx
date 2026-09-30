@@ -143,7 +143,13 @@ export default async function PostPage({ params }: Params) {
               {post.title}
             </h1>
 
-            <p className="article-lede mt-6 leading-relaxed">{post.excerpt}</p>
+            {post.quote ? (
+              <blockquote className="article-lede mt-6 border-l-2 border-white/55 pl-5 italic leading-relaxed text-white/90">
+                {post.quote}
+              </blockquote>
+            ) : (
+              <p className="article-lede mt-6 leading-relaxed">{post.excerpt}</p>
+            )}
 
             <p className="font-mono mt-8 text-xs uppercase tracking-[0.18em] text-white/55">
               {SITE.person}
