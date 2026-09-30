@@ -27,6 +27,8 @@ export interface Post {
   /** Optional image path, for example "/images/blog/spinors.jpg" */
   cover?: string;
   coverAlt?: string;
+  /** Optional pull quote shown under the title, in place of the excerpt. */
+  quote?: string;
   draft: boolean;
   /** Rendered HTML of the body. */
   html: string;
@@ -77,6 +79,7 @@ function read(fileName: string): Post {
     dateLabel: isoDate ? toLabel(isoDate) : "",
     cover: data.cover ? String(data.cover) : undefined,
     coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
+    quote: data.quote ? String(data.quote) : undefined,
     draft: data.draft === true,
     html: htmlWithHeadingIds,
   };

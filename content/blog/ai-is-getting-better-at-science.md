@@ -5,11 +5,10 @@ category: Investigation
 readTime: 9 min
 date: 2026-09-30
 draft: false
+quote: "“Science has always depended on our ability to understand how we know what we know. AI may be about to challenge that.”"
 cover: /images/blog/ai-science-cover.webp
 coverAlt: Einstein in black and white looking toward a glowing neural network that turns the field equations into a colourful warped spacetime around a black hole
 ---
-
-> “Science has always depended on our ability to understand how we know what we know. AI may be about to challenge that.”
 
 I still remember it was late December 2022. A friend of mine, who was working at Hugging Face at the time, got very excited in our group chat about a tool called ChatGPT. He asked us all to try it, so I did.
 
