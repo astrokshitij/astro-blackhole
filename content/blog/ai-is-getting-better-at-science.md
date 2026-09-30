@@ -5,7 +5,7 @@ category: Investigation
 readTime: 9 min
 date: 2026-09-30
 draft: false
-summary: "In September 2026, OpenAI said an internal model had produced a proof for the Navier-Stokes problem, one of the seven Millennium Prize Problems. The claim is unverified, and the Clay Mathematics Institute waits at least two years before it considers any proposed solution. This essay by physicist Kshitij Pandey asks whether AI can make a foundational discovery, as Newton and Einstein did, or only speed up science. It says the answer depends on four obstacles: the black box (epistemic opacity), checking truth outside mathematics, breaking the paradigm, and trust in the scientific system. Each has a plausible way around it, but none is proven yet."
+summary: "In September 2026, OpenAI said an internal model had produced a proof for the Navier-Stokes problem, a Millennium Prize Problem. The claim is unverified. Can AI make a real discovery or only speed up science? It hinges on four obstacles: the black box, truth outside maths, paradigms and trust."
 topics:
   - Artificial intelligence in scientific research
   - Millennium Prize Problems
