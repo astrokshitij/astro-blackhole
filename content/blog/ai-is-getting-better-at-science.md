@@ -5,6 +5,7 @@ category: Investigation
 readTime: 9 min
 date: 2026-09-30
 draft: false
+summary: "AI went from failing my relativity homework in 2022 to a claimed, still unverified proof of a Millennium Prize Problem in 2026. Whether it can make a real discovery, and not just speed up science, depends on four obstacles: the black box, checking truth outside maths, breaking the paradigm, and trust. Each has a plausible way around it, but none is proven yet."
 quote: "“Science has always depended on our ability to understand how we know what we know. AI may be about to challenge that.”"
 cover: /images/blog/ai-science-cover.webp
 ogImage: /images/blog/ai-science-cover.jpg

@@ -29,8 +29,12 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       ? { url: post.cover, alt: post.coverAlt ?? post.title }
       : OG_IMAGE;
 
+  // Search results cut titles at about 60 characters. When the brand suffix
+  // would push a title past that, show the title alone.
+  const fullTitle = `${post.title} — ${SITE.name}`;
+
   return {
-    title: post.title,
+    title: fullTitle.length > 60 ? { absolute: post.title } : post.title,
     description,
     authors: [{ name: SITE.person, url: `${siteUrl}/about` }],
     alternates: { canonical: `/blog/${post.slug}`, types: FEED_ALTERNATE },
@@ -83,6 +87,7 @@ export default async function PostPage({ params }: Params) {
     dateModified: post.date || undefined,
     inLanguage: "en-IN",
     articleSection: post.category,
+    abstract: post.summary,
     wordCount: post.html
       .replace(/<[^>]*>/g, " ")
       .split(/\s+/)
@@ -217,6 +222,19 @@ export default async function PostPage({ params }: Params) {
         ) : null}
 
         <div id="article-contents" className="article-body bg-black">
+          {post.summary ? (
+            <section
+              aria-label="Summary"
+              className="article-summary mx-auto max-w-[68ch] px-5 pt-14 sm:px-8 sm:pt-16"
+            >
+              <div className="article-summary__box">
+                <p className="font-mono text-xs uppercase tracking-[0.2em]">
+                  In short
+                </p>
+                <p className="article-summary__text">{post.summary}</p>
+              </div>
+            </section>
+          ) : null}
           <div
             className="prose-astro mx-auto max-w-[68ch] px-5 py-16 sm:px-8 sm:py-20"
             dangerouslySetInnerHTML={{ __html: post.html }}
