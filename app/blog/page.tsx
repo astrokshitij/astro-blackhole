@@ -76,18 +76,46 @@ export default function BlogPage() {
         {posts.length > 0 && (
           <div className="essay-grid">
             {posts.map((post) => (
-              <article key={post.slug}>
-                <Eyebrow>
-                  {post.category} / {post.readTime} read
-                </Eyebrow>
-                <h2>
-                  <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-                </h2>
-                <p className="body-copy">{post.excerpt}</p>
-                <Link href={`/blog/${post.slug}`} className="text-link">
-                  Read the essay
-                  <ArrowGlyph className="h-4 w-4" />
-                </Link>
+              <article
+                key={post.slug}
+                className={post.cover ? "has-cover" : undefined}
+              >
+                <div>
+                  <Eyebrow>
+                    {post.category} / {post.readTime} read
+                  </Eyebrow>
+                  <h2>
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h2>
+                  <p className="body-copy">{post.excerpt}</p>
+                  <Link href={`/blog/${post.slug}`} className="text-link">
+                    Read the essay
+                    <ArrowGlyph className="h-4 w-4" />
+                  </Link>
+                </div>
+                {post.cover && (
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="essay-grid-image"
+                    style={
+                      post.coverSize
+                        ? {
+                            aspectRatio: `${post.coverSize.width} / ${post.coverSize.height}`,
+                          }
+                        : undefined
+                    }
+                    tabIndex={-1}
+                    aria-hidden="true"
+                  >
+                    <Image
+                      src={post.cover}
+                      alt={post.coverAlt ?? ""}
+                      fill
+                      sizes="(min-width:900px) 480px, 100vw"
+                      className="object-cover"
+                    />
+                  </Link>
+                )}
               </article>
             ))}
           </div>
