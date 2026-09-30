@@ -5,7 +5,7 @@ category: Investigation
 readTime: 9 min
 date: 2026-09-30
 draft: false
-summary: "In September 2026, OpenAI said an internal model had produced a proof for the Navier-Stokes problem, a Millennium Prize Problem. The claim is unverified. Can AI make a real discovery or only speed up science? It hinges on four obstacles: the black box, truth outside maths, paradigms and trust."
+summary: "Can AI take over scientific research? Not yet. Four limits hold it back: the black box, checking truth outside maths, breaking paradigms and trust. None is rigid, as each has a plausible fix, so whether AI only speeds up science or starts making real discoveries is still open. Humans lead for now."
 topics:
   - Artificial intelligence in scientific research
   - Millennium Prize Problems
