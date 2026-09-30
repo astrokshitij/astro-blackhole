@@ -6,6 +6,7 @@ readTime: 7 min
 date: 2026-09-14
 draft: false
 cover: /images/blog/universe-death.png
+ogImage: /images/blog/universe-death-og.jpg
 coverAlt: A visual representation of false vacuum decay spreading through space
 ---
 

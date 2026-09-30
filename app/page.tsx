@@ -13,9 +13,7 @@ import {
 import { getPosts } from "@/lib/posts";
 
 export default function Home() {
-  const essay = getPosts().find(
-    (post) => post.slug === "how-the-universe-might-actually-die",
-  );
+  const [essay] = getPosts();
   return (
     <>
       <section className="home-hero" aria-labelledby="hero-title">
@@ -254,7 +252,7 @@ export default function Home() {
               <h2>
                 <Link href={`/blog/${essay.slug}`}>{essay.title}</Link>
               </h2>
-              <p className="body-copy">{COPY.writing.summary}</p>
+              <p className="body-copy">{essay.excerpt}</p>
               <Link className="text-link" href={`/blog/${essay.slug}`}>
                 Read the essay <ArrowGlyph className="h-4 w-4" />
               </Link>
@@ -262,6 +260,13 @@ export default function Home() {
             <Link
               href={`/blog/${essay.slug}`}
               className="essay-image"
+              style={
+                essay.coverSize
+                  ? {
+                      aspectRatio: `${essay.coverSize.width} / ${essay.coverSize.height}`,
+                    }
+                  : undefined
+              }
               tabIndex={-1}
               aria-hidden="true"
             >

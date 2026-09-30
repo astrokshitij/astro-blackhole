@@ -166,8 +166,6 @@ export const EDITORIAL = {
   writing: {
     eyebrow: "Featured writing / My abstract thoughts",
     intro: "For ideas that need a little more room.",
-    summary:
-      "A journey into false vacuum decay, and what the apparent stability of our universe might be hiding.",
   },
   closing: {
     eyebrow: "A conversation worth having",
