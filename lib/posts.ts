@@ -35,6 +35,8 @@ export interface Post {
   quote?: string;
   /** Optional short answer shown above the body and used as the article abstract. */
   summary?: string;
+  /** Optional subjects the post is about, published as structured data. */
+  topics?: string[];
   draft: boolean;
   /** Rendered HTML of the body. */
   html: string;
@@ -183,6 +185,7 @@ function read(fileName: string): Post {
     coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
     quote: data.quote ? String(data.quote) : undefined,
     summary: data.summary ? String(data.summary) : undefined,
+    topics: Array.isArray(data.topics) ? data.topics.map(String) : undefined,
     draft: data.draft === true,
     html: htmlWithHeadingIds,
   };
