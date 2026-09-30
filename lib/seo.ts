@@ -46,3 +46,20 @@ export function socialMeta({
     },
   };
 }
+
+/**
+ * Search results cut descriptions at about 160 characters. Clip at the last
+ * full sentence that fits, or else the last whole word, so a long excerpt
+ * never ends mid-thought.
+ */
+export function metaDescription(text: string, max = 158): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  const sentence = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("? "));
+  if (sentence > 60) return cut.slice(0, sentence + 1);
+  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:.-]+$/, "")}…`;
+}
+
+/** RSS discovery link. Every route that sets `alternates` must include it, or Next drops it. */
+export const FEED_ALTERNATE = { "application/rss+xml": "/feed.xml" };

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { socialMeta } from "@/lib/seo";
+import { socialMeta, FEED_ALTERNATE } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { Eyebrow, Section, NextPage } from "@/components/site/ui";
 import { ArrowGlyph } from "@/components/site/icons";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Writing",
   description:
     "My Abstract Thoughts: physics, the universe, strange questions and rabbit holes that need more room than a short video.",
-  alternates: { canonical: "/blog" },
+  alternates: { canonical: "/blog", types: FEED_ALTERNATE },
   ...socialMeta({
     path: "/blog",
     title: "My Abstract Thoughts",

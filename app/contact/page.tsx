@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { socialMeta } from "@/lib/seo";
+import { socialMeta, FEED_ALTERNATE } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { Eyebrow, Section } from "@/components/site/ui";
 import { EnquiryForm } from "@/components/site/enquiry-form";
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Reach Kshitij Pandey about workshops, talks and collaborations, or to argue about physics.",
-  alternates: { canonical: "/contact" },
+  alternates: { canonical: "/contact", types: FEED_ALTERNATE },
   ...socialMeta({
     path: "/contact",
     title: "Get in touch with Kshitij Pandey",

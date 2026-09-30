@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { socialMeta } from "@/lib/seo";
+import { socialMeta, FEED_ALTERNATE } from "@/lib/seo";
 import { PageHero } from "@/components/site/page-hero";
 import { ButtonLink, Eyebrow, NextPage, Section } from "@/components/site/ui";
 import { ArrowGlyph } from "@/components/site/icons";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Workshops",
   description:
     "Two workshops in development: a two-hour quantum mechanics session open to anyone curious, and a science communication programme for research institutions.",
-  alternates: { canonical: "/workshops" },
+  alternates: { canonical: "/workshops", types: FEED_ALTERNATE },
   ...socialMeta({
     path: "/workshops",
     title: "Workshops with Kshitij Pandey",
