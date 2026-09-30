@@ -5,11 +5,6 @@ category: Investigation
 readTime: 9 min
 date: 2026-09-30
 draft: false
-summary:
-  - "Can AI take over scientific research? Not yet. Humans still lead on meaning and direction."
-  - "Four limits hold it back: the black box, checking truth outside maths, breaking paradigms and trust."
-  - "None is rigid. Each has a plausible fix, though none is proven yet."
-  - "Whether AI only speeds up science or starts making real discoveries is still open."
 topics:
   - Artificial intelligence in scientific research
   - Millennium Prize Problems
