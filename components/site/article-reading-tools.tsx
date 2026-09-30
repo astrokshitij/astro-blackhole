@@ -21,6 +21,9 @@ export function ArticleReadingTools({
   const [light, setLight] = useState(false);
   const [themeReady, setThemeReady] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [tocOpen, setTocOpen] = useState(false);
+  const [barHidden, setBarHidden] = useState(false);
+  const lastY = useRef(0);
   useEffect(() => {
     let savedLight = false;
     try {
@@ -49,6 +52,15 @@ export function ArticleReadingTools({
         .filter((heading) => heading.getBoundingClientRect().top <= 160)
         .at(-1);
       if (current) setActiveId(current.id);
+
+      // The phone bar slides away while reading down and returns on scroll up.
+      const y = window.scrollY;
+      const delta = y - lastY.current;
+      if (Math.abs(delta) > 8) {
+        setBarHidden(delta > 0 && y > 240);
+        if (delta > 0) setTocOpen(false);
+        lastY.current = y;
+      }
 
       if (toolsRef.current) {
         const footer = document.querySelector("footer");
@@ -172,7 +184,31 @@ export function ArticleReadingTools({
         </div>
       </aside>
 
-      <div className="article-mobile-tools">
+      {tocOpen ? (
+        <nav
+          id="article-mobile-toc"
+          className="article-mobile-toc"
+          aria-label="Table of contents"
+        >
+          <ol>
+            {items.map((item) => (
+              <li key={item.id}>
+                <a
+                  className={activeId === item.id ? "is-active" : ""}
+                  href={`#${item.id}`}
+                  onClick={() => setTocOpen(false)}
+                >
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      ) : null}
+
+      <div
+        className={`article-mobile-tools${barHidden && !tocOpen ? " is-hidden" : ""}`}
+      >
         <button
           type="button"
           onClick={() => setLight((value) => !value)}
@@ -180,7 +216,16 @@ export function ArticleReadingTools({
         >
           {light ? "Dark reading" : "Light reading"}
         </button>
-        <a href="#article-contents">Contents</a>
+        {items.length ? (
+          <button
+            type="button"
+            onClick={() => setTocOpen((open) => !open)}
+            aria-expanded={tocOpen}
+            aria-controls="article-mobile-toc"
+          >
+            Contents
+          </button>
+        ) : null}
         <a
           href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`}
           target="_blank"

@@ -7,6 +7,7 @@ date: 2026-09-30
 draft: false
 quote: "“Science has always depended on our ability to understand how we know what we know. AI may be about to challenge that.”"
 cover: /images/blog/ai-science-cover.webp
+ogImage: /images/blog/ai-science-cover.jpg
 coverAlt: Einstein in black and white looking toward a glowing neural network that turns the field equations into a colourful warped spacetime around a black hole
 ---
 
