@@ -5,7 +5,13 @@ category: Investigation
 readTime: 9 min
 date: 2026-09-30
 draft: false
-summary: "AI went from failing my relativity homework in 2022 to a claimed, still unverified proof of a Millennium Prize Problem in 2026. Whether it can make a real discovery, and not just speed up science, depends on four obstacles: the black box, checking truth outside maths, breaking the paradigm, and trust. Each has a plausible way around it, but none is proven yet."
+summary: "In September 2026, OpenAI said an internal model had produced a proof for the Navier-Stokes problem, one of the seven Millennium Prize Problems. The claim is unverified, and the Clay Mathematics Institute waits at least two years before it considers any proposed solution. This essay by physicist Kshitij Pandey asks whether AI can make a foundational discovery, as Newton and Einstein did, or only speed up science. It says the answer depends on four obstacles: the black box (epistemic opacity), checking truth outside mathematics, breaking the paradigm, and trust in the scientific system. Each has a plausible way around it, but none is proven yet."
+topics:
+  - Artificial intelligence in scientific research
+  - Millennium Prize Problems
+  - Navier-Stokes existence and smoothness
+  - Philosophy of science
+  - Epistemic opacity
 quote: "“Science has always depended on our ability to understand how we know what we know. AI may be about to challenge that.”"
 cover: /images/blog/ai-science-cover.webp
 ogImage: /images/blog/ai-science-cover.jpg

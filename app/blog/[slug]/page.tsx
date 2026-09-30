@@ -37,6 +37,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title: fullTitle.length > 60 ? { absolute: post.title } : post.title,
     description,
     authors: [{ name: SITE.person, url: `${siteUrl}/about` }],
+    keywords: post.topics,
     alternates: { canonical: `/blog/${post.slug}`, types: FEED_ALTERNATE },
     ...socialMeta({
       type: "article",
@@ -88,6 +89,8 @@ export default async function PostPage({ params }: Params) {
     inLanguage: "en-IN",
     articleSection: post.category,
     abstract: post.summary,
+    about: post.topics?.map((name) => ({ "@type": "Thing", name })),
+    keywords: post.topics?.join(", "),
     wordCount: post.html
       .replace(/<[^>]*>/g, " ")
       .split(/\s+/)
