@@ -7,6 +7,7 @@ import "./editorial.css";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ScrollMotion } from "@/components/site/scroll-motion";
+import { GoogleAnalytics } from "@/components/site/google-analytics";
 import { SITE, SOCIALS } from "@/lib/content";
 import { siteUrl } from "@/lib/site-url";
 import { FEED_ALTERNATE, socialMeta } from "@/lib/seo";
@@ -162,6 +163,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full bg-background text-foreground">
+        <GoogleAnalytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}

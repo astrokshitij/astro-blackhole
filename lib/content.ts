@@ -16,6 +16,12 @@ export const SITE = {
   portraitAlt: "Kshitij Pandey",
 };
 
+/**
+ * Paste your Google Analytics 4 Measurement ID here (starts with 'G-').
+ * You can also set it via the NEXT_PUBLIC_GA_ID environment variable.
+ * While this is empty, analytics tracking is turned off.
+ */
+export const GOOGLE_ANALYTICS_ID = process.env.NEXT_PUBLIC_GA_ID || "G-6TLR45R8ME";
 // `glyph` picks the icon, `accent` is the brand colour used on hover only.
 export const SOCIALS = [
   {
