@@ -33,8 +33,8 @@ export interface Post {
   coverAlt?: string;
   /** Optional pull quote shown under the title, in place of the excerpt. */
   quote?: string;
-  /** Optional short answer shown above the body and used as the article abstract. */
-  summary?: string;
+  /** Optional short takeaways, as bullets above the body; joined to form the article abstract. */
+  summary?: string[];
   /** Optional subjects the post is about, published as structured data. */
   topics?: string[];
   draft: boolean;
@@ -184,7 +184,11 @@ function read(fileName: string): Post {
     coverSize: cover ? (imageSize(cover) ?? undefined) : undefined,
     coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
     quote: data.quote ? String(data.quote) : undefined,
-    summary: data.summary ? String(data.summary) : undefined,
+    summary: Array.isArray(data.summary)
+      ? data.summary.map(String)
+      : data.summary
+        ? [String(data.summary)]
+        : undefined,
     topics: Array.isArray(data.topics) ? data.topics.map(String) : undefined,
     draft: data.draft === true,
     html: htmlWithHeadingIds,
