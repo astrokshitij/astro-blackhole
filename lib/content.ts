@@ -110,7 +110,7 @@ export const EDITORIAL = {
     eyebrow: "Astro Kshitij / Physics & the universe",
     title: "The universe is stranger than you think.",
     intro:
-      "I’m Kshitij Pandey, a physicist and science communicator exploring the ideas that reshape how we understand reality.",
+      "I’m Kshitij Pandey, a physicist and science communicator exploring the ideas that reshape how we understand reality. I also build AI products and grow audiences the way a product manager would.",
   },
   credentials: [
     "MSc Physics · Astrophysics & Cosmology",
