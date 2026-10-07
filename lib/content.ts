@@ -185,6 +185,7 @@ export const EDITORIAL = {
   writing: {
     eyebrow: "Featured writing / My abstract thoughts",
     intro: "For ideas that need a little more room.",
+    aiNote: "Written while building AI tools of my own.",
   },
   closing: {
     eyebrow: "A conversation worth having",

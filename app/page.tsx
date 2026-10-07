@@ -244,7 +244,8 @@ export default function Home() {
           <Eyebrow>04 / {COPY.writing.eyebrow}</Eyebrow>
           <div className="writing-feature">
             <div>
-              <p className="writing-meta">
+              <p className="writing-meta items-center">
+                <span className="image-badge !static">Featured</span>
                 {essay.category} <span> / </span> {essay.readTime} read{" "}
                 <span> / </span>{" "}
                 <time dateTime={essay.date}>{essay.dateLabel}</time>
@@ -253,6 +254,11 @@ export default function Home() {
                 <Link href={`/blog/${essay.slug}`}>{essay.title}</Link>
               </h2>
               <p className="body-copy">{essay.excerpt}</p>
+              {COPY.writing.aiNote && (
+                <p className="mt-3 text-[15px] leading-relaxed text-[#a8adb7]">
+                  {COPY.writing.aiNote}
+                </p>
+              )}
               <Link className="text-link" href={`/blog/${essay.slug}`}>
                 Read the essay <ArrowGlyph className="h-4 w-4" />
               </Link>
@@ -277,6 +283,7 @@ export default function Home() {
                 sizes="(min-width: 900px) 400px, 100vw"
                 className="object-cover"
               />
+              <span className="image-badge">Featured</span>
             </Link>
           </div>
         </Section>
