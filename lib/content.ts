@@ -179,7 +179,7 @@ export const EDITORIAL = {
   about: {
     eyebrow: "Behind the questions",
     title: "A physicist. A storyteller. Still a student of the universe.",
-    body: "My path runs through studying physics, asking questions about the universe, and sharing what I learn. The question that follows me everywhere: how do we make these difficult ideas understandable?",
+    body: "My path runs through studying physics, asking questions about the universe, and sharing what I learn. The question that follows me everywhere: how do we make these difficult ideas understandable? I treat science communication like a product: audience personas, retention data, and a steady stream of experiments.",
     cta: "The story so far",
   },
   writing: {
