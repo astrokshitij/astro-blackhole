@@ -115,6 +115,7 @@ export const EDITORIAL = {
   credentials: [
     "MSc Physics · Astrophysics & Cosmology",
     "TEDx speaker",
+    "Product & AI builder",
   ],
   explorations: [
     {
