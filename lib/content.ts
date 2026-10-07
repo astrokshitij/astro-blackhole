@@ -44,7 +44,7 @@ export const SOCIALS = [
     label: "LinkedIn",
     handle: "Kshitij Pandey",
     href: "https://www.linkedin.com/in/kshitij-pandey-30215314b/",
-    note: "Talks, workshops and what I'm building beyond the screen.",
+    note: "AI products, growth, and what I'm building beyond the screen.",
     glyph: "linkedin" as const,
     accent: "#0a66c2",
   },
