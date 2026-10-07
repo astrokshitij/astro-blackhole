@@ -319,6 +319,15 @@ export default function Home() {
             <ButtonLink href="/contact" variant="secondary">
               Get in touch
             </ButtonLink>
+            <ButtonLink
+              href="https://nextleap.app/portfolio/kshitij-pandey"
+              variant="ghost"
+              external
+              target="_blank"
+              rel="noopener"
+            >
+              Hiring? See my product work
+            </ButtonLink>
           </div>
         </div>
       </Section>

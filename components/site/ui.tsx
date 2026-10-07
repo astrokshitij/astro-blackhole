@@ -32,6 +32,8 @@ type ButtonLinkProps = VariantProps<typeof buttonStyles> & {
   children: React.ReactNode;
   className?: string;
   external?: boolean;
+  target?: string;
+  rel?: string;
 };
 
 export function ButtonLink({
@@ -41,11 +43,18 @@ export function ButtonLink({
   size,
   className,
   external,
+  target,
+  rel,
 }: ButtonLinkProps) {
   const classes = cn(buttonStyles({ variant, size }), className);
   if (external || href.startsWith("http") || href.startsWith("mailto:")) {
     return (
-      <a href={href} className={classes}>
+      <a
+        href={href}
+        className={classes}
+        target={target ?? (external ? "_blank" : undefined)}
+        rel={rel ?? (target === "_blank" || external ? "noopener noreferrer" : undefined)}
+      >
         {children}
       </a>
     );
