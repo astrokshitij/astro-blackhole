@@ -28,19 +28,20 @@ const jost = localFont({
   fallback: ["system-ui", "sans-serif"],
 });
 
-const TITLE = `${SITE.name} — science communication by ${SITE.person}`;
+const TITLE =
+  "Astro Kshitij | Physicist, Science Communicator and AI Product Builder";
 
 const DESCRIPTION =
-  "Kshitij Pandey (Astro Kshitij) — physicist, TEDx speaker, and science communicator reaching 137k+ people and 100+ rooms through deep physics explainers, research, and workshops.";
+  "Kshitij Pandey: physicist, TEDx speaker and science communicator, also building AI products as a product manager.";
 
 const SOCIAL_DESCRIPTION =
-  "Physicist, TEDx speaker, and science communicator reaching 137k+ people and 100+ rooms through deep physics explainers, research, and workshops.";
+  "Kshitij Pandey: physicist, TEDx speaker and science communicator, also building AI products as a product manager.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: TITLE,
-    template: `%s — ${SITE.name}`,
+    template: `%s | ${SITE.name}`,
   },
   description: DESCRIPTION,
   authors: [{ name: SITE.person, url: `${siteUrl}/about` }],
@@ -96,7 +97,7 @@ const structuredData = {
       mainEntityOfPage: `${siteUrl}/about`,
       image: `${siteUrl}${SITE.portrait}`,
       email: `mailto:${SITE.email}`,
-      jobTitle: "Physicist & Science Communicator",
+      jobTitle: "Physicist, Science Communicator & AI Product Builder",
       description: SOCIAL_DESCRIPTION,
       alumniOf: [
         {
