@@ -495,6 +495,9 @@ img {
 .exploration-2 .editorial-image img {
   object-position: center 36%;
 }
+.exploration-3 .editorial-image img {
+  object-position: center 30%;
+}
 .image-badge {
   display: inline-flex;
   align-items: center;

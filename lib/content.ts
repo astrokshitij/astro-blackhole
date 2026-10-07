@@ -151,6 +151,18 @@ export const EDITORIAL = {
       alt: "Kshitij explaining physics at a chalkboard",
       cta: "Watch on YouTube",
     },
+    {
+      category: "Product / AI",
+      title: "Product work: PRDs, wireframes and case studies",
+      description:
+        "How I think about users, problems and AI products, shown through the work.",
+      type: "Product",
+      href: "https://nextleap.app/portfolio/kshitij-pandey",
+      // TODO: Replace with dedicated product portfolio screenshot when available
+      image: "/images/story/msc-research.jpg",
+      alt: "Product management and AI case studies by Kshitij Pandey",
+      cta: "See my product work",
+    },
   ],
   room: {
     title: "Physics in the room.",
