@@ -91,6 +91,20 @@ export const WORKSHOPS = [
     photo: "",
     photoAlt: "",
   },
+  {
+    title: "AI literacy for researchers and science communicators",
+    format: "Live online or on site",
+    audience: "Departments, labs and science communicators",
+    blurb:
+      "A session on using AI tools critically and effectively in research and outreach.",
+    points: [
+      "Understanding AI capabilities and limitations in scientific work",
+      "Using AI tools without compromising scientific accuracy",
+      "Communicating research effectively with modern workflows",
+    ],
+    photo: "",
+    photoAlt: "",
+  },
 ];
 
 export const CREDENTIALS = [
@@ -173,8 +187,9 @@ export const EDITORIAL = {
       "Talks that make space for curiosity",
       "Quantum Mechanics for Everyone",
       "Science communication training for institutions",
+      "AI literacy for researchers and science communicators",
     ],
-    note: "Both workshop programmes are in development. Enquiries and expressions of interest are welcome.",
+    note: "All workshop programmes are in development. Enquiries and expressions of interest are welcome.",
   },
   about: {
     eyebrow: "Behind the questions",
@@ -245,6 +260,29 @@ export const PROGRAMMES = [
     ],
     action: "Discuss an institutional session",
   },
+  {
+    id: "ai-literacy-for-researchers-and-science-communicators",
+    number: "03",
+    category: "For institutions & researchers",
+    title: "AI literacy for researchers and science communicators",
+    intro:
+      "Practical AI literacy for researchers and science communicators.",
+    audience:
+      "Universities, laboratories, science departments, research teams, and communicators.",
+    duration: "To be agreed with your institution",
+    format: "Live online or on site",
+    availability: "In development · Institutional enquiries welcome",
+    // TODO: Confirm detailed syllabus, duration, and outcomes with Kshitij for AI literacy workshop
+    description:
+      "A programme exploring how researchers and science communicators can use AI tools critically and effectively, from research workflows to communicating science without losing accuracy.",
+    outcomes: [
+      "Understand where AI accelerates research and communication, and where it fails",
+      "Use AI tools for drafting and structuring without losing scientific integrity",
+      "Evaluate outputs with evals and critical verification",
+      "Communicate research clearly using modern digital tools",
+    ],
+    action: "Discuss an institutional session",
+  },
 ];
 
 export const CONTACT = {
@@ -255,6 +293,7 @@ export const CONTACT = {
     "Speaking invitation",
     "Quantum mechanics workshop",
     "Institutional training",
+    "AI literacy workshop",
     "Research or creator collaboration",
     "Question or correction",
   ],

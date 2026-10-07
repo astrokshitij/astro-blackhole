@@ -10,13 +10,13 @@ import { siteUrl } from "@/lib/site-url";
 export const metadata: Metadata = {
   title: "Workshops",
   description:
-    "Two workshops in development: a two-hour quantum mechanics session open to anyone curious, and a science communication programme for research institutions.",
+    "Workshops in development: a two-hour quantum mechanics session, a science communication programme for research institutions, and AI literacy for researchers and science communicators.",
   alternates: { canonical: "/workshops", types: FEED_ALTERNATE },
   ...socialMeta({
     path: "/workshops",
     title: "Workshops with Kshitij Pandey",
     description:
-      "Quantum mechanics for everyone, and science communication training for research institutions. Both programmes are in development.",
+      "Quantum mechanics for everyone, science communication training for research institutions, and AI literacy for researchers. All programmes are in development.",
   }),
 };
 
