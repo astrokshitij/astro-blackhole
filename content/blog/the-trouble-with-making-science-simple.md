@@ -4,7 +4,7 @@ excerpt: A child in Ladakh asked me what the Big Bang collided with, and my conf
 category: Science communication
 readTime: 8 min
 date: 2026-10-19
-draft: true
+draft: false
 topics:
   - Science communication
   - Misconceptions in physics education
