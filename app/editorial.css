@@ -696,6 +696,10 @@ figcaption {
 .essay-image img {
   filter: saturate(0.5);
 }
+.essay-image .image-badge {
+  top: 14px;
+  bottom: auto;
+}
 .channel-list a {
   display: grid;
   grid-template-columns: 35px 1fr 1.4fr 1fr 24px;

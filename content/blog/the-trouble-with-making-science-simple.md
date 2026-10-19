@@ -12,9 +12,9 @@ topics:
   - Jargon and understanding
   - Cosmology
 quote: "“Maybe a good science explanation isn't finished when we've made it sound simple. Maybe it gets better when we discover what our words made someone else think.”"
-cover: /images/blog/trouble-simple-cover.webp
-ogImage: /images/blog/trouble-simple-og.jpg
-coverAlt: Two overlapping circles on a dark background, one white and one amber, with a glowing amber overlap between them
+cover: /images/blog/trouble-simple-venn.webp
+ogImage: /images/blog/trouble-simple-venn-og.jpg
+coverAlt: Two overlapping circles labelled what I know and what they know, with a sun and stars in the overlap between them
 ---
 
 *A recorded version of this talk was played at SciComm Collider 2026 at the Perimeter Institute for Theoretical Physics on 19 October 2026. This is the written version.*
