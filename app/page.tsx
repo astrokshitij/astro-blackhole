@@ -254,7 +254,8 @@ export default function Home() {
                 <Link href={`/blog/${essay.slug}`}>{essay.title}</Link>
               </h2>
               <p className="body-copy">{essay.excerpt}</p>
-              {COPY.writing.aiNote && (
+              {COPY.writing.aiNote &&
+                essay.topics?.some((t) => /artificial intelligence/i.test(t)) && (
                 <p className="mt-3 text-[15px] leading-relaxed text-[#a8adb7]">
                   {COPY.writing.aiNote}
                 </p>
@@ -263,6 +264,7 @@ export default function Home() {
                 Read the essay <ArrowGlyph className="h-4 w-4" />
               </Link>
             </div>
+            {essay.cover && (
             <Link
               href={`/blog/${essay.slug}`}
               className="essay-image"
@@ -277,7 +279,7 @@ export default function Home() {
               aria-hidden="true"
             >
               <Image
-                src={essay.cover!}
+                src={essay.cover}
                 alt=""
                 fill
                 sizes="(min-width: 900px) 400px, 100vw"
@@ -285,6 +287,7 @@ export default function Home() {
               />
               <span className="image-badge">Featured</span>
             </Link>
+            )}
           </div>
         </Section>
       )}
