@@ -309,11 +309,11 @@ export const PAGE_COPY = {
     reachLabel: "Reach / In rooms and on screen",
     reachTitle: "Physics in front of rooms. Curiosity beyond them.",
     headline: ["The universe is", "stranger than", "you think."],
-    workLabel: "01 / Selected explorations",
+    workLabel: "02 / Selected explorations",
     workTitle: ["Follow a question.", "See where it takes you."],
     workIntro:
       "Research, stories, and ideas from a universe that keeps surprising us.",
-    roomLabel: "02 / Beyond the screen",
+    roomLabel: "01 / Beyond the screen",
     portraitCaption: "Kshitij Pandey / Physicist & science communicator",
     channelsLabel: "05 / The conversation continues",
     channelsTitle: "Find me in your orbit.",

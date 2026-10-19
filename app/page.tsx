@@ -72,6 +72,47 @@ export default function Home() {
           </div>
         </div>
       </Section>
+      <Section className="room-section">
+        <div className="section-top">
+          <div>
+            <Eyebrow>{PAGE_COPY.home.roomLabel}</Eyebrow>
+            <h2 className="section-title">{COPY.room.title}</h2>
+          </div>
+          <Link className="text-link" href="/contact?type=speaking">
+            Invite Kshitij to speak <ArrowGlyph className="h-4 w-4" />
+          </Link>
+        </div>
+        <figure className="stage-photo">
+          <Image
+            src="/images/home/tedx/2.jpg"
+            alt="Kshitij Pandey speaking on the TEDx stage"
+            fill
+            sizes="(min-width: 1280px) 1200px, 100vw"
+            className="object-cover"
+          />
+          <figcaption>{COPY.room.caption}</figcaption>
+        </figure>
+        <div className="room-details">
+          <div>
+            <h3>{COPY.room.intro}</h3>
+            <p>{COPY.room.body}</p>
+          </div>
+          <div>
+            <ul>
+              {COPY.room.offerings.map((item, i) => (
+                <li key={item}>
+                  <span>0{i + 1}</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="availability-note">{COPY.room.note}</p>
+            <Link className="text-link" href="/workshops">
+              Explore workshops <ArrowGlyph className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </Section>
       <Section id="work">
         <div className="section-top">
           <div>
@@ -171,47 +212,6 @@ export default function Home() {
               </article>
             );
           })}
-        </div>
-      </Section>
-      <Section className="room-section">
-        <div className="section-top">
-          <div>
-            <Eyebrow>{PAGE_COPY.home.roomLabel}</Eyebrow>
-            <h2 className="section-title">{COPY.room.title}</h2>
-          </div>
-          <Link className="text-link" href="/contact?type=speaking">
-            Invite Kshitij to speak <ArrowGlyph className="h-4 w-4" />
-          </Link>
-        </div>
-        <figure className="stage-photo">
-          <Image
-            src="/images/home/tedx/2.jpg"
-            alt="Kshitij Pandey speaking on the TEDx stage"
-            fill
-            sizes="(min-width: 1280px) 1200px, 100vw"
-            className="object-cover"
-          />
-          <figcaption>{COPY.room.caption}</figcaption>
-        </figure>
-        <div className="room-details">
-          <div>
-            <h3>{COPY.room.intro}</h3>
-            <p>{COPY.room.body}</p>
-          </div>
-          <div>
-            <ul>
-              {COPY.room.offerings.map((item, i) => (
-                <li key={item}>
-                  <span>0{i + 1}</span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="availability-note">{COPY.room.note}</p>
-            <Link className="text-link" href="/workshops">
-              Explore workshops <ArrowGlyph className="h-4 w-4" />
-            </Link>
-          </div>
         </div>
       </Section>
       <Section>
