@@ -67,6 +67,10 @@ Each step lets the student test the connection instead of taking our word for it
 
 That also makes me wonder what we're allowed to simplify. I sometimes think of an explanation as having a soul and a body. The soul is the central idea you want to get across. The body is everything around it: the terminology, the math, the technical detail.
 
+![A glowing amber circle at the centre, surrounded by faded symbols and the word terminology, such as H0, lambda, rho and T proportional to 1 over a](/images/blog/trouble-simple-core.webp)
+
+*The soul is the glowing idea. The body is everything faded around it.*
+
 I have to be careful with that metaphor, though. Sometimes the math, or the mechanism, is the idea. You can't strip it away and expect the meaning to survive. So maybe the better question isn't "How much detail can I remove?" It's "What must remain true after I've removed it?"
 
 There's even a slightly provocative name for simplified teaching models: "lies-to-children," a phrase from Jack Cohen and Ian Stewart. Nobody is trying to deceive anyone. The point is to give a beginner something they can improve on later. But that label doesn't tell us which simplifications help. Leaving out a detail for later is one thing. Inventing a mechanism that doesn't exist is something else. My collision wasn't a first step on a ladder. It was a step in the wrong direction.
@@ -84,6 +88,10 @@ So everyday language can give people the wrong picture, and technical language c
 The question I want to ask instead is: can they use it? Can they put it in their own words, apply it to something new? And what wrong conclusions might they walk away with?
 
 We can turn that into a habit. I call it an inference audit. Fancy name, I know. It isn't a new theory, just a practical habit built on decades of work in science education.
+
+![A cycle with three stops. Before: what picture are they starting with? While: what might they infer if they take it literally? After: can they use it somewhere new?](/images/blog/trouble-simple-cycle.webp)
+
+*The audit is a loop, not a checklist: what you learn afterwards changes what you ask before.*
 
 **Table 1: The inference audit, in three moments.**
 
