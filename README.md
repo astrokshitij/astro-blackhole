@@ -1,5 +1,7 @@
 # Astro Kshitij
 
+Personal brand site for Astro Kshitij (Kshitij Pandey), science communicator.
+
 [astrokshitij.com](https://astrokshitij.com). Next.js, TypeScript and Tailwind
 v4, with a WebGL2 black-hole renderer.
 
