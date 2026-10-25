@@ -14,14 +14,20 @@ topics:
 cover: /images/blog/sayana-audit/cover.webp
 ogImage: /images/blog/sayana-audit/cover-og.jpg
 coverAlt: The line 2,202 yojanas in half a nimesa, the formula speed equals 4404 times Y divided by N, and a number line showing the paper's 16 results scattered around the speed of light
-quote: "“A close match is only as strong as the reason for choosing the units behind it.”"
+quote: "“Honouring a tradition means checking its claims as carefully as we celebrate them.”"
 summary:
   - The printed speed arithmetic holds up. All 16 tabulated calculations reproduce from their printed inputs, to the displayed rounding.
   - The choice of units needs more justification. In one case, picking between two values listed in the paper decides whether a result is about 7% or about 25% away from the modern speed of light.
   - The calculations do not establish a proven ancient determination of the modern speed of light, and the paper itself acknowledges that limitation.
 ---
 
-Ever since I was 14 years old, I have often heard that the speed of light was mentioned in our ancient texts. It always made me curious. But when I started studying physics, I began to grow sceptical.
+I remember I was around 14, sitting in the audience at an event, when I first heard someone on stage say that the speed of light was already mentioned in our scriptures. I was fascinated. I couldn't stop talking about it with my friends and family. To think that our ancestors knew something so advanced, so long ago.
+
+Later, when I started studying physics, I began to grow sceptical. Not of our heritage, but of claims that were repeated without anyone checking them.
+
+Don't get me wrong. When I question an idea like this, I don't mean that ancient India had nothing to offer. I study Indian astronomy in my free time, read about the discoveries we can support with evidence, and have attended online lectures on the subject. One of my future plans is to study and explore ancient Indian astronomy more deeply and make documentaries about it.
+
+But as a sceptic, I also want to be extra careful that claims which could be wrong or misleading don't spread in our culture's name. A claim that falls apart under scrutiny doesn't honour a tradition. It hurts its reputation.
 
 So when a peer-reviewed paper on exactly this question came out in August 2026, I wanted to know two things. What does the ancient statement actually say? And what does this modern paper actually establish?
 
@@ -288,7 +294,7 @@ To be fair, the very next page returns to the cautious position: the paper does 
 
 ## So, Where Does This Leave Us?
 
-When I was 14, the idea that our ancient texts mentioned the speed of light felt exciting. Studying the claim properly turned out to be more interesting than either believing it or dismissing it.
+When I heard this claim from that stage at 14, it felt thrilling. Studying it properly, years later, turned out to be more interesting than either believing it or dismissing it.
 
 Here's what holds up. The paper's arithmetic is right. It correctly separates Sayana's commentary from the Rigveda. Some of its chosen conversions really do produce numbers near the modern speed of light. And its authors are careful not to claim more than that.
 
