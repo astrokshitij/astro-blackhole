@@ -13,7 +13,7 @@ topics:
   - Scientific peer review
 cover: /images/blog/sayana-audit/cover.webp
 ogImage: /images/blog/sayana-audit/cover-og.jpg
-coverAlt: The line 2,202 yojanas in half a nimesa, the formula speed equals 4404 times Y divided by N, and a number line showing the paper's 16 results scattered around the speed of light
+coverAlt: An old palm-leaf manuscript lit by a single beam of sunlight that passes two measuring rulers with different markings
 quote: "“Honouring a tradition means checking its claims as carefully as we celebrate them.”"
 summary:
   - The printed speed arithmetic holds up. All 16 tabulated calculations reproduce from their printed inputs, to the displayed rounding.
