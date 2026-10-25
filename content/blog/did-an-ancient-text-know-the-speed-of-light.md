@@ -153,7 +153,7 @@ The yojana cancels out, so no kilometre conversion affects this result.
 
 **Aryabhata.** The paper prints the Sun's orbit as 2,887,666.8 yojanas around, which puts the Sun about 459,585 yojanas away. With Earth's radius at 525 yojanas, that's about **875 Earth radii**, against a real 23,481, so about 27 times too close. With the paper's 0.2133 s nimesa: 459,585 ÷ 4,404 × 0.2133 = **22.3 seconds**. (Aryabhata's Moon, by contrast, sits about 65.5 Earth radii away against a real 60.3. The model works near Earth and breaks further out.)
 
-**Surya Siddhanta.** Earth's diameter is 1,600 yojanas (verse 1.59) and the Sun's orbit 4,331,500 yojanas (verses 12.85 to 90), so the Sun is about 689,378 yojanas away, or about **862 Earth radii**. With the paper's 0.088 s nimesa: **13.8 seconds**.
+**Surya Siddhanta.** Earth's diameter is 1,600 yojanas (verse I.59) and the Sun's orbit 4,331,500 yojanas (verse XII.86). The text gives its own rule for distance (verse XII.84): multiply the orbit by Earth's diameter and divide by Earth's circumference to get the orbit's diameter. That puts the Sun about 684,870 yojanas from Earth's centre, or about **856 Earth radii**. With the paper's 0.088 s nimesa: **13.7 seconds**.
 
 **Vishnu Purana.** The Vishnu Purana places the Sun 100,000 yojanas from Earth and the Moon a further 100,000 beyond it. Puranic cosmology is a different kind of picture from the geometric models above, and Puranic texts don't all give the same figures, so treat this as one Puranic statement rather than "the" Puranic distance. I use it because the paper takes its main nimesa from this text, and links Sayana's source to this broad tradition.
 
@@ -163,7 +163,7 @@ The yojana cancels out, so no kilometre conversion affects this result.
 
 With the Vishnu Purana's own nimesa (0.2133 s): 100,000 ÷ 4,404 × 0.2133 = **4.8 seconds**.
 
-![Two bar charts. Left: sunlight's travel time to Earth inside each model at Sayana's rate, 4.8 s for the Vishnu Purana, 13.8 s for the Surya Siddhanta and 22.3 s for Aryabhata, against 499 s in reality. Right: the Sun's distance in Earth radii, 875 for Aryabhata and 862 for the Surya Siddhanta, against 23,481 in reality](/images/blog/sayana-audit/pressure-test-chart.webp)
+![Two bar charts. Left: sunlight's travel time to Earth inside each model at Sayana's rate, 4.8 s for the Vishnu Purana, 13.7 s for the Surya Siddhanta and 22.3 s for Aryabhata, against 499 s in reality. Right: the Sun's distance in Earth radii, 875 for Aryabhata and 856 for the Surya Siddhanta, against 23,481 in reality](/images/blog/sayana-audit/pressure-test-chart.webp)
 
 *Figure 9: Sunlight's travel time and the Sun's distance, in each tradition's own numbers, against reality. (Calculations: Astro Kshitij)*
 
@@ -172,7 +172,7 @@ With the Vishnu Purana's own nimesa (0.2133 s): 100,000 ÷ 4,404 × 0.2133 = **4
 | Tradition | Sun's distance in the text | Nimesa (paper's pairing) | Sunlight would arrive in |
 |---|---|---|---|
 | Aryabhata | 459,585 yojanas | 0.2133 s | 22.3 s |
-| Surya Siddhanta | 689,378 yojanas | 0.088 s | 13.8 s |
+| Surya Siddhanta | 684,870 yojanas | 0.088 s | 13.7 s |
 | Vishnu Purana | 100,000 yojanas | 0.2133 s | 4.8 s |
 | Reality | 149.6 million km | | 499 s |
 
@@ -184,9 +184,9 @@ But it does show two things. First, the number can't have come from these astron
 
 The paper disclaims a measurement, but the popular claim usually implies one. Historically, there have been two routes to measuring the speed of light.
 
-On the ground, you have to time light over a distance of kilometres, where it takes only tens of millionths of a second. Galileo's lantern experiment, described in 1638, could detect no delay at all. The first successful measurement on the ground was Fizeau's in 1849, using a rapidly rotating toothed wheel over about 8.6 km.
+On the ground, you have to time light over a distance of kilometres, where it takes only tens of millionths of a second. Galileo proposed a lantern experiment in 1638; when the Accademia del Cimento in Florence tried it in 1667, with lanterns about a mile apart, no delay was observed. The first successful measurement on the ground was Fizeau's in 1849, using a rapidly rotating toothed wheel and a mirror about 8 km away.
 
-In the sky, Ole Rømer made the first estimate in 1676 by timing the eclipses of Jupiter's moon Io. That method only works if you know the size of Earth's orbit. These traditions placed the Sun 27 or more times too close, so an estimate built on their own scale would have come out roughly that many times too small.
+In the sky, Ole Rømer made the first estimate in 1676 by timing the eclipses of Jupiter's moon Io, and Christiaan Huygens turned it into a speed by combining it with an estimate of the size of Earth's orbit. That method only works if you know that size. These traditions placed the Sun 27 or more times too close, so an estimate built on their own scale would have come out roughly that many times too small.
 
 The paper cites no instrument or procedure for either route, and I know of none. That doesn't prove no measurement ever happened. It means there is no evidence one did, and the one route that existed in principle would have failed with these traditions' own distances.
 
@@ -332,13 +332,13 @@ Everything below works on an ordinary calculator.
 **Sunlight travel time in a tradition's own units:** `(D ÷ 4404) × N` seconds, where D is the Sun's distance in yojanas. For an orbit given as a circumference C, `D = C ÷ (2 × π)`.
 
 - Aryabhata: `2887666.8 ÷ (2 × π) ÷ 4404 × 0.2133 ≈ 22.3` s
-- Surya Siddhanta: `4331500 ÷ (2 × π) ÷ 4404 × 0.088 ≈ 13.8` s
+- Surya Siddhanta, using its own rule (XII.84) with circumference = √10 × diameter: `4331500 ÷ √10 ÷ 2 ÷ 4404 × 0.088 ≈ 13.7` s
 - Vishnu Purana: `100000 ÷ 4404 × 0.2133 ≈ 4.8` s
 - Reality: `149597870.7 ÷ 299792.458 ≈ 499` s
 
 **The line read literally, in Aryabhata's model:** the Sun's daily motion is `2887666.8 ÷ 365.2587 ≈ 7906` yojanas per day, while Sayana's rate is `4404 × 405000 ≈ 1.78 billion` yojanas per day, over 200,000 times more. (365.2587 is Aryabhata's year: 1,577,917,500 days ÷ 4,320,000 revolutions.)
 
-**Sun's distance in Earth radii:** `(C ÷ (2 × π)) ÷ (Earth diameter in yojanas ÷ 2)`. Aryabhata: `459585 ÷ 525 ≈ 875`. Surya Siddhanta: `689378 ÷ 800 ≈ 862`. Reality: `149597870.7 ÷ 6371 ≈ 23481`.
+**Sun's distance in Earth radii:** `(C ÷ (2 × π)) ÷ (Earth diameter in yojanas ÷ 2)`. Aryabhata: `459585 ÷ 525 ≈ 875`. Surya Siddhanta: `684870 ÷ 800 ≈ 856`. Reality: `149597870.7 ÷ 6371 ≈ 23481`.
 
 **The Surya Siddhanta Sun orbit, from its own rules:** the Moon's orbit of 324,000 yojanas, times the Moon's 57,753,336 revolutions, divided by the Sun's 4,320,000 revolutions per great age: `324000 × 57753336 ÷ 4320000 ≈ 4331500`.
 
@@ -394,11 +394,12 @@ The Mahabharata row is an approximation rather than a clear mistake. Its hierarc
 ## Sources
 
 - Iyer, K., Gour, M. and Maurya, G. (2026). Pre-Rømer reflections on the speed of light in Indian texts: a scientific and philological reassessment of Sāyaṇa's Ṛgveda commentary. *Proceedings of the Indian National Science Academy*, published 3 August 2026. [doi.org/10.1007/s43538-026-00814-x](https://doi.org/10.1007/s43538-026-00814-x). All highlighted figures are from this paper; highlights added.
-- Burgess, E. (trans.) (1935). *Translation of the Sūrya Siddhānta*. University of Calcutta. Verse I.59, printed pp. 43 to 44; verses XII.85 to 90. [PDF](https://classicalastrologer.com/wp-content/uploads/2018/04/surya_siddhanta_english.pdf)
+- Burgess, E. (trans.) (1935). *Translation of the Sūrya Siddhānta*. University of Calcutta. Verse I.59, printed p. 43; verses XII.84 to 86, printed p. 294; orbit table, printed p. 295. [PDF](https://classicalastrologer.com/wp-content/uploads/2018/04/surya_siddhanta_english.pdf)
 - Wilson, H. H. (trans.) (1840). *The Vishnu Purana*, Book 2, Chapter 7. [Online text](https://sacred-texts.com/hin/vp/vp065.htm)
 - Shamasastry, R. (trans.). *Kautilya's Arthashastra*, Book 2, Chapter 20, on the ordinary and garhapatya dhanus. [Online text](https://www.wisdomlib.org/hinduism/book/kautilya-arthashastra/d/doc366066.html)
 - Venugopal, P., Rupa, K., Uma, S. K. and Rao, S. B. (2019). The concepts of deśāntara and yojana in Indian astronomy. *Journal of Astronomical History and Heritage*, 22(3), 401 to 406, printed p. 403. [PDF](https://adsabs.harvard.edu/pdf/2019JAHH...22..401V)
 - Jha, G. (trans.). *Manusmṛti with the commentary of Medhātithi*, verse 8.406. [English rendering](https://www.wisdomlib.org/hinduism/book/manusmriti-with-the-commentary-of-medhatithi/d/doc201341.html) and [Sanskrit commentary](https://www.wisdomlib.org/hinduism/book/manusmriti-with-manubhashya-sanskrit/d/doc1648181.html).
 - NASA. [Earth Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html).
 - International Astronomical Union (2012). Resolution B2, defining the astronomical unit as 149,597,870,700 m.
-- Galileo Galilei (1638). *Dialogues Concerning Two New Sciences* (lantern experiment); H. Fizeau (1849), *Comptes rendus* 29, 90 to 92; O. Rømer (1676), on the eclipses of Io.
+- Wikipedia, [Speed of light](https://en.wikipedia.org/wiki/Speed_of_light), sections on first measurement attempts and the history of measurements (Galileo, Accademia del Cimento, Rømer and Huygens, Fizeau).
+- Wikipedia, [Kali ahargana](https://en.wikipedia.org/wiki/Kali_ahargana), for the Aryabhatiya's 1,577,917,500 civil days and 4,320,000 solar revolutions per yuga.
