@@ -2,7 +2,7 @@
 title: Did an Ancient Text Know the Speed of Light? I Put the Claim to a Physics Test
 excerpt: A new peer-reviewed paper says a line in Sayana's Rigveda commentary comes close to the speed of light. I checked its numbers, then tested the claim against the astronomy of the very traditions it relies on.
 category: Investigation
-readTime: 15 min
+readTime: 17 min
 date: 2026-10-25
 draft: false
 topics:
@@ -54,7 +54,7 @@ Their final paragraph explicitly disclaims an experimentally established ancient
 
 *Figure 2: The paper's own limitation, in its final paragraph. (Iyer, Gour & Maurya 2026, p. 12)*
 
-But elsewhere the paper speaks more confidently. Its abstract refers to "Sāyaṇācārya's numerical value for the speed of light", and its conclusion says he "postulates" one (Figure 17). So the paper doesn't claim an ancient experiment, but it does identify this number with the speed of light. That identification is what I tested.
+But elsewhere the paper speaks more confidently. Its abstract refers to "Sāyaṇācārya's numerical value for the speed of light", and its conclusion says he "postulates" one (Figure 33). So the paper doesn't claim an ancient experiment, but it does identify this number with the speed of light. That identification is what I tested.
 
 ## How the Calculation Works
 
@@ -121,7 +121,15 @@ One note first. Every astronomy before the telescope, Greek astronomy included, 
 
 ### Test 1: Why the Earth-calibrated rows look good
 
-Aryabhata gives Earth's diameter as 1,050 yojanas. With the paper's 12.13 km yojana, Earth's equator spins at about 0.464 km/s. The real value is 0.465 km/s.
+Aryabhata gives Earth's diameter as 1,050 yojanas. With the paper's 12.13 km yojana, Earth's equator spins at about 0.464 km/s (3.1416 × 1,050 × 12.13 km ÷ 86,164 s). The real value, from NASA's equatorial radius of 6,378.137 km, is 0.465 km/s.
+
+![The Aryabhata rows of the paper's Table 1, with Earth's diameter of 1,050 yojanas and the 12.13 km yojana](/images/blog/sayana-audit/fig04_table1_aryabhata_rows.webp)
+
+*Figure 6: Aryabhata's Earth diameter and the paper's yojana. (Iyer, Gour & Maurya 2026, p. 5, Table 1)*
+
+![NASA Earth Fact Sheet with the equatorial radius 6,378.137 km and mean radius 6,371 km highlighted](/images/blog/sayana-audit/ext_nasa_radius.webp)
+
+*Figure 7: Earth's radius. (NASA NSSDC, [Earth Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html), accessed 25 October 2026)*
 
 A near-perfect match, and it has to be: the yojana was set using Earth's size and the nimesa using the length of the day. For every row where the yojana comes from Earth's size, agreement near Earth is built in. It can't independently confirm the conversion. (The paper's two closest rows take other routes, Jha's 8 miles and an archaeological reading. Those are examined in the next section.)
 
@@ -131,15 +139,27 @@ The line addresses the Sun: you traverse 2,202 yojanas in half a nimesa. The pap
 
 ![The paper's report that calculating the Sun's speed with such a formula is not supported by Siddhantic or Puranic texts, highlighted](/images/blog/sayana-audit/fig19_sun_speed_kak.webp)
 
-*Figure 6: (Iyer, Gour & Maurya 2026, p. 9)*
+*Figure 8: (Iyer, Gour & Maurya 2026, p. 9)*
 
-The numbers show how far off it is. In Aryabhata's model, the Sun moves along its orbit about 7,906 yojanas per day. Sayana's rate, with the paper's Vishnu Purana count of 405,000 nimesas per day, is about 1.78 billion yojanas per day: **more than 200,000 times faster**. Even the Sun's apparent daily trip around the whole sky, 2.89 million yojanas, is more than 600 times too slow.
+The numbers show how far off it is. Aryabhata counts 4,320,000 solar revolutions and 1,577,917,500 days in a yuga, so his year is 1,577,917,500 ÷ 4,320,000 = 365.2587 days. His Sun's orbit is 2,887,666.8 yojanas (shown in Test 3 below), so the Sun moves along it about 2,887,666.8 ÷ 365.2587 ≈ 7,906 yojanas per day. Sayana's rate, with the paper's Vishnu Purana count of 405,000 nimesas per day, is about 1.78 billion yojanas per day: **more than 200,000 times faster**. Even the Sun's apparent daily trip around the whole sky, 2.89 million yojanas, is more than 600 times too slow.
+
+![Wikipedia's Kali ahargana article listing the Aryabhatiya's 4,320,000 solar revolutions and 1,577,917,500 civil days per yuga, highlighted](/images/blog/sayana-audit/ext_wiki_days.webp)
+
+*Figure 9: Aryabhata's yuga constants. (Wikipedia, [Kali ahargana](https://en.wikipedia.org/wiki/Kali_ahargana), accessed 25 October 2026)*
+
+![The paper's Table 2, with the Vishnu Purana's 405,000 nimesas per day](/images/blog/sayana-audit/fig06_table2_sidereal.webp)
+
+*Figure 10: The Vishnu Purana's 405,000 nimesas per day, used for Sayana's daily rate: 4,404 × 405,000 = 1,783,620,000 yojanas per day. (Iyer, Gour & Maurya 2026, p. 7, Table 2)*
 
 Both sides of this comparison are in the tradition's own yojanas, so no conversion choice can change the result. As written, the line doesn't describe anything in this astronomy. To get a speed-of-light reading, it has to be reinterpreted, which is what the paper does.
 
 ### Test 3: Read as light, it doesn't fit the sky it came with
 
-So take the paper's reading. The same texts that give Earth's size also give the Sun's distance, in the same yojanas. If 2,202 yojanas per half nimesa is the speed of light, how long does sunlight take to reach Earth inside each tradition's own model? The real answer is about 8 minutes 19 seconds, or 499 seconds.
+So take the paper's reading. The same texts that give Earth's size also give the Sun's distance, in the same yojanas. If 2,202 yojanas per half nimesa is the speed of light, how long does sunlight take to reach Earth inside each tradition's own model? The real answer is about 8 minutes 19 seconds: 149,598,000 km ÷ 299,792.458 km/s ≈ 499 seconds. In Earth radii, the real distance is 149,598,000 ÷ 6,371 ≈ 23,481.
+
+![NASA Earth Fact Sheet with the semimajor axis of 149.598 million km highlighted](/images/blog/sayana-audit/ext_nasa_axis.webp)
+
+*Figure 11: The real Earth to Sun distance. (NASA NSSDC, [Earth Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html), accessed 25 October 2026)*
 
 If the Sun is D yojanas away, light at 4,404 yojanas per nimesa arrives in:
 
@@ -149,23 +169,39 @@ The yojana cancels out, so no kilometre conversion affects this result.
 
 ![The paper's description of Aryabhata's yojana, with the Sun's orbit of 2,887,666.8 yojanas and the orbit of the sky highlighted](/images/blog/sayana-audit/fig02_aryabhata_orbits.webp)
 
-*Figure 7: Aryabhata's Sun orbit, printed in the paper itself. (Iyer, Gour & Maurya 2026, p. 4)*
+*Figure 12: Aryabhata's Sun orbit, printed in the paper itself. (Iyer, Gour & Maurya 2026, p. 4)*
 
-**Aryabhata.** The paper prints the Sun's orbit as 2,887,666.8 yojanas around, which puts the Sun about 459,585 yojanas away. With Earth's radius at 525 yojanas, that's about **875 Earth radii**, against a real 23,481, so about 27 times too close. With the paper's 0.2133 s nimesa: 459,585 ÷ 4,404 × 0.2133 = **22.3 seconds**. (Aryabhata's Moon, by contrast, sits about 65.5 Earth radii away against a real 60.3. The model works near Earth and breaks further out.)
+**Aryabhata.** The paper prints the Sun's orbit as 2,887,666.8 yojanas around, which puts the Sun about 2,887,666.8 ÷ (2 × 3.1416) ≈ 459,585 yojanas away. With Earth's radius at 525 yojanas, that's about **875 Earth radii**, against a real 23,481, so about 27 times too close. With the paper's 0.2133 s nimesa: 459,585 ÷ 4,404 × 0.2133 = **22.3 seconds**. (Aryabhata's Moon, by contrast, sits about 65.5 Earth radii away against a real 60.3. The model works near Earth and breaks further out.)
 
-**Surya Siddhanta.** Earth's diameter is 1,600 yojanas (verse I.59) and the Sun's orbit 4,331,500 yojanas (verse XII.86). The text gives its own rule for distance (verse XII.84): multiply the orbit by Earth's diameter and divide by Earth's circumference to get the orbit's diameter. That puts the Sun about 684,870 yojanas from Earth's centre, or about **856 Earth radii**. With the paper's 0.088 s nimesa: **13.7 seconds**.
+**Surya Siddhanta.** Earth's diameter is 1,600 yojanas (verse I.59) and the Sun's orbit 4,331,500 yojanas (verse XII.86). The text gives its own rule for distance (verse XII.84): multiply the orbit by Earth's diameter and divide by Earth's circumference to get the orbit's diameter. With Earth's circumference at 1,600 × √10 ≈ 5,059.6 yojanas, the orbit's diameter is 4,331,500 × 1,600 ÷ 5,059.6 ≈ 1,369,741 yojanas. That puts the Sun about 684,870 yojanas from Earth's centre, or 684,870 ÷ 800 ≈ **856 Earth radii**. With the paper's 0.088 s nimesa: 684,870 ÷ 4,404 × 0.088 = **13.7 seconds**.
 
-**Vishnu Purana.** The Vishnu Purana places the Sun 100,000 yojanas from Earth and the Moon a further 100,000 beyond it. Puranic cosmology is a different kind of picture from the geometric models above, and Puranic texts don't all give the same figures, so treat this as one Puranic statement rather than "the" Puranic distance. I use it because the paper takes its main nimesa from this text, and links Sayana's source to this broad tradition.
+![Burgess's translation of the Surya Siddhanta, printed page 43, verse 59: twice eight hundred yojanas are the diameter of the earth, and the square root of ten times its square is the circumference](/images/blog/sayana-audit/ext_burgess_p43.webp)
+
+*Figure 13: Surya Siddhanta I.59. (Burgess 1935, printed p. 43; [PDF](https://classicalastrologer.com/wp-content/uploads/2018/04/surya_siddhanta_english.pdf) page 96, accessed 25 October 2026)*
+
+![Burgess's translation, printed page 294, verses 84 to 86, with the distance rule and the Sun's orbit of 4,331,500 yojanas](/images/blog/sayana-audit/ext_burgess_p294.webp)
+
+*Figure 14: Surya Siddhanta XII.84 to 86: the text's own distance rule, and the Sun's orbit. (Burgess 1935, printed p. 294; PDF page 347)*
+
+![Burgess's table of orbits in yojanas, printed page 295, with the Sun at 4,331,500](/images/blog/sayana-audit/ext_burgess_p295.webp)
+
+*Figure 15: Burgess's table of the orbits in verses XII.85 to 90. (Burgess 1935, printed p. 295; PDF page 348)*
+
+**Vishnu Purana.** The Vishnu Purana places the Sun 100,000 yojanas from Earth and the Moon a further 100,000 beyond it. (Wilson's translation renders yojanas as "leagues".)
+
+![Wilson's translation of the Vishnu Purana, Book II, Chapter VII, page 212, with the solar orb a hundred thousand leagues from the earth highlighted](/images/blog/sayana-audit/ext_vp.webp)
+
+*Figure 16: Vishnu Purana II.7. Wilson's footnote adds that the Padma, Kurma and Vayu Puranas give a similar account. (Wilson 1840, p. 212; [sacred-texts.com](https://archive.sacred-texts.com/hin/vp/vp065.htm), accessed 25 October 2026)* Puranic cosmology is a different kind of picture from the geometric models above, and Puranic texts don't all give the same figures, so treat this as one Puranic statement rather than "the" Puranic distance. I use it because the paper takes its main nimesa from this text, and links Sayana's source to this broad tradition.
 
 ![The paper's statement that the source quoted by Sayana was most probably based on the Puranic-Dharmashastric tradition, highlighted](/images/blog/sayana-audit/fig21_puranic_dharmasastric_source.webp)
 
-*Figure 8: (Iyer, Gour & Maurya 2026, p. 8)*
+*Figure 17: (Iyer, Gour & Maurya 2026, p. 8)*
 
 With the Vishnu Purana's own nimesa (0.2133 s): 100,000 ÷ 4,404 × 0.2133 = **4.8 seconds**.
 
 ![Two bar charts. Left: sunlight's travel time to Earth inside each model at Sayana's rate, 4.8 s for the Vishnu Purana, 13.7 s for the Surya Siddhanta and 22.3 s for Aryabhata, against 499 s in reality. Right: the Sun's distance in Earth radii, 875 for Aryabhata and 856 for the Surya Siddhanta, against 23,481 in reality](/images/blog/sayana-audit/pressure-test-chart.webp)
 
-*Figure 9: Sunlight's travel time and the Sun's distance, in each tradition's own numbers, against reality. (Calculations: Astro Kshitij)*
+*Figure 18: Sunlight's travel time and the Sun's distance, in each tradition's own numbers, against reality. (Calculations: Astro Kshitij)*
 
 **Table 1: Sayana's line read as light, inside each tradition's own sky.**
 
@@ -188,6 +224,14 @@ On the ground, you have to time light over a distance of kilometres, where it ta
 
 In the sky, Ole Rømer made the first estimate in 1676 by timing the eclipses of Jupiter's moon Io, and Christiaan Huygens turned it into a speed by combining it with an estimate of the size of Earth's orbit. That method only works if you know that size. These traditions placed the Sun 27 or more times too close, so an estimate built on their own scale would have come out roughly that many times too small.
 
+![Wikipedia's account of the first attempts to measure light's speed, with no delay was observed and Huygens combining Rømer's estimate with the diameter of Earth's orbit highlighted](/images/blog/sayana-audit/ext_wiki_attempts.webp)
+
+*Figure 19: First measurement attempts. (Wikipedia, [Speed of light](https://en.wikipedia.org/wiki/Speed_of_light), accessed 25 October 2026)*
+
+![Wikipedia's table of historical measurements of c, with the Rømer and Huygens row and the 1849 Fizeau row highlighted](/images/blog/sayana-audit/ext_wiki_table.webp)
+
+*Figure 20: History of measurements of c. (Wikipedia, [Speed of light](https://en.wikipedia.org/wiki/Speed_of_light), accessed 25 October 2026)*
+
 The paper cites no instrument or procedure for either route, and I know of none. That doesn't prove no measurement ever happened. It means there is no evidence one did, and the one route that existed in principle would have failed with these traditions' own distances.
 
 ### What the pressure test adds up to
@@ -204,15 +248,23 @@ The pressure test shows the resemblance depends on the modern conversion. So how
 
 ![Table 1's two Arthashastra-related yojana values, 15.23 km and 12.3 km, and Table 4's Arthashastra row using 15.23 km, highlighted](/images/blog/sayana-audit/v3_arthashastra_choice.webp)
 
-*Figure 10: Two values in Table 1, and the one used in Table 4. (Iyer, Gour & Maurya 2026, p. 5, Table 1 and p. 8, Table 4)*
+*Figure 21: Two values in Table 1, and the one used in Table 4. (Iyer, Gour & Maurya 2026, p. 5, Table 1 and p. 8, Table 4)*
 
 **What I checked.** On page 4, the paper says a yojana is 8,000 dhanus, that a dhanus is 108 angulas, and then that a yojana is 768,000 angulas.
 
 ![Two passages from the same page: 8,000 dhanus of 108 angulas, and a yojana of 768,000 angulas, highlighted](/images/blog/sayana-audit/fig15_length_ladder.webp)
 
-*Figure 11: (Iyer, Gour & Maurya 2026, p. 4)*
+*Figure 22: (Iyer, Gour & Maurya 2026, p. 4)*
 
-Those numbers don't fit. 8,000 × 108 = 864,000, not 768,000. The 768,000 works out to 96 angulas per dhanus, which matches the ordinary dhanus of the Arthashastra in Shamasastry's translation. There, the 108-angula dhanus is a separate measure used for roads and fort walls. So the paper mixes two different dhanus in one passage. Combined with its two angula sizes (1.763 cm and 1.6 cm), this reconstructs both rounded values.
+Those numbers don't fit. 8,000 × 108 = 864,000, not 768,000. The 768,000 works out to 96 angulas per dhanus, which matches the ordinary dhanus of the Arthashastra in Shamasastry's translation. There, the 108-angula dhanus is a separate measure used for roads and fort walls. So the paper mixes two different dhanus in one passage. Combined with its two angula sizes (1.763 cm and 1.6 cm), this reconstructs both rounded values. (The translation's main text gives 1,000 dhanus per goruta and 4 gorutas per yojana; its footnote records that the commentator reads 2,000 per goruta, which gives the paper's 8,000 dhanus.)
+
+![Shamasastry's Arthashastra, Book 2, Chapter 20, with 12 angulas to a vitasti, 2 vitastis to an aratni, 4 aratnis to a dhanus, and 108 angulas to a garhapatya dhanus highlighted](/images/blog/sayana-audit/ext_arth_units.webp)
+
+*Figure 23: Arthashastra II.20: 12 × 2 × 4 = 96 angulas to the ordinary dhanus; 108 to the garhapatya dhanus. (Shamasastry tr., [wisdomlib.org](https://www.wisdomlib.org/hinduism/book/kautilya-arthashastra/d/doc366066.html), accessed 25 October 2026)*
+
+![The translator's footnotes, with 2,000 dhanus per goruta and the ordinary dhanus of 96 angulas highlighted](/images/blog/sayana-audit/ext_arth_notes.webp)
+
+*Figure 24: Arthashastra II.20, footnotes 7 to 9. (Same source)*
 
 Using the Arthashastra's own time unit of 0.24 s:
 
@@ -235,9 +287,21 @@ The first row is the paper's published result. The second is my check of the val
 
 ![The paper's statement that Jha, on Manusmriti verse 8.406, says one yojana equals 8 miles, which gives 12.87 km, and the matching Table 1 row](/images/blog/sayana-audit/v2_jha_manu.webp)
 
-*Figure 12: The source of the 12.87 km yojana. (Iyer, Gour & Maurya 2026, p. 4 and p. 5, Table 1)*
+*Figure 25: The source of the 12.87 km yojana. (Iyer, Gour & Maurya 2026, p. 4 and p. 5, Table 1)*
 
-**What I checked.** Manu 8.406 is about boat fares on long river journeys. In Jha's English rendering of the commentary, "one Yojana (8 miles)" appears as a parenthetical English gloss. The Sanskrit commentary at that point talks about one and two yojanas, but gives no conversion into miles or any other unit.
+**What I checked.** Manu 8.406 is about boat fares on long river journeys. In [Jha's English rendering](https://www.wisdomlib.org/hinduism/book/manusmriti-with-the-commentary-of-medhatithi/d/doc201341.html) of the commentary, "one Yojana (8 miles)" appears as a parenthetical English gloss. The [Sanskrit commentary](https://www.wisdomlib.org/hinduism/book/manusmriti-with-manubhashya-sanskrit/d/doc1648181.html) at that point talks about one and two yojanas, but gives no conversion into miles or any other unit. You can check both yourself.
+
+![Manu 8.406 in Jha's translation: for a long passage, the boat fare should be in proportion to the time and place](/images/blog/sayana-audit/ext_manu_en_verse.webp)
+
+*Figure 26: Manu 8.406, Jha's English translation. (wisdomlib.org, accessed 25 October 2026)*
+
+![Jha's English rendering of Medhatithi's commentary on Manu 8.406, with one Yojana (8 miles) highlighted](/images/blog/sayana-audit/ext_manu_en_8miles.webp)
+
+*Figure 27: The "(8 miles)" gloss in Jha's English rendering of the commentary. (Same page)*
+
+![Medhatithi's Sanskrit commentary on Manu 8.406, with every mention of yojana highlighted, none converted to miles](/images/blog/sayana-audit/ext_manu_sa.webp)
+
+*Figure 28: The same passage in Sanskrit: one yojana or two, no miles. (wisdomlib.org, Manubhashya, accessed 25 October 2026)*
 
 **What it shows.** The closest result in the paper rests on an English gloss. The cited passage, on its own, doesn't establish an ancient length unit, paired with an ancient time unit, that applies to Sayana's statement.
 
@@ -249,9 +313,9 @@ The first row is the paper's published result. The second is my check of the val
 
 ![The paper's statement that in the Surya Siddhanta Earth's circumference is 4800 yojanas, giving 8.35 km per yojana, and the matching Table 1 row](/images/blog/sayana-audit/v2_ss_4800_passage.webp)
 
-*Figure 13: (Iyer, Gour & Maurya 2026, p. 4 and p. 5, Table 1)*
+*Figure 29: (Iyer, Gour & Maurya 2026, p. 4 and p. 5, Table 1)*
 
-**What I checked.** In Burgess's translation, verse I.59 (printed page 43) gives Earth's diameter as 1,600 yojanas, with a circumference rule of the square root of ten times the diameter squared: **1,600 × √10 ≈ 5,059.64 yojanas**, not 4,800. Burgess's next page gives 5,059.556. Venugopal and colleagues, cited by the paper itself, use this Burgess figure, and note that 4,800 appears in other works (2019, printed p. 403).
+**What I checked.** In Burgess's translation, verse I.59 (printed page 43, Figure 13) gives Earth's diameter as 1,600 yojanas, with a circumference rule of the square root of ten times the diameter squared: **1,600 × √10 ≈ 5,059.64 yojanas**, not 4,800. Burgess's next page gives 5,059.556. Venugopal and colleagues, cited by the paper itself, use this Burgess figure, and note that 4,800 appears in other works (2019, printed p. 403).
 
 **What it shows.** The number used doesn't match the cited source, and it's the starting point of that calibration.
 
@@ -263,7 +327,7 @@ The first row is the paper's published result. The second is my check of the val
 
 ![The paper's statement that smaller yojana estimates are disregarded as unsuitable for astronomical contexts where larger units are required, highlighted](/images/blog/sayana-audit/v2_smaller_yojanas.webp)
 
-*Figure 14: (Iyer, Gour & Maurya 2026, pp. 4 and 5)*
+*Figure 30: (Iyer, Gour & Maurya 2026, pp. 4 and 5)*
 
 **What it shows.** Physics doesn't need a large unit to describe a large speed. The speed of light is the same in kilometres or millimetres per second. So the size of a unit, and its supposed suitability for astronomy, can't by themselves establish which yojana Sayana's quotation means.
 
@@ -287,7 +351,7 @@ These don't decide the question, but they should be corrected:
 
 ![The paper's argument that the specific figure of 2202 suggests an effort at precision rather than exaggeration, highlighted](/images/blog/sayana-audit/v2_precision_2202.webp)
 
-*Figure 15: (Iyer, Gour & Maurya 2026, pp. 10 and 11)*
+*Figure 31: (Iyer, Gour & Maurya 2026, pp. 10 and 11)*
 
 But writing 2,202 rather than 2,200 doesn't tell us the method, the uncertainty, or the accuracy behind it. The paper itself offers 2,200 as an example of a rounded figure, and the difference is only about 0.09%, far smaller than the spread between the paper's own unit choices, from about −16% to +39%.
 
@@ -295,13 +359,13 @@ But writing 2,202 rather than 2,200 doesn't tell us the method, the uncertainty,
 
 ![The paper's suggestion that the Sun's speed may reasonably be taken as a figurative reference to the swiftness of sunlight, highlighted](/images/blog/sayana-audit/v2_sunlight_reading.webp)
 
-*Figure 16: A possible reading, offered on page 9. (Iyer, Gour & Maurya 2026, p. 9)*
+*Figure 32: A possible reading, offered on page 9. (Iyer, Gour & Maurya 2026, p. 9)*
 
 By page 11, it describes Sayana as postulating a value for the speed of light.
 
 ![The paper's conclusion describing Sayana as postulating a numerical value for the speed of light, highlighted](/images/blog/sayana-audit/fig12_postulates.webp)
 
-*Figure 17: Firmer wording on page 11. (Iyer, Gour & Maurya 2026, p. 11)*
+*Figure 33: Firmer wording on page 11. (Iyer, Gour & Maurya 2026, p. 11)*
 
 Page 12 then disclaims an experimental determination (Figure 2). But a figurative reading can't become a postulated value without evidence, and the pressure test shows the sunlight reading gets no support from the traditions' own skies.
 
