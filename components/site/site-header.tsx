@@ -7,7 +7,6 @@ const NAV = [
   { label: "Work", href: "/#work" },
   { label: "About", href: "/about" },
   { label: "Writing", href: "/blog" },
-  { label: "Workshops", href: "/workshops" },
   { label: "Contact", href: "/contact" },
 ];
 export function SiteHeader() {
@@ -61,9 +60,6 @@ export function SiteHeader() {
               </li>
             ))}
           </ul>
-          <Link className="nav-invite" href="/contact?type=speaking">
-            Invite me to speak <span aria-hidden="true">↗</span>
-          </Link>
           <button
             className="menu-toggle"
             type="button"
@@ -114,13 +110,6 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
-        <Link
-          className="mobile-invite"
-          href="/contact?type=speaking"
-          onClick={() => setOpen(false)}
-        >
-          Invite me to speak ↗
-        </Link>
       </dialog>
       <noscript>
         <nav className="nojs-nav" aria-label="Mobile navigation">

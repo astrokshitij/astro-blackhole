@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 
 const origin = process.env.PREVIEW_URL || "http://127.0.0.1:3001";
-const routes = ["/", "/about", "/blog", "/workshops", "/workshops/register", "/contact", "/blog/how-the-universe-might-actually-die"];
+const routes = ["/", "/about", "/blog", "/contact", "/blog/how-the-universe-might-actually-die"];
 const internal = new Set();
 const pages = new Map();
 for (const route of routes) {
@@ -29,10 +29,17 @@ const text = pages.get("/").replace(/<script\b[\s\S]*?<\/script>/g, "").replace(
 assert.match(text, /100\s*\+\s*Talks/);
 assert.match(text, /137\s*k\+\s*People Reached/);
 assert.match(text, /The universe is\s*stranger than\s*you think/);
-assert.ok(pages.get("/workshops").includes("In development"));
-assert.ok(pages.get("/workshops/register").includes("not a confirmed booking"));
-assert.ok(pages.get("/contact").includes("nothing is submitted here"));
-assert.ok(pages.get("/contact").includes('action="mailto:astrokshitij5@gmail.com"'));
+for (const gone of ["/workshops", "/workshops/register"]) {
+  const moved = await fetch(origin + gone, { redirect: "manual" });
+  assert.ok([301, 308].includes(moved.status), gone + " redirects away");
+}
+for (const route of routes) {
+  assert.ok(!/Invite (me|Kshitij) to speak/i.test(pages.get(route)), route + " has no speaking invitation");
+  assert.ok(!pages.get(route).includes("/workshops"), route + " does not link to workshops");
+}
+assert.ok(pages.get("/contact").includes('action="/api/registrations"'));
+assert.ok(!pages.get("/contact").includes('name="audience"'), "contact form has no audience field");
+assert.ok(pages.get("/contact").includes("astrokshitij5@gmail.com"));
 assert.ok(pages.get("/").includes('"@type":"Person"'));
 assert.ok(pages.get("/blog/how-the-universe-might-actually-die").includes('"@type":"Article"'));
 const sitemap = await (await fetch(origin + "/sitemap.xml")).text();
@@ -44,4 +51,4 @@ for (const slug of ["turn-around-twice", "what-school-gets-wrong-about-electrici
 assert.equal((await fetch(origin + "/page-that-does-not-exist")).status, 404);
 assert.equal((await fetch(origin + "/images/black-hole-still.webp")).status, 200);
 assert.ok((await (await fetch(origin + "/robots.txt")).text()).includes("Sitemap:"));
-console.log("PASS: 7 routes, all internal links, metadata, Person/Article structured data, static metrics, enquiry fallback, sitemap, robots, draft exclusions and 404.");
+console.log("PASS: 5 routes, all internal links, metadata, Person/Article structured data, static metrics, enquiry fallback, sitemap, robots, draft exclusions and 404.");

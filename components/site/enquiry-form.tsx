@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CONTACT, SITE } from "@/lib/content";
 import { buttonStyles } from "./ui";
 
-export function EnquiryForm({ preselect }: { preselect?: string }) {
+export function EnquiryForm() {
   const [status, setStatus] = useState<
     "idle" | "sending" | "sent" | "error"
   >("idle");
@@ -50,7 +50,7 @@ export function EnquiryForm({ preselect }: { preselect?: string }) {
       <div className="form-grid">
         <label className="full">
           Enquiry type
-          <select name="type" defaultValue={preselect ?? CONTACT.types[0]}>
+          <select name="type" defaultValue={CONTACT.types[0]}>
             {CONTACT.types.map((type) => (
               <option key={type}>{type}</option>
             ))}
@@ -78,18 +78,6 @@ export function EnquiryForm({ preselect }: { preselect?: string }) {
             maxLength={160}
           />
         </label>
-        <label>
-          Audience (optional)
-          <input name="audience" placeholder="Who is it for?" maxLength={160} />
-        </label>
-        <label>
-          Approximate date (optional)
-          <input
-            name="date"
-            placeholder="Month, date, or flexible"
-            maxLength={80}
-          />
-        </label>
         <label className="full">
           What do you have in mind?
           <textarea name="message" required rows={5} maxLength={2000} />
@@ -113,7 +101,7 @@ export function EnquiryForm({ preselect }: { preselect?: string }) {
       <noscript>
         <p className="form-note">
           Please email <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with
-          your enquiry, organisation, audience, and approximate date.
+          your enquiry and, if relevant, your organisation.
         </p>
       </noscript>
       {status === "sent" && (

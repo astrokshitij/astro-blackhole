@@ -39,6 +39,8 @@ const nextConfig: NextConfig = {
         destination: "https://astrokshitij.com/:path*",
         permanent: true,
       },
+      // The workshops pages were removed; send old links to the home page.
+      { source: "/workshops/:path*", destination: "/", permanent: true },
     ];
   },
   async headers() {

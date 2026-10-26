@@ -128,7 +128,7 @@ export default function BlogPage() {
             <ArrowGlyph className="h-4 w-4" />
           </a>
         </div>
-        <NextPage href="/workshops" title="Explore ideas together" />
+        <NextPage href="/about" title="The story so far" />
       </Section>
     </>
   );

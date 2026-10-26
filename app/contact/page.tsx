@@ -8,27 +8,16 @@ import { SITE, CONTACT, PAGE_COPY } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Reach Kshitij Pandey about workshops, talks and collaborations, or to argue about physics.",
+    "Reach Kshitij Pandey about research and creator collaborations, or to argue about physics.",
   alternates: { canonical: "/contact", types: FEED_ALTERNATE },
   ...socialMeta({
     path: "/contact",
     title: "Get in touch with Kshitij Pandey",
     description:
-      "Workshops, talks, collaborations, or telling me I got something wrong.",
+      "Collaborations, questions, or telling me I got something wrong.",
   }),
 };
-export default async function ContactPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ type?: string }>;
-}) {
-  const { type } = await searchParams;
-  const selected =
-    type === "speaking"
-      ? CONTACT.types[0]
-      : type === "institution"
-        ? CONTACT.types[2]
-        : undefined;
+export default function ContactPage() {
   return (
     <>
       <PageHero
@@ -54,7 +43,7 @@ export default async function ContactPage({
               <p className="mt-5">{PAGE_COPY.contact.socialNote}</p>
             </div>
           </div>
-          <EnquiryForm key={selected ?? "general"} preselect={selected} />
+          <EnquiryForm />
         </div>
       </Section>
     </>
