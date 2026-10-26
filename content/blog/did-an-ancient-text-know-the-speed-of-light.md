@@ -14,7 +14,6 @@ topics:
 cover: /images/blog/sayana-audit/cover.webp
 ogImage: /images/blog/sayana-audit/cover-og.jpg
 coverAlt: An old palm-leaf manuscript lit by a single beam of sunlight that passes two measuring rulers with different markings
-quote: "“Read literally, the line has the Sun moving over 200,000 times faster than Aryabhata's astronomy allows.”"
 summary:
   - The paper's 16 speed divisions are correct for their printed inputs. With the right choice of units, the line lands within about 6% of the speed of light.
   - Read literally, the line says the Sun moves over 200,000 times faster than its own tradition's astronomy allows. Read as light, those same skies would put sunlight here in 5 to 22 seconds, not 8 minutes 19 seconds.
