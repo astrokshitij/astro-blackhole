@@ -6,7 +6,6 @@ const SITEMAP = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Writing", href: "/blog" },
-  { label: "Workshops", href: "/workshops" },
   { label: "Contact", href: "/contact" },
 ];
 

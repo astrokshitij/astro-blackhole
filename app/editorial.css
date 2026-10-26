@@ -43,32 +43,6 @@ body[data-reading-theme="light"] .article-toc a {
 body[data-reading-theme="light"] :focus-visible {
   outline-color: #17202a;
 }
-.workshop-visual {
-  display: grid;
-  grid-template-columns: 0.85fr 1fr;
-  align-items: center;
-  gap: 100px;
-  margin-bottom: 80px;
-}
-.workshop-photo {
-  position: relative;
-  aspect-ratio: 3/4;
-  overflow: hidden;
-}
-.workshop-photo img {
-  filter: saturate(0.55) contrast(1.04);
-}
-@media (max-width: 899px) {
-  .workshop-visual {
-    gap: 40px;
-  }
-}
-@media (max-width: 639px) {
-  .workshop-visual {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-}
 :root,
 .dark {
   --background: #08090c;
@@ -235,16 +209,6 @@ img {
 .desktop-nav a[aria-current] {
   color: #f2efe8;
 }
-.nav-invite {
-  color: #cba775;
-  border: 1px solid rgba(203, 167, 117, 0.5);
-  padding: 12px 15px;
-  font-size: 12px;
-  white-space: nowrap;
-}
-.nav-invite span {
-  margin-left: 12px;
-}
 .menu-toggle {
   display: none;
   width: 44px;
@@ -305,12 +269,6 @@ img {
 .mobile-menu nav a span:last-child {
   margin-left: auto;
   font-size: 22px;
-}
-.mobile-invite {
-  display: inline-block;
-  padding: 16px 0;
-  color: #cba775;
-  margin-top: 24px;
 }
 .mobile-menu > p {
   color: #a8adb7;
@@ -578,65 +536,6 @@ img {
     background: rgba(8, 9, 12, 0.92);
   }
 }
-.room-section {
-  background: #111319;
-}
-.stage-photo {
-  position: relative;
-  aspect-ratio: 2.2;
-  overflow: hidden;
-  background: #08090c;
-}
-.stage-photo img {
-  object-position: center 35%;
-  filter: saturate(0.5) contrast(1.04);
-}
-.stage-photo figcaption {
-  position: absolute;
-  bottom: 0;
-  inset-inline: 0;
-  padding: 40px 24px 20px;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  font-family: var(--font-geist-mono);
-  font-size: 12px;
-}
-.room-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  margin-top: 45px;
-}
-.room-details h3 {
-  font-family: var(--font-jost);
-  font-size: 30px;
-  font-weight: 350;
-  line-height: 1.2;
-}
-.room-details p {
-  color: #a8adb7;
-  font-size: 14px;
-  line-height: 1.8;
-  margin-top: 18px;
-}
-.room-details li {
-  display: flex;
-  align-items: baseline;
-  gap: 20px;
-  padding: 15px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 15px;
-}
-.room-details li:first-child {
-  padding-top: 0;
-}
-.room-details li span {
-  font-family: var(--font-geist-mono);
-  color: #cba775;
-  font-size: 12px;
-}
-.room-details .availability-note {
-  font-size: 12px;
-}
 .about-preview {
   display: grid;
   grid-template-columns: 0.85fr 1fr;
@@ -881,98 +780,6 @@ figcaption {
   line-height: 1.2;
   margin-top: 15px;
 }
-.programme {
-  display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 90px;
-  padding: 60px 0;
-  border-top: 1px solid var(--border);
-  scroll-margin-top: 105px;
-}
-.programme h2 {
-  font-family: var(--font-jost);
-  font-size: clamp(34px, 4vw, 50px);
-  line-height: 1.12;
-  letter-spacing: -0.035em;
-  margin: 20px 0;
-}
-.programme h3 {
-  font-family: var(--font-jost);
-  font-size: 25px;
-  margin-top: 30px;
-}
-.programme p {
-  font-size: 15px;
-  color: #a8adb7;
-  line-height: 1.8;
-}
-.programme ul {
-  margin-top: 22px;
-}
-.programme li {
-  display: flex;
-  gap: 16px;
-  color: #a8adb7;
-  font-size: 15px;
-  line-height: 1.7;
-  padding-block: 12px;
-  border-bottom: 1px solid var(--border);
-}
-.programme li:before {
-  content: "↗";
-  color: #cba775;
-}
-.programme-details {
-  background: #111319;
-  padding: 32px;
-  align-self: start;
-}
-.programme-details dt {
-  color: #cba775;
-  font-family: var(--font-geist-mono);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-top: 24px;
-}
-.programme-details dd {
-  font-size: 14px;
-  color: #f2efe8;
-  line-height: 1.7;
-  margin-top: 8px;
-}
-.programme-details dt:first-child {
-  margin-top: 0;
-}
-.programme-status {
-  color: #cba775 !important;
-  font-size: 12px !important;
-  border-top: 1px solid var(--border);
-  padding-top: 24px;
-  margin-top: 24px;
-}
-.programme-details > a {
-  margin-top: 24px;
-}
-.programme-intro {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  margin-bottom: 60px;
-}
-.programme-intro p {
-  font-size: 17px;
-  line-height: 1.8;
-  color: #a8adb7;
-}
-.programme-intro nav {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.programme-intro nav a {
-  margin-top: 0;
-}
 .contact-grid {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
@@ -1113,14 +920,9 @@ footer {
   .desktop-nav {
     gap: 18px;
   }
-  .nav-invite {
-    display: none;
-  }
-  .room-details,
   .about-preview,
   .writing-feature,
-  .contact-grid,
-  .programme {
+  .contact-grid {
     gap: 45px;
   }
   .channel-list a {
@@ -1197,16 +999,6 @@ footer {
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 50px;
-  }
-  .programme-intro {
-    gap: 30px;
-  }
-  .programme {
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-  }
-  .programme-details {
-    padding: 24px;
   }
   .essay-feature {
     gap: 35px;
@@ -1345,27 +1137,6 @@ footer {
   .exploration-copy h3 {
     font-size: 25px;
   }
-  .stage-photo {
-    aspect-ratio: 4/3;
-  }
-  .stage-photo img {
-    object-position: 12% center;
-  }
-  .stage-photo figcaption {
-    padding: 30px 16px 14px;
-    font-size: 12px;
-  }
-  .room-details {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    margin-top: 30px;
-  }
-  .room-details h3 {
-    font-size: 27px;
-  }
-  .room-details li {
-    font-size: 14px;
-  }
   .about-preview {
     grid-template-columns: 1fr;
     gap: 34px;
@@ -1451,21 +1222,6 @@ footer {
   .essay-grid-image {
     order: -1;
   }
-  .programme-intro {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-  .programme-intro p {
-    font-size: 15px;
-  }
-  .programme {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    padding-block: 42px;
-  }
-  .programme h2 {
-    font-size: 35px;
-  }
   .enquiry-form {
     padding: 24px 20px;
   }
@@ -1505,8 +1261,6 @@ footer {
     transform: none !important;
   }
 }
-.programme .eyebrow,
-.programme-intro .eyebrow,
 .essay-feature .eyebrow {
   color: #cba775;
   font-size: 12px;

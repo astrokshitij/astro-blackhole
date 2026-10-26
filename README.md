@@ -87,18 +87,8 @@ path), uncomment the `cover` and `coverAlt` lines in
 `content/blog/how-the-universe-might-actually-die.md`, and save. The image will
 then appear on the latest-post tile and at the top of the article page.
 
-**Workshop photos.** In `lib/content.ts`, each workshop has a `photo` field:
-
-```ts
-photo: "/images/workshop-qm.jpg",
-photoAlt: "A room of people at the quantum mechanics session",
-```
-
-Leave any of these as `""` and that image simply does not appear. Nothing
-breaks.
-
 Sizes that work well: portrait around 800 by 1000, blog covers around 1600 by
-700, workshop photos around 1200 by 675. Use JPG for photographs. Keep files
+700. Use JPG for photographs. Keep files
 under about 500 KB so pages stay fast.
 
 Always fill in the `Alt` field. It is what a blind visitor hears, and what
@@ -106,13 +96,12 @@ Google reads.
 
 ---
 
-## 3. Enquiries and workshop interest
+## 3. Enquiries
 
-The Contact page and workshop-interest page share the enquiry form. They collect
-name, email, enquiry type, organisation, audience, approximate date and message.
+The Contact page has the enquiry form. It collects name, email, enquiry type
+(collaboration, question or correction, other), organisation and message.
 
 Every valid submission is stored in the `registrations` table in Postgres.
-Both workshops are in development, so this is interest, not a confirmed booking.
 
 To connect the database in Vercel:
 
@@ -134,10 +123,7 @@ No payment is collected.
 ## 4. Changing any other text
 
 **`lib/content.ts`** holds the rest: site name, email, social links, the stat
-numbers, workshops and credentials. Change the text between the quote marks.
-
-To add a workshop, copy one `{ ... }` block, paste it below the last one, edit
-it, and keep the commas.
+numbers and credentials. Change the text between the quote marks.
 
 When the domain ever changes, edit the one constant at the top of
 **`lib/site-url.ts`**. Metadata, the sitemap and robots.txt all follow from it.
@@ -162,16 +148,15 @@ Then open http://localhost:3000.
 ```
 content/blog/*.md                                   blog posts, one file each
 public/images/                                      photos
-lib/content.ts                                      site text, socials, workshops
+lib/content.ts                                      site text, socials, stats
 lib/site-url.ts                                     canonical domain
 lib/posts.ts                                        reads the markdown files
 components/site/ui.tsx                              buttons, sections, headings
 components/site/                                    header, footer, banner, enquiry form
 components/ui/black-hole-hero-section.tsx            the renderer component
 app/page.tsx                                        home
-app/about|blog|workshops|contact/page.tsx           pages
+app/about|blog|contact/page.tsx                    pages
 app/blog/[slug]/page.tsx                            a single post
-app/workshops/register/page.tsx                     registration
 app/globals.css                                     design tokens, article styles
 ```
 

@@ -15,18 +15,17 @@ export function ScrollMotion() {
     const selector = [
       ".hero-copy > *", ".page-hero .site-width > *",
       ".credibility-inner > p", ".reach-copy > .eyebrow", ".reach-copy > h2", ".reach-numbers > p", ".section-top", ".exploration",
-      ".room-details > div", ".about-preview > div", ".writing-feature > *",
+      ".about-preview > div", ".writing-feature > *",
       ".featured-post", ".post-card", "footer .site-width > div",
       ".section-inner > .eyebrow", ".section-inner > h2",
       ".section-inner > .closing-bottom", ".channel-list > a",
-      "main figure", ".workshop-visual > div", ".programme-intro > *",
-      ".programme > div", ".programme-details", ".contact-grid > div",
+      "main figure", ".contact-grid > div",
       ".enquiry-form", "[data-story-section] > h2",
       "[data-story-section] > p", ".article-body h2", ".article-body p",
       ".article-hero h1", ".article-hero p", ".next-page",
     ].join(",");
     const elements = Array.from(document.querySelectorAll<HTMLElement>(selector))
-      .filter(el => !el.parentElement?.closest(".exploration, .enquiry-form, .programme-details, .contact-grid > div"));
+      .filter(el => !el.parentElement?.closest(".exploration, .enquiry-form, .contact-grid > div"));
     const observer = new IntersectionObserver(entries => {
       entries.filter(entry => entry.isIntersecting).forEach((entry, index) => {
         const el = entry.target as HTMLElement;

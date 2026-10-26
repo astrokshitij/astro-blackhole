@@ -10,13 +10,13 @@ that a change took effect.
 Next.js 16 (App Router) + React 19 + TypeScript + Tailwind v4, deployed from
 GitHub to Vercel on push to `main`. Warm-white and muted amber on near-black, built around a WebGL black-hole renderer.
 
-Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/workshops`,
-`/workshops/register`, `/contact`, plus 404, sitemap, robots.
+Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/contact`, plus 404, sitemap, robots. Old `/workshops*` URLs
+redirect to `/` (see `next.config.ts`).
 
 ## Where things are
 
 - `lib/content.ts` — **all editable text**: SITE, SOCIALS,
-  STATS, PROGRAMMES, EDITORIAL and PAGE_COPY. Change copy here, not in components.
+  STATS, EDITORIAL and PAGE_COPY. Change copy here, not in components.
 - `lib/seo.ts` — `socialMeta()`. Every route must build its `openGraph` and
   `twitter` blocks from this. See the trap below.
 - `lib/posts.ts` — reads `content/blog/*.md` (gray-matter + marked).
@@ -30,7 +30,7 @@ Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/workshops`,
   `components/site/hero-visual.tsx` loads it and provides motion controls.
   It caps DPR, backing pixels and frame rate, and respects reduced motion.
 - `app/editorial.css` — editorial layouts, palette and responsive rules.
-- `components/site/enquiry-form.tsx` — shared Contact/workshop-interest form.
+- `components/site/enquiry-form.tsx` — Contact enquiry form.
 - `content/blog/*.md` — one file per post.
 - `fonts/` — Jost, self-hosted, loaded via `next/font/local` in `app/layout.tsx`.
 
@@ -84,9 +84,8 @@ Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/workshops`,
    variable only if email notifications are wanted.
 2. **Contact is a gmail address.** Set up mail on the domain, then change
    `SITE.email` in one place.
-3. **`public/images/home/tedx/1.jpg` is 1408px wide** for a band that displays
-   at 1152 CSS px, so it is soft on retina. Needs a re-export. The other two
-   sources are ~3000px and fine.
+3. **`public/images/home/tedx/*.jpg` are unused** since the speaking section
+   was removed. Delete them if the repository size matters.
 4. **Credential years need owner review.** The legacy content list says 2023,
    while an About photo caption says 2024. New summaries omit years.
 5. **Individual video URLs are not in the repository.** The selected work

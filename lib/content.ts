@@ -61,52 +61,6 @@ export const STATS = [
 // Blog posts are NOT here. Each post is its own markdown file in
 // `content/blog/`. See the README for the format.
 
-export const WORKSHOPS = [
-  {
-    title: "Quantum mechanics, in two hours",
-    format: "Live online",
-    audience: "Open to anyone",
-    blurb:
-      "Not a lecture course compressed into a session. Two hours of thinking hard about one genuinely strange thing, in an era that has made sustained attention rare. No mathematical background assumed.",
-    points: [
-      "Two hours, live, with questions taken throughout",
-      "No prerequisites beyond school-level curiosity",
-      "Built around one idea followed all the way down, not a survey",
-    ],
-    // Optional photo, for example "/images/workshop-qm.jpg"
-    photo: "",
-    photoAlt: "",
-  },
-  {
-    title: "Science communication for research institutions",
-    format: "On site",
-    audience: "Departments, labs and graduate cohorts",
-    blurb:
-      "For researchers who can defend a thesis to a committee but lose a room of non-specialists in ninety seconds. Built around what actually travels, tested continuously on an audience of ninety thousand.",
-    points: [
-      "Why most outreach fails in its first eight seconds",
-      "Turning a paper into something a stranger will finish",
-      "Workshopping each participant's own research live",
-    ],
-    photo: "",
-    photoAlt: "",
-  },
-  {
-    title: "AI literacy for researchers and science communicators",
-    format: "Live online or on site",
-    audience: "Departments, labs and science communicators",
-    blurb:
-      "A session on using AI tools critically and effectively in research and outreach.",
-    points: [
-      "Understanding AI capabilities and limitations in scientific work",
-      "Using AI tools without compromising scientific accuracy",
-      "Communicating research effectively with modern workflows",
-    ],
-    photo: "",
-    photoAlt: "",
-  },
-];
-
 export const CREDENTIALS = [
   { year: "2023", detail: "MSc Physics, astrophysics and cosmology focus" },
   {
@@ -178,19 +132,6 @@ export const EDITORIAL = {
       cta: "See my product work",
     },
   ],
-  room: {
-    title: "Physics in the room.",
-    intro: "Some ideas are best explored together.",
-    body: "From the TEDx stage to a room full of students, I bring difficult ideas into conversations people can be part of.",
-    caption: "Kshitij Pandey / On the TEDx stage",
-    offerings: [
-      "Talks that make space for curiosity",
-      "Quantum Mechanics for Everyone",
-      "Science communication training for institutions",
-      "AI literacy for researchers and science communicators",
-    ],
-    note: "All workshop programmes are in development. Enquiries and expressions of interest are welcome.",
-  },
   about: {
     eyebrow: "Behind the questions",
     title: "A physicist. A storyteller. Still a student of the universe.",
@@ -205,7 +146,7 @@ export const EDITORIAL = {
   closing: {
     eyebrow: "A conversation worth having",
     title: "Let’s make difficult ideas impossible to ignore.",
-    body: "Talks, workshops, institutional training, and research or creator collaborations. Tell me what you have in mind.",
+    body: "Research or creator collaborations, questions about the physics, or a correction. Tell me what you have in mind.",
   },
   aboutCredentials: [
     "MSc Physics · Astrophysics & Cosmology",
@@ -216,86 +157,14 @@ export const EDITORIAL = {
   ],
 };
 
-export const PROGRAMMES = [
-  {
-    id: "quantum-mechanics-for-everyone",
-    number: "01",
-    category: "For the curious",
-    title: "Quantum Mechanics for Everyone",
-    intro: "Two hours. One big idea. A different way of seeing reality.",
-    audience:
-      "Students, working professionals, and anyone curious about physics. No mathematical background required.",
-    duration: "2 hours",
-    format: "Live online · Questions throughout",
-    availability: "In development · Register interest",
-    description:
-      "An invitation to slow down, question what seems obvious, and follow the experiments that forced us to rethink reality. We explore the fundamentals without memorising equations or compressing a textbook into a lecture.",
-    outcomes: [
-      "Understand what quantum mechanics says about the physical world",
-      "Follow the experiments that challenged classical intuition",
-      "Separate quantum physics from common myths about consciousness and reality",
-      "Build confidence in asking better questions about nature",
-    ],
-    action: "Register your interest",
-  },
-  {
-    id: "science-communication-that-reaches-people",
-    number: "02",
-    category: "For institutions",
-    title: "Science Communication That Reaches People",
-    intro:
-      "Help your research travel beyond the people who already understand it.",
-    audience:
-      "Universities, laboratories, science departments, graduate cohorts, and research teams.",
-    duration: "To be agreed with your institution",
-    format: "On site · Practical exercises",
-    availability: "In development · Institutional enquiries welcome",
-    description:
-      "A programme for researchers who want to communicate with non-specialists while protecting scientific accuracy. Participants work with their own research and communication challenges, with a focus on public engagement, outreach, and reaching prospective students.",
-    outcomes: [
-      "Explain complex research to a non-specialist audience",
-      "Turn a paper into a clear, engaging story",
-      "Develop stronger openings for science outreach",
-      "Practise communicating your own research without losing accuracy",
-    ],
-    action: "Discuss an institutional session",
-  },
-  {
-    id: "ai-literacy-for-researchers-and-science-communicators",
-    number: "03",
-    category: "For institutions & researchers",
-    title: "AI literacy for researchers and science communicators",
-    intro:
-      "Practical AI literacy for researchers and science communicators.",
-    audience:
-      "Universities, laboratories, science departments, research teams, and communicators.",
-    duration: "To be agreed with your institution",
-    format: "Live online or on site",
-    availability: "In development · Institutional enquiries welcome",
-    // TODO: Confirm detailed syllabus, duration, and outcomes with Kshitij for AI literacy workshop
-    description:
-      "A programme exploring how researchers and science communicators can use AI tools critically and effectively, from research workflows to communicating science without losing accuracy.",
-    outcomes: [
-      "Understand where AI accelerates research and communication, and where it fails",
-      "Use AI tools for drafting and structuring without losing scientific integrity",
-      "Evaluate outputs with evals and critical verification",
-      "Communicate research clearly using modern digital tools",
-    ],
-    action: "Discuss an institutional session",
-  },
-];
-
 export const CONTACT = {
   title: "Good questions start good conversations.",
   intro:
-    "For talks, workshops, research and creator collaborations. Or simply to tell me I got something wrong.",
+    "For research and creator collaborations, questions about the physics, or to tell me I got something wrong.",
   types: [
-    "Speaking invitation",
-    "Quantum mechanics workshop",
-    "Institutional training",
-    "AI literacy workshop",
     "Research or creator collaboration",
     "Question or correction",
+    "Something else",
   ],
   formTitle: "Tell me what you have in mind.",
   emailNote:
@@ -309,13 +178,12 @@ export const PAGE_COPY = {
     reachLabel: "Reach / In rooms and on screen",
     reachTitle: "Physics in front of rooms. Curiosity beyond them.",
     headline: ["The universe is", "stranger than", "you think."],
-    workLabel: "02 / Selected explorations",
+    workLabel: "01 / Selected explorations",
     workTitle: ["Follow a question.", "See where it takes you."],
     workIntro:
       "Research, stories, and ideas from a universe that keeps surprising us.",
-    roomLabel: "01 / Beyond the screen",
     portraitCaption: "Kshitij Pandey / Physicist & science communicator",
-    channelsLabel: "05 / The conversation continues",
+    channelsLabel: "04 / The conversation continues",
     channelsTitle: "Find me in your orbit.",
   },
   writing: {
@@ -326,26 +194,10 @@ export const PAGE_COPY = {
     videoIntro:
       "The same curiosity, in a different format. Explore physics and astronomy on YouTube.",
   },
-  workshops: {
-    eyebrow: "Workshops / Shared curiosity",
-    title: "Understanding changes everything.",
-    intro:
-      "Talks and workshops that make complex ideas easier to understand, question, and think about.",
-    caption: "Physics is a conversation. Bring your questions.",
-    notice:
-      "No dates or places are confirmed yet. Tell me your interests and we can discuss the next step.",
-  },
-  interest: {
-    title: "Be part of the conversation.",
-    intro:
-      "Tell me which programme interests you and what you hope to understand. I’ll reply to discuss your interests and share details when the programme is ready.",
-    notice:
-      "This is an expression of interest, not a confirmed booking. No payment is taken and no dates are announced.",
-  },
   contact: {
     corrections:
-      "If I got something wrong in a video, a post, or a talk, please tell me. I’ll credit you if you’d like. Questions and friendly arguments about physics are always welcome.",
+      "If I got something wrong in a video or a post, please tell me. I’ll credit you if you’d like. Questions and friendly arguments about physics are always welcome.",
     socialNote:
-      "Instagram DMs are read but pile up quickly. For anything with a date attached, please use email.",
+      "Instagram DMs are read but pile up quickly. For anything time-sensitive, please use email.",
   },
 };
