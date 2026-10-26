@@ -135,11 +135,11 @@ function withImageSizes(html: string) {
 
 /**
  * Wrap every table in a keyboard-focusable scroll box, and turn a bold
- * "Table N: ..." line right above it into its caption.
+ * "Table 1: ..." or "Table A: ..." line right above it into its caption.
  */
 function withTableWrappers(html: string) {
   return html.replace(
-    /(<p><strong>(Table \d+[^<]*)<\/strong><\/p>\s*)?<table>([\s\S]*?)<\/table>/g,
+    /(<p><strong>(Table (?:\d+|[A-Z])[^<]*)<\/strong><\/p>\s*)?<table>([\s\S]*?)<\/table>/g,
     (_, _para: string | undefined, caption: string | undefined, rest: string) => {
       const label = caption ?? "Table";
       const table = `<div class="table-wrap" role="region" aria-label="${label}" tabindex="0"><table>${rest}</table></div>`;

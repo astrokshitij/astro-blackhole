@@ -514,6 +514,75 @@ body[data-reading-theme="light"] .article-summary__list {
 body[data-reading-theme="light"] .article-summary__list li::marker {
   color: #8a6a35;
 }
+/* Callout for a paired "what it shows / what it doesn't" verdict. */
+.prose-astro .callout {
+  padding: 1.1rem 1.4rem;
+  border: 1px solid color-mix(in oklab, white 14%, transparent);
+  border-left: 2px solid #cba775;
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, white 3%, transparent);
+}
+.prose-astro .callout > * + * {
+  margin-top: 0.75rem;
+}
+body[data-reading-theme="light"] .prose-astro .callout {
+  border-color: rgb(23 32 42 / 18%);
+  border-left-color: #8a6a35;
+  background: rgb(23 32 42 / 4%);
+}
+/* Collapsible block for long reference material. The heading stays outside
+   so it still appears in the contents list. */
+.prose-astro details.fold {
+  border: 1px solid color-mix(in oklab, white 14%, transparent);
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, white 3%, transparent);
+}
+.prose-astro details.fold > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.25rem;
+  cursor: pointer;
+  list-style: none;
+  color: #cba775;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.prose-astro details.fold > summary::-webkit-details-marker {
+  display: none;
+}
+.prose-astro details.fold > summary::before {
+  content: "+";
+  font-size: 1.125rem;
+  line-height: 1;
+}
+.prose-astro details.fold[open] > summary::before {
+  content: "\2212";
+}
+.prose-astro details.fold > summary:focus-visible {
+  outline: 2px solid #cba775;
+  outline-offset: 3px;
+  border-radius: 0.75rem;
+}
+.prose-astro details.fold > :not(summary) {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+}
+.prose-astro details.fold > * + * {
+  margin-top: 1.25rem;
+}
+.prose-astro details.fold > :last-child {
+  margin-bottom: 1.25rem;
+}
+body[data-reading-theme="light"] .prose-astro details.fold {
+  border-color: rgb(23 32 42 / 18%);
+  background: rgb(23 32 42 / 4%);
+}
+body[data-reading-theme="light"] .prose-astro details.fold > summary {
+  color: #8a6a35;
+}
 .prose-astro figcaption {
   margin-bottom: 0.75rem;
   color: white;
