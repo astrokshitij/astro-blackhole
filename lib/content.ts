@@ -151,9 +151,8 @@ export const EDITORIAL = {
   aboutCredentials: [
     "MSc Physics · Astrophysics & Cosmology",
     "TEDx speaker",
-    "Silver Medal · University Physics Competition",
+    "Silver Medal · University Physics Competition · 2019",
     "SLAC Summer Institute",
-    "Founder · Astro Kshitij",
   ],
 };
 

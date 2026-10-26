@@ -121,8 +121,8 @@ export function StoryPhotoPanel({
             }}
           />
           {photo.caption ? (
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-5 pt-14">
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-white/80">
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-5 pt-20">
+              <p className="font-mono text-[13px] uppercase tracking-[0.16em] text-white">
                 {photo.caption}
               </p>
             </div>

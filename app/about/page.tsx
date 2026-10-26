@@ -159,14 +159,6 @@ export default function AboutPage() {
                 at following a conventional path.
               </p>
 
-              <p className="mt-8 text-sm leading-relaxed text-white/70 sm:text-base">
-                Those are the headlines, but they don&apos;t really tell you
-                much about the person behind Astro Kshitij.
-              </p>
-              <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-                Since you&apos;re here to know a little more about me, let me
-                take you through the journey that brought me here.
-              </p>
             </div>
 
             <div className="story-chapters mt-14 space-y-14">
@@ -174,7 +166,7 @@ export default function AboutPage() {
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   It started with a weird obsession with science.
                 </h2>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   I&apos;ve been fascinated by science for as long as I can
                   remember. I wasn&apos;t exactly the brightest student in
                   school when it came to academics. In fact, I failed Class 6.
@@ -184,7 +176,7 @@ export default function AboutPage() {
                   understand it, question it and figure out how things actually
                   work.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   That became clearer in Class 9, when I was selected by my
                   school to represent it at a national-level science exhibition.
                   I presented an idea around time travel, combining the popular
@@ -201,7 +193,7 @@ export default function AboutPage() {
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Finding my way into physics
                 </h2>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   I went on to study{" "}
                   <strong className="font-normal text-white/85">
                     B.Sc. Physics (Hons.) at The ICFAI University, Jaipur
@@ -210,7 +202,7 @@ export default function AboutPage() {
                   than just study for exams. I wanted to get involved in physics
                   outreach, competitions and research.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   During my first year, I was invited to deliver a guest lecture
                   on Special Relativity at a college in Banswara, Rajasthan. I
                   also started participating in physics and research
@@ -218,7 +210,7 @@ export default function AboutPage() {
                   including IIT BHU, IIT Kharagpur, BITS Pilani and LNMIIT,
                   among others.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   One experience stands out. In my second year, I participated
                   in the{" "}
                   <strong className="font-normal text-white/85">
@@ -232,7 +224,7 @@ export default function AboutPage() {
                   </strong>
                   .
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   During my final year, I was also elected{" "}
                   <strong className="font-normal text-white/85">
                     Student Council President
@@ -248,7 +240,7 @@ export default function AboutPage() {
                   Before my master&apos;s, I got a taste of the bigger research
                   world.
                 </h2>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   After completing my B.Sc., I had the opportunity to
                   participate in the{" "}
                   <strong className="font-normal text-white/85">
@@ -258,7 +250,7 @@ export default function AboutPage() {
                   research, workshops and the wider world of physics beyond my
                   undergraduate experience.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   That experience further strengthened my interest in pursuing
                   research, which naturally led me towards astrophysics and
                   cosmology.
@@ -271,7 +263,7 @@ export default function AboutPage() {
                   <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                     From competitions to research
                   </h2>
-                  <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                  <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                     I went on to pursue an{" "}
                     <strong className="font-normal text-white/85">
                       M.Sc. in Physics with a focus on Astrophysics and
@@ -283,7 +275,7 @@ export default function AboutPage() {
                 </div>
 
                 <div data-story-section="research-labs" className="!mt-8">
-                  <p className="text-sm leading-relaxed text-white/70 sm:text-base">
+                  <p className="text-base leading-[1.8] text-white/80 sm:text-[17px]">
                     My master&apos;s changed the scale of the questions I was
                     working on. I got the opportunity to work with{" "}
                     <strong className="font-normal text-white/85">
@@ -296,7 +288,7 @@ export default function AboutPage() {
                     on high-energy particle collisions in the vicinity of naked
                     singularities.
                   </p>
-                  <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                  <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                     That work eventually became a{" "}
                     <a
                       href="https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948"
@@ -312,13 +304,13 @@ export default function AboutPage() {
                 </div>
 
                 <div data-story-section="research-teaching" className="!mt-8">
-                  <p className="text-sm leading-relaxed text-white/70 sm:text-base">
+                  <p className="text-base leading-[1.8] text-white/80 sm:text-[17px]">
                     Research is still the part of physics that excites me the
                     most. I enjoy sitting with difficult problems, digging into
                     the mathematics and trying to understand what nature is
                     actually telling us.
                   </p>
-                  <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                  <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                     But I&apos;ve also always enjoyed communicating those ideas,
                     especially when I can take something that feels intimidating
                     and make it accessible to someone who doesn&apos;t have a
@@ -332,17 +324,17 @@ export default function AboutPage() {
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Then I took an unexpected detour.
                 </h2>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   After my master&apos;s, the obvious next step would have been
                   a PhD. Instead, I decided to take a break from the traditional
                   academic path.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   Not because I stopped loving physics or research. I wanted
                   some time to explore, learn outside academia and understand
                   where my interests could take me.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   Today, I work in{" "}
                   <strong className="font-normal text-white/85">
                     marketing automation and strategy
@@ -354,15 +346,15 @@ export default function AboutPage() {
                   , helping companies make better decisions and build stronger
                   inbound and outbound growth systems.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   On paper, Physics &rarr; astrophysics research &rarr; science
                   communication &rarr; marketing &rarr; AI probably looks like a
                   very strange trajectory.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   But I actually think the detour has been useful.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   Physics taught me to question assumptions. Research taught me
                   to sit with difficult problems. Science communication taught
                   me to make complicated ideas understandable. Marketing taught
@@ -376,35 +368,35 @@ export default function AboutPage() {
                 <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
                   Maybe the detour was the point.
                 </h2>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   I don&apos;t see these as completely separate parts of my life
                   anymore. They&apos;ve given me an unusual way of looking at
                   problems, and that perspective is probably one of the things I
                   value most about my journey.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   And that brings me back to{" "}
                   <strong className="font-normal text-white/85">
                     Astro Kshitij
                   </strong>
                   .
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   I started with a fascination for physics and research. Along
                   the way, I realised that I also genuinely enjoy bringing those
                   ideas outside the walls of academia and sharing them with
                   people who might otherwise never encounter them.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   So whether you found me through a reel, a workshop, a research
                   paper, a talk or simply because you were curious enough to
                   click &ldquo;About&rdquo;, welcome.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   I&apos;m still figuring things out. Still asking questions.
                   Still going down ridiculous rabbit holes.
                 </p>
-                <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   And hopefully, still making you curious enough to ask a few of
                   your own.
                 </p>
