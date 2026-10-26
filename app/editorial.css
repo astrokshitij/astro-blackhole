@@ -764,7 +764,15 @@ figcaption {
   border-top: 1px solid var(--border);
 }
 .essay-grid article.has-cover {
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+}
+/* The featured essay has its image on the left, so the list continues the
+   zigzag: image right, image left, image right, and so on. */
+.essay-grid article.has-cover:nth-child(even) {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+}
+.essay-grid article.has-cover:nth-child(even) .essay-grid-image {
+  order: -1;
 }
 .essay-grid-image {
   position: relative;
@@ -1216,7 +1224,8 @@ footer {
   .essay-grid {
     grid-template-columns: 1fr;
   }
-  .essay-grid article.has-cover {
+  .essay-grid article.has-cover,
+  .essay-grid article.has-cover:nth-child(even) {
     grid-template-columns: minmax(0, 1fr);
   }
   .essay-grid-image {
