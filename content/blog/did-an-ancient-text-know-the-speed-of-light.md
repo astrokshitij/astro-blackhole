@@ -21,10 +21,6 @@ summary:
   - There is no evidence of any instrument or method that could have measured it, and the paper itself disclaims an ancient measurement.
 ---
 
-![Two bar charts. Left: sunlight's travel time to Earth inside each model at Sayana's rate, 4.8 s for the Vishnu Purana, 13.7 s for the Surya Siddhanta and 22.3 s for Aryabhata, against 499 s in reality. Right: the Sun's distance in Earth radii, 875 for Aryabhata and 856 for the Surya Siddhanta, against 23,481 in reality](/images/blog/sayana-audit/pressure-test-chart.webp)
-
-*Sunlight's travel time and the Sun's distance, in each tradition's own numbers, against reality. Worked through in Test 3. (Calculations: Astro Kshitij)*
-
 I remember I was around 14, sitting in the audience at an event, when I first heard someone on stage say that the speed of light was already mentioned in our scriptures. I was fascinated. I couldn't stop talking about it with my friends and family. To think that our ancestors knew something so advanced, so long ago.
 
 Later, when I started studying physics, I began to grow sceptical. Not of our heritage, but of claims that were repeated without anyone checking them.
@@ -176,6 +172,10 @@ Here is the result for all three traditions. The working for each follows the ta
 | Reality | 149.6 million km | | 499 s |
 
 The nimesa doesn't rescue this. Using any value in the paper's Table 2, from 0.088 s to 0.427 s, gives 9 to 45 seconds for Aryabhata, 14 to 66 seconds for the Surya Siddhanta and 2 to 10 seconds for the Vishnu Purana. None comes near 499.
+
+![Two bar charts. Left: sunlight's travel time to Earth inside each model at Sayana's rate, 4.8 s for the Vishnu Purana, 13.7 s for the Surya Siddhanta and 22.3 s for Aryabhata, against 499 s in reality. Right: the Sun's distance in Earth radii, 875 for Aryabhata and 856 for the Surya Siddhanta, against 23,481 in reality](/images/blog/sayana-audit/pressure-test-chart.webp)
+
+*Sunlight's travel time and the Sun's distance, in each tradition's own numbers, against reality. The working for each tradition follows below. (Calculations: Astro Kshitij)*
 
 <div class="callout">
 
