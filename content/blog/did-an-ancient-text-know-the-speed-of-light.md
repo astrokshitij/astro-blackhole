@@ -16,7 +16,7 @@ ogImage: /images/blog/sayana-audit/cover-og.jpg
 coverAlt: An old palm-leaf manuscript lit by a single beam of sunlight that passes two measuring rulers with different markings
 summary:
   - The paper's 16 speed divisions are correct for their printed inputs. With the right choice of units, the line lands within about 6% of the speed of light.
-  - Read literally, the line says the Sun moves over 200,000 times faster than its own tradition's astronomy allows. Read as light, those same skies would put sunlight here in 5 to 22 seconds, not 8 minutes 19 seconds.
+  - Read literally, the line says the Sun moves over 200,000 times faster than Aryabhata's astronomy allows. Read as light, those same skies would put sunlight here in 5 to 22 seconds, not 8 minutes 19 seconds.
   - So the resemblance to c doesn't come from the astronomy of these traditions. It appears only after a modern conversion, and the conversions behind the closest matches are thin.
   - There is no evidence of any instrument or method that could have measured it, and the paper itself disclaims an ancient measurement.
 ---
@@ -112,7 +112,7 @@ I recalculated all 16 speeds in the paper's Tables 3 to 5, using the printed inp
 
 Among these 16 results, the closest is the row labelled Manusmriti. It uses a yojana of 12.87 km and a nimesa of 0.1778 s:
 
-**4,404 × 12.87 ÷ 0.1778 ≈ 318,782.227 km/s**, about **6.334% above** the modern value.
+**4,404 × 12.87 ÷ 0.1778 ≈ 318,800 km/s**, about **6.3% above** the modern value.
 
 The division is fine. What I wanted to know is whether the number agrees with the astronomy in the same texts.
 
@@ -120,9 +120,11 @@ The division is fine. What I wanted to know is whether the number agrees with th
 
 The paper treats the line as a speed and converts it. But a number taken from an astronomical tradition should also make sense inside that tradition's own astronomy. So here is a test of the line inside the very texts the paper draws its units from. I use only nimesa values the paper itself pairs with each tradition.
 
-One note first. Every astronomy before the telescope, Greek astronomy included, placed the Sun far too close. This is not a criticism of ancient astronomers. It's a test of the claim that this line encodes the speed of light.
+Two notes first. The paper points out (p. 6) that Aryabhata and the Surya Siddhanta don't use the nimesa at all. So for those two, the nimesa is borrowed from another text, just as it is in the paper's own tables. These are comparisons across texts, not proof that Sayana's source worked inside Aryabhata's model. I show below that no nimesa in the paper changes the outcome.
 
-### Test 1: Why the Earth-calibrated rows look good
+And every astronomy before the telescope, Greek astronomy included, placed the Sun far too close. This is not a criticism of ancient astronomers. It's a test of the claim that this line encodes the speed of light.
+
+### Test 1: Why the Earth-calibrated rows match Earth
 
 Aryabhata gives Earth's diameter as 1,050 yojanas. With the paper's 12.13 km yojana, Earth's equator spins at about 0.464 km/s (3.1416 × 1,050 × 12.13 km ÷ 86,164 s). The real value, from NASA's equatorial radius of 6,378.137 km, is 0.465 km/s.
 
@@ -134,11 +136,13 @@ Aryabhata gives Earth's diameter as 1,050 yojanas. With the paper's 12.13 km yoj
 
 *Figure 7: Earth's radius. (NASA NSSDC, [Earth Fact Sheet](https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html), accessed 25 October 2026)*
 
-A near-perfect match, and it has to be: the yojana was set using Earth's size and the nimesa using the length of the day. For every row where the yojana comes from Earth's size, agreement near Earth is built in. It can't independently confirm the conversion. (The paper's two closest rows take other routes, Jha's 8 miles and an archaeological reading. Those are examined in the next section.)
+A near-perfect match, and it has to be: the yojana was set using Earth's size and the nimesa using the length of the day. For every row where the yojana comes from Earth's size, agreement near Earth is built in. It can't independently confirm the conversion. Note what is built in, though: agreement with Earth, not with c. The speed from Sayana's line still depends on which nimesa you pick.
 
-### Test 2: Read literally, the line contradicts its own astronomy
+(The four rows closest to c take other routes: Jha's 8 miles, and a Harappan angula of 1.763 cm that sets both the Arthashastra and the Brahmanda Purana yojanas. Those are examined in the next section.)
 
-The line addresses the Sun: you traverse 2,202 yojanas in half a nimesa. The paper itself notes that a Sun's-speed reading isn't supported by the astronomical texts.
+### Test 2: Read literally, the line contradicts the astronomy
+
+The line addresses the Sun: you traverse 2,202 yojanas in half a nimesa. The paper, citing Kak, notes that a Sun's-speed reading isn't supported by the astronomical texts.
 
 ![The paper's report that calculating the Sun's speed with such a formula is not supported by Siddhantic or Puranic texts, highlighted](/images/blog/sayana-audit/fig19_sun_speed_kak.webp)
 
@@ -154,15 +158,15 @@ The numbers show how far off it is. Aryabhata counts 4,320,000 solar revolutions
 
 *Figure 10: The Vishnu Purana's 405,000 nimesas per day, used for Sayana's daily rate: 4,404 × 405,000 = 1,783,620,000 yojanas per day. (Iyer, Gour & Maurya 2026, p. 7, Table 2)*
 
-Both sides of this comparison are in the tradition's own yojanas, so no conversion choice can change the result. As written, the line doesn't describe anything in this astronomy. To get a speed-of-light reading, it has to be reinterpreted, which is what the paper does.
+This sets Sayana's line against Aryabhata's model, using the Vishnu Purana's nimesa, so it is a comparison across texts. But it is a robust one. If Sayana's yojana is Aryabhata's yojana, no kilometre conversion enters at all, and even the longest nimesa in the paper's Table 2 (0.427 s) still leaves the line more than 100,000 times too fast. As written, the line doesn't describe the Sun's motion in this astronomy. To get a speed-of-light reading, it has to be reinterpreted, which is what the paper does.
 
-### Test 3: Read as light, it doesn't fit the sky it came with
+### Test 3: Read as light, it doesn't fit these traditions' skies
 
-So take the paper's reading. The same texts that give Earth's size also give the Sun's distance, in the same yojanas. If 2,202 yojanas per half nimesa is the speed of light, how long does sunlight take to reach Earth inside each tradition's own model? The real answer is about 8 minutes 19 seconds: 149,598,000 km ÷ 299,792.458 km/s ≈ 499 seconds. In Earth radii, the real distance is 149,598,000 ÷ 6,371 ≈ 23,481.
+So take the paper's reading. The same texts that give Earth's size also give the Sun's distance, in the same yojanas. If 2,202 yojanas per half nimesa is the speed of light, how long does sunlight take to reach Earth inside each tradition's own model? At the average Earth to Sun distance (1 astronomical unit), the real answer is about 8 minutes 19 seconds: 149,598,000 km ÷ 299,792.458 km/s ≈ 499 seconds. (It varies from about 8 minutes 11 seconds to 8 minutes 27 seconds over the year.) In Earth radii, the real distance is 149,598,000 ÷ 6,371 ≈ 23,481.
 
 Here is the result for all three traditions. The working for each follows the table.
 
-**Table A: Sayana's line read as light, inside each tradition's own sky.**
+**Table A: Sayana's line read as light, inside each tradition's sky.**
 
 | Tradition | Sun's distance in the text | Nimesa (paper's pairing) | Sunlight would arrive in |
 |---|---|---|---|
@@ -171,11 +175,13 @@ Here is the result for all three traditions. The working for each follows the ta
 | Vishnu Purana | 100,000 yojanas | 0.2133 s | 4.8 s |
 | Reality | 149.6 million km | | 499 s |
 
+The nimesa doesn't rescue this. Using any value in the paper's Table 2, from 0.088 s to 0.427 s, gives 9 to 45 seconds for Aryabhata, 14 to 66 seconds for the Surya Siddhanta and 2 to 10 seconds for the Vishnu Purana. None comes near 499.
+
 <div class="callout">
 
 **What this shows, and what it doesn't.** In each tradition, three things can't all be right at once: its Sun distance, its yojana, and Sayana's line as the speed of light. We already know the Sun distances are wrong, so this test alone can't tell us the speed is wrong.
 
-But it does show two things. First, the number can't have come from these astronomies, or been checked against them: inside their own skies, a speed near c would put sunlight here in seconds. Second, the "match" exists only when you take a unit from one source and leave out the sky that came with it. That step is made by the modern interpreter, not by the texts.
+What it does show is narrower. First, the number isn't the result of timing light across these models' Sun distances: done that way, the speed would have come out more than 20 times too small. Second, for the rows calibrated against Earth, the match depends on which body sets the yojana. Calibrate Aryabhata's yojana against the Sun's distance instead, about 325 km, and the same line gives about 6.7 million km/s, over 20 times the speed of light. The paper itself notes that Sun-based values "diverge" (p. 3). So the resemblance to c is a feature of the chosen conversion, not an agreement between these astronomies and modern astronomy.
 
 </div>
 
@@ -221,15 +227,15 @@ The yojana cancels out, so no kilometre conversion affects this result.
 
 *Figure 17: (Iyer, Gour & Maurya 2026, p. 8)*
 
-With the Vishnu Purana's own nimesa (0.2133 s): 100,000 ÷ 4,404 × 0.2133 = **4.8 seconds**.
+With the Vishnu Purana's own nimesa (0.2133 s): 100,000 ÷ 4,404 × 0.2133 = **4.8 seconds**. Because the Puranic geometry isn't the modern centre-to-centre picture, read this one as illustrative.
 
 ### Test 4: Is there any evidence of a measurement?
 
-The paper disclaims a measurement, but the popular claim usually implies one. Historically, there have been two routes to measuring the speed of light.
+The paper disclaims a measurement, but the popular claim usually implies one. Historically, the first measurements of the speed of light took two broad routes.
 
 On the ground, you have to time light over a distance of kilometres, where it takes only tens of millionths of a second. Galileo proposed a lantern experiment in 1638; when the Accademia del Cimento in Florence tried it in 1667, with lanterns about a mile apart, no delay was observed. The first successful measurement on the ground was Fizeau's in 1849, using a rapidly rotating toothed wheel and a mirror about 8 km away.
 
-In the sky, Ole Rømer made the first estimate in 1676 by timing the eclipses of Jupiter's moon Io, and Christiaan Huygens turned it into a speed by combining it with an estimate of the size of Earth's orbit. That method only works if you know that size. These traditions placed the Sun 27 or more times too close, so an estimate built on their own scale would have come out roughly that many times too small.
+In the sky, Ole Rømer made the first estimate in 1676 by timing the eclipses of Jupiter's moon Io, and Christiaan Huygens turned it into a speed by combining it with an estimate of the size of Earth's orbit. Rømer's timings showed that light takes time to travel; turning that delay into a speed needs the size of the orbit. It also needs a telescope, because Io can't be seen with the naked eye. And these traditions placed the Sun about 27 times too close, so a speed built on their scale would have come out roughly that many times too small. (James Bradley's 1729 measurement from the aberration of starlight, a third route, also needed a telescope and the size of Earth's orbit.)
 
 ![Wikipedia's account of the first attempts to measure light's speed, with no delay was observed and Huygens combining Rømer's estimate with the diameter of Earth's orbit highlighted](/images/blog/sayana-audit/ext_wiki_attempts.webp)
 
@@ -239,13 +245,13 @@ In the sky, Ole Rømer made the first estimate in 1676 by timing the eclipses of
 
 *Figure 19: History of measurements of c. (Wikipedia, [Speed of light](https://en.wikipedia.org/wiki/Speed_of_light), accessed 25 October 2026)*
 
-The paper cites no instrument or procedure for either route, and I know of none. That doesn't prove no measurement ever happened. It means there is no evidence one did, and the one route that existed in principle would have failed with these traditions' own distances.
+The paper cites no instrument or procedure for either route, and I know of none. That doesn't prove no measurement ever happened. It means there is no evidence one did. The astronomical routes needed a telescope, and the paper itself says direct evidence of telescopic devices is absent (p. 12).
 
-So agreement with c, whether built in through Earth calibration or reached by choosing a unit, doesn't validate the conversion on its own.
+So agreement with c, reached by choosing units, doesn't validate the conversion on its own.
 
 ## The Unit Choices Behind the Match
 
-The pressure test shows the resemblance depends on the modern conversion. So how well supported are the conversions the paper actually uses? For each, here's what the paper says, what I checked, what it shows, and what it doesn't.
+The pressure test shows the resemblance depends on the modern conversion. So how well supported are the conversions the paper actually uses? The four results within about 7% of c all rest on two choices: Jha's 8-mile gloss, and a Harappan angula of 1.763 cm that sets both the Arthashastra yojana and the Brahmanda Purana's 13.54 km yojana. For each, here's what the paper says, what I checked, what it shows, and what it doesn't.
 
 ### 1. Two Arthashastra yojanas, two very different answers
 
@@ -261,7 +267,9 @@ The pressure test shows the resemblance depends on the modern conversion. So how
 
 *Figure 21: (Iyer, Gour & Maurya 2026, p. 4)*
 
-Those numbers don't fit. 8,000 × 108 = 864,000, not 768,000. The 768,000 works out to 96 angulas per dhanus, which matches the ordinary dhanus of the Arthashastra in Shamasastry's translation. There, the 108-angula dhanus is a separate measure used for roads and fort walls. So the paper mixes two different dhanus in one passage. Combined with its two angula sizes (1.763 cm and 1.6 cm), this reconstructs both rounded values. (The translation's main text gives 1,000 dhanus per goruta and 4 gorutas per yojana; its footnote records that the commentator reads 2,000 per goruta, which gives the paper's 8,000 dhanus.)
+Those numbers don't fit. 8,000 × 108 = 864,000, not 768,000. The 768,000 works out to 96 angulas per dhanus, which matches the ordinary dhanus of the Arthashastra in Shamasastry's translation. There, the 108-angula dhanus is a separate measure used for roads and fort walls. So the paper mixes two different dhanus in one passage. Combined with its two angula sizes (1.763 cm and 1.6 cm), this reconstructs both rounded values. The paper also uses the 96-angula rod itself: its Brahmanda Purana yojana of 13.54 km is 768,000 angulas of 1.763 cm (p. 4 and Table 1).
+
+All of these rest on 8,000 dhanus per yojana, which is a commentator's reading. The translation's main text gives 1,000 dhanus per goruta and 4 gorutas per yojana, half that; its footnote records that the commentator reads 2,000 per goruta, which gives the paper's 8,000.
 
 ![Shamasastry's Arthashastra, Book 2, Chapter 20, with 12 angulas to a vitasti, 2 vitastis to an aratni, 4 aratnis to a dhanus, and 108 angulas to a garhapatya dhanus highlighted](/images/blog/sayana-audit/ext_arth_units.webp)
 
@@ -273,18 +281,19 @@ Those numbers don't fit. 8,000 × 108 = 864,000, not 768,000. The 768,000 works 
 
 Using the Arthashastra's own time unit of 0.24 s:
 
-**Table B: The two Arthashastra-related yojanas, with the same 0.24 s nimesa.**
+**Table B: Three yojanas built from the paper's own values, with the same 0.24 s nimesa.** All use the commentator's 8,000 dhanus.
 
 | Yojana in the paper | Reconstructed recipe | Speed | Difference from c |
 |---|---|---|---|
-| 15.23 km (used in Table 4) | 8,000 × 108 angulas of 1.763 cm | 279,470.5 km/s | about −6.8% |
-| 12.3 km (labelled Arthashastra in Table 1) | 8,000 × 96 angulas of 1.6 cm | 225,705 km/s | about −24.7% |
+| 15.23 km (used in Table 4) | 8,000 × 108 angulas of 1.763 cm | about 279,500 km/s | about −6.8% |
+| 13.54 km (used for the Brahmanda Purana) | 8,000 × 96 angulas of 1.763 cm | about 248,500 km/s | about −17.1% |
+| 12.3 km (labelled Arthashastra in Table 1) | 8,000 × 96 angulas of 1.6 cm | about 225,700 km/s | about −24.7% |
 
-The first row is the paper's published result. The second is my check of the value the paper itself labels Arthashastra. It is not among the paper's 16 tabulated speeds.
+The first row is the paper's published result. The other two are my checks, using yojana values the paper itself gives; neither is paired with the 0.24 s nimesa among its 16 tabulated speeds.
 
 <div class="callout">
 
-**What it shows.** One choice of units decides whether this row looks close to the speed of light or not. The paper needs to explain why the 108-angula archaeological value is the right one for Sayana's line.
+**What it shows.** With the angula held at 1.763 cm, the choice of dhanus alone moves this row from about −7% to about −17%. The paper accepts the 96-angula rod for the Brahmanda Purana, so it needs to explain why the 108-angula dhanus is the right one for the Arthashastra and for Sayana's line.
 
 **What it doesn't show.** The archaeological reading may have support, and the paper gives a reason for it on page 4. This doesn't show intent: the paper publishes results far above c and rejects an earlier, closer calculation (p. 10). But a better match can't, by itself, show a choice was historically correct.
 
@@ -292,7 +301,7 @@ The first row is the paper's published result. The second is my check of the val
 
 ### 2. Where the closest row's yojana comes from
 
-**What the paper says.** The 12.87 km yojana in the closest row is credited to Ganganath Jha, writing on Manu 8.406, who equates one yojana with 8 miles.
+**What the paper says.** The 12.87 km yojana in the closest row is credited to Ganganath Jha, writing on Manu 8.406, who equates one yojana with 8 miles. Table 1 also cites the Monier-Williams and Apte Sanskrit dictionaries, which give 8 or 9 miles (12.87 or 14.48 km).
 
 ![The paper's statement that Jha, on Manusmriti verse 8.406, says one yojana equals 8 miles, which gives 12.87 km, and the matching Table 1 row](/images/blog/sayana-audit/v2_jha_manu.webp)
 
@@ -314,7 +323,7 @@ The first row is the paper's published result. The second is my check of the val
 
 <div class="callout">
 
-**What it shows.** The closest result in the paper rests on an English gloss. The cited passage, on its own, doesn't establish an ancient length unit, paired with an ancient time unit, that applies to Sayana's statement.
+**What it shows.** The closest result in the paper rests on an English gloss. The cited passage, on its own, doesn't establish an ancient length unit, paired with an ancient time unit, that applies to Sayana's statement. The dictionaries the paper also cites (1890 and 1899) are modern glosses too, and they allow 9 miles, which would put this row about 20% above c.
 
 **What it doesn't show.** I'm not saying the 8-mile figure is wrong or unsupported elsewhere, and this says nothing against Manu's time units. The question is what else supports this conversion, and why it applies to Sayana's line.
 
@@ -359,8 +368,8 @@ The first row is the paper's published result. The second is my check of the val
 These don't decide the question, but they should be corrected:
 
 - **Two wrong entries in the paper's Table 2.** Dividing the paper's sidereal day (86,164.0905 s, the time Earth takes to spin once relative to the stars) by 486,000 gives 0.17729 s, not the printed 0.17740 s. Dividing it by 202,500 gives 0.42550 s, not 0.42584 s. Neither feeds the 16 speeds. All seven entries are checked in the appendix.
-- **The 0.088 s nimesa.** The paper's text gives about 0.0886 s and its Table 2 gives 0.08865 s and 0.08889 s, all of which round to 0.089. Table 5 uses 0.088 (p. 6).
-- **Which modern Earth?** The calibration uses a radius of "approximately 6,437 km". NASA gives 6,371 km (mean) and 6,378.137 km (equatorial). Different parts of the paper also imply different Earth sizes: Table 1's Nilakantha and Yallaya values imply about 6,439 km, while the same scholars' values in the prose on page 3 imply about 6,376 km.
+- **The 0.088 s nimesa.** The paper's text gives about 0.0886 s and its Table 2 gives 0.08865 s and 0.08889 s, all of which round to 0.089. Table 5 uses 0.088 (p. 6). The effect is small: with 0.0886 s, the Surya Siddhanta row moves from about +39% to about +38%, still well above c.
+- **Which modern Earth?** The calibration uses a radius of "approximately 6,437 km". NASA gives 6,371 km (mean) and 6,378.137 km (equatorial). Different parts of the paper also imply different Earth sizes: Table 1's Nilakantha and Yallaya values imply about 6,439 km, while the same scholars' values in the prose on page 3 imply about 6,376 km. The Aryabhata, Varahamihira, Surya Siddhanta and Bhaskara II rows imply about 6,368 to 6,380 km, so only two rows actually use the stated 6,437.
 - **"Within a 33% margin"** (p. 9) describes a pair the paper's own Table 5 puts at +34.7%, and credits it to Brahmagupta, while Tables 1 and 5 credit the 8.07 km yojana to Bhaskara II.
 - On page 7, the yojanas are said to range up to 15.54 km; Table 1's largest is 15.23 km. The verse is cited as Rigveda 1.50.4 on page 2 and 1.50.5 on page 9. Page 4 says "800 angulas" for the 15.232 km yojana.
 
@@ -388,7 +397,7 @@ By page 11, it describes Sayana as postulating a value for the speed of light.
 
 *Figure 32: Firmer wording on page 11. (Iyer, Gour & Maurya 2026, p. 11)*
 
-Page 12 then disclaims an experimental determination (Figure 2). But a figurative reading can't become a postulated value without evidence, and the pressure test shows the sunlight reading gets no support from the traditions' own skies.
+Page 12 then disclaims an experimental determination (Figure 2). But a figurative reading can't become a postulated value without evidence, and the traditions' own Sun distances give the sunlight reading no independent support.
 
 ## So, Where Does This Leave Us?
 
@@ -396,15 +405,17 @@ When I heard this claim from that stage at 14, it felt thrilling. Testing it pro
 
 The paper's 16 divisions are correct, and with the right units the line really does land within about 6% of the speed of light.
 
-But read as written, the line says the Sun moves over 200,000 times faster than its own astronomy allows. Read as light, it doesn't fit the skies of the traditions it comes from: inside them, sunlight would arrive in seconds. The resemblance to c appears only after a modern conversion, one that takes a unit from one source and leaves the rest of that tradition's sky behind.
+But read as written, the line says the Sun moves over 200,000 times faster than Aryabhata's astronomy allows. Read as light, it doesn't fit the skies of these traditions either: inside them, sunlight would arrive in seconds. The resemblance to c appears only after a modern conversion. Calibrate Aryabhata's yojana against the Sun instead of Earth, and the same line comes out over 20 times faster than light.
 
-And those conversions are thin. The closest result rests on an English gloss. One Arthashastra row swings from about 7% to about 25% off depending on which of the paper's own values you use. A key Earth size doesn't match its cited source. And there is no evidence of any instrument or method that could have measured the speed of light.
+And those conversions are thin. The four closest results rest on an English gloss or on one archaeological angula. The Arthashastra row swings from about 7% to about 17% off on the choice of dhanus alone, and to about 25% with the paper's other angula. A key Earth size doesn't match its cited source. And there is no evidence of any instrument or method that could have measured the speed of light.
 
 Put together, nothing here requires more than a coincidence of conversion, which is one of the explanations the paper itself keeps open. Agreement with c, on its own, doesn't validate the conversion or show that anyone knew the speed of light.
 
 Indian astronomy has achievements that don't need rescuing, like Aryabhata's rotating Earth or Madhava's infinite series for sine. This line isn't one of them. The paper itself stops short of claiming a measurement. The popular version of this claim should stop there too.
 
 If you spot a mistake in my working, I genuinely want to hear about it. You can [write to me here](https://astrokshitij.com/contact).
+
+*Updated 27 October 2026, after a reader's careful review: I narrowed some claims about what the Sun-distance test shows, labelled the cross-text comparisons as such, added the Brahmanda Purana and dictionary sources for the closest rows, and showed that no nimesa in the paper changes the tests. The conclusions are unchanged.*
 
 ## Check It Yourself
 
@@ -423,8 +434,11 @@ Everything below works on an ordinary calculator.
 - Surya Siddhanta, using its own rule (XII.84) with circumference = √10 × diameter: `4331500 ÷ √10 ÷ 2 ÷ 4404 × 0.088 ≈ 13.7` s
 - Vishnu Purana: `100000 ÷ 4404 × 0.2133 ≈ 4.8` s
 - Reality: `149597870.7 ÷ 299792.458 ≈ 499` s
+- Any other nimesa: swap 0.2133 or 0.088 for any Table 2 value from 0.088 to 0.42667. Aryabhata stays between about 9 and 45 s, the Surya Siddhanta between about 14 and 66 s, the Vishnu Purana between about 2 and 10 s.
 
-**The line read literally, in Aryabhata's model:** the Sun's daily motion is `2887666.8 ÷ 365.2587 ≈ 7906` yojanas per day, while Sayana's rate is `4404 × 405000 ≈ 1.78 billion` yojanas per day, over 200,000 times more. (365.2587 is Aryabhata's year: 1,577,917,500 days ÷ 4,320,000 revolutions.)
+**Aryabhata's yojana calibrated against the Sun instead of Earth:** `149597870.7 ÷ 459585 ≈ 325.5` km per yojana, so `4404 × 325.5 ÷ 0.2133 ≈ 6.72 million` km/s, about 22 times c.
+
+**The line read literally, in Aryabhata's model:** the Sun's daily motion is `2887666.8 ÷ 365.2587 ≈ 7906` yojanas per day, while Sayana's rate is `4404 × 405000 ≈ 1.78 billion` yojanas per day, over 200,000 times more. (365.2587 is Aryabhata's year: 1,577,917,500 days ÷ 4,320,000 revolutions.) With the longest nimesa in Table 2, `4404 × 202500 ÷ 7906 ≈ 112,800` times.
 
 **Sun's distance in Earth radii:** `(C ÷ (2 × π)) ÷ (Earth diameter in yojanas ÷ 2)`. Aryabhata: `459585 ÷ 525 ≈ 875`. Surya Siddhanta: `684870 ÷ 800 ≈ 856`. Reality: `149597870.7 ÷ 6371 ≈ 23481`.
 
@@ -432,7 +446,9 @@ Everything below works on an ordinary calculator.
 
 **The closest row:** `4404 × 12.87 ÷ 0.1778 = 318,782.227` km/s, about +6.334%.
 
-**The two Arthashastra yojanas:** `4404 × 15.23 ÷ 0.24 = 279,470.5` km/s (about −6.78%), and `4404 × 12.3 ÷ 0.24 = 225,705` km/s (about −24.71%).
+**The three yojanas in Table B:** `4404 × 15.23 ÷ 0.24 = 279,470.5` km/s (about −6.78%), `4404 × 13.54 ÷ 0.24 = 248,459` km/s (about −17.12%), and `4404 × 12.3 ÷ 0.24 = 225,705` km/s (about −24.71%). The yojanas themselves: `864000 × 1.763 cm ≈ 15.23` km, `768000 × 1.763 cm ≈ 13.54` km, `768000 × 1.6 cm ≈ 12.29` km.
+
+**The 9-mile reading of the closest row:** `4404 × 14.48 ÷ 0.1778 ≈ 358,661` km/s, about +19.6%.
 
 **The Surya Siddhanta circumference:** `1600 × √10 ≈ 5059.64` yojanas (the paper uses 4,800).
 
