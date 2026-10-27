@@ -1,4 +1,3 @@
-import { CONTACT } from "@/lib/content";
 import { saveRegistration, type RegistrationInput } from "@/lib/registrations";
 
 export const runtime = "nodejs";
@@ -16,7 +15,7 @@ function parseRegistration(form: FormData): RegistrationInput | null {
   const message = text(form, "message", 2000);
 
   if (
-    !CONTACT.types.includes(type as (typeof CONTACT.types)[number]) ||
+    !type ||
     !name ||
     !EMAIL_PATTERN.test(email) ||
     !message

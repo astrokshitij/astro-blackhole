@@ -34,10 +34,6 @@ export default function ContactPage() {
             </a>
             <p className="body-copy">{CONTACT.emailNote}</p>
             <div className="contact-reason">
-              <h2>Bring a question. Or a correction.</h2>
-              <p>{PAGE_COPY.contact.corrections}</p>
-            </div>
-            <div className="contact-reason">
               <h2>Find me elsewhere</h2>
               <SocialLinks compact />
               <p className="mt-5">{PAGE_COPY.contact.socialNote}</p>

@@ -160,11 +160,6 @@ export const CONTACT = {
   title: "Good questions start good conversations.",
   intro:
     "For research and creator collaborations, questions about the physics, or to tell me I got something wrong.",
-  types: [
-    "Research or creator collaboration",
-    "Question or correction",
-    "Something else",
-  ],
   formTitle: "Tell me what you have in mind.",
   emailNote:
     "Email is the best way to reach me. I usually reply within a couple of days.",
@@ -194,8 +189,6 @@ export const PAGE_COPY = {
       "The same curiosity, in a different format. Explore physics and astronomy on YouTube.",
   },
   contact: {
-    corrections:
-      "If I got something wrong in a video or a post, please tell me. I’ll credit you if you’d like. Questions and friendly arguments about physics are always welcome.",
     socialNote:
       "Instagram DMs are read but pile up quickly. For anything time-sensitive, please use email.",
   },

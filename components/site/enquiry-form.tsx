@@ -50,11 +50,7 @@ export function EnquiryForm() {
       <div className="form-grid">
         <label className="full">
           Enquiry type
-          <select name="type" defaultValue={CONTACT.types[0]}>
-            {CONTACT.types.map((type) => (
-              <option key={type}>{type}</option>
-            ))}
-          </select>
+          <input name="type" required maxLength={100} />
         </label>
         <label>
           Your name
