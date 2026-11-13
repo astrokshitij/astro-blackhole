@@ -177,7 +177,7 @@
   position: fixed;
   z-index: 30;
   top: 9rem;
-  right: max(1.5rem, calc((100vw - 1260px) / 2));
+  left: max(1.5rem, calc((100vw - 1260px) / 2));
   width: 10rem;
   color: rgb(255 255 255 / 65%);
 }
@@ -387,16 +387,16 @@ body[data-reading-theme="light"] .reading-theme-toggle {
   }
 }
 @media (min-width: 1280px) {
-  /* Title, cover and body all start on the same left edge. */
+  /* Reserve room for the left contents rail and align the article beside it. */
   .article-hero > div,
   .article-body .article-summary,
   .article-body .prose-astro {
-    margin-left: max(5rem, calc((100vw - 1152px) / 2));
+    margin-left: max(18rem, calc((100vw - 768px) / 2));
     margin-right: auto;
   }
   .article-cover {
     width: min(100vw - 4rem, 900px);
-    margin-left: calc(max(5rem, calc((100vw - 1152px) / 2)) + 2rem);
+    margin-left: calc(max(18rem, calc((100vw - 768px) / 2)) + 2rem);
     margin-right: auto;
   }
 }
