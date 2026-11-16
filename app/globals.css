@@ -479,12 +479,12 @@ body[data-reading-theme="light"] .reading-theme-toggle {
 .article-summary__box {
   padding: 1.25rem 1.5rem;
   border: 1px solid color-mix(in oklab, white 14%, transparent);
-  border-left: 2px solid #cba775;
+  border-left: 2px solid #f0b545;
   border-radius: 0.75rem;
   background: color-mix(in oklab, white 3%, transparent);
 }
 .article-summary__box > p:first-child {
-  color: #cba775;
+  color: #f0b545;
 }
 .article-summary__list {
   margin-top: 0.75rem;
@@ -498,27 +498,27 @@ body[data-reading-theme="light"] .reading-theme-toggle {
   margin-top: 0.6rem;
 }
 .article-summary__list li::marker {
-  color: #cba775;
+  color: #f0b545;
 }
 body[data-reading-theme="light"] .article-summary__box {
   border-color: rgb(23 32 42 / 18%);
-  border-left-color: #8a6a35;
+  border-left-color: #8a5a00;
   background: rgb(23 32 42 / 4%);
 }
 body[data-reading-theme="light"] .article-summary__box > p:first-child {
-  color: #8a6a35;
+  color: #8a5a00;
 }
 body[data-reading-theme="light"] .article-summary__list {
   color: #17202a;
 }
 body[data-reading-theme="light"] .article-summary__list li::marker {
-  color: #8a6a35;
+  color: #8a5a00;
 }
 /* Callout for a paired "what it shows / what it doesn't" verdict. */
 .prose-astro .callout {
   padding: 1.1rem 1.4rem;
   border: 1px solid color-mix(in oklab, white 14%, transparent);
-  border-left: 2px solid #cba775;
+  border-left: 2px solid #f0b545;
   border-radius: 0.75rem;
   background: color-mix(in oklab, white 3%, transparent);
 }
@@ -527,7 +527,7 @@ body[data-reading-theme="light"] .article-summary__list li::marker {
 }
 body[data-reading-theme="light"] .prose-astro .callout {
   border-color: rgb(23 32 42 / 18%);
-  border-left-color: #8a6a35;
+  border-left-color: #8a5a00;
   background: rgb(23 32 42 / 4%);
 }
 /* Collapsible block for long reference material. The heading stays outside
@@ -544,7 +544,7 @@ body[data-reading-theme="light"] .prose-astro .callout {
   padding: 0.9rem 1.25rem;
   cursor: pointer;
   list-style: none;
-  color: #cba775;
+  color: #f0b545;
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   letter-spacing: 0.14em;
@@ -562,7 +562,7 @@ body[data-reading-theme="light"] .prose-astro .callout {
   content: "\2212";
 }
 .prose-astro details.fold > summary:focus-visible {
-  outline: 2px solid #cba775;
+  outline: 2px solid #f0b545;
   outline-offset: 3px;
   border-radius: 0.75rem;
 }
@@ -581,7 +581,7 @@ body[data-reading-theme="light"] .prose-astro details.fold {
   background: rgb(23 32 42 / 4%);
 }
 body[data-reading-theme="light"] .prose-astro details.fold > summary {
-  color: #8a6a35;
+  color: #8a5a00;
 }
 .prose-astro figcaption {
   margin-bottom: 0.75rem;
@@ -603,7 +603,7 @@ body[data-reading-theme="light"] .prose-astro details.fold > summary {
     linear-gradient(to left, var(--wrap-edge), transparent) 100% 0 / 14px 100% no-repeat scroll;
 }
 .prose-astro .table-wrap:focus-visible {
-  outline: 2px solid #cba775;
+  outline: 2px solid #f0b545;
   outline-offset: 3px;
 }
 .prose-astro table {

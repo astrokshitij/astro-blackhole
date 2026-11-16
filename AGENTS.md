@@ -8,7 +8,15 @@ that a change took effect.
 ## Stack
 
 Next.js 16 (App Router) + React 19 + TypeScript + Tailwind v4, deployed from
-GitHub to Vercel on push to `main`. Warm-white and muted amber on near-black, built around a WebGL black-hole renderer.
+GitHub to Vercel on push to `main`. The home hero is a WebGL prism: white light
+refracted into a spectrum.
+
+Palette ("Prism Light", one accent only): obsidian `#08090c` base, soft pearl
+`#f2efe8` text, beam gold `#f0b545` accent (hover `#f8cd78`; `#8a5a00` on the
+light reading theme, which passes 4.5:1 on white). The prism's beam is tinted
+the same warm white, so the gold reads as the colour of the light. The rainbow
+hairline (`.credibility::before`, `footer::before`) is the signature and is used
+in exactly those two places; do not spread rainbow colours elsewhere.
 
 Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/contact`, plus 404, sitemap, robots. Old `/workshops*` URLs
 redirect to `/` (see `next.config.ts`).
@@ -26,9 +34,18 @@ redirect to `/` (see `next.config.ts`).
   source of vertical rhythm), `SectionHeading`, `Eyebrow`, `NextPage`. Use these
   rather than writing new inline spacing or button styles.
 - `components/site/site-header.tsx` — nav, with the mobile panel.
-- `components/ui/black-hole-hero-section.tsx` — the retained ray marcher.
-  `components/site/hero-visual.tsx` loads it and provides motion controls.
-  It caps DPR, backing pixels and frame rate, and respects reduced motion.
+- `components/ui/prism-hero.tsx` — the home hero. Each frame bends 20
+  wavelengths through the glass with Snell's law (dispersion exaggerated ~10x
+  so the fan is visible). `components/site/hero-visual.tsx` loads it. It caps
+  DPR, backing pixels and frame rate, pauses off-screen, and shows a finished
+  still under reduced motion. The glass, its side face, the surface and the
+  reflection are shaded in the same fragment shader; a Three.js version was
+  tried and rejected (dark glass reads as a grey ghost on black, and it adds
+  ~180 KB). Below 900px the prism sits in its own band under
+  the hero copy (see `.hero-art` in `app/editorial.css`).
+- `components/ui/black-hole-hero-section.tsx` — the previous hero (black-hole
+  ray marcher). No longer mounted; kept so it can be swapped back in
+  `hero-visual.tsx`.
 - `app/editorial.css` — editorial layouts, palette and responsive rules.
 - `components/site/enquiry-form.tsx` — Contact enquiry form.
 - `content/blog/*.md` — one file per post.
