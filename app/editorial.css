@@ -11,13 +11,13 @@
 .action-button, button, .text-link, .header-invite, .channel-list > a { transition:background-color .22s, color .22s, border-color .22s, box-shadow .22s, transform .22s; }
 .action-button svg, .text-link svg, .channel-list > a svg { transition:transform .22s; }
 @media(hover:hover) {
-  .action-button:hover, button:not(:disabled):hover { transform:translateY(-2px); box-shadow:0 8px 25px #cba77518; }
+  .action-button:hover, button:not(:disabled):hover { transform:translateY(-2px); box-shadow:0 8px 25px #f0b54518; }
   .action-button:hover svg, .text-link:hover svg, .channel-list > a:hover svg { transform:translateX(4px); }
-  .text-link:hover { color:#e9bf85; }
-  .channel-list > a:hover { background:#cba77508; }
+  .text-link:hover { color:#f8cd78; }
+  .channel-list > a:hover { background:#f0b54508; }
 }
 .action-button:active, button:not(:disabled):active, .text-link:active { transform:translateY(1px) scale(.98); }
-a:focus-visible, button:focus-visible { outline:2px solid #e9bf85; outline-offset:5px; }
+a:focus-visible, button:focus-visible { outline:2px solid #f8cd78; outline-offset:5px; }
 button:disabled { opacity:.55; }
 @media(max-width:899px) {
   .reach-layout { grid-template-columns:1fr; gap:40px; }
@@ -50,7 +50,7 @@ body[data-reading-theme="light"] :focus-visible {
   --card: #111319;
   --card-foreground: #f2efe8;
   --muted-foreground: #a8adb7;
-  --accent: #cba775;
+  --accent: #f0b545;
   --border: rgba(242, 239, 232, 0.13);
 }
 body {
@@ -92,7 +92,7 @@ img {
 }
 .eyebrow {
   font-family: var(--font-geist-mono), monospace;
-  color: #cba775;
+  color: #f0b545;
   font-size: 12px;
   line-height: 1.7;
   letter-spacing: 0.13em;
@@ -134,7 +134,7 @@ img {
   gap: 16px;
   font-size: 14px;
   color: #f2efe8;
-  border-bottom: 1px solid rgba(203, 167, 117, 0.55);
+  border-bottom: 1px solid rgba(240, 181, 69, 0.55);
   padding-block: 10px;
   margin-top: 24px;
   transition:
@@ -142,8 +142,8 @@ img {
     border-color 0.2s;
 }
 .text-link:hover {
-  color: #cba775;
-  border-color: #cba775;
+  color: #f0b545;
+  border-color: #f0b545;
 }
 .text-link svg {
   flex: none;
@@ -182,7 +182,7 @@ img {
   display: block;
   width: 23px;
   height: 23px;
-  border: 1px solid #cba775;
+  border: 1px solid #f0b545;
   border-radius: 50%;
   position: relative;
 }
@@ -190,7 +190,7 @@ img {
   content: "";
   position: absolute;
   inset: 8px -5px;
-  border-top: 1px solid #cba775;
+  border-top: 1px solid #f0b545;
   transform: rotate(-30deg);
 }
 .desktop-nav {
@@ -264,7 +264,7 @@ img {
 .mobile-menu nav a span {
   font-family: var(--font-geist-mono);
   font-size: 12px;
-  color: #cba775;
+  color: #f0b545;
 }
 .mobile-menu nav a span:last-child {
   margin-left: auto;
@@ -343,7 +343,7 @@ img {
   margin-top: 32px;
 }
 .hero-copy h1 span {
-  color: #cba775;
+  color: #f0b545;
 }
 .hero-intro {
   max-width: 410px;
@@ -371,8 +371,35 @@ img {
   background: rgba(8, 9, 12, 0.8);
 }
 .credibility {
+  position: relative;
   border-block: 1px solid var(--border);
+  border-top-color: transparent;
   background: #0d0f13;
+}
+/* Signature: a hairline of the prism's spectrum, used in exactly two places
+   (under the home hero and over the footer). Do not add more. */
+.credibility::before,
+footer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 1px;
+  pointer-events: none;
+  opacity: 0.7;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ff5a4e 14%,
+    #ffa63d 27%,
+    #f0d43a 39%,
+    #45d07a 52%,
+    #3ac7e6 64%,
+    #4d6bff 78%,
+    #8a5cff 89%,
+    transparent 100%
+  );
 }
 .credibility-inner {
   display: flex;
@@ -483,8 +510,8 @@ img {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #cba775;
-  box-shadow: 0 0 6px rgba(203, 167, 117, 0.7);
+  background: #f0b545;
+  box-shadow: 0 0 6px rgba(240, 181, 69, 0.7);
   flex-shrink: 0;
 }
 .exploration-copy {
@@ -514,7 +541,7 @@ img {
 }
 @media (hover: hover) {
   .exploration:hover .image-link {
-    border-color: rgba(203, 167, 117, 0.4);
+    border-color: rgba(240, 181, 69, 0.4);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
   }
   .exploration:hover .editorial-image img {
@@ -522,17 +549,17 @@ img {
     filter: saturate(0.85) contrast(1.04);
   }
   .exploration:hover .exploration-copy h3 a {
-    color: #e9bf85;
+    color: #f8cd78;
   }
   .exploration:hover .text-link {
-    color: #e9bf85;
-    border-color: #e9bf85;
+    color: #f8cd78;
+    border-color: #f8cd78;
   }
   .exploration:hover .text-link svg {
     transform: translateX(4px);
   }
   .exploration:hover .image-badge {
-    border-color: rgba(203, 167, 117, 0.35);
+    border-color: rgba(240, 181, 69, 0.35);
     background: rgba(8, 9, 12, 0.92);
   }
 }
@@ -577,7 +604,7 @@ figcaption {
   font-size: 12px;
 }
 .writing-meta span {
-  color: #cba775;
+  color: #f0b545;
 }
 .writing-feature h2 {
   font-family: var(--font-jost);
@@ -612,7 +639,7 @@ figcaption {
   border-bottom: 1px solid var(--border);
 }
 .channel-list a:hover {
-  color: #cba775;
+  color: #f0b545;
 }
 .channel-number,
 .channel-handle {
@@ -698,7 +725,7 @@ figcaption {
   line-height: 1.5;
   color: #e9ebf0;
   padding-top: 16px;
-  border-top: 1px solid #cba775;
+  border-top: 1px solid #f0b545;
 }
 .story-chapters {
   counter-reset: chapter;
@@ -716,7 +743,7 @@ figcaption {
   display: block;
   font: 12px/1.5 var(--font-geist-mono);
   letter-spacing: 0.12em;
-  color: #cba775;
+  color: #f0b545;
   margin-bottom: 18px;
 }
 .essay-feature {
@@ -800,7 +827,7 @@ figcaption {
   letter-spacing: -0.025em;
   overflow-wrap: anywhere;
   padding: 18px 0;
-  border-bottom: 1px solid #cba775;
+  border-bottom: 1px solid #f0b545;
 }
 .contact-reason {
   padding-top: 28px;
@@ -894,7 +921,7 @@ figcaption {
   background: #08090c !important;
 }
 .reading-progress span {
-  background: #cba775;
+  background: #f0b545;
   box-shadow: none;
 }
 .article-tools {
@@ -1256,7 +1283,7 @@ footer {
   }
 }
 .essay-feature .eyebrow {
-  color: #cba775;
+  color: #f0b545;
   font-size: 12px;
 }
 body[data-reading-theme="light"] .article-body,

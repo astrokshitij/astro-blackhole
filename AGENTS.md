@@ -8,8 +8,15 @@ that a change took effect.
 ## Stack
 
 Next.js 16 (App Router) + React 19 + TypeScript + Tailwind v4, deployed from
-GitHub to Vercel on push to `main`. Warm-white and muted amber on near-black. The home hero is a WebGL prism: white light
+GitHub to Vercel on push to `main`. The home hero is a WebGL prism: white light
 refracted into a spectrum.
+
+Palette ("Prism Light", one accent only): obsidian `#08090c` base, soft pearl
+`#f2efe8` text, beam gold `#f0b545` accent (hover `#f8cd78`; `#8a5a00` on the
+light reading theme, which passes 4.5:1 on white). The prism's beam is tinted
+the same warm white, so the gold reads as the colour of the light. The rainbow
+hairline (`.credibility::before`, `footer::before`) is the signature and is used
+in exactly those two places; do not spread rainbow colours elsewhere.
 
 Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/contact`, plus 404, sitemap, robots. Old `/workshops*` URLs
 redirect to `/` (see `next.config.ts`).

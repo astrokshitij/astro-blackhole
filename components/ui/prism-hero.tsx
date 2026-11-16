@@ -85,8 +85,10 @@ uniform float uWidth;      // beam half-width
 uniform float uSpread;     // growth of each band's width per unit travelled
 uniform float uExposure;
 uniform vec4 uRay[N];      // exit point xy, exit direction zw
-uniform vec4 uCol[N];
-uniform float uGlass;      // linear rgb (sums to white), w = n (0 = total internal reflection)
+uniform vec4 uCol[N];      // linear rgb (sums to SUN), w = n (0 = total internal reflection)
+uniform float uGlass;      // 1 draws the glass, 0 leaves it to another layer
+// Sunlight rather than lamp-white: the warm white all the bands add up to.
+const vec3 SUN = vec3(1.0, 0.93, 0.80);
 
 float hash(vec2 p) {
   p = fract(p * vec2(123.34, 456.21));
@@ -141,7 +143,7 @@ void main() {
   float along = dot(p - uE, uD0);
   float perp = abs(cross2(uD0, p - uE));
   float incoming = smoothstep(0.004, -0.004, along) * headMask(uL0 + along);
-  outside += vec3(1.0) * incoming * (1.6 * gauss(perp, w) + 0.16 * exp(-perp / (w * 7.0)));
+  outside += SUN * incoming * (1.6 * gauss(perp, w) + 0.16 * exp(-perp / (w * 7.0)));
 
   /* --- one band per wavelength ------------------------------------------ */
   for (int i = 0; i < N; i++) {
@@ -311,7 +313,9 @@ const BAND_COLOURS = (() => {
     return c.map((v) => (v * 0.88 + y * 0.12) * k) as [number, number, number];
   });
   const sum = raw.reduce((s, c) => [s[0] + c[0], s[1] + c[1], s[2] + c[2]], [0, 0, 0]);
-  return raw.map((c) => [c[0] / sum[0], c[1] / sum[1], c[2] / sum[2]]);
+  // Normalised so all bands together make the beam's warm white (SUN in the shader).
+  const sun = [1.0, 0.93, 0.8];
+  return raw.map((c) => [(c[0] / sum[0]) * sun[0], (c[1] / sum[1]) * sun[1], (c[2] / sum[2]) * sun[2]]);
 })();
 
 /** Crown glass (BK7) fitted to Cauchy's law, λ in micrometres. */
