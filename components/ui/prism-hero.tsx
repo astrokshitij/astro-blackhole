@@ -145,6 +145,10 @@ void main() {
   float incoming = smoothstep(0.004, -0.004, along) * headMask(uL0 + along);
   outside += SUN * incoming * (1.6 * gauss(perp, w) + 0.16 * exp(-perp / (w * 7.0)));
 
+  // The prism stands on a dark surface at the height of its base.
+  float floorY = min(uB.y, uC.y);
+  vec3 splash = vec3(0.0);
+
   /* --- one band per wavelength ------------------------------------------ */
   for (int i = 0; i < N; i++) {
     vec4 ray = uRay[i];
@@ -161,6 +165,9 @@ void main() {
     glass += col.rgb * (1.5 * gauss(din, w * 0.95) + 0.22 * exp(-din / (w * 9.0))) * headMask(sIn);
 
     // Out in the air: each band spreads, so its peak dims as it widens.
+    // Bent towards the base, every band falls, and it ends where it meets
+    // the surface: there it spreads into a soft pool of its own colour.
+    float fall = d.y < -0.01 ? (X.y - floorY) / -d.y : 40.0;
     float t = dot(p - X, d);
     if (t > 0.0) {
       float pd = abs(cross2(d, p - X));
@@ -168,12 +175,22 @@ void main() {
       float amp = w / sg;
       float sOut = uL0 + col.w * lin + t;
       outside += col.rgb * amp * (1.7 * gauss(pd, sg) + 0.11 * exp(-pd / (sg * 4.0)))
-               * exp(-t * 0.35) * headMask(sOut);
+               * smoothstep(fall + 0.004, fall - 0.012, t) * headMask(sOut);
+    }
+    if (fall < 40.0) {
+      vec2 H = X + d * fall;
+      float sgH = w + fall * uSpread;
+      // Seen at a grazing angle, the pool is long and thin, and a little
+      // light scatters past it along the surface.
+      float sx = max(0.03, sgH * 4.0);
+      float pool = exp(-pow((p.x - H.x) / sx, 2.0) - pow((p.y - floorY) / 0.006, 2.0))
+                 + 0.12 * exp(-pow((p.x - H.x) / (sx * 1.8), 2.0) - pow((p.y - floorY) / 0.02, 2.0));
+      splash += col.rgb * pool * (w / sgH) * headMask(uL0 + col.w * lin + fall);
     }
   }
 
   vec3 lightAir = outside * (1.0 - inside);
-  vec3 light = lightAir * air + glass * inside;
+  vec3 light = lightAir * air + glass * inside + splash * 1.6;
 
   /* --- motes caught in the light ---------------------------------------- */
   vec2 q = p * 46.0 + vec2(uTime * 0.35, sin(uTime * 0.13) * 1.5);
@@ -190,7 +207,7 @@ void main() {
   vec2 A2 = uA + uBack, B2 = uB + uBack, C2 = uC + uBack;
   float on = headMask(0.0) * uGlass;
   vec3 tint = vec3(0.86, 0.92, 1.0);
-  vec3 spill = (outside + glass) * 2.2;
+  vec3 spill = (outside + glass) * 1.5;
   float slow = uTime * 0.09;
 
   // Right side face as a parallelogram: p = C + u (A - C) + v back.
@@ -214,14 +231,17 @@ void main() {
   // Edges. Front edges and the outer silhouette are bright and doubled (a
   // bevel has two lines of light), edges seen through the glass are faint.
   float glint = pow(0.5 + 0.5 * sin(dot(p, vec2(7.0, 4.0)) - uTime * 0.5), 24.0);
+  // Like a photograph, edges are bright only where light reaches them.
+  vec2 xmid = uRay[N / 2].xy;
+  float reach = exp(-length(p - uE) * 4.5) + exp(-length(p - xmid) * 4.5) + 0.35 * exp(-length(p - uA) * 9.0);
   float lw = px * 1.1;
   float front = min(seg(p, uA, uB), min(seg(p, uB, uC), seg(p, uC, uA)));
   float bevel = exp(-abs(tri + 0.0065) / lw) * inside;
   float outer = min(seg(p, A2, C2), min(seg(p, uA, A2), seg(p, uC, C2)));
   float hidden = min(seg(p, A2, B2), min(seg(p, B2, C2), seg(p, uB, B2)));
-  light += (tint * (0.22 + 0.6 * glint) + spill) * exp(-front / lw) * on;
+  light += (tint * (0.02 + 0.45 * reach + 0.4 * glint) + spill) * exp(-front / lw) * on;
   light += (tint * 0.07 + spill * 0.35) * bevel * on;
-  light += (tint * (0.13 + 0.3 * glint) + spill * 0.4) * exp(-outer / lw) * on;
+  light += (tint * (0.035 + 0.22 * reach + 0.25 * glint) + spill * 0.4) * exp(-outer / lw) * on;
   light += (tint * 0.012 + spill * 0.08) * exp(-hidden / lw) * on;
   // A point of light where the apex catches the overhead strip.
   light += tint * on * (0.35 * exp(-length(p - uA) * 90.0) + 0.06 * exp(-length(p - uA) * 22.0)) * (0.7 + 0.3 * sin(slow * 2.0));
@@ -254,14 +274,21 @@ void main() {
   vec2 xm = uRay[N / 2].xy;
   light += vec3(0.95, 0.95, 1.0) * headMask(uL0 + 1.55 * length(xm - uE)) * 0.06 * exp(-length(p - xm) * 14.0);
 
-  /* --- room -------------------------------------------------------------- */
-  vec3 base = vec3(0.0027, 0.0030, 0.0037); // #08090c, linear
+  /* --- the room, graded like a photograph ----------------------------- */
+  // Warm haze where the beam strikes: light scattered in the air near the
+  // brightest point, which is what makes a single glow read as cinematic.
+  light += SUN * hit * (0.028 * exp(-length(p - uE) * 3.5) + 0.004 * exp(-length(p - uE) * 1.5));
+  vec3 base = vec3(0.0024, 0.0027, 0.0034); // #08090c, linear
   float sky = fract(sin(dot(floor(gl_FragCoord.xy * 0.5), vec2(12.9898, 78.233))) * 43758.5453);
-  float star = step(0.9975, sky) * (0.35 + 0.35 * sin(uTime * 0.7 + sky * 300.0)) * 0.05;
-  vec3 col = base + vec3(star) + vec3(0.012, 0.012, 0.016) * exp(-length(p) * 2.4);
-  col += 1.0 - exp(-light * uExposure);
-
-  gl_FragColor = vec4(pow(clamp(col, 0.0, 1.0), vec3(1.0 / 2.2)), 1.0);
+  float star = step(0.9975, sky) * (0.35 + 0.35 * sin(uTime * 0.7 + sky * 300.0)) * 0.04;
+  vec3 col = base + vec3(star) + (1.0 - exp(-light * uExposure));
+  // Darker corners pull the eye to the glass.
+  vec2 uv = gl_FragCoord.xy / uRes - 0.5;
+  col *= mix(0.62, 1.0, smoothstep(0.85, 0.2, length(uv * vec2(0.9, 1.25))));
+  col = pow(clamp(col, 0.0, 1.0), vec3(1.0 / 2.2));
+  // Fine film grain; it also hides banding in the dark gradients.
+  col += (fract(sin(dot(gl_FragCoord.xy + fract(uTime) * 61.0, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * 0.014;
+  gl_FragColor = vec4(col, 1.0);
 }
 `;
 
@@ -332,7 +359,7 @@ const indexOf = (lambdaNm: number, dispersion: number) => {
 
 export function PrismHero({
   focus = [0.66, 0.46],
-  compactFocus = [0.42, 0.42],
+  compactFocus = [0.36, 0.42],
   size = 0.34,
   rotation = 0,
   incidence = 19,
