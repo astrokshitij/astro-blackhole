@@ -948,21 +948,29 @@ footer {
     font-size: 70px;
   }
   .home-hero {
-    height: 850px;
-    min-height: 850px;
+    height: auto;
+    min-height: 0;
   }
+  .hero-composition {
+    justify-content: flex-start;
+    min-height: 0;
+    padding-top: 150px;
+    padding-bottom: 390px;
+  }
+  /* Below 900px the prism gets its own stage under the copy, so light never
+     runs behind text. */
   .hero-art {
-    left: 10%;
+    inset: auto 0 0 0;
+    height: 420px;
   }
   .hero-art:after {
-    background:
-      linear-gradient(
-        90deg,
-        #08090c,
-        rgba(8, 9, 12, 0.85) 25%,
-        transparent 85%
-      ),
-      linear-gradient(0deg, #08090c, transparent 50%);
+    background: linear-gradient(
+      180deg,
+      #08090c 0%,
+      transparent 28%,
+      transparent 82%,
+      #08090c 100%
+    );
   }
   .hero-copy {
     max-width: 600px;
@@ -1031,15 +1039,9 @@ footer {
   .menu-toggle {
     display: flex;
   }
-  .home-hero {
-    height: auto;
-    min-height: 850px;
-  }
   .hero-composition {
-    justify-content: flex-start;
     padding-top: 142px;
-    padding-bottom: 72px;
-    min-height: 850px;
+    padding-bottom: 290px;
   }
   .hero-copy h1 {
     font-size: clamp(43px, 11.6vw, 67px);
@@ -1059,21 +1061,7 @@ footer {
     margin-top: 28px;
   }
   .hero-art {
-    inset: 300px -95px 70px 0;
-  }
-  .hero-art .simulation-host {
-    opacity: 0.52;
-  }
-  .hero-art:after {
-    background:
-      linear-gradient(
-        180deg,
-        #08090c,
-        rgba(8, 9, 12, 0.5) 30%,
-        rgba(8, 9, 12, 0.4) 75%,
-        #08090c
-      ),
-      linear-gradient(90deg, #08090c, transparent);
+    height: 320px;
   }
   .hero-copy {
     position: relative;
