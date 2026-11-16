@@ -31,7 +31,10 @@ redirect to `/` (see `next.config.ts`).
   wavelengths through the glass with Snell's law (dispersion exaggerated ~10x
   so the fan is visible). `components/site/hero-visual.tsx` loads it. It caps
   DPR, backing pixels and frame rate, pauses off-screen, and shows a finished
-  still under reduced motion. Below 900px the prism sits in its own band under
+  still under reduced motion. The glass, its side face, the surface and the
+  reflection are shaded in the same fragment shader; a Three.js version was
+  tried and rejected (dark glass reads as a grey ghost on black, and it adds
+  ~180 KB). Below 900px the prism sits in its own band under
   the hero copy (see `.hero-art` in `app/editorial.css`).
 - `components/ui/black-hole-hero-section.tsx` — the previous hero (black-hole
   ray marcher). No longer mounted; kept so it can be swapped back in

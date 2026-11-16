@@ -52,6 +52,8 @@ export interface PrismHeroProps extends React.HTMLAttributes<HTMLDivElement> {
   interactive?: boolean;
   /** Freeze on a finished frame (reduced motion). */
   paused?: boolean;
+  /** Draw the glass outline. Off when another layer supplies the prism. */
+  glass?: boolean;
 }
 
 const RAYS = 20;
@@ -76,8 +78,6 @@ uniform vec2 uA, uB, uC;   // front face of the prism
 uniform vec2 uBack;        // offset of the back face (fakes depth)
 uniform vec2 uE;           // where the beam enters
 uniform vec2 uD0;          // incoming direction
-uniform vec2 uR0;          // weak reflection off the entry face
-uniform float uFres;
 uniform float uTime;
 uniform float uHead;       // how far the light has travelled since switch-on
 uniform float uL0;         // path length from the frame edge to uE
@@ -85,7 +85,8 @@ uniform float uWidth;      // beam half-width
 uniform float uSpread;     // growth of each band's width per unit travelled
 uniform float uExposure;
 uniform vec4 uRay[N];      // exit point xy, exit direction zw
-uniform vec4 uCol[N];      // linear rgb (sums to white), w = n (0 = total internal reflection)
+uniform vec4 uCol[N];
+uniform float uGlass;      // linear rgb (sums to white), w = n (0 = total internal reflection)
 
 float hash(vec2 p) {
   p = fract(p * vec2(123.34, 456.21));
@@ -142,15 +143,6 @@ void main() {
   float incoming = smoothstep(0.004, -0.004, along) * headMask(uL0 + along);
   outside += vec3(1.0) * incoming * (1.6 * gauss(perp, w) + 0.16 * exp(-perp / (w * 7.0)));
 
-  /* --- a few percent bounce off the first face (Fresnel) ---------------- */
-  float ra = dot(p - uE, uR0);
-  if (ra > 0.0) {
-    float rp = abs(cross2(uR0, p - uE));
-    float rs = w + ra * 0.02;
-    outside += vec3(1.0) * uFres * 0.6 * (w / rs) * (gauss(rp, rs) + 0.2 * exp(-rp / (rs * 6.0)))
-             * exp(-ra * 1.4) * headMask(uL0 + ra);
-  }
-
   /* --- one band per wavelength ------------------------------------------ */
   for (int i = 0; i < N; i++) {
     vec4 ray = uRay[i];
@@ -173,7 +165,7 @@ void main() {
       float sg = w + t * uSpread;
       float amp = w / sg;
       float sOut = uL0 + col.w * lin + t;
-      outside += col.rgb * amp * (1.7 * gauss(pd, sg) + 0.2 * exp(-pd / (sg * 5.0)))
+      outside += col.rgb * amp * (1.7 * gauss(pd, sg) + 0.11 * exp(-pd / (sg * 4.0)))
                * exp(-t * 0.35) * headMask(sOut);
     }
   }
@@ -191,28 +183,66 @@ void main() {
   light += lightAir * max(mote, 0.0) * 5.0;
 
   /* --- the glass -------------------------------------------------------- */
+  // Seen from a little above and to the right: the front face, and the right
+  // side face receding to a back face. The other faces are hidden.
   vec2 A2 = uA + uBack, B2 = uB + uBack, C2 = uC + uBack;
-  float front = min(seg(p, uA, uB), min(seg(p, uB, uC), seg(p, uC, uA)));
-  float back = min(seg(p, A2, B2), min(seg(p, B2, C2), seg(p, C2, A2)));
-  float ribs = min(seg(p, uA, A2), min(seg(p, uB, B2), seg(p, uC, C2)));
-  // Edges catch whatever light is near them, so the faces the beam touches
-  // light up and the far corners stay dark. A slow glint runs over the glass.
+  float on = headMask(0.0) * uGlass;
+  vec3 tint = vec3(0.86, 0.92, 1.0);
   vec3 spill = (outside + glass) * 2.2;
+  float slow = uTime * 0.09;
+
+  // Right side face as a parallelogram: p = C + u (A - C) + v back.
+  vec2 ca = uA - uC;
+  float det = cross2(ca, uBack);
+  float fu = cross2(p - uC, uBack) / det;
+  float fv = cross2(ca, p - uC) / det;
+  float side = step(0.0, fu) * step(fu, 1.0) * step(0.0, fv) * step(fv, 1.0) * (1.0 - inside);
+  // A studio strip light reflected in it, drifting slowly along the face.
+  float band = exp(-pow((fu - 0.42 - 0.18 * sin(slow)) / 0.09, 2.0));
+  light += tint * side * (0.022 + 0.17 * band * (0.55 + 0.45 * fv)) * on;
+  light += outside * side * 0.25 * on;
+
+  // Front face: dark glass with a soft sheen falling from the top, brighter
+  // at the rims where the glass is seen through more of its thickness.
+  float rim = exp(tri / 0.016) * inside;
+  float sheenF = 0.5 + 0.5 * clamp((p.y - uB.y) / (uA.y - uB.y), 0.0, 1.0);
+  float diag = exp(-pow((dot(p, normalize(vec2(1.0, -0.6))) + 0.03 * sin(slow * 1.3)) / 0.05, 2.0));
+  light += tint * inside * (0.014 * sheenF + 0.055 * rim + 0.05 * diag) * on;
+
+  // Edges. Front edges and the outer silhouette are bright and doubled (a
+  // bevel has two lines of light), edges seen through the glass are faint.
   float glint = pow(0.5 + 0.5 * sin(dot(p, vec2(7.0, 4.0)) - uTime * 0.5), 24.0);
-  vec3 glassTint = vec3(0.86, 0.92, 1.0);
-  float on = headMask(0.0);
-  float lineF = exp(-front / (px * 1.1));
-  float lineB = exp(-back / (px * 1.0));
-  float lineR = exp(-ribs / (px * 1.0));
-  light += (glassTint * (0.16 + 0.55 * glint) + spill) * lineF * on;
-  // Back edges are seen through the glass, or past it: much dimmer.
-  light += (glassTint * 0.07 + spill * 0.3) * lineB * (1.0 - 0.6 * inside) * on;
-  light += (glassTint * 0.10 + spill * 0.4) * lineR * on;
-  // Thick glass looks brighter at its rims than in its middle.
-  float rim = exp(tri / 0.014) * inside;
-  float hull = (1.0 - smoothstep(-px, px, sdTri(p, A2, B2, C2))) * (1.0 - inside);
-  float sheen = 0.75 + 0.5 * clamp(p.y / 0.25, -1.0, 1.0);
-  light += glassTint * (inside * 0.012 + rim * 0.05 + hull * 0.006) * sheen * on;
+  float lw = px * 1.1;
+  float front = min(seg(p, uA, uB), min(seg(p, uB, uC), seg(p, uC, uA)));
+  float bevel = exp(-abs(tri + 0.0065) / lw) * inside;
+  float outer = min(seg(p, A2, C2), min(seg(p, uA, A2), seg(p, uC, C2)));
+  float hidden = min(seg(p, A2, B2), min(seg(p, B2, C2), seg(p, uB, B2)));
+  light += (tint * (0.22 + 0.6 * glint) + spill) * exp(-front / lw) * on;
+  light += (tint * 0.07 + spill * 0.35) * bevel * on;
+  light += (tint * (0.13 + 0.3 * glint) + spill * 0.4) * exp(-outer / lw) * on;
+  light += (tint * 0.012 + spill * 0.08) * exp(-hidden / lw) * on;
+  // A point of light where the apex catches the overhead strip.
+  light += tint * on * (0.35 * exp(-length(p - uA) * 90.0) + 0.06 * exp(-length(p - uA) * 22.0)) * (0.7 + 0.3 * sin(slow * 2.0));
+
+  // The surface it stands on: a pool of light under the glass, and a faint,
+  // quickly fading reflection of the prism and its beam.
+  float baseY = min(uB.y, uC.y);
+  float below = baseY - p.y;
+  float midX = 0.5 * (uB.x + uC.x);
+  float halfW = 0.5 * abs(uC.x - uB.x);
+  if (below > 0.0) {
+    vec2 r = vec2(p.x, baseY + below);
+    float rtri = sdTri(r, uA, uB, uC);
+    float rin = 1.0 - smoothstep(-px, px, rtri);
+    float rfront = min(seg(r, uA, uB), min(seg(r, uB, uC), seg(r, uC, uA)));
+    vec2 xm2 = uRay[N / 2].xy;
+    float rbeam = gauss(seg(r, uE, xm2), w * 1.4);
+    float fade = exp(-below * 16.0) * smoothstep(halfW * 2.2, halfW * 0.6, abs(p.x - midX));
+    light += (tint * (0.22 * exp(-rfront / lw) + 0.02 * rin) + vec3(1.0) * rbeam * 0.9 * rin) * fade * 0.22 * on;
+  }
+  float pool = exp(-pow((p.x - midX) / (halfW * 1.25), 2.0) - pow(p.y - baseY, 2.0) / 0.0016);
+  light += vec3(1.0, 0.98, 0.95) * pool * 0.045 * headMask(uL0 + 0.1) * on;
+  light += tint * exp(-abs(p.y - baseY) / lw) * smoothstep(halfW * 1.8, halfW * 0.9, abs(p.x - midX)) * 0.05 * on;
 
   /* --- flare where the beam hits, softer glow where it leaves ----------- */
   float hit = headMask(uL0);
@@ -272,7 +302,14 @@ function wavelengthToRgb(l: number): [number, number, number] {
 const LAMBDA = Array.from({ length: RAYS }, (_, i) => 668 - (250 * i) / (RAYS - 1));
 /** Each band's colour, scaled so that all bands together add up to white. */
 const BAND_COLOURS = (() => {
-  const raw = LAMBDA.map(wavelengthToRgb);
+  // A touch more weight at the red end, which the eye sees dimly, and a
+  // little desaturation so the bands blend like light, not paint.
+  const raw = LAMBDA.map((l) => {
+    const c = wavelengthToRgb(l);
+    const k = l > 610 ? 1 + (l - 610) / 120 : 1;
+    const y = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+    return c.map((v) => (v * 0.88 + y * 0.12) * k) as [number, number, number];
+  });
   const sum = raw.reduce((s, c) => [s[0] + c[0], s[1] + c[1], s[2] + c[2]], [0, 0, 0]);
   return raw.map((c) => [c[0] / sum[0], c[1] / sum[1], c[2] / sum[2]]);
 })();
@@ -302,14 +339,15 @@ export function PrismHero({
   maxDpr = 1.5,
   interactive = true,
   paused = false,
+  glass = true,
   className = "",
   ...rest
 }: PrismHeroProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const props = useRef({ focus, compactFocus, size, rotation, incidence, swing, dispersion, exposure, resolution, maxDpr, interactive, paused });
+  const props = useRef({ focus, compactFocus, size, rotation, incidence, swing, dispersion, exposure, resolution, maxDpr, interactive, paused, glass });
   useEffect(() => {
-    props.current = { focus, compactFocus, size, rotation, incidence, swing, dispersion, exposure, resolution, maxDpr, interactive, paused };
+    props.current = { focus, compactFocus, size, rotation, incidence, swing, dispersion, exposure, resolution, maxDpr, interactive, paused, glass };
   });
 
   useEffect(() => {
@@ -374,7 +412,7 @@ export function PrismHero({
       gl!.enableVertexAttribArray(0);
       gl!.vertexAttribPointer(0, 2, gl!.FLOAT, false, 0, 0);
       loc = {};
-      for (const n of ["uRes", "uCenter", "uUnit", "uA", "uB", "uC", "uBack", "uE", "uD0", "uR0", "uFres", "uTime", "uHead", "uL0", "uWidth", "uSpread", "uExposure", "uRay", "uCol"]) {
+      for (const n of ["uRes", "uCenter", "uUnit", "uA", "uB", "uC", "uBack", "uE", "uD0", "uTime", "uHead", "uL0", "uWidth", "uSpread", "uExposure", "uRay", "uCol", "uGlass"]) {
         loc[n] = gl!.getUniformLocation(p, n);
       }
       return true;
@@ -425,9 +463,6 @@ export function PrismHero({
       const swingNow = o.swing * Math.sin(clock * 0.11) + nudge;
       const a = ((o.incidence + swingNow) * Math.PI) / 180 + r;
       const d0: V2 = [Math.cos(a), Math.sin(a)];
-      const r0 = sub(d0, mul(faceN, 2 * dot(d0, faceN)));
-      const cosI = -dot(d0, faceN);
-      const fres = 0.043 + (1 - 0.043) * Math.pow(1 - cosI, 5);
 
       // Distance from the frame's left edge to E along the beam.
       const left = -center[0] / unit;
@@ -474,7 +509,7 @@ export function PrismHero({
       const first = [rayData[2], rayData[3]] as V2;
       const last = [rayData[(RAYS - 1) * 4 + 2], rayData[(RAYS - 1) * 4 + 3]] as V2;
       const fan = Math.acos(Math.min(1, Math.max(-1, dot(first, last))));
-      const spread = (fan / (RAYS - 1)) * 0.75 + 0.004;
+      const spread = (fan / (RAYS - 1)) * 1.0 + 0.004;
 
       g.uniform2f(loc.uRes, width, height);
       g.uniform2f(loc.uCenter, center[0], center[1]);
@@ -485,14 +520,13 @@ export function PrismHero({
       g.uniform2f(loc.uBack, back[0], back[1]);
       g.uniform2f(loc.uE, E[0], E[1]);
       g.uniform2f(loc.uD0, d0[0], d0[1]);
-      g.uniform2f(loc.uR0, r0[0], r0[1]);
-      g.uniform1f(loc.uFres, fres);
       g.uniform1f(loc.uTime, clock);
       g.uniform1f(loc.uHead, head);
       g.uniform1f(loc.uL0, L0);
       g.uniform1f(loc.uWidth, 0.0042 * (s / 0.34));
       g.uniform1f(loc.uSpread, spread);
       g.uniform1f(loc.uExposure, o.exposure);
+      g.uniform1f(loc.uGlass, o.glass ? 1 : 0);
       g.uniform4fv(loc.uRay, rayData);
       g.uniform4fv(loc.uCol, colData);
       g.drawArrays(g.TRIANGLES, 0, 3);
