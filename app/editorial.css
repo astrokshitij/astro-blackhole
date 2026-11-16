@@ -935,6 +935,64 @@ figcaption {
 .story-photo {
   border-radius: 0 !important;
 }
+/* Home only: the hero's spectrum keeps spreading down the page as you
+   scroll (components/site/spectrum-scroll.tsx). Sections go see-through so
+   the light shows behind them; panel bands stay mostly opaque as resting
+   places. Keep the fan dim: every text colour must still clear 4.5:1. */
+.spectrum-scroll {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: strict;
+  opacity: calc(var(--spectrum-o, 0) * 0.42);
+}
+.spectrum-fan {
+  position: absolute;
+  top: -35vh;
+  right: -14vw;
+  width: 240vmax;
+  height: 240vmax;
+  transform-origin: 100% 0;
+  transform: rotate(calc(-16deg + var(--spectrum-p, 0) * 30deg))
+    scaleX(calc(0.5 + var(--spectrum-p, 0) * 1.1));
+  background: conic-gradient(
+    from 196deg at 100% 0%,
+    transparent 0deg,
+    rgb(255 70 60 / 0.6) 6deg,
+    rgb(255 150 50 / 0.5) 10deg,
+    rgb(245 215 60 / 0.36) 14deg,
+    rgb(70 210 120 / 0.36) 19deg,
+    rgb(50 200 235 / 0.42) 24deg,
+    rgb(70 100 255 / 0.6) 29deg,
+    rgb(140 85 255 / 0.62) 33deg,
+    transparent 40deg
+  );
+  -webkit-mask-image: radial-gradient(circle at 100% 0%, #000 0%, rgb(0 0 0 / 0.6) 30%, transparent 68%);
+  mask-image: radial-gradient(circle at 100% 0%, #000 0%, rgb(0 0 0 / 0.6) 30%, transparent 68%);
+  will-change: transform;
+}
+/* A wider, fainter copy blurs the band edges without a costly blur filter. */
+.spectrum-fan--soft {
+  opacity: 0.45;
+  transform: rotate(calc(-20deg + var(--spectrum-p, 0) * 30deg))
+    scaleX(calc(0.8 + var(--spectrum-p, 0) * 1.4));
+}
+main:has(.spectrum-scroll) .editorial-section {
+  background: transparent;
+}
+main:has(.spectrum-scroll) .writing-band {
+  background: rgb(17 19 25 / 0.88);
+}
+@media (prefers-reduced-motion: reduce) {
+  .spectrum-fan {
+    transform: rotate(-1deg) scaleX(1.05);
+  }
+  .spectrum-fan--soft {
+    transform: rotate(-5deg) scaleX(1.5);
+  }
+}
 footer {
   position: relative;
   z-index: 35;

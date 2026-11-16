@@ -46,6 +46,12 @@ redirect to `/` (see `next.config.ts`).
 - `components/ui/black-hole-hero-section.tsx` — the previous hero (black-hole
   ray marcher). No longer mounted; kept so it can be swapped back in
   `hero-visual.tsx`.
+- `components/site/spectrum-scroll.tsx` — home only: a dim fixed fan of
+  spectrum light that widens and turns as you scroll (transform/opacity only,
+  driven by two CSS variables). Home sections are made transparent for it via
+  `main:has(.spectrum-scroll)`. Measured worst-case text contrast over it is
+  6.3:1; re-measure (text hidden, brightest pixel under each text box) if you
+  brighten it.
 - `app/editorial.css` — editorial layouts, palette and responsive rules.
 - `components/site/enquiry-form.tsx` — Contact enquiry form.
 - `content/blog/*.md` — one file per post.
