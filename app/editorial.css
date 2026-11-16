@@ -952,8 +952,10 @@ figcaption {
   position: absolute;
   top: -35vh;
   right: -14vw;
-  width: 240vmax;
-  height: 240vmax;
+  /* Big enough for the longest ray to reach the far corner, no bigger: the
+     layer is GPU memory on every frame. */
+  width: 170vmax;
+  height: 170vmax;
   transform-origin: 100% 0;
   transform: rotate(calc(-16deg + var(--spectrum-p, 0) * 30deg))
     scaleX(calc(0.5 + var(--spectrum-p, 0) * 1.1));
@@ -969,8 +971,8 @@ figcaption {
     rgb(140 85 255 / 0.62) 33deg,
     transparent 40deg
   );
-  -webkit-mask-image: radial-gradient(circle at 100% 0%, #000 0%, rgb(0 0 0 / 0.6) 30%, transparent 68%);
-  mask-image: radial-gradient(circle at 100% 0%, #000 0%, rgb(0 0 0 / 0.6) 30%, transparent 68%);
+  -webkit-mask-image: radial-gradient(circle at 100% 0%, #000 0, rgb(0 0 0 / 0.6) 100vmax, transparent 165vmax);
+  mask-image: radial-gradient(circle at 100% 0%, #000 0, rgb(0 0 0 / 0.6) 100vmax, transparent 165vmax);
   will-change: transform;
 }
 /* A wider, fainter copy blurs the band edges without a costly blur filter. */
