@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HeroVisual } from "@/components/site/hero-visual";
+import { SpectrumScroll } from "@/components/site/spectrum-scroll";
 import { ButtonLink, Eyebrow, Section } from "@/components/site/ui";
 import { ArrowGlyph, YoutubeGlyph } from "@/components/site/icons";
 import {
@@ -16,6 +17,7 @@ export default function Home() {
   const [essay] = getPosts();
   return (
     <>
+      <SpectrumScroll />
       <section className="home-hero" aria-labelledby="hero-title">
         <div className="hero-art">
           <HeroVisual />

@@ -14,9 +14,10 @@ refracted into a spectrum.
 Palette ("Prism Light", one accent only): obsidian `#08090c` base, soft pearl
 `#f2efe8` text, beam gold `#f0b545` accent (hover `#f8cd78`; `#8a5a00` on the
 light reading theme, which passes 4.5:1 on white). The prism's beam is tinted
-the same warm white, so the gold reads as the colour of the light. The rainbow
-hairline (`.credibility::before`, `footer::before`) is the signature and is used
-in exactly those two places; do not spread rainbow colours elsewhere.
+the same warm white, so the gold reads as the colour of the light. Rainbow colours
+appear in exactly three deliberate places: the hero prism, the 1px hairline
+(`.credibility::before`, `footer::before`), and the home-only scroll fan
+(`spectrum-scroll.tsx`). Do not add rainbow colour anywhere else.
 
 Routes: `/`, `/about`, `/blog`, `/blog/[slug]`, `/contact`, plus 404, sitemap, robots. Old `/workshops*` URLs
 redirect to `/` (see `next.config.ts`).
@@ -46,6 +47,12 @@ redirect to `/` (see `next.config.ts`).
 - `components/ui/black-hole-hero-section.tsx` — the previous hero (black-hole
   ray marcher). No longer mounted; kept so it can be swapped back in
   `hero-visual.tsx`.
+- `components/site/spectrum-scroll.tsx` — home only: a dim fixed fan of
+  spectrum light that widens and turns as you scroll (transform/opacity only,
+  driven by two CSS variables). Home sections are made transparent for it via
+  `main:has(.spectrum-scroll)`. Measured worst-case text contrast over it is
+  6.3:1; re-measure (text hidden, brightest pixel under each text box) if you
+  brighten it.
 - `app/editorial.css` — editorial layouts, palette and responsive rules.
 - `components/site/enquiry-form.tsx` — Contact enquiry form.
 - `content/blog/*.md` — one file per post.
