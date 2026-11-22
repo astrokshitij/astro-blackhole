@@ -1,0 +1,24 @@
+Mode: built-in image_gen tool
+Date: 22 November 2026
+transparent_background: false
+Generated asset: E:/github/astro-blackhole-light-story/public/images/light-story/photoelectric-studio.png
+
+Attached references (in order):
+1. E:/github/astrokshitij/design/light-story/04-personal-story-selected.png
+2. E:/github/astrokshitij/audits/homepage-2026-11-22/01-desktop-hero.jpg
+
+Exact generation prompt:
+
+Use case: photorealistic-natural. Asset type: cinematic scientific still life, dark website background, no text. Create ONE image, landscape 1536 x 1024. The attached first reference establishes the premium optical studio look; the attached second reference establishes an extremely dark atmospheric scientific visual with light fading into black. Match that refined quality, absolutely no cartoon or basic 3D demo look.
+Subject: a photoelectric-effect laboratory apparatus with a narrow cylindrical source at pixel approximately (260,500), a large satin dark-metal photocathode plate at pixel approximately (1080,500), and a delicate collector ring at approximately (800,330). The light source aperture must aim toward the FRONT surface of the plate. The plate faces the source and camera. The collector ring is above-left on the same illuminated side of the metal plate, never behind an opaque plate. Realistic small precision optical mounts, exquisitely fine bevels, glass and satin graphite metal with restrained warm grazing studio highlights. A large, slightly angled rectangular metal plate around x=1000..1340 y=330..700, visible as a real smooth metal surface with no inscriptions.
+Lighting: very deep nearly black background, no room or wall. Minimal almost-black optical surface with only faint, tasteful reflections of the apparatus. No big grey table, no perforated table holes, no bright floor. Beautiful photographic depth of field, dark cinematic physics atmosphere, subtle warm and cool edge highlights, enough contrast that metal surfaces read naturally without glowing. A tiny neutral light on the source aperture may be visible but the beam must be absent or extremely faint because live beam colour will be overlaid later.
+Composition: apparatus concentrated centre-right; ample black upper and left negative space for website copy. Keep the exact source, impact and collector placement easy to identify for live overlays. NO text, labels, UI, people, electron dots, particle trails, interference patterns, colourful light beams, sci-fi HUD, rings of energy, mechanical clutter, logos or watermark. Deliver a studio-quality real scientific apparatus photograph, not an illustration or infographic.
+
+Observed output dimensions: 1536 x 1024
+Observed overlay anchors in output image pixels:
+Source aperture: (505,598), normalized (0.3288,0.5840)
+Metal impact: (1195,562), normalized (0.7780,0.5488)
+Collector centre: (955,393), normalized (0.6217,0.3838)
+
+Original generated image preserved at:
+C:/Users/pkshi/.codex/generated_images/01a203a6-52b3-7573-85f4-9083ba47c7c4/exec-4eb142a5-69b6-4ad8-bb91-d59d471e96f8.png

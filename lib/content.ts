@@ -193,3 +193,58 @@ export const PAGE_COPY = {
       "Instagram DMs are read but pile up quickly. For anything time-sensitive, please use email.",
   },
 };
+
+/** The light tells a visual story; the words remain about Kshitij. */
+export const LIGHT_STORY = {
+  chapters: ["Curiosity", "Communication", "Investigation", "Building"],
+  hero: {
+    label: "Kshitij Pandey / Physicist & science communicator",
+    intro: "I explore difficult ideas, share them, and build things from what I learn.",
+    scroll: "Follow the light. Meet the person behind the questions.",
+  },
+  communication: {
+    label: "01 / In rooms and on screen",
+    title: "I make difficult ideas worth following.",
+    body: "Through videos, talks and stories, I bring physics closer to people. From a room full of questions to a screen full of possibilities.",
+    caption: "Physics, in conversation.",
+  },
+  investigation: {
+    label: "02 / Research & writing",
+    title: "A good question deserves a closer look.",
+    body: "My curiosity takes me from high-energy collisions near naked singularities to the claims we repeat about our universe. I research, write, and put the reasoning on the page.",
+    caption: "Presenting my research on naked singularities.",
+  },
+  building: {
+    label: "03 / Product & AI",
+    title: "I turn questions into things people can use.",
+    body: "Beyond science communication, I build AI products and approach growth through product thinking: understand the person, find the problem, test an idea.",
+    caption: "Working through a question, one page at a time.",
+  },
+  personal: {
+    label: "Behind all of this",
+    title: "A physicist. A storyteller. Still curious.",
+    body: "Physics is where I began. Making difficult ideas understandable is what keeps me going. Whether I’m at a chalkboard, writing an essay, or building a product, I’m usually following a question.",
+    cta: "The story so far",
+  },
+  work: {
+    label: "Selected work / Follow a question further",
+    title: "The ideas become work.",
+    intro: "A few places that curiosity has taken me.",
+  },
+  controls: {
+    pause: "Pause motion", resume: "Resume motion", skip: "Go straight to my work",
+    slit: "Slit spacing", path: "Record which path", wavelength: "Wavelength",
+    why: "A little physics, if you're curious",
+    newRun: "New run", photonCount: "detections", below: "Below emission threshold", above: "Photoelectrons emitted",
+  },
+  physics: {
+    prism: "White light, many colours. Different wavelengths refract by different amounts.",
+    waves: "A new experiment: coherent green light passes through two slits. Overlapping waves produce bright and dark fringes.",
+    quantum: "Individual detections build an interference pattern. Recording the path removes the interference, not the single-slit diffraction.",
+    energy: "A separate photoelectric experiment. Above the surface’s threshold, light can release electrons.",
+    prismDetail: "The rays follow Snell’s law at both prism surfaces. Dispersion is magnified to make the colours visible at this scale. Visible beams represent scattering in a slightly dusty room; light is not visible side-on in a vacuum.",
+    slitDetail: "This is a schematic apparatus with a calculated far-field pattern: wavelength 530 nm, slit width 35 μm, screen distance 1 m. Change slit spacing to change fringe spacing. The apparatus dimensions are exaggerated for visibility.",
+    quantumDetail: "Dots are sampled from the two-slit probability distribution. Switching path recording starts a fresh run with fully distinguishable paths. The new distribution adds the two single-slit intensities. No conscious observer is needed, and a detected photon is absorbed at the screen.",
+    energyDetail: "For this illustrative surface, the work function is 2.5 eV. Photon energy is E = hc/λ. In the ordinary single-photon regime, emission needs a photon above the threshold; extra brightness alone cannot make a lower-energy photon eject an electron. The shown kinetic energy is the maximum, not every electron’s energy.",
+  },
+};
