@@ -25,8 +25,14 @@ This is one camera/world. A foreground cutaway removes the slit assembly for the
 
 Three.js was already installed. The scene uses a local CC0 1K HDR lighting environment with a procedural fallback, existing owner photographs and existing fonts. No new paid service is needed.
 
-DPR is capped at 1 on phones and 1.4 on desktop; animated rendering is approximately 30 fps with a slow-frame resolution reduction. Stationary prism/completed detector states render on demand. Hidden/offscreen scenes stop. Mobile bloom is disabled after a reproduced blank frame.
+DPR is capped at 1 on phones and 1.4 on desktop; animated rendering is approximately 30 fps with a slow-frame resolution reduction. Stationary prism/completed detector states render on demand. Hidden/offscreen scenes stop. Bloom postprocessing is omitted after reproduced blank frames at multiple sizes. Shader-based beam lighting remains.
 
 Pause freezes ambient wave/exposure motion while preserving native scroll. Reduced motion selects complete chapter poses and exposures. WebGL failure keeps HTML content and substitutes a supplied portrait. Physical iPhone validation remains pending.
 
 The original prism renderer and previous engine remain unmounted in the repository. Other routes and the enquiry backend are unchanged. Do not promote this branch until the owner approves the actual live preview.
+
+## Hosted review copy
+
+Vercel rejected the branch deployment with a 24-hour rate limit. A separate owner-private Sites review copy is available at https://astro-kshitij-light-preview-20261123.elated-cake-1410.chatgpt.site . It requires the owner’s ChatGPT sign-in and does not depend on this computer staying online. The Site project ID is appgprj_6b035074e0948191a8ff5eb721dcd187. Its source is E:/github/astrokshitij/previews/light-story-live-20261123, with .openai/hosting.json preserving that identity.
+
+The copy statically exports the same frontend with unoptimized local images. Its contact form is replaced by a link to the real contact page; the registration API and runtime secrets are excluded. Analytics is disabled and robots disallows crawling. Updates must reuse the Site identity and existing audience. The actual domain and main branch are unchanged.

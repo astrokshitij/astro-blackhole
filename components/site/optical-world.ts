@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 import {
@@ -459,10 +458,8 @@ void main(){float x=(vUv.x-.5)*.036;float s=x/sqrt(1.+x*x);float beta=3.14159265
   bench.add(sensor);
   const composer = new EffectComposer(renderer);
   const renderPass = new RenderPass(scene, camera),
-    bloom = new UnrealBloomPass(new THREE.Vector2(800, 600), 0.45, 0.5, 0.62),
     outputPass = new OutputPass();
   composer.addPass(renderPass);
-  composer.addPass(bloom);
   composer.addPass(outputPass);
   let width = 1,
     height = 1,
@@ -659,7 +656,6 @@ void main(){float x=(vUv.x-.5)*.036;float s=x/sqrt(1.+x*x);float beta=3.14159265
     camera.fov = compact ? 44 : 39 + 5 * phase(p, 4, 5);
     camera.updateProjectionMatrix();
     renderer.setViewport(0, 0, width, height);
-    bloom.enabled = !compact;
     composer.render();
     canvas.dataset.scene = String(Math.min(5, Math.floor(p + 0.001)));
     canvas.dataset.detections = String(count);
@@ -688,7 +684,6 @@ void main(){float x=(vUv.x-.5)*.036;float s=x/sqrt(1.+x*x);float beta=3.14159265
       environment.dispose();
       hdri?.dispose();
       composer.dispose();
-      bloom.dispose();
       outputPass.dispose();
       const geometries = new Set<THREE.BufferGeometry>(),
         materials = new Set<THREE.Material>();

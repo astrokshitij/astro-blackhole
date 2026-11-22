@@ -14,7 +14,7 @@ The local production captures in qa/live-3d/ were inspected against the full sto
 
 - Typography/content: existing Jost/Geist, warm personal headings and real owner photos remain central. Desktop content has a reserved left column; mobile content flows below a separate pinned scene. No text sits over the moving field.
 - Spacing: all six anchors and intermediate scroll states were inspected. The document has no horizontal overflow at 320/390 CSS pixels. A separate visual band adapts the concept's full-bleed composition to readable personal content.
-- Colour: obsidian, pearl and gold remain the page palette. Spectral/green light belongs to the experiment. Mobile omits the bloom pass after reproducing and fixing a blank-frame failure.
+- Colour: obsidian, pearl and gold remain the page palette. Spectral/green light belongs to the experiment. All viewports omit the bloom pass after reproducing and fixing a blank-frame failure at multiple sizes.
 - Images: portraits, speaking and research photographs are substantially larger than in the rejected version. The portrait crop includes the face. Writing and product chapters reuse an existing desk photograph.
 - Materials: the geometric prism has weaker face reflections than the photographic storyboard, and the hardware reads more matte. These are visible fidelity gaps, not proof of a finished photographic look. Aesthetic review remains pending; this is not a production sign-off.
 - Scientific imagery: the concept's smooth final hump is replaced by a finite-slit interference distribution and its probability curve. This is an intentional physical correction. Travelling waves remain schematic; the detector uses SI dimensions.
@@ -23,7 +23,7 @@ The local production captures in qa/live-3d/ were inspected against the full sto
 
 - Reserved canvas pixels so personal copy/photos never sit underneath the moving field.
 - Corrected final camera framing and removed the foreground slit assembly in a detector cutaway. It previously blocked the close-up.
-- Disabled mobile bloom after reproducing a blank research frame.
+- Removed the bloom post-effect after reproducing blank research frames at phone and 1280px desktop sizes. Shader-based beam lighting remains.
 - Corrected pointer interception by the closed physics-details container.
 - Made exposure replay reset on each click and rebuild a prefix of detection events.
 - Preserved vertical touch scrolling during horizontal prism interaction.
