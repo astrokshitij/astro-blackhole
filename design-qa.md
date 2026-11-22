@@ -1,6 +1,6 @@
 # Homepage design QA
 
-final result: passed
+final result: rejected by owner; superseded by the 23 November visual audit in docs/light-story-v2/AUDIT.md. The checks below record the previous local technical review, not aesthetic acceptance.
 
 ## Reference and intent
 

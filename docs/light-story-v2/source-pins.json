@@ -1,0 +1,82 @@
+{
+  "checkedOn": "2026-11-23",
+  "purpose": "Read-only source research for a continuous optical homepage storyboard. No third-party source has been integrated into the homepage.",
+  "projects": [
+    {
+      "repository": "pmndrs/examples",
+      "commit": "541599ac5ad913de85796403c1c6927ada3b303c",
+      "paths": [
+        "examples/nextjs-prism/src/App.tsx",
+        "examples/nextjs-prism/src/components/Prism.tsx",
+        "examples/nextjs-prism/src/util.ts",
+        "LICENSE"
+      ],
+      "licence": "MIT",
+      "liveDemoInspected": true,
+      "qualification": "Rendering reference; artistic ray exaggeration must be replaced by calibrated optics."
+    },
+    {
+      "repository": "nicolasadamini/young-double-slit",
+      "commit": "80b2f1fabc63022494749d209191d0adb37abca8",
+      "paths": [
+        "README.md",
+        "minimal.html",
+        "LICENSE"
+      ],
+      "licence": "MIT",
+      "liveDemoInspected": false,
+      "qualification": "Classical wave-field shader, not a quantum photon-detection simulator."
+    },
+    {
+      "repository": "14islands/codrops-scroll-rig-tutorial",
+      "commit": "f903c1ed917bf1c2f8a351aea54f1045db6fc129",
+      "paths": [
+        "src/App.jsx",
+        "src/Image.jsx",
+        "package.json",
+        "LICENSE"
+      ],
+      "licence": "MIT",
+      "liveDemoInspected": false,
+      "qualification": "React 18/Fiber 8 tutorial; port patterns and verify React 19 compatibility."
+    },
+    {
+      "repository": "14islands/r3f-scroll-rig",
+      "paths": [
+        "package.json",
+        "LICENSE"
+      ],
+      "licence": "MIT in LICENSE, ISC in package.json",
+      "qualification": "Licence metadata discrepancy noted; integration not tested."
+    },
+    {
+      "repository": "pmndrs/drei",
+      "paths": [
+        "package.json",
+        "src/web/ScrollControls.tsx"
+      ],
+      "licence": "MIT",
+      "qualification": "Source package peers target React 19/Fiber 9. No version installed in this research step."
+    },
+    {
+      "repository": "sofianebeloucif/Quantum-Diffraction-Simulator",
+      "paths": [
+        "README.md",
+        "js/shaders.js"
+      ],
+      "licence": "README says MIT",
+      "selected": false,
+      "qualification": "Nanometre-to-metre conversion in inspected shader uses 1e-6; requires correction/calibration."
+    },
+    {
+      "repository": "ncase/double-slit",
+      "paths": [
+        "README.md",
+        "quantum.js"
+      ],
+      "licence": "README declares CC0 code/art",
+      "selected": false,
+      "qualification": "2D teaching reference, not cinematic scene or discrete detections."
+    }
+  ]
+}
