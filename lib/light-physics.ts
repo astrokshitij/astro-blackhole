@@ -39,11 +39,12 @@ export function detectionCDF(
   separation = OPTICS.separation,
   recorded = false,
   bins = 2048,
+  halfScreen = OPTICS.halfScreen,
 ) {
   const values = new Float64Array(bins + 1);
   let sum = 0;
   for (let i = 1; i <= bins; i++) {
-    const x = -OPTICS.halfScreen + ((i - 0.5) / bins) * OPTICS.halfScreen * 2;
+    const x = -halfScreen + ((i - 0.5) / bins) * halfScreen * 2;
     sum += slitIntensity(x, separation, recorded);
     values[i] = sum;
   }
@@ -51,7 +52,7 @@ export function detectionCDF(
   return values;
 }
 
-export function sampleDetection(cdf: Float64Array, u: number) {
+export function sampleDetection(cdf: Float64Array, u: number, halfScreen = OPTICS.halfScreen) {
   u = Math.min(1 - Number.EPSILON, Math.max(0, u));
   let lo = 0,
     hi = cdf.length - 1;
@@ -61,7 +62,7 @@ export function sampleDetection(cdf: Float64Array, u: number) {
     else hi = m;
   }
   const fraction = (u - cdf[lo]) / Math.max(Number.EPSILON, cdf[hi] - cdf[lo]);
-  return (((lo + fraction) / (cdf.length - 1)) * 2 - 1) * OPTICS.halfScreen;
+  return (((lo + fraction) / (cdf.length - 1)) * 2 - 1) * halfScreen;
 }
 
 export function seededRandom(seed: number) {

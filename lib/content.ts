@@ -248,3 +248,22 @@ export const LIGHT_STORY = {
     energyDetail: "For this illustrative surface, the work function is 2.5 eV. Photon energy is E = hc/λ. In the ordinary single-photon regime, emission needs a photon above the threshold; extra brightness alone cannot make a lower-energy photon eject an electron. The shown kinetic energy is the maximum, not every electron’s energy.",
   },
 };
+
+/** Personal content paired with the live optical journey. */
+export const LIVE_LIGHT_STORY = {
+  chapters: ["The question", "A different angle", "In conversation", "Research", "Writing", "Things I build"],
+  intro: "I’m Kshitij Pandey. Physicist, science communicator, and someone who follows a question wherever it leads.",
+  scroll: "Follow the light. See what emerges.", rotate: "Turn the prism", loading: "Opening the light…", fallback: "Explore the story below. The live optical scene could not open on this device.",
+  pause: "Pause motion", resume: "Resume motion", reveal: "Reveal the pattern", reset: "Replay the exposure", skip: "Explore my work",
+  scenes: [
+    { id: "curiosity", label: "Kshitij Pandey / Astro Kshitij", title: "The universe is stranger than you think.", body: "I explore difficult ideas, share them, and build things from what I learn.", photo: "/images/portraits/kshitij-bits.jpg", alt: "Kshitij Pandey wearing a physics T-shirt", caption: "Physicist. Storyteller. Still curious.", link: "#work", cta: "Explore my work" },
+    { id: "perspective", label: "01 / A question worth following", title: "A different angle changes the question.", body: "My background is in physics, astrophysics and cosmology. That curiosity carries into everything I do.", photo: "/images/portraits/kshitij-bits.jpg", alt: "Kshitij Pandey", caption: "MSc Physics / Astrophysics & Cosmology", link: "/about", cta: "The story so far" },
+    { id: "communication", label: "02 / In rooms and on screen", title: "I bring physics into the room.", body: "Through talks, videos and conversations, I make difficult ideas easier to follow.", photo: "/images/home/stats-audience.jpg", alt: "Kshitij speaking to an audience", caption: "Physics, in conversation.", link: SOCIALS[0].href, cta: "Watch on YouTube" },
+    { id: "investigation", label: "03 / Research", title: "I stay with difficult questions.", body: "My co-authored research explores high-energy particle collisions near naked singularities.", photo: "/images/story/msc-poster.jpg", alt: "Kshitij presenting his research poster on naked singularities", caption: "A question taken to the research poster.", link: EDITORIAL.explorations[1].href, cta: "Explore my research" },
+    { id: "writing", label: "04 / Writing & investigation", title: "I put the reasoning on the page.", body: "From the speed of light in an ancient text to the fate of the universe, I test the claims and follow the evidence.", photo: "/images/story/msc-research.jpg", alt: "Kshitij working through a question at his desk", caption: "Working through it, one page at a time.", link: "/blog/did-an-ancient-text-know-the-speed-of-light", cta: "Read the investigation" },
+    { id: "building", label: "05 / Product & AI", title: "Curiosity becomes something you can use.", body: "I bring the same habit to products: understand the person, find the problem, and test an idea.", photo: "/images/story/msc-research.jpg", alt: "Kshitij writing at his desk", caption: "Research. Stories. Things I build.", link: EDITORIAL.explorations[3].href, cta: "See my product work" },
+  ],
+  opticalLabels: ["White light. One question.", "One prism. Many wavelengths.", "A narrow green band. A path to follow.", "Two openings. Overlapping waves.", "One detection at a time.", "The pattern emerges."],
+  physicsLabel: "About the light",
+  physics: "This is a live 3D optical scene. The prism solves Snell’s law at both faces; dispersion is enlarged 4× for clarity. The filter selects a narrow green band and the lens collimates it. Ideal coherent illumination is assumed at the double slit; selecting a colour alone does not guarantee coherence. Wavefront spacing, slit geometry and time are schematic. The detector is calculated at 530 nm, 35 μm slit width, 180 μm slit separation and a 1 m screen distance, with a 36 mm field of view. Individual detections sample that intensity, including the diffraction envelope. The final curve represents probability, not physical matter. Detected photons are absorbed at the screen.",
+};

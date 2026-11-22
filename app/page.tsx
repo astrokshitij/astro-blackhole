@@ -6,6 +6,7 @@ import { ArrowGlyph } from "@/components/site/icons";
 import { SITE, SOCIALS, EDITORIAL as COPY, LIGHT_STORY } from "@/lib/content";
 import { getPosts } from "@/lib/posts";
 import "./light-story.css";
+import "./optical-story.css";
 
 export default function Home() {
   const [essay] = getPosts();
