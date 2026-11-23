@@ -119,11 +119,11 @@ export function LightJourney() {
     let rightX = 0;
     let rowTops: number[] = [];
     let rowHeights: number[] = [];
-    let stickyOffset = 84 + window.innerHeight * 0.03;
+    let stickyOffset = 84 + Math.round(window.innerHeight * 0.04);
 
     const measure = () => {
       isDesktop = window.innerWidth >= 900;
-      stickyOffset = 84 + window.innerHeight * 0.03;
+      stickyOffset = 84 + Math.round(window.innerHeight * 0.04);
       rowTops = rows.map((r) => r.offsetTop);
       rowHeights = rows.map((r) => r.offsetHeight);
 
@@ -168,18 +168,20 @@ export function LightJourney() {
         return;
       }
 
-      // Desktop floating visual: smooth scrubbing within chapter, seamless handover between chapters
+      // Desktop floating visual: smooth continuous downward and diagonal journey
       const numRows = rows.length;
       if (numRows === 0 || rowTops.length === 0) return;
 
       // Find current row based on scroll position relative to sticky docking point
       let activeRow = 0;
-      for (let i = 0; i < numRows; i++) {
+      for (let i = 0; i < numRows - 1; i++) {
         const top = rowTops[i] - stickyOffset;
-        if (y >= top) {
+        const nextTop = rowTops[i + 1] - stickyOffset;
+        if (y >= top && y < nextTop) {
           activeRow = i;
-        } else {
           break;
+        } else if (y >= nextTop) {
+          activeRow = i + 1;
         }
       }
 
@@ -192,63 +194,95 @@ export function LightJourney() {
       const fromSlotX = isEven ? rightX : leftX;
       const toSlotX = isEven ? leftX : rightX;
 
-      // Division of row scroll:
-      // 0.00 - 0.52: stationary reading & scrubbing phase
-      // 0.52 - 0.82: handover at cut frame and smooth glide across to next column
-      // 0.82 - 1.00: docked in next column as next chapter arrives
+      const H = window.innerHeight;
+      const baseY = Math.round(H * 0.04);
+
+      // Continuous fluid diagonal descent trajectory:
+      // uStart and uEnd define the graceful flight corridor between alternating column slots,
+      // completely collision-free with words and photos while keeping motion fluid and continuous.
+      const uStart = 0.54;
+      const uEnd = 0.70;
       let posX = fromSlotX;
+      let posY = baseY;
       let activeClipIdx = activeRow;
       let captionIdx = activeRow;
 
-      if (activeRow < numRows - 1 && u > 0.52) {
-        // Handover & glide phase
-        const glideProgress = clamp01((u - 0.52) / (0.82 - 0.52));
-        // Smoothstep easing for physical gliding motion
-        const ease = glideProgress * glideProgress * (3 - 2 * glideProgress);
-        posX = fromSlotX + (toSlotX - fromSlotX) * ease;
+      if (activeRow < numRows - 1) {
+        if (u < uStart) {
+          // Entry & reading: visual docks in row slot, breathes and floats gently downward
+          posX = fromSlotX;
+          const driftY = Math.round(H * 0.04 * (u / uStart));
+          posY = baseY + driftY;
+          activeClipIdx = activeRow;
+          captionIdx = activeRow;
 
-        // Video handover at the shared cut frame:
-        // Video activeRow is at its end frame; video activeRow+1 starts at its identical first frame.
-        activeClipIdx = glideProgress >= 0.05 ? activeRow + 1 : activeRow;
-        captionIdx = glideProgress >= 0.5 ? activeRow + 1 : activeRow;
-
-        // Ensure current video rests at end frame and next video is prepared at frame 0
-        const curVid = desktopVideosRef.current[activeRow];
-        if (curVid && curVid.duration && curVid.readyState >= 1) {
-          curVid.currentTime = Math.max(0, curVid.duration - 0.05);
-        }
-        const nextVid = desktopVideosRef.current[activeRow + 1];
-        if (nextVid && nextVid.duration && nextVid.readyState >= 1) {
-          if (nextVid.currentTime > 0.05) nextVid.currentTime = 0;
-        }
-      } else {
-        // Stationary scrub phase
-        posX = fromSlotX;
-        activeClipIdx = activeRow;
-        captionIdx = activeRow;
-
-        const curVid = desktopVideosRef.current[activeRow];
-        if (curVid && curVid.duration && curVid.readyState >= 1) {
-          if (activeRow === 0) {
-            // Opening clip: played on arrival. If user scrolls down past opening, scrub toward end frame
-            if (u > 0.10) {
-              if (!curVid.paused) curVid.pause();
-              const p = clamp01((u - 0.10) / (0.52 - 0.10));
-              const t = p * Math.max(0, curVid.duration - 0.05);
+          const curVid = desktopVideosRef.current[activeRow];
+          if (curVid && curVid.duration && curVid.readyState >= 1) {
+            if (activeRow === 0 && y <= rowTops[0] - stickyOffset + 50) {
+              // Opening clip: allowed to play through on initial arrival
+            } else {
+              if (activeRow === 0 && !curVid.paused) curVid.pause();
+              const pVid = (u / uStart) * 0.45;
+              const t = pVid * Math.max(0, curVid.duration - 0.04);
               if (Math.abs(curVid.currentTime - t) > 1 / 60) curVid.currentTime = t;
             }
-          } else {
-            // Scrub smoothly with scroll through the chapter
-            const p = clamp01(u / 0.52);
-            const t = p * Math.max(0, curVid.duration - 0.05);
+          }
+        } else if (u < uEnd) {
+          // Diagonal flight phase: glides across while swooping down in a smooth arc
+          const flightP = clamp01((u - uStart) / (uEnd - uStart));
+          const easeX = flightP * flightP * (3 - 2 * flightP);
+          posX = fromSlotX + (toSlotX - fromSlotX) * easeX;
+
+          const downAmp = Math.round(H * 0.06);
+          const returnY = Math.round(H * 0.04 * (1 - flightP));
+          posY = Math.round(baseY + returnY + downAmp * Math.sin(Math.PI * flightP));
+
+          activeClipIdx = activeRow;
+          captionIdx = flightP >= 0.5 ? activeRow + 1 : activeRow;
+
+          const curVid = desktopVideosRef.current[activeRow];
+          if (curVid && curVid.duration && curVid.readyState >= 1) {
+            if (activeRow === 0 && !curVid.paused) curVid.pause();
+            const pVid = 0.45 + flightP * 0.53;
+            const t = pVid * Math.max(0, curVid.duration - 0.04);
             if (Math.abs(curVid.currentTime - t) > 1 / 60) curVid.currentTime = t;
           }
+        } else {
+          // Landed in next column slot: seamless cut-frame handover
+          posX = toSlotX;
+          posY = baseY;
+          activeClipIdx = activeRow + 1;
+          captionIdx = activeRow + 1;
+
+          const curVid = desktopVideosRef.current[activeRow];
+          if (curVid && curVid.duration && curVid.readyState >= 1) {
+            curVid.currentTime = Math.max(0, curVid.duration - 0.04);
+          }
+
+          const nextVid = desktopVideosRef.current[activeRow + 1];
+          if (nextVid && nextVid.duration && nextVid.readyState >= 1) {
+            const pNext = clamp01((u - uEnd) / (1.0 - uEnd)) * 0.15;
+            const t = pNext * Math.max(0, nextVid.duration - 0.04);
+            if (Math.abs(nextVid.currentTime - t) > 1 / 60) nextVid.currentTime = t;
+          }
+        }
+      } else {
+        // Final chapter (Row 5): docked in Row 5's slot
+        posX = fromSlotX;
+        posY = baseY + Math.round(H * 0.04 * u);
+        activeClipIdx = activeRow;
+        captionIdx = activeRow;
+        const curVid = desktopVideosRef.current[activeRow];
+        if (curVid && curVid.duration && curVid.readyState >= 1) {
+          const t = u * Math.max(0, curVid.duration - 0.04);
+          if (Math.abs(curVid.currentTime - t) > 1 / 60) curVid.currentTime = t;
         }
       }
 
-      // Update transform position
+      // Update hardware-accelerated transform position
       if (floatingRef.current) {
         floatingRef.current.style.setProperty("--jr-visual-x", `${posX.toFixed(1)}px`);
+        floatingRef.current.style.setProperty("--jr-visual-y", `${posY.toFixed(1)}px`);
       }
 
       // Update active video visibility

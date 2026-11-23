@@ -142,9 +142,9 @@
 
 @media (min-width: 900px) {
   .jr-row {
-    min-height: 160svh;
+    min-height: 175svh;
     column-gap: 4vw;
-    padding-block: 6vh 20vh;
+    padding-block: 8vh 24vh;
     align-items: start;
   }
   .visual-right {
@@ -166,10 +166,10 @@
     white-space: nowrap;
   }
 
-  /* Desktop floating visual stage: pins below the header and glides between 7/12 slots */
+  /* Desktop floating visual stage: pins below header and glides between 7/12 slots */
   .jr-stage {
     position: sticky;
-    top: calc(84px + 3vh);
+    top: 84px;
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 var(--jr-gutter);
@@ -183,12 +183,12 @@
     left: 0;
     width: var(--jr-visual-w, 58%);
     margin: 0;
-    transform: translate3d(var(--jr-visual-x, 0px), 0, 0);
+    transform: translate3d(var(--jr-visual-x, 0px), var(--jr-visual-y, 0px), 0);
     will-change: transform;
     pointer-events: none;
   }
   .jr-stage .jr-frame {
-    max-height: calc(100svh - 84px - 10vh);
+    max-height: calc(100svh - 84px - 20vh);
     margin-inline: auto;
   }
   .jr-stage .jr-frame video {
