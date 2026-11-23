@@ -23,7 +23,7 @@ export function SpectrumScroll() {
     let range = 1;
 
     const measure = () => {
-      const hero = document.querySelector<HTMLElement>(".home-hero");
+      const hero = document.querySelector<HTMLElement>(".jr-row-0, .home-hero");
       heroH = Math.max(1, hero?.offsetHeight ?? window.innerHeight);
       range = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
     };
