@@ -193,3 +193,112 @@ export const PAGE_COPY = {
       "Instagram DMs are read but pile up quickly. For anything time-sensitive, please use email.",
   },
 };
+
+/**
+ * Home page: one light journey, six moments. Keep each line short; the
+ * picture does most of the talking. `photo` paths are in /public.
+ * `focus` is the CSS object-position for the crop (horizontal vertical).
+ */
+export const LIGHT_JOURNEY = {
+  // House style: no full stops in headlines or lines.
+  chapters: [
+    {
+      id: "journey-start",
+      eyebrow: "Kshitij Pandey / Astro Kshitij",
+      title: "Kshitij means horizon, welcome to mine",
+      // How the opening headline breaks; the last line is gold.
+      titleLines: ["Kshitij means horizon", "Welcome to mine"],
+      line: "The universe is stranger than you think, follow the light",
+      photo: "/images/portraits/kshitij-bits.jpg",
+      alt: "Kshitij Pandey, arms crossed, in a T-shirt printed with Gauss's law",
+      focus: "42% 28%",
+      size: "xl",
+      label: "Sunlight",
+      links: [
+        { label: "Follow the light", href: "#journey-early" },
+        { label: "Watch on YouTube", href: SOCIALS[0].href },
+      ],
+    },
+    {
+      id: "journey-early",
+      eyebrow: "01",
+      title: "Curious since class 2",
+      titleLines: [] as string[],
+      line: "By class 9, that curiosity had its own stall at the science fair: time travel and wormholes",
+      photo: "/images/story/9th-class-exhibition.jpg",
+      alt: "A school science exhibition stand about methods of time travel, space-time warps and wormholes",
+      focus: "50% 60%",
+      size: "xl",
+      label: "Many colours",
+      links: [{ label: "The story so far", href: "/about" }],
+    },
+    {
+      id: "journey-research",
+      eyebrow: "02",
+      title: "Then I picked one hard question",
+      titleLines: [] as string[],
+      line: "In my MSc in astrophysics, I co-authored research on particle collisions near naked singularities",
+      photo: "/images/story/msc-poster.jpg",
+      alt: "Kshitij beside his research poster on particle collisions near naked singularities",
+      focus: "30% 50%",
+      size: "l",
+      label: "One colour gets through",
+      links: [
+        {
+          label: "Read the paper",
+          href: "https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948",
+        },
+      ],
+    },
+    {
+      id: "journey-explain",
+      eyebrow: "03",
+      title: "Ideas travel further when they’re shared",
+      titleLines: [] as string[],
+      line: "On stage and on screen, I make physics something you can picture, not just memorise",
+      photo: "/images/home/stats-audience.jpg",
+      alt: "Kshitij explaining physics to an audience",
+      focus: "50% 12%",
+      size: "l",
+      label: "Two slits",
+      links: [{ label: "Read the essay", href: "/blog/the-trouble-with-making-science-simple" }],
+    },
+    {
+      id: "journey-writing",
+      eyebrow: "04",
+      title: "One claim at a time",
+      titleLines: [] as string[],
+      line: "Myths, viral facts, “ancient science”: I test them and show my working",
+      photo: "/images/story/msc-research.jpg",
+      alt: "Kshitij writing in a notebook beside a laptop showing a plot",
+      focus: "45% 45%",
+      size: "xl",
+      label: "One photon at a time",
+      links: [{ label: "Read an investigation", href: "/blog/did-an-ancient-text-know-the-speed-of-light" }],
+    },
+    {
+      id: "work",
+      eyebrow: "05",
+      title: "The bigger picture keeps growing",
+      titleLines: [] as string[],
+      line: "Today it’s physics, plus growth, AI and building useful products",
+      photo: "/images/story/telescope.jpg",
+      alt: "Kshitij standing beside a large telescope on a hillside",
+      focus: "62% 80%",
+      size: "l",
+      label: "Where it’s likely to land",
+      links: [{ label: "See my product work", href: "https://nextleap.app/portfolio/kshitij-pandey" }],
+    },
+  ],
+  closer: {
+    title: "Let’s talk",
+    line: "Tell me what you’re working on, or what you’re wondering about",
+    href: "/contact",
+  },
+  pause: "Pause motion",
+  resume: "Play motion",
+  fallback: "A still of the light journey. The live scene needs WebGL 2.",
+  notesLabel: "About the light",
+  notes:
+    "These clips are 3D renders made in Blender from the same calculations the site's tests check, not a live simulation. Sunlight reflects off a flat mirror into a glass prism; each colour is refracted at both faces with Snell's law, with the spread enlarged seven times so it is visible. A pinhole passes a narrow green band and a lens collimates it, which prepares the light to be coherent enough for the slits; picking a colour alone would not do that. Two vertical slits give vertical bright and dark bands. The detector pattern is calculated for 530 nm light, 35 µm slits 180 µm apart and a screen 1 m away (36 mm across), including the single-slit envelope. Each dot is one detection drawn from that distribution; a detected photon is absorbed. The curve is the probability, drawn as a guide. Wave spacing, sizes and timing are schematic, and the visible beams stand for light scattered by dust: in a vacuum you would not see a beam from the side.",
+};
