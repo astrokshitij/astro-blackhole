@@ -42,15 +42,26 @@
   font-family: var(--font-jost), system-ui, sans-serif;
   font-weight: 500;
   color: var(--lj-pearl);
-  letter-spacing: -0.025em;
-  line-height: 1.02;
-  font-size: clamp(2.35rem, 4.1vw, 4.25rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-size: clamp(2.35rem, 3.9vw, 4rem);
   margin: 0;
   text-wrap: balance;
 }
+/* Rhythm: short headlines go big, longer ones stay a step down. */
+.lj-title-xl {
+  font-size: clamp(2.7rem, 5.2vw, 5.6rem);
+  line-height: 0.96;
+}
 .lj-chapter-0 .lj-title {
-  font-size: clamp(2.9rem, 5.4vw, 5.9rem);
-  line-height: 0.98;
+  font-size: clamp(3rem, 5.6vw, 6.1rem);
+  line-height: 0.95;
+}
+.lj-title [aria-hidden] > span {
+  display: block;
+}
+.lj-title-last {
+  color: var(--lj-gold);
 }
 .lj-line {
   margin: 1.25rem 0 0;
@@ -73,12 +84,11 @@
   min-height: 44px;
   font-size: 0.98rem;
   color: var(--lj-pearl);
-  border-bottom: 1px solid rgb(242 239 232 / 0.32);
+  border-bottom: 1px solid transparent;
   transition: color 0.2s, border-color 0.2s, gap 0.2s;
 }
 .lj-link:first-child {
   color: var(--lj-gold);
-  border-bottom-color: rgb(240 181 69 / 0.55);
 }
 .lj-link:hover {
   color: #f8cd78;
@@ -90,17 +100,25 @@
   margin: 0;
   z-index: 1;
   overflow: hidden;
-  /* Feather every edge into the dark so the photo lives in the scene. */
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
-    linear-gradient(to bottom, transparent, #000 10%, #000 84%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
-    linear-gradient(to bottom, transparent, #000 10%, #000 84%, transparent);
-  mask-composite: intersect;
+  border-radius: 2px;
+  background: #111318;
+  box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.9);
 }
+/* One grade for every photo so daylight and stage shots sit in the dark scene. */
 .lj-photo img {
   object-fit: cover;
-  filter: saturate(0.92) contrast(1.03);
+  filter: saturate(0.78) contrast(1.06) brightness(0.9) sepia(0.1);
+}
+.lj-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgb(242 239 232 / 0.08);
+  background: linear-gradient(180deg, transparent 60%, rgb(8 9 12 / 0.28));
+}
+.lj-fade {
+  will-change: opacity, transform;
 }
 .lj-stage {
   position: absolute;
@@ -137,9 +155,9 @@
     margin-right: max(5vw, calc((100vw - 1440px) / 2 + 72px));
   }
   .lj-photo {
-    margin-top: 2rem;
-    aspect-ratio: 16 / 10;
-    max-height: 40vh;
+    margin-top: 2.25rem;
+    aspect-ratio: 3 / 2;
+    max-height: 38vh;
   }
   .lj-stage {
     top: 0;
@@ -155,25 +173,44 @@
   }
   /* Opening: portrait bleeds in from the left edge beside the headline. */
   .lj-chapter-0 .lj-copy {
-    margin-left: max(24vw, calc((100vw - 1440px) / 2 + 330px));
-    width: min(30vw, 470px);
+    margin-left: max(26vw, calc((100vw - 1440px) / 2 + 370px));
+    width: min(36vw, 600px);
+    max-width: none;
+  }
+  .lj-chapter-0 .lj-title {
+    font-size: clamp(2.8rem, 4.9vw, 5.4rem);
   }
   .lj-chapter-0 .lj-photo {
     position: absolute;
     left: 0;
     top: 84px;
     bottom: 0;
-    width: 27vw;
+    width: 23vw;
+    border-radius: 0;
+    box-shadow: none;
     max-height: none;
     margin: 0;
     aspect-ratio: auto;
-    -webkit-mask-image: linear-gradient(to right, #000 55%, transparent),
+    -webkit-mask-image: linear-gradient(to right, #000 50%, transparent),
       linear-gradient(to bottom, #000 62%, transparent);
-    mask-image: linear-gradient(to right, #000 55%, transparent),
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, #000 50%, transparent),
       linear-gradient(to bottom, #000 62%, transparent);
+    mask-composite: intersect;
   }
   .lj-chapter-0 .lj-stage {
-    left: 52%;
+    left: 58%;
+  }
+  /* The payoff: give the pattern most of the screen. */
+  .lj-chapter-5 .lj-stage {
+    right: 38%;
+  }
+  .lj-chapter-5 .lj-copy,
+  .lj-chapter-5 .lj-photo {
+    width: min(32vw, 470px);
+  }
+  .lj-chapter-5 .lj-photo {
+    max-height: 30vh;
   }
 }
 
@@ -185,7 +222,13 @@
     padding: 108px 20px 24px;
   }
   .lj-chapter + .lj-chapter {
-    padding-top: 48px;
+    padding-top: 40px;
+  }
+  .lj-line {
+    margin-top: 0.8rem;
+  }
+  .lj-links {
+    margin-top: 0.6rem;
   }
   .lj-copy {
     order: 1;
@@ -193,15 +236,14 @@
   .lj-stage {
     order: 2;
     position: relative;
-    height: 50svh;
-    min-height: 300px;
+    height: 42svh;
+    min-height: 260px;
     margin: 0 -20px;
   }
   .lj-photo {
     order: 3;
-    width: calc(100% + 40px);
-    margin: 0 -20px;
-    aspect-ratio: 4 / 3;
+    width: 100%;
+    aspect-ratio: 16 / 10;
   }
   .lj-chapter-0 .lj-stage {
     height: 46svh;
@@ -210,13 +252,20 @@
     aspect-ratio: 1 / 1;
     width: 78%;
     margin: -14svh 0 0 -20px;
+    border-radius: 0;
+    box-shadow: none;
     -webkit-mask-image: linear-gradient(to right, #000 60%, transparent),
       linear-gradient(to bottom, transparent, #000 22%, #000 70%, transparent);
+    -webkit-mask-composite: source-in;
     mask-image: linear-gradient(to right, #000 60%, transparent),
       linear-gradient(to bottom, transparent, #000 22%, #000 70%, transparent);
+    mask-composite: intersect;
   }
   .lj-title {
-    font-size: clamp(2.1rem, 9.2vw, 3rem);
+    font-size: clamp(2rem, 8.6vw, 2.8rem);
+  }
+  .lj-title-xl {
+    font-size: clamp(2.3rem, 10.4vw, 3.3rem);
   }
   .lj-chapter-0 .lj-title {
     font-size: clamp(2.6rem, 12.2vw, 3.9rem);
@@ -227,26 +276,110 @@
   position: relative;
   z-index: 2;
   padding-bottom: 4rem;
+  background: #08090c;
+  box-shadow: 0 0 0 100vmax #08090c;
+  clip-path: inset(0 -100vmax);
 }
 .lj-pause {
   position: fixed;
-  right: 16px;
+  left: 16px;
   bottom: 16px;
   z-index: 40;
-  min-height: 40px;
-  padding: 0 14px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
   border-radius: 999px;
-  border: 1px solid rgb(242 239 232 / 0.22);
-  background: rgb(8 9 12 / 0.72);
-  backdrop-filter: blur(10px);
+  border: 1px solid rgb(242 239 232 / 0.2);
+  background: rgb(8 9 12 / 0.6);
+  color: rgb(242 239 232 / 0.8);
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.lj-pause svg {
+  width: 14px;
+  height: 14px;
+}
+.lj-pause:hover,
+.lj-pause:focus-visible {
+  opacity: 1;
+}
+
+/* Labels pinned to the objects in the scene. */
+.lj-labels {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.lj.lj-still .lj-labels,
+.lj.lj-loading .lj-labels {
+  display: none;
+}
+.lj-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  white-space: nowrap;
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgb(242 239 232 / 0.78);
+  color: rgb(242 239 232 / 0.72);
+  translate: -50% -140%;
+  text-shadow: 0 0 12px rgb(8 9 12 / 0.95);
 }
-.lj-pause:hover {
+.lj-label::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 6px);
+  width: 1px;
+  height: 14px;
+  background: rgb(242 239 232 / 0.35);
+}
+
+/* Closer: one big invitation after the pattern. */
+.lj-closer {
+  position: relative;
+  z-index: 2;
+  padding-block: 22vh 12vh;
+  background: linear-gradient(180deg, rgb(8 9 12 / 0), #08090c 38%);
+}
+.lj-closer-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
   color: var(--lj-pearl);
+  transition: color 0.25s;
+}
+.lj-closer-title {
+  font-family: var(--font-jost), system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  font-size: clamp(3.6rem, 13vw, 13rem);
+}
+.lj-closer-arrow {
+  width: clamp(2rem, 6vw, 5.5rem);
+  height: clamp(2rem, 6vw, 5.5rem);
+  color: var(--lj-gold);
+  transition: transform 0.25s;
+}
+.lj-closer-link:hover {
+  color: #f8cd78;
+}
+.lj-closer-link:hover .lj-closer-arrow {
+  transform: translateX(0.15em);
+}
+.lj-closer-line {
+  margin-top: 1.4rem;
+  max-width: 34rem;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgb(242 239 232 / 0.72);
 }
 .lj-notes {
   max-width: 44rem;
@@ -269,7 +402,9 @@
   margin-top: 0.5rem;
 }
 @media (prefers-reduced-motion: reduce) {
-  .lj-link {
+  .lj-link,
+  .lj-closer-link,
+  .lj-closer-arrow {
     transition: none;
   }
 }

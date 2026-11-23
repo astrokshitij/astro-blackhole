@@ -251,7 +251,7 @@ vec3 benchLight(vec2 p, float obliq, bool inGlass) {
   d = segDist(p, vec2(LENS_X, PIN_Y), vec2(SLIT_X, PIN_Y), h);
   float band = smoothstep(0.24, 0.16, d);
   L += GREEN * (band * 0.22 + glow(d, 0.05 / o) * 0.25) * reveal(S_LENS + h * (S_SLIT - S_LENS));
-  L += GREEN * 2.0 * exp(-dot(p - vec2(CARD_X, PIN_Y), p - vec2(CARD_X, PIN_Y)) / 0.0012) * reveal(S_CARD);
+  L += GREEN * 2.0 * exp(-dot(p - vec2(CARD_X, PIN_Y), p - vec2(CARD_X, PIN_Y)) / 0.0012) * smoothstep(S_CARD + 0.02, S_CARD + 0.12, uFront);
   return L * gain;
 }
 
@@ -302,7 +302,7 @@ vec3 bevelNormal(vec3 p, int face, float sgn) {
   for (int j = 0; j < 5; j++) {
     if (j == face) continue;
     float d = PL[j].w - dot(PL[j].xyz, p);
-    float m = 1.0 - smoothstep(0.0, 0.028, d);
+    float m = 1.0 - smoothstep(0.0, 0.042, d);
     acc += PL[j].xyz * m * m * 1.4;
   }
   return normalize(acc) * sgn;
@@ -428,14 +428,16 @@ vec3 screenColor(vec3 p) {
 vec3 cardFace(vec3 p) {
   // Illumination by the spectrum where it lands, in card coordinates.
   vec3 q = cardLocal(p);
-  vec3 c = vec3(0.012);
+  // Matte pearl face: the spectrum shows as a crisp band, with soft spill.
+  vec3 c = vec3(0.05, 0.048, 0.045);
   vec3 L = vec3(0.0);
   for (int i = 0; i < N; i++) {
     float dy = q.y - RH[i];
-    L += RC[i] * exp(-dy * dy / 0.0011 - q.z * q.z / 0.0016);
+    L += RC[i] * exp(-dy * dy / 0.0009 - q.z * q.z / 0.0045);
   }
   float on = reveal(S_CARD - 0.02);
-  return c + L * (4.0 / float(N)) * on;
+  float spill = exp(-pow(q.y - PIN_Y, 2.0) / 0.03 - q.z * q.z / 0.05);
+  return c * (0.4 + 2.2 * spill * on) + L * (5.5 / float(N)) * on;
 }
 
 vec3 metal(vec3 p, vec3 n, vec3 rd, float rough) {
@@ -520,7 +522,11 @@ vec3 shadePrism(vec3 ro, vec3 rd, float tN, int iN, bool full) {
 
 vec3 shadeObject(vec3 p, vec3 rd, float mat, bool full) {
   vec3 n = objNormal(p);
-  if (mat < 1.5) return metal(p, n, rd, 0.25);
+  // Green light from the beam catches nearby metal edges.
+  float axis = length(p.yz - vec2(PIN_Y, 0.0));
+  float greenOn = reveal(S_CARD + 0.3) * step(CARD_X, p.x) * step(p.x, DET_X + 0.1);
+  vec3 spillG = GREEN * 0.05 * exp(-axis * axis / 0.06) * greenOn * (0.4 + 0.6 * max(dot(n, vec3(-1.0, 0.0, 0.0)), 0.0));
+  if (mat < 1.5) return metal(p, n, rd, 0.25) + spillG;
   if (mat < 2.5) {
     vec3 q = cardLocal(p);
     vec3 m = metal(p, n, rd, 0.6) * 0.5;
@@ -551,7 +557,7 @@ float maskAt(vec2 frag) {
     vec4 r = uMask[i];
     vec2 c = r.xy + r.zw * 0.5;
     vec2 d = abs(frag - c) - r.zw * 0.5;
-    float feather = 28.0 * uPx;
+    float feather = 40.0 * uPx;
     float inside = 1.0 - smoothstep(0.0, feather, max(d.x, d.y));
     m = max(m, inside);
   }
@@ -615,7 +621,7 @@ void main() {
       tr = ro2.x;
     } else if (tr < 1e8) {
       vec3 hp = fp + r * tr;
-      refl = shadePrism(fp, r, tr, pi, false) * exp(-hp.y * 2.0);
+      refl = shadePrism(fp, r, tr, pi, false) * exp(-hp.y * 2.6) * 0.45;
     }
     float tz = -fp.z / r.z;
     if (tz > 0.0 && tz < tr) {
@@ -640,7 +646,7 @@ void main() {
   if (tf > 0.0 && tf < tHit) light += fieldLight((ro + rd * tf).xz);
 
   float m = maskAt(frag);
-  vec3 col = solid * (1.0 - 0.6 * m) + light * (1.0 - 0.92 * m);
+  vec3 col = solid * (1.0 - 0.65 * m) + light * (1.0 - 0.985 * m);
   // Gentle filmic shoulder, then display gamma.
   col = col / (1.0 + col * 0.55);
   col = pow(max(col, 0.0), vec3(1.0 / 2.2));

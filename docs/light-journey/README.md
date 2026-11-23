@@ -65,7 +65,7 @@ apparatus by 60%.
 
 ## Verification actually performed (23 Nov 2026)
 
-- `npm run build`, `npx tsc --noEmit`, `eslint` on the new files, and
+- `npm run build`, `npx tsc --noEmit`, `eslint .`, and
   `node --test scripts/*.test.mjs` (14 passing) all pass.
 - Screenshots in `qa/light-journey/` from the production build in headless
   Chromium with **software** WebGL (SwiftShader): 1440, 1024, 390 and 320 px,
@@ -75,6 +75,36 @@ apparatus by 60%.
 - **Not yet done:** a real GPU, real Safari or a real iPhone. Frame rate on
   phones is unmeasured; the governor exists for that reason. Shader compile
   time on older phones is unmeasured.
+
+## Design review round (23 Nov 2026)
+
+An independent critical design review of the first build raised 15 issues.
+Applied:
+- Light no longer shows through words: each chapter's words and photo are
+  masked as one block and light behind them is dimmed by about 98%.
+- Desktop chapters fade out before the next fades in, so mid-transition frames
+  show only the scene. Phones no longer glide the camera at all: each
+  experiment stays in its own band, scrolls with the page and swaps while out
+  of sight, so it never crosses a headline.
+- Shorter copy: one line of 7 to 12 words, one link per chapter (two on the
+  opening), number-only labels. Opening headline breaks on three lines with
+  "you think." in gold. Short headlines go a size up for rhythm.
+- Photos: crisp 2px-radius frames with one shared grade instead of feathered
+  vignettes; the opening portrait still fades into the dark.
+- Prism lengthened (depth 1.6) so it reads as a bar prism, softer bevels,
+  dimmer reflection. Card has a pale face so the rainbow visibly lands on it.
+  Green light catches the metal props. Green no longer appears before its
+  chapter.
+- Small mono labels pinned to each object ("Sunlight", "Many colours", "One
+  colour gets through", "Two slits", "One photon at a time", "Where it is
+  likely to land"), hidden if they would touch words or photos.
+- The ending gives the pattern most of the screen, followed by a full-width
+  "Let's talk." closer. The pause control is a small icon button.
+
+Not applied, on purpose: changing the opening headline (the owner kept it),
+tiny inset photos (the brief rules out a tiny avatar as the main photo),
+dropping the growth/AI line from the ending (part of the agreed story), and a
+site-wide header redesign (out of scope).
 
 ## Earlier attempts
 
