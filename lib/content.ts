@@ -200,14 +200,15 @@ export const PAGE_COPY = {
  * `focus` is the CSS object-position for the crop (horizontal vertical).
  */
 export const LIGHT_JOURNEY = {
+  // House style: no full stops in headlines or lines.
   chapters: [
     {
       id: "journey-start",
-      eyebrow: "Kshitij Pandey",
-      title: "The universe is stranger than you think.",
-      // How the opening headline breaks on wide screens.
-      titleLines: ["The universe is", "stranger than", "you think."],
-      line: "Physics is where I began. Curiosity connects the rest.",
+      eyebrow: "Kshitij Pandey / Astro Kshitij",
+      title: "Kshitij means horizon, welcome to mine",
+      // How the opening headline breaks; the last line is gold.
+      titleLines: ["Kshitij means horizon", "Welcome to mine"],
+      line: "The universe is stranger than you think, follow the light",
       photo: "/images/portraits/kshitij-bits.jpg",
       alt: "Kshitij Pandey, arms crossed, in a T-shirt printed with Gauss's law",
       focus: "42% 28%",
@@ -221,9 +222,9 @@ export const LIGHT_JOURNEY = {
     {
       id: "journey-early",
       eyebrow: "01",
-      title: "The questions started early.",
+      title: "Curious since class 2",
       titleLines: [] as string[],
-      line: "Ninth grade: a science exhibition on wormholes.",
+      line: "By class 9, that curiosity had its own stall at the science fair: time travel and wormholes",
       photo: "/images/story/9th-class-exhibition.jpg",
       alt: "A school science exhibition stand about methods of time travel, space-time warps and wormholes",
       focus: "50% 60%",
@@ -234,9 +235,9 @@ export const LIGHT_JOURNEY = {
     {
       id: "journey-research",
       eyebrow: "02",
-      title: "Then the questions got harder.",
+      title: "Then I picked one hard question",
       titleLines: [] as string[],
-      line: "Co-authored research on particle collisions near naked singularities.",
+      line: "In my MSc in astrophysics, I co-authored research on particle collisions near naked singularities",
       photo: "/images/story/msc-poster.jpg",
       alt: "Kshitij beside his research poster on particle collisions near naked singularities",
       focus: "30% 50%",
@@ -252,9 +253,9 @@ export const LIGHT_JOURNEY = {
     {
       id: "journey-explain",
       eyebrow: "03",
-      title: "What does an explanation make you imagine?",
+      title: "Ideas travel further when they’re shared",
       titleLines: [] as string[],
-      line: "On stage and on screen: ideas that feel real, not just simpler.",
+      line: "On stage and on screen, I make physics something you can picture, not just memorise",
       photo: "/images/home/stats-audience.jpg",
       alt: "Kshitij explaining physics to an audience",
       focus: "50% 12%",
@@ -265,9 +266,9 @@ export const LIGHT_JOURNEY = {
     {
       id: "journey-writing",
       eyebrow: "04",
-      title: "Test the claim. Show the working.",
+      title: "One claim at a time",
       titleLines: [] as string[],
-      line: "When a claim spreads, I check it and show the reasoning.",
+      line: "Myths, viral facts, “ancient science”: I test them and show my working",
       photo: "/images/story/msc-research.jpg",
       alt: "Kshitij writing in a notebook beside a laptop showing a plot",
       focus: "45% 45%",
@@ -278,20 +279,20 @@ export const LIGHT_JOURNEY = {
     {
       id: "work",
       eyebrow: "05",
-      title: "What are you working on?",
+      title: "The bigger picture keeps growing",
       titleLines: [] as string[],
-      line: "Physics, and now growth, AI and useful products too.",
+      line: "Today it’s physics, plus growth, AI and building useful products",
       photo: "/images/story/telescope.jpg",
       alt: "Kshitij standing beside a large telescope on a hillside",
       focus: "62% 80%",
-      size: "xl",
-      label: "Where it is likely to land",
+      size: "l",
+      label: "Where it’s likely to land",
       links: [{ label: "See my product work", href: "https://nextleap.app/portfolio/kshitij-pandey" }],
     },
   ],
   closer: {
-    title: "Let’s talk.",
-    line: "A collaboration, a correction, or a question about the universe.",
+    title: "Let’s talk",
+    line: "Tell me what you’re working on, or what you’re wondering about",
     href: "/contact",
   },
   pause: "Pause motion",
@@ -299,5 +300,5 @@ export const LIGHT_JOURNEY = {
   fallback: "A still of the light journey. The live scene needs WebGL 2.",
   notesLabel: "About the light",
   notes:
-    "A live scene, ray-traced in your browser. Sunlight reflects off a flat mirror into a glass prism; each colour is refracted at both faces with Snell's law, with dispersion enlarged four times so the spectrum is visible. A pinhole passes a narrow green band and a lens collimates it, which is how the light is prepared to be coherent enough for the slits; picking a colour alone would not do that. Two vertical slits give vertical bright and dark bands. The detector pattern is calculated for 530 nm light, 35 µm slits 180 µm apart and a screen 1 m away (36 mm across), including the single-slit envelope. Each dot is one detection drawn from that distribution; a detected photon is absorbed. The final curve is the probability, drawn as a guide. Wave spacing, sizes and timing are schematic, and the visible beams stand for light scattered by dust: in a vacuum you would not see a beam from the side.",
+    "A live scene, ray-traced in your browser. Sunlight reflects off a flat mirror into a glass prism; each colour is refracted at both faces with Snell's law, with dispersion enlarged seven times so the spectrum is visible. A pinhole passes a narrow green band and a lens collimates it, which is how the light is prepared to be coherent enough for the slits; picking a colour alone would not do that. Two vertical slits give vertical bright and dark bands. The detector pattern is calculated for 530 nm light, 35 µm slits 180 µm apart and a screen 1 m away (36 mm across), including the single-slit envelope. Each dot is one detection drawn from that distribution; a detected photon is absorbed. The final curve is the probability, drawn as a guide. Wave spacing, sizes and timing are schematic, and the visible beams stand for light scattered by dust: in a vacuum you would not see a beam from the side.",
 };

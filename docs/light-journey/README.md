@@ -39,7 +39,7 @@ apparatus by 60%.
   white light enters well away from grazing. Standing flat on the floor, a
   level green beam needs 84.6° incidence; that was rejected.
 - Refraction is solved at both faces for 24 wavelengths (Cauchy index).
-  Dispersion is enlarged 4× so the spectrum is visible.
+  Dispersion is enlarged 7× so the spectrum is visible.
 - A pinhole then a lens prepare the light for the slits. Picking a colour alone
   does not make light coherent; the notes on the page say so.
 - Exactly two vertical slits, separated horizontally; vertical bands on the

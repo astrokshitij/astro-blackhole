@@ -15,7 +15,7 @@
  */
 import { refract2, wavelengthRGB, type V2 } from "./light-physics.ts";
 
-export const DISPERSION_MAGNIFICATION = 4;
+export const DISPERSION_MAGNIFICATION = 7;
 export const PRISM_SIDE = 1.6;
 export const PRISM_DEPTH = 1.6;
 export const PRISM_HEIGHT = (PRISM_SIDE * Math.sqrt(3)) / 2;
