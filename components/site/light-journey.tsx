@@ -144,7 +144,7 @@ export function LightJourney() {
                   </SmartLink>
                 ))}
               </div>
-              <figure className="jr-photo">
+              <figure className="jr-photo" style={{ "--ar": c.ratio } as React.CSSProperties}>
                 <Image
                   src={c.photo}
                   alt={c.alt}

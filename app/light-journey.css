@@ -84,7 +84,8 @@
 .jr-photo {
   position: relative;
   margin: 1.6rem 0 0;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: var(--ar, 1.5);
+  width: min(100%, calc(50svh * var(--ar, 1.5)));
   overflow: hidden;
   border-radius: 2px;
   background: #111318;
@@ -151,8 +152,7 @@
     order: -1;
   }
   .jr-photo {
-    max-height: 34vh;
-    width: 100%;
+    width: min(100%, calc(44svh * var(--ar, 1.5)));
   }
   .jr-row-0 .jr-title {
     font-size: clamp(2.3rem, 3.5vw, 4.1rem);
@@ -177,9 +177,6 @@
   }
   .jr-visual {
     margin: 1.4rem calc(-1 * var(--jr-gutter)) 0;
-  }
-  .jr-photo {
-    aspect-ratio: 16 / 10;
   }
   .jr-title {
     font-size: clamp(2rem, 8.6vw, 2.8rem);

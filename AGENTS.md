@@ -114,7 +114,7 @@ redirect to `/` (see `next.config.ts`).
    variable only if email notifications are wanted.
 2. **Contact is a gmail address.** Set up mail on the domain, then change
    `SITE.email` in one place.
-3. **`public/images/home/tedx/*.jpg` are unused** since the speaking section
+3. **`public/images/home/tedx/3.jpg` is now the opening photo; 1 and 2 are unused** since the speaking section
    was removed. Delete them if the repository size matters.
 4. **Credential years need owner review.** The legacy content list says 2023,
    while an About photo caption says 2024. New summaries omit years.

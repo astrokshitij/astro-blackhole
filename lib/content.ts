@@ -197,7 +197,8 @@ export const PAGE_COPY = {
 /**
  * Home page: one light journey, six moments. Keep each line short; the
  * picture does most of the talking. `photo` paths are in /public.
- * `focus` is the CSS object-position for the crop (horizontal vertical).
+ * `ratio` is the frame's width / height (match the photo so nothing important is cut);
+ * `focus` is the CSS object-position for any crop that remains (horizontal vertical).
  */
 export const LIGHT_JOURNEY = {
   // House style: no full stops in headlines or lines.
@@ -209,9 +210,10 @@ export const LIGHT_JOURNEY = {
       // How the opening headline breaks; the last line is gold.
       titleLines: ["Kshitij means horizon", "Welcome to mine"],
       line: "The universe is stranger than you think, follow the light",
-      photo: "/images/portraits/kshitij-bits.jpg",
-      alt: "Kshitij Pandey, arms crossed, in a T-shirt printed with Gauss's law",
-      focus: "42% 28%",
+      photo: "/images/home/tedx/3.jpg",
+      alt: "Kshitij Pandey speaking on the TEDx stage in a grey blazer",
+      ratio: 2993 / 2694, // the whole frame, uncropped
+      focus: "30% 15%",
       size: "xl",
       label: "Sunlight",
       links: [
@@ -227,6 +229,7 @@ export const LIGHT_JOURNEY = {
       line: "By class 9, that curiosity had its own stall at the science fair: time travel and wormholes",
       photo: "/images/story/9th-class-exhibition.jpg",
       alt: "A school science exhibition stand about methods of time travel, space-time warps and wormholes",
+      ratio: 4 / 3,
       focus: "50% 60%",
       size: "xl",
       label: "Many colours",
@@ -240,6 +243,7 @@ export const LIGHT_JOURNEY = {
       line: "In my MSc in astrophysics, I co-authored research on particle collisions near naked singularities",
       photo: "/images/story/msc-poster.jpg",
       alt: "Kshitij beside his research poster on particle collisions near naked singularities",
+      ratio: 4 / 3,
       focus: "30% 50%",
       size: "l",
       label: "One colour gets through",
@@ -258,6 +262,7 @@ export const LIGHT_JOURNEY = {
       line: "On stage and on screen, I make physics something you can picture, not just memorise",
       photo: "/images/home/stats-audience.jpg",
       alt: "Kshitij explaining physics to an audience",
+      ratio: 1,
       focus: "50% 12%",
       size: "l",
       label: "Two slits",
@@ -271,6 +276,7 @@ export const LIGHT_JOURNEY = {
       line: "Myths, viral facts, “ancient science”: I test them and show my working",
       photo: "/images/story/msc-research.jpg",
       alt: "Kshitij writing in a notebook beside a laptop showing a plot",
+      ratio: 4 / 3,
       focus: "45% 45%",
       size: "xl",
       label: "One photon at a time",
@@ -284,7 +290,8 @@ export const LIGHT_JOURNEY = {
       line: "Today it’s physics, plus growth, AI and building useful products",
       photo: "/images/story/telescope.jpg",
       alt: "Kshitij standing beside a large telescope on a hillside",
-      focus: "62% 80%",
+      ratio: 1,
+      focus: "50% 70%",
       size: "l",
       label: "Where it’s likely to land",
       links: [{ label: "See my product work", href: "https://nextleap.app/portfolio/kshitij-pandey" }],
