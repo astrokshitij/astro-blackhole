@@ -52,6 +52,7 @@ export function LightJourney() {
   const journeyRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const floatingRef = useRef<HTMLElement>(null);
+  const captionRef = useRef<HTMLElement>(null);
   const captionNumRef = useRef<HTMLSpanElement>(null);
   const captionLabelRef = useRef<HTMLSpanElement>(null);
 
@@ -154,15 +155,17 @@ export function LightJourney() {
       const y = window.scrollY;
 
       if (!isDesktop) {
-        // Mobile scrubber: clips scrub as each row crosses the middle of the screen
+        // Mobile scrubber: smoothstep curve eliminates thumb jitter as rows cross reading area
         const H = window.innerHeight;
-        mobileVideosRef.current.forEach((v) => {
-          if (!v || !v.duration || v.readyState < 1 || v.dataset.clip === "0") return;
+        mobileVideosRef.current.forEach((v, idx) => {
+          if (!v || !v.duration || v.readyState < 1) return;
+          if (idx === 0 && v.currentTime > 0 && !v.paused) return; // let clip 0 play once on arrival
           const r = v.getBoundingClientRect();
-          const start = H * 0.92;
-          const end = H * 0.4 - r.height / 2;
+          const start = H * 0.95;
+          const end = H * 0.25;
           const p = clamp01((start - r.top) / (start - end));
-          const t = p * Math.max(0, v.duration - 0.05);
+          const smoothP = p * p * (3 - 2 * p);
+          const t = smoothP * Math.max(0, v.duration - 0.04);
           if (Math.abs(v.currentTime - t) > 1 / 60) v.currentTime = t;
         });
         return;
@@ -204,6 +207,9 @@ export function LightJourney() {
       const uEnd = 0.70;
       let posX = fromSlotX;
       let posY = baseY;
+      let tilt = 0;
+      let scale = 1;
+      let opacity = 1;
       let activeClipIdx = activeRow;
       let captionIdx = activeRow;
 
@@ -213,6 +219,9 @@ export function LightJourney() {
           posX = fromSlotX;
           const driftY = Math.round(H * 0.04 * (u / uStart));
           posY = baseY + driftY;
+          tilt = 0;
+          scale = 1;
+          opacity = 1;
           activeClipIdx = activeRow;
           captionIdx = activeRow;
 
@@ -230,12 +239,19 @@ export function LightJourney() {
         } else if (u < uEnd) {
           // Diagonal flight phase: glides across while swooping down in a smooth arc
           const flightP = clamp01((u - uStart) / (uEnd - uStart));
-          const easeX = flightP * flightP * (3 - 2 * flightP);
+          // Smootherstep (Ken Perlin quintic): zero 1st and 2nd derivatives for zero jerk
+          const easeX = flightP * flightP * flightP * (flightP * (flightP * 6 - 15) + 10);
           posX = fromSlotX + (toSlotX - fromSlotX) * easeX;
 
           const downAmp = Math.round(H * 0.06);
           const returnY = Math.round(H * 0.04 * (1 - flightP));
           posY = Math.round(baseY + returnY + downAmp * Math.sin(Math.PI * flightP));
+
+          // Subtle dynamic banking angle into turn (-1.0deg for right->left, +1.0deg for left->right)
+          tilt = (isEven ? -1.0 : 1.0) * Math.sin(Math.PI * flightP);
+          // Subtle cinematic depth lift
+          scale = 1 + 0.02 * Math.sin(Math.PI * flightP);
+          opacity = 1;
 
           activeClipIdx = activeRow;
           captionIdx = flightP >= 0.5 ? activeRow + 1 : activeRow;
@@ -251,6 +267,9 @@ export function LightJourney() {
           // Landed in next column slot: seamless cut-frame handover
           posX = toSlotX;
           posY = baseY;
+          tilt = 0;
+          scale = 1;
+          opacity = 1;
           activeClipIdx = activeRow + 1;
           captionIdx = activeRow + 1;
 
@@ -259,17 +278,19 @@ export function LightJourney() {
             curVid.currentTime = Math.max(0, curVid.duration - 0.04);
           }
 
+          // Incoming video rests at frame 0 (the exact shared cut frame) until Row i+1 begins
           const nextVid = desktopVideosRef.current[activeRow + 1];
           if (nextVid && nextVid.duration && nextVid.readyState >= 1) {
-            const pNext = clamp01((u - uEnd) / (1.0 - uEnd)) * 0.15;
-            const t = pNext * Math.max(0, nextVid.duration - 0.04);
-            if (Math.abs(nextVid.currentTime - t) > 1 / 60) nextVid.currentTime = t;
+            if (nextVid.currentTime > 0.02) nextVid.currentTime = 0;
           }
         }
       } else {
-        // Final chapter (Row 5): docked in Row 5's slot
+        // Final chapter (Row 5): docked in Row 5's slot, dissolves gracefully into closer section
         posX = fromSlotX;
         posY = baseY + Math.round(H * 0.04 * u);
+        tilt = 0;
+        scale = 1;
+        opacity = u > 0.85 ? clamp01(1 - (u - 0.85) / 0.15) : 1;
         activeClipIdx = activeRow;
         captionIdx = activeRow;
         const curVid = desktopVideosRef.current[activeRow];
@@ -283,29 +304,46 @@ export function LightJourney() {
       if (floatingRef.current) {
         floatingRef.current.style.setProperty("--jr-visual-x", `${posX.toFixed(1)}px`);
         floatingRef.current.style.setProperty("--jr-visual-y", `${posY.toFixed(1)}px`);
+        floatingRef.current.style.setProperty("--jr-visual-tilt", `${tilt.toFixed(2)}deg`);
+        floatingRef.current.style.setProperty("--jr-visual-scale", `${scale.toFixed(4)}`);
+        floatingRef.current.style.setProperty("--jr-visual-opacity", `${opacity.toFixed(3)}`);
       }
 
-      // Update active video visibility
+      // Update active video visibility with radiant crossfade (zero transient dimming)
       if (activeClipIdx !== lastActiveIdx) {
+        const prevIdx = lastActiveIdx;
         lastActiveIdx = activeClipIdx;
         desktopVideosRef.current.forEach((v, idx) => {
           if (!v) return;
           if (idx === activeClipIdx) {
             v.classList.add("active");
+            v.classList.remove("previous");
+          } else if (idx === prevIdx) {
+            v.classList.remove("active");
+            v.classList.add("previous");
           } else {
             v.classList.remove("active");
+            v.classList.remove("previous");
           }
         });
       }
 
-      // Update caption
+      // Update caption with subtle crossfade
       if (captionIdx !== lastCaptionIdx) {
         lastCaptionIdx = captionIdx;
-        if (captionNumRef.current) {
-          captionNumRef.current.textContent = String(captionIdx + 1).padStart(2, "0");
-        }
-        if (captionLabelRef.current) {
-          captionLabelRef.current.textContent = chapters[captionIdx]?.label ?? "";
+        if (captionRef.current) {
+          captionRef.current.style.opacity = "0";
+          setTimeout(() => {
+            if (captionNumRef.current) {
+              captionNumRef.current.textContent = String(captionIdx + 1).padStart(2, "0");
+            }
+            if (captionLabelRef.current) {
+              captionLabelRef.current.textContent = chapters[captionIdx]?.label ?? "";
+            }
+            if (captionRef.current) {
+              captionRef.current.style.opacity = "1";
+            }
+          }, 80);
         }
       }
     };
@@ -368,7 +406,7 @@ export function LightJourney() {
                 />
               ))}
             </div>
-            <figcaption className="jr-caption">
+            <figcaption className="jr-caption" ref={captionRef}>
               <span ref={captionNumRef}>01</span>{" "}
               <span ref={captionLabelRef}>{chapters[0].label}</span>
             </figcaption>

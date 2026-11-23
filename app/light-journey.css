@@ -134,6 +134,7 @@
   text-transform: uppercase;
   color: rgb(242 239 232 / 0.6);
   text-align: center;
+  transition: opacity 0.16s ease-out;
 }
 .jr-caption span {
   color: var(--jr-gold);
@@ -183,9 +184,14 @@
     left: 0;
     width: var(--jr-visual-w, 58%);
     margin: 0;
-    transform: translate3d(var(--jr-visual-x, 0px), var(--jr-visual-y, 0px), 0);
-    will-change: transform;
+    transform: translate3d(var(--jr-visual-x, 0px), var(--jr-visual-y, 0px), 0)
+               rotate(var(--jr-visual-tilt, 0deg))
+               scale(var(--jr-visual-scale, 1));
+    opacity: var(--jr-visual-opacity, 1);
+    transform-origin: center center;
+    will-change: transform, opacity;
     pointer-events: none;
+    transition: opacity 0.25s ease-out;
   }
   .jr-stage .jr-frame {
     max-height: calc(100svh - 84px - 20vh);
@@ -193,10 +199,16 @@
   }
   .jr-stage .jr-frame video {
     opacity: 0;
-    transition: opacity 0.12s ease-out;
+    transition: opacity 0.16s ease-out;
+    pointer-events: none;
   }
   .jr-stage .jr-frame video.active {
     opacity: 1;
+    z-index: 2;
+  }
+  .jr-stage .jr-frame video.previous {
+    opacity: 1;
+    z-index: 1;
   }
 
   /* Reserve the 7/12 slot in the row grid */
