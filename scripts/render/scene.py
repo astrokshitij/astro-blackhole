@@ -573,7 +573,7 @@ POSES = [
     ((1.9, 1.6, 2.7), (3.15, 1.18, 0.0), 38),   # 3 card, green through pinhole + lens
     ((3.9, 2.25, 2.45), (5.05, 1.1, 0.0), 36),  # 4 two slits, waves
     ((5.0, 1.75, 2.35), (6.7, 1.2, 0.0), 40),   # 5 detections arrive
-    ((3.6, 2.5, 8.6), (3.3, 0.95, 0.0), 36),    # 6 pattern, then the whole bench
+    ((2.9, 1.75, 7.9), (2.75, 0.92, 0.0), 33),  # 6 pattern, then the whole bench
 ]
 HOLD = ((5.55, 1.35, 1.7), (6.72, 1.2, 0.0), 40)  # mid clip 6: close on the pattern
 
