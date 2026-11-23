@@ -35,12 +35,12 @@ redirect to `/` (see `next.config.ts`).
   source of vertical rhythm), `SectionHeading`, `Eyebrow`, `NextPage`. Use these
   rather than writing new inline spacing or button styles.
 - `components/site/site-header.tsx` — nav, with the mobile panel.
-- **Home page = the light journey** (`components/site/light-journey*.ts(x)`,
-  `app/light-journey.css`, copy in `LIGHT_JOURNEY`). One WebGL2 scene behind
-  six HTML chapters; read `docs/light-journey/README.md` before changing it.
-  Camera framing per chapter is the `DESKTOP`/`MOBILE` arrays; photo crops are
-  `focus` in content. The prism hero and spectrum scroll below are no longer
-  mounted on `/`.
+- **Home page = the light journey** (`components/site/light-journey.tsx`,
+  `app/light-journey.css`, copy in `LIGHT_JOURNEY`). Six rows: words + photo
+  in one cell, a pre-rendered Blender clip in the other, alternating sides,
+  never overlapping. Read `docs/light-journey/README.md` before changing it;
+  the clips are rebuilt with `scripts/render/`. Copy house style: no full
+  stops in headlines or lines.
 - `components/ui/prism-hero.tsx` — the previous home hero. Each frame bends 20
   wavelengths through the glass with Snell's law (dispersion exaggerated ~10x
   so the fan is visible). `components/site/hero-visual.tsx` loads it. It caps
