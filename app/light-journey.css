@@ -1,0 +1,280 @@
+/* Home: one light journey. The canvas is the world; sections are transparent. */
+.lj {
+  position: relative;
+  isolation: isolate;
+  --lj-pearl: #f2efe8;
+  --lj-gold: #f0b545;
+}
+.lj-canvas {
+  position: fixed;
+  inset: 0 auto auto 0;
+  width: 100vw;
+  height: 100lvh;
+  z-index: 0;
+  display: block;
+  pointer-events: none;
+  background: #08090c;
+  transition: opacity 0.18s linear;
+}
+.lj.lj-still .lj-canvas {
+  display: none;
+}
+.lj-chapter {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+}
+.lj-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 34rem;
+  text-shadow: 0 0 28px rgb(8 9 12 / 0.9), 0 0 2px rgb(8 9 12 / 0.8);
+}
+.lj-eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgb(242 239 232 / 0.62);
+  margin: 0 0 1.1rem;
+}
+.lj-title {
+  font-family: var(--font-jost), system-ui, sans-serif;
+  font-weight: 500;
+  color: var(--lj-pearl);
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+  font-size: clamp(2.35rem, 4.1vw, 4.25rem);
+  margin: 0;
+  text-wrap: balance;
+}
+.lj-chapter-0 .lj-title {
+  font-size: clamp(2.9rem, 5.4vw, 5.9rem);
+  line-height: 0.98;
+}
+.lj-line {
+  margin: 1.25rem 0 0;
+  max-width: 30rem;
+  font-size: clamp(1.05rem, 1.25vw, 1.2rem);
+  line-height: 1.55;
+  color: rgb(242 239 232 / 0.78);
+  text-wrap: pretty;
+}
+.lj-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.6rem;
+  margin-top: 1.5rem;
+}
+.lj-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  font-size: 0.98rem;
+  color: var(--lj-pearl);
+  border-bottom: 1px solid rgb(242 239 232 / 0.32);
+  transition: color 0.2s, border-color 0.2s, gap 0.2s;
+}
+.lj-link:first-child {
+  color: var(--lj-gold);
+  border-bottom-color: rgb(240 181 69 / 0.55);
+}
+.lj-link:hover {
+  color: #f8cd78;
+  border-bottom-color: #f8cd78;
+  gap: 0.75rem;
+}
+.lj-photo {
+  position: relative;
+  margin: 0;
+  z-index: 1;
+  overflow: hidden;
+  /* Feather every edge into the dark so the photo lives in the scene. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 10%, #000 84%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 10%, #000 84%, transparent);
+  mask-composite: intersect;
+}
+.lj-photo img {
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.03);
+}
+.lj-stage {
+  position: absolute;
+  pointer-events: none;
+}
+.lj-poster {
+  display: none;
+}
+.lj.lj-still .lj-poster {
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Desktop and tablet landscape: copy and photo on one side, the light on the other. */
+@media (min-width: 900px) {
+  .lj-chapter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 118px 0 64px;
+  }
+  .lj-copy,
+  .lj-photo {
+    width: min(38vw, 560px);
+    margin-left: max(5vw, calc((100vw - 1440px) / 2 + 72px));
+  }
+  .copy-right .lj-copy,
+  .copy-right .lj-photo {
+    margin-left: auto;
+    margin-right: max(5vw, calc((100vw - 1440px) / 2 + 72px));
+  }
+  .lj-photo {
+    margin-top: 2rem;
+    aspect-ratio: 16 / 10;
+    max-height: 40vh;
+  }
+  .lj-stage {
+    top: 0;
+    bottom: 0;
+  }
+  .copy-left .lj-stage {
+    left: 44%;
+    right: 1vw;
+  }
+  .copy-right .lj-stage {
+    left: 1vw;
+    right: 44%;
+  }
+  /* Opening: portrait bleeds in from the left edge beside the headline. */
+  .lj-chapter-0 .lj-copy {
+    margin-left: max(24vw, calc((100vw - 1440px) / 2 + 330px));
+    width: min(30vw, 470px);
+  }
+  .lj-chapter-0 .lj-photo {
+    position: absolute;
+    left: 0;
+    top: 84px;
+    bottom: 0;
+    width: 27vw;
+    max-height: none;
+    margin: 0;
+    aspect-ratio: auto;
+    -webkit-mask-image: linear-gradient(to right, #000 55%, transparent),
+      linear-gradient(to bottom, #000 62%, transparent);
+    mask-image: linear-gradient(to right, #000 55%, transparent),
+      linear-gradient(to bottom, #000 62%, transparent);
+  }
+  .lj-chapter-0 .lj-stage {
+    left: 52%;
+  }
+}
+
+/* Phones and portrait tablets: one column, the light between words and photo. */
+@media (max-width: 899.98px) {
+  .lj-chapter {
+    display: flex;
+    flex-direction: column;
+    padding: 108px 20px 24px;
+  }
+  .lj-chapter + .lj-chapter {
+    padding-top: 48px;
+  }
+  .lj-copy {
+    order: 1;
+  }
+  .lj-stage {
+    order: 2;
+    position: relative;
+    height: 50svh;
+    min-height: 300px;
+    margin: 0 -20px;
+  }
+  .lj-photo {
+    order: 3;
+    width: calc(100% + 40px);
+    margin: 0 -20px;
+    aspect-ratio: 4 / 3;
+  }
+  .lj-chapter-0 .lj-stage {
+    height: 46svh;
+  }
+  .lj-chapter-0 .lj-photo {
+    aspect-ratio: 1 / 1;
+    width: 78%;
+    margin: -14svh 0 0 -20px;
+    -webkit-mask-image: linear-gradient(to right, #000 60%, transparent),
+      linear-gradient(to bottom, transparent, #000 22%, #000 70%, transparent);
+    mask-image: linear-gradient(to right, #000 60%, transparent),
+      linear-gradient(to bottom, transparent, #000 22%, #000 70%, transparent);
+  }
+  .lj-title {
+    font-size: clamp(2.1rem, 9.2vw, 3rem);
+  }
+  .lj-chapter-0 .lj-title {
+    font-size: clamp(2.6rem, 12.2vw, 3.9rem);
+  }
+}
+
+.lj-tools {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 4rem;
+}
+.lj-pause {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 40;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgb(242 239 232 / 0.22);
+  background: rgb(8 9 12 / 0.72);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(242 239 232 / 0.78);
+}
+.lj-pause:hover {
+  color: var(--lj-pearl);
+}
+.lj-notes {
+  max-width: 44rem;
+  color: rgb(242 239 232 / 0.66);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+.lj-notes summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(242 239 232 / 0.66);
+}
+.lj-notes p {
+  margin-top: 0.5rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lj-link {
+    transition: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lj-pause {
+    display: none;
+  }
+}

@@ -193,3 +193,96 @@ export const PAGE_COPY = {
       "Instagram DMs are read but pile up quickly. For anything time-sensitive, please use email.",
   },
 };
+
+/**
+ * Home page: one light journey, six moments. Keep each line short; the
+ * picture does most of the talking. `photo` paths are in /public.
+ * `focus` is the CSS object-position for the crop (horizontal vertical).
+ */
+export const LIGHT_JOURNEY = {
+  chapters: [
+    {
+      id: "journey-start",
+      eyebrow: "Kshitij Pandey / Astro Kshitij",
+      title: "The universe is stranger than you think.",
+      line: "Physics is where I began. Curiosity connects the rest.",
+      photo: "/images/portraits/kshitij-bits.jpg",
+      alt: "Kshitij Pandey, arms crossed, in a T-shirt printed with Gauss's law",
+      focus: "50% 30%",
+      links: [
+        { label: "Follow the light", href: "#journey-early" },
+        { label: "Watch on YouTube", href: SOCIALS[0].href },
+      ],
+    },
+    {
+      id: "journey-early",
+      eyebrow: "01 / School",
+      title: "The questions started early.",
+      line: "A ninth-grade exhibition on space-time and wormholes: the first time a question became a project.",
+      photo: "/images/story/9th-class-exhibition.jpg",
+      alt: "A school science exhibition stand about methods of time travel, space-time warps and wormholes",
+      focus: "50% 55%",
+      links: [{ label: "The story so far", href: "/about" }],
+    },
+    {
+      id: "journey-research",
+      eyebrow: "02 / Research",
+      title: "Then the questions got harder.",
+      line: "Astrophysics and cosmology, then co-authored research on particle collisions near naked singularities.",
+      photo: "/images/story/msc-poster.jpg",
+      alt: "Kshitij beside his research poster on particle collisions near naked singularities",
+      focus: "30% 50%",
+      links: [
+        {
+          label: "Read the paper",
+          href: "https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948",
+        },
+      ],
+    },
+    {
+      id: "journey-explain",
+      eyebrow: "03 / Explaining",
+      title: "What does an explanation make you imagine?",
+      line: "On stage and on screen, I try to make ideas feel real, not just simpler.",
+      photo: "/images/home/stats-audience.jpg",
+      alt: "Kshitij explaining physics to an audience",
+      focus: "50% 12%",
+      links: [
+        { label: "Read the essay", href: "/blog/the-trouble-with-making-science-simple" },
+        { label: "Watch on YouTube", href: SOCIALS[0].href },
+      ],
+    },
+    {
+      id: "journey-writing",
+      eyebrow: "04 / Writing",
+      title: "Test the claim. Show the working.",
+      line: "When an idea spreads, I check it and put the reasoning on the page.",
+      photo: "/images/story/msc-research.jpg",
+      alt: "Kshitij writing in a notebook beside a laptop showing a plot",
+      focus: "45% 50%",
+      links: [
+        { label: "Read an investigation", href: "/blog/did-an-ancient-text-know-the-speed-of-light" },
+        { label: "All writing", href: "/blog" },
+      ],
+    },
+    {
+      id: "work",
+      eyebrow: "05 / Now",
+      title: "What are you working on?",
+      line: "These days I also work on growth, AI and useful products. Tell me what you’re building.",
+      photo: "/images/story/telescope.jpg",
+      alt: "Kshitij standing beside a large telescope on a hillside",
+      focus: "50% 78%",
+      links: [
+        { label: "Talk to me", href: "/contact" },
+        { label: "See my product work", href: "https://nextleap.app/portfolio/kshitij-pandey" },
+      ],
+    },
+  ],
+  pause: "Pause motion",
+  resume: "Play motion",
+  fallback: "A still of the light journey. The live scene needs WebGL 2.",
+  notesLabel: "About the light",
+  notes:
+    "A live scene, ray-traced in your browser. Sunlight reflects off a flat mirror into a glass prism; each colour is refracted at both faces with Snell's law, with dispersion enlarged four times so the spectrum is visible. A pinhole passes a narrow green band and a lens collimates it, which is how the light is prepared to be coherent enough for the slits; picking a colour alone would not do that. Two vertical slits give vertical bright and dark bands. The detector pattern is calculated for 530 nm light, 35 µm slits 180 µm apart and a screen 1 m away (36 mm across), including the single-slit envelope. Each dot is one detection drawn from that distribution; a detected photon is absorbed. The final curve is the probability, drawn as a guide. Wave spacing, sizes and timing are schematic, and the visible beams stand for light scattered by dust: in a vacuum you would not see a beam from the side.",
+};
