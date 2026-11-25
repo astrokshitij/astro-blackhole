@@ -1,332 +1,257 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { LIVE_LIGHT_STORY as COPY, PAGE_COPY, SOCIALS } from "@/lib/content";
-import { ArrowGlyph, YoutubeGlyph } from "./icons";
-import { Eyebrow } from "./ui";
-import type { OpticalState, OpticalWorld } from "./optical-world";
-
+import {
+  JOURNEY_STORY as COPY,
+  LIVE_LIGHT_STORY as LABELS,
+  SOCIALS,
+  SITE,
+  PAGE_COPY,
+} from "@/lib/content";
+import type { LightWorld, LightWorldState } from "./light-world";
+const clamp = (n: number) => Math.max(0, Math.min(1, n));
+const ease = (n: number) => {
+  const t = clamp(n);
+  return t * t * (3 - 2 * t);
+};
 export function LightStory() {
-  const rootRef = useRef<HTMLDivElement>(null),
-    stageRef = useRef<HTMLDivElement>(null),
-    canvasRef = useRef<HTMLCanvasElement>(null),
-    worldRef = useRef<OpticalWorld | null>(null);
-  const stateRef = useRef<OpticalState>({
+  const root = useRef<HTMLDivElement>(null),
+    canvas = useRef<HTMLCanvasElement>(null),
+    world = useRef<LightWorld | null>(null);
+  const state = useRef<LightWorldState>({
     progress: 0,
+    focusX: 0.75,
+    focusY: 0.52,
     rotation: 0,
     paused: false,
     reduced: false,
     exposure: 0,
   });
-  const [chapter, setChapter] = useState(0),
-    [ready, setReady] = useState(false),
-    [fallback, setFallback] = useState(false),
-    [paused, setPaused] = useState(false),
-    [rotation, setRotation] = useState(0),
-    [exposing, setExposing] = useState(0);
-  const dragging = useRef<{ x: number; rotation: number } | null>(null);
+  const [paused, setPaused] = useState(false),
+    [failed, setFailed] = useState(false),
+    [ready, setReady] = useState(false);
   useEffect(() => {
-    const root = rootRef.current,
-      stage = stageRef.current,
-      canvas = canvasRef.current;
-    if (!root || !stage || !canvas) return;
+    const element = root.current,
+      target = canvas.current;
+    if (!element || !target) return;
     let cancelled = false,
-      scrollFrame = 0,
-      readyFrame = 0,
-      anchors: number[] = [];
-    const media = matchMedia("(prefers-reduced-motion: reduce)"),
-      panels = Array.from(
-        root.querySelectorAll<HTMLElement>("[data-optical-chapter]"),
-      );
+      raf = 0;
+    const sections = Array.from(
+      element.querySelectorAll<HTMLElement>("[data-light-chapter]"),
+    );
+    const media = matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => {
-      scrollFrame = 0;
-      const y = window.scrollY;
+      raf = 0;
+      const compact = innerWidth < 900,
+        y = scrollY;
+      const positions = sections.map((s) => s.getBoundingClientRect().top + y);
       let index = 0;
-      while (index < anchors.length - 1 && y + 2 >= anchors[index + 1]) index++;
-      const interval =
-        index < anchors.length - 1
-          ? anchors[index + 1] - anchors[index]
-          : panels[index].offsetHeight;
-      const local = Math.max(
-        0,
-        Math.min(1, (y - anchors[index]) / Math.max(interval, 1)),
+      while (index < 5 && y + innerHeight * 0.18 >= positions[index + 1])
+        index++;
+      const length =
+        (positions[index + 1] ??
+          positions[index] + sections[index].offsetHeight) - positions[index];
+      const t = clamp((y - positions[index] + innerHeight * 0.18) / length),
+        mix = ease((t - 0.15) / 0.85);
+      const progress = media.matches ? index : Math.min(5, index + mix),
+        next = Math.min(5, index + 1);
+      const side = (i: number) =>
+        compact ? (i === 0 ? 0.72 : i % 2 ? 0.22 : 0.78) : i % 2 ? 0.22 : 0.78;
+      state.current.progress = progress;
+      state.current.focusX = side(index) + (side(next) - side(index)) * (media.matches ? 0 : mix);
+      state.current.focusY = compact ? 0.58 : 0.52;
+      element.dataset.chapter = String(index);
+      element.style.setProperty(
+        "--light-x",
+        String(state.current.focusX * 100) + "%",
       );
-      stateRef.current.progress = Math.min(
-        5,
-        index + Math.max(0, Math.min(1, (local - 0.12) / 0.88)),
-      );
-      setChapter(index);
-      root.dataset.scene = String(index);
-      worldRef.current?.invalidate();
+      world.current?.invalidate();
     };
-    const measure = () => {
-      const offset = innerWidth < 900 ? stage.offsetHeight + 70 : 84;
-      anchors = panels.map(
-        (p) => p.getBoundingClientRect().top + scrollY - offset,
-      );
-      update();
-    };
-    const scroll = () => {
-      if (!scrollFrame) scrollFrame = requestAnimationFrame(update);
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(update);
     };
     const preference = () => {
-      stateRef.current.reduced = media.matches;
-      worldRef.current?.invalidate();
+      state.current.reduced = media.matches;
+      world.current?.invalidate();
     };
-    preference();
-    const visibility = () => worldRef.current?.invalidate();
     const lost = (event: Event) => {
       event.preventDefault();
-      worldRef.current?.dispose();
-      worldRef.current = null;
-      setFallback(true);
-      setReady(false);
+      world.current?.dispose();
+      world.current = null;
+      setFailed(true);
     };
-    window.addEventListener("scroll", scroll, { passive: true });
-    window.addEventListener("resize", measure);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    document.addEventListener("visibilitychange", schedule);
     media.addEventListener("change", preference);
-    document.addEventListener("visibilitychange", visibility);
-    canvas.addEventListener("webglcontextlost", lost);
-    const observer = new ResizeObserver(measure);
-    observer.observe(root);
-    observer.observe(stage);
-    measure();
-    import("./optical-world")
-      .then(({ createOpticalWorld }) => {
+    target.addEventListener("webglcontextlost", lost);
+    preference();
+    update();
+    import("./light-world")
+      .then(({ createLightWorld }) => {
         if (cancelled) return;
         try {
-          worldRef.current = createOpticalWorld(canvas, stateRef.current);
-          const check = () => {
-            if (cancelled) return;
-            if (canvas.dataset.progress) setReady(true);
-            else readyFrame = requestAnimationFrame(check);
-          };
-          readyFrame = requestAnimationFrame(check);
+          world.current = createLightWorld(target, state.current);
+          setReady(true);
           update();
         } catch {
-          if (!cancelled) setFallback(true);
+          setFailed(true);
         }
       })
-      .catch(() => {
-        if (!cancelled) setFallback(true);
-      });
+      .catch(() => setFailed(true));
     return () => {
       cancelled = true;
-      cancelAnimationFrame(scrollFrame);
-      cancelAnimationFrame(readyFrame);
-      observer.disconnect();
-      window.removeEventListener("scroll", scroll);
-      window.removeEventListener("resize", measure);
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      document.removeEventListener("visibilitychange", schedule);
       media.removeEventListener("change", preference);
-      document.removeEventListener("visibilitychange", visibility);
-      canvas.removeEventListener("webglcontextlost", lost);
-      worldRef.current?.dispose();
-      worldRef.current = null;
+      target.removeEventListener("webglcontextlost", lost);
+      world.current?.dispose();
+      world.current = null;
     };
   }, []);
   useEffect(() => {
-    stateRef.current.paused = paused;
-    stateRef.current.rotation = (rotation * Math.PI) / 180;
-    stateRef.current.exposure = exposing;
-    worldRef.current?.invalidate();
-  }, [paused, rotation, exposing]);
-  function go(index: number) {
-    const stage = stageRef.current,
-      target = document.getElementById(COPY.scenes[index].id);
-    if (!stage || !target) return;
-    const offset = innerWidth < 900 ? stage.offsetHeight + 70 : 84;
-    window.history.replaceState(null, "", `#${COPY.scenes[index].id}`);
-    window.scrollTo({
-      top: target.getBoundingClientRect().top + scrollY - offset,
-      behavior: stateRef.current.reduced ? "instant" : "smooth",
-    });
-  }
+    state.current.paused = paused;
+    world.current?.invalidate();
+  }, [paused]);
   return (
     <div
-      className={`optical-story ${ready ? "optical-ready" : ""} ${fallback ? "optical-fallback" : ""}`}
-      ref={rootRef}
-      data-live-3d={ready}
+      className={
+        "light-experience" +
+        (ready ? " is-ready" : "") +
+        (failed ? " is-fallback" : "")
+      }
+      ref={root}
     >
-      <div className="optical-stage" ref={stageRef}>
-        <canvas
-          ref={canvasRef}
-          className="optical-canvas"
-          aria-hidden="true"
-          onPointerDown={(event) => {
-            if (chapter > 1) return;
-            dragging.current = { x: event.clientX, rotation };
-            event.currentTarget.setPointerCapture(event.pointerId);
-          }}
-          onPointerMove={(event) => {
-            if (!dragging.current || chapter > 1) return;
-            setRotation(
-              Math.max(
-                -4,
-                Math.min(
-                  4,
-                  dragging.current.rotation +
-                    (event.clientX - dragging.current.x) * 0.035,
-                ),
-              ),
-            );
-          }}
-          onPointerUp={() => {
-            dragging.current = null;
-          }}
-          onPointerCancel={() => {
-            dragging.current = null;
-          }}
-        />
-        {!ready && !fallback && (
-          <p className="optical-loading" role="status">
-            {COPY.loading}
-          </p>
-        )}
-        {fallback && (
-          <div className="optical-fallback-image">
-            <Image
-              src={COPY.scenes[0].photo}
-              alt=""
-              fill
-              sizes="60vw"
-              className="object-cover"
-            />
-            <p>{COPY.fallback}</p>
-          </div>
-        )}
-        <div className="optical-stage-caption">
-          <p>{COPY.opticalLabels[chapter]}</p>
-          <div className="optical-stage-input">
-            {chapter < 2 ? (
-              <label>
-                {COPY.rotate}
-                <input
-                  aria-label={COPY.rotate}
-                  type="range"
-                  min="-4"
-                  max="4"
-                  step=".25"
-                  value={rotation}
-                  onChange={(e) => setRotation(Number(e.target.value))}
-                />
-              </label>
-            ) : chapter >= 4 ? (
-              <button type="button" onClick={() => setExposing((v) => v + 1)}>
-                {exposing ? COPY.reset : COPY.reveal}
-              </button>
-            ) : null}
-          </div>
-        </div>
+      <div className="experience-world" aria-hidden="true">
+        <canvas ref={canvas} className="experience-canvas" />
       </div>
-      <div className="optical-track">
+      <div className="experience-pages">
         {COPY.scenes.map((scene, i) => (
           <section
-            className={`optical-panel optical-panel-${i}`}
-            key={scene.id}
+            className={
+              "experience-chapter chapter-" + i + (i % 2 ? " is-reversed" : "")
+            }
             id={scene.id}
-            data-optical-chapter={i}
-            aria-labelledby={`optical-heading-${i}`}
+            key={scene.id}
+            data-light-chapter={i}
+            aria-labelledby={"light-heading-" + i}
           >
-            <div className="site-width optical-panel-width">
-              <div className="optical-card">
-                <Eyebrow>{scene.label}</Eyebrow>
+            {i === 5 && <span id="work" className="experience-work-anchor" />}
+            <div className="experience-composition">
+              <div className="experience-copy">
+                <p className="experience-eyebrow">{scene.label}</p>
                 {i === 0 ? (
-                  <h1 id={`optical-heading-${i}`}>
+                  <h1 id={"light-heading-" + i}>
                     {PAGE_COPY.home.headline[0]}
                     <br />
                     {PAGE_COPY.home.headline[1]}
                     <br />
-                    <span>{PAGE_COPY.home.headline[2]}</span>
+                    <em>{PAGE_COPY.home.headline[2]}</em>
                   </h1>
                 ) : (
-                  <h2 id={`optical-heading-${i}`}>{scene.title}</h2>
+                  <h2 id={"light-heading-" + i}>{scene.title}</h2>
                 )}
-                {i === 0 && <p className="optical-name">{COPY.intro}</p>}
-                <p className="optical-body">{scene.body}</p>
-                <figure className={`optical-photo optical-photo-${i}`}>
+                <p className="experience-body">{scene.body}</p>
+                <figure className={"experience-photo photo-" + i}>
                   <Image
                     src={scene.photo}
                     alt={scene.alt}
-                    width={600}
-                    height={400}
-                    sizes="(min-width:900px) 32vw, 90vw"
+                    width={800}
+                    height={600}
+                    sizes="(min-width:900px) 38vw, 62vw"
                     priority={i === 0}
                     loading={i === 0 ? "eager" : undefined}
                   />
-                  <figcaption>{scene.caption}</figcaption>
+                  {i > 0 && <figcaption>{scene.caption}</figcaption>}
                 </figure>
-                <div className="optical-links">
-                  <a
-                    className="text-link"
-                    href={scene.link}
-                    target={
-                      scene.link.startsWith("http") ? "_blank" : undefined
-                    }
-                    rel={
-                      scene.link.startsWith("http")
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                  >
-                    {scene.cta}
-                    <ArrowGlyph className="h-4 w-4" />
-                  </a>
+                <div className="experience-links">
+                  {scene.link && (
+                    <a
+                      href={scene.link}
+                      target={
+                        scene.link.startsWith("https:") ? "_blank" : undefined
+                      }
+                      rel={
+                        scene.link.startsWith("https:")
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
+                    >
+                      {scene.cta}
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
                   {i === 0 && (
-                    <a href={SOCIALS[0].href} className="optical-youtube">
-                      <YoutubeGlyph className="h-4 w-4" />
-                      YouTube
+                    <a
+                      href={SOCIALS[0].href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      YouTube<span aria-hidden="true">↗</span>
                     </a>
                   )}
                 </div>
                 {i === 0 && (
                   <button
                     type="button"
-                    onClick={() => go(1)}
-                    className="optical-follow"
+                    className="experience-pause"
+                    aria-pressed={paused}
+                    onClick={() => setPaused(!paused)}
                   >
-                    {COPY.scroll}
-                    <ArrowGlyph className="h-4 w-4" />
+                    {paused ? LABELS.resume : LABELS.pause}
+                  </button>
+                )}
+                {i === 5 && (
+                  <button
+                    type="button"
+                    className="experience-replay"
+                    onClick={() => {
+                      state.current.exposure++;
+                      world.current?.invalidate();
+                    }}
+                  >
+                    {LABELS.reset}
+                    <span aria-hidden="true">↻</span>
                   </button>
                 )}
               </div>
             </div>
           </section>
         ))}
+        <section className="experience-close" id="continue">
+          <div>
+            <p className="experience-eyebrow">{COPY.closing.eyebrow}</p>
+            <h2>{COPY.closing.title}</h2>
+            <p className="experience-body">{COPY.closing.body}</p>
+            <a className="experience-contact" href={COPY.closing.link}>
+              {COPY.closing.cta}
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <details className="experience-physics">
+            <summary>{COPY.physicsLabel}</summary>
+            <p>{COPY.physics}</p>
+          </details>
+          <div className="experience-footer">
+            <p>{SITE.name}</p>
+            <nav aria-label="Find Kshitij">
+              {SOCIALS.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {s.label}
+                </a>
+              ))}
+              <a href="/about">About</a>
+            </nav>
+          </div>
+        </section>
       </div>
-      <div className="optical-controls">
-        <nav aria-label="Light story chapters">
-          {COPY.chapters.map((name, i) => (
-            <button
-              type="button"
-              key={name}
-              aria-label={name}
-              aria-current={i === chapter ? "step" : undefined}
-              onClick={() => go(i)}
-            >
-              <span>{String(i + 1).padStart(2, "0")}</span>
-              <span className="optical-nav-name">{name}</span>
-            </button>
-          ))}
-        </nav>
-        <button
-          type="button"
-          className="optical-pause"
-          aria-pressed={paused}
-          onClick={() => setPaused(!paused)}
-        >
-          {paused ? COPY.resume : COPY.pause}
-        </button>
-        <a href="#work" className="optical-skip">
-          {COPY.skip}
-        </a>
-      </div>
-      <details className="optical-physics site-width">
-        <summary>{COPY.physicsLabel}</summary>
-        <p>{COPY.physics}</p>
-      </details>
-      <noscript>
-        <p className="site-width">{COPY.fallback}</p>
-      </noscript>
     </div>
   );
 }

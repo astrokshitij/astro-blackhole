@@ -1,0 +1,97 @@
+127.0.0.1 - - [23/Nov/2026 02:03:01] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /images/portraits/kshitij-bits.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/css/99d2e7901b18f849.css HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/css/3bb231fcf7889ddb.css HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/webpack-cdd630b0c992a58c.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/main-app-2f746db8b2aec6ff.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/app/layout-673abc54c64148c3.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/997-181d2d1e6c153a00.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/app/page-b4dbe31a1b17f5ea.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/282-5291d8b191f5d609.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/890-c50513be7d03524b.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/7647afbf-87842bf41c28a86e.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/media/723e11e5093b8e80.p.woff2 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/media/c925c60744b73058-s.p.woff2 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/media/0b78ff376f6b9734-s.p.woff2 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /favicon.ico HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "HEAD /about HTTP/1.1" 301 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "HEAD /blog HTTP/1.1" 301 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/580.7ac43983554785fe.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "HEAD /contact HTTP/1.1" 301 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/839.4a7111d0f96b2711.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "HEAD /about/ HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "HEAD /blog/ HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "HEAD /contact/ HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /__next._tree.txt?_rsc=5CB68i4pnAekjehf HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /blog/__next._tree.txt?_rsc=5CB68i4pnAekjehf HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /about/__next._tree.txt?_rsc=5CB68i4pnAekjehf HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /contact/__next._tree.txt?_rsc=5CB68i4pnAekjehf HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/602bc037.9da4662d2302ca9e.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /_next/static/chunks/3ae69684.d8b473cfcbbf7d4f.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /about/__next.about.__PAGE__.txt?_rsc=hzcUC6YqarYE9pKE HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /blog/__next.blog.__PAGE__.txt?_rsc=Npvf18QV6N2pz_RZ HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /__next.__PAGE__.txt?_rsc=8nTjltbQWvg6NcbE HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /__next._index.txt?_rsc=yIp22O3xgPPxC28X HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /images/light-story/environment/studio_small_09_1k.hdr HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:02] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:03:02] "GET /contact/__next.contact.__PAGE__.txt?_rsc=BiuOixuigeBXVJn7 HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:03:09] "GET /images/home/stats-audience.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:09] "GET /images/story/msc-poster.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:03:09] "GET /images/story/msc-research.jpg HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:05:20] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /blog/__next.blog.__PAGE__.txt?_rsc=Npvf18QV6N2pz_RZ HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /about/__next.about.__PAGE__.txt?_rsc=hzcUC6YqarYE9pKE HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /contact/__next.contact.__PAGE__.txt?_rsc=BiuOixuigeBXVJn7 HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /images/portraits/kshitij-bits.jpg HTTP/1.1" 304 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/css/3bb231fcf7889ddb.css HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/css/99d2e7901b18f849.css HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/main-app-2f746db8b2aec6ff.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/webpack-e473641036a67aab.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/app/layout-673abc54c64148c3.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/282-5291d8b191f5d609.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/997-181d2d1e6c153a00.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/media/723e11e5093b8e80.p.woff2 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/media/c925c60744b73058-s.p.woff2 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/media/0b78ff376f6b9734-s.p.woff2 HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /images/story/msc-research.jpg HTTP/1.1" 304 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/app/page-422b057a6bacbcc7.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/7647afbf-87842bf41c28a86e.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/890-c50513be7d03524b.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "HEAD /about HTTP/1.1" 301 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "HEAD /blog HTTP/1.1" 301 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "HEAD /contact HTTP/1.1" 301 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "HEAD / HTTP/1.1" 304 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "HEAD /about/ HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /favicon.ico HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "HEAD /contact/ HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/342.f8b2a536f57cea44.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "HEAD /blog/ HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/839.c7ef7b4c1600e080.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /__next._tree.txt?_rsc=5CB68i4pnAekjehf HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /contact/__next._tree.txt?_rsc=5CB68i4pnAekjehf HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /about/__next._tree.txt?_rsc=5CB68i4pnAekjehf HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /blog/__next._tree.txt?_rsc=5CB68i4pnAekjehf HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /about/__next.about.__PAGE__.txt?_rsc=hzcUC6YqarYE9pKE HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /blog/__next.blog.__PAGE__.txt?_rsc=Npvf18QV6N2pz_RZ HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /__next._index.txt?_rsc=yIp22O3xgPPxC28X HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /__next.__PAGE__.txt?_rsc=8nTjltbQWvg6NcbE HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/602bc037.9da4662d2302ca9e.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /_next/static/chunks/3ae69684.d8b473cfcbbf7d4f.js HTTP/1.1" 200 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /contact/__next.contact.__PAGE__.txt?_rsc=BiuOixuigeBXVJn7 HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:05:20] "GET /images/light-story/environment/studio_small_09_1k.hdr HTTP/1.1" 304 -
+127.0.0.1 - - [23/Nov/2026 02:05:21] "GET /images/home/stats-audience.jpg HTTP/1.1" 304 -
+127.0.0.1 - - [23/Nov/2026 02:05:21] "GET /images/story/msc-poster.jpg HTTP/1.1" 304 -
+127.0.0.1 - - [23/Nov/2026 02:08:00] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:08:00] "GET /about/__next.about.__PAGE__.txt?_rsc=hzcUC6YqarYE9pKE HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:08:00] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:08:00] "GET /contact/__next.contact.__PAGE__.txt?_rsc=BiuOixuigeBXVJn7 HTTP/1.1" 404 -
+127.0.0.1 - - [23/Nov/2026 02:08:00] code 404, message File not found
+127.0.0.1 - - [23/Nov/2026 02:08:00] "GET /blog/__next.blog.__PAGE__.txt?_rsc=Npvf18QV6N2pz_RZ HTTP/1.1" 404 -

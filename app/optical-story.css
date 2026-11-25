@@ -1,567 +1,429 @@
-.optical-story {
+body:has(.light-experience) {
+  background: #08090c;
+}
+body:has(.light-experience) .site-header {
+  background: linear-gradient(#08090ce8, #08090c55, transparent);
+  border: 0;
+  backdrop-filter: none;
+}
+body:has(.light-experience) footer {
+  display: none;
+}
+.light-experience {
   position: relative;
   isolation: isolate;
   background: #08090c;
-  padding-top: 84px;
-  --optical-height: calc(100svh - 84px);
+  --light-x: 75%;
 }
-.optical-stage {
+.experience-world {
   position: sticky;
-  top: 84px;
-  height: var(--optical-height);
+  top: 0;
+  height: 100svh;
   width: 100%;
-  z-index: 1;
   overflow: hidden;
-  background: #08090c;
-  touch-action: pan-y;
+  pointer-events: none;
+  z-index: 0;
 }
-.optical-canvas {
+.experience-canvas {
   display: block;
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: opacity 0.5s;
-  touch-action: pan-y;
+  transition: opacity 1s;
 }
-.optical-ready .optical-canvas {
+.is-ready .experience-canvas {
   opacity: 1;
 }
-.optical-loading {
-  position: absolute;
-  top: 48%;
-  left: 65%;
-  transform: translateX(-50%);
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  color: #d1c5aa;
-}
-.optical-stage-caption {
-  position: absolute;
-  left: 40%;
-  right: 6%;
-  bottom: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 25px;
-  pointer-events: none;
-}
-.optical-stage-caption > p {
-  font-family: var(--font-geist-mono), monospace;
-  font-size: 12px;
-  color: #d5d5ce;
-  letter-spacing: 0.025em;
-  padding-left: 15px;
-  border-left: 1px solid #f0b54577;
-  max-width: 36ch;
-}
-.optical-stage-input {
-  pointer-events: auto;
-  min-width: 150px;
-  font-size: 12px;
-  color: #dbd8ce;
-}
-.optical-stage-input label {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  white-space: nowrap;
-}
-.optical-stage-input input {
-  width: 90px;
-  accent-color: #f0b545;
-  min-height: 44px;
-  cursor: ew-resize;
-}
-.optical-stage-input button {
-  min-height: 44px;
-  border-bottom: 1px solid #f0b54580;
-  padding: 7px 0;
-  cursor: pointer;
-}
-.optical-track {
+.experience-pages {
   position: relative;
-  z-index: 2;
-  pointer-events: none;
-  margin-top: calc(-1 * var(--optical-height));
+  z-index: 1;
+  margin-top: -100svh;
 }
-.optical-panel {
-  min-height: 115svh;
-  padding-top: 55px;
-  padding-bottom: 100px;
+.experience-chapter {
+  min-height: 108svh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 110px 0 70px;
   scroll-margin-top: 84px;
 }
-.optical-panel-0 {
-  padding-top: 40px;
+.experience-composition {
+  width: min(1280px, calc(100% - 120px));
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
 }
-.optical-panel-width {
-  width: min(1280px, calc(100% - 96px));
-  margin-inline: auto;
-}
-.optical-card {
-  width: min(33vw, 430px);
-  pointer-events: auto;
+.experience-copy {
+  position: relative;
+  width: 42%;
   min-width: 0;
 }
-.optical-card .eyebrow {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  margin-bottom: 20px;
+.experience-copy:before {
+  content: "";
+  position: absolute;
+  inset: -35px -45px;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse,
+    #08090cdd 22%,
+    #08090c88 50%,
+    transparent 73%
+  );
+  pointer-events: none;
 }
-.optical-card h1,
-.optical-card h2 {
+.is-reversed .experience-composition {
+  justify-content: flex-end;
+}
+.experience-eyebrow {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  color: #d9b778;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+}
+.light-experience h1,
+.light-experience h2 {
   font-family: var(--font-jost), sans-serif;
   font-weight: 400;
   letter-spacing: -0.045em;
-  line-height: 1.06;
+  line-height: 1.02;
   text-wrap: balance;
 }
-.optical-card h1 {
-  font-size: clamp(44px, 4.7vw, 70px);
-  text-wrap: nowrap;
+.light-experience h1 {
+  font-size: clamp(56px, 5.8vw, 86px);
+  white-space: nowrap;
 }
-.optical-card h1 span {
+.light-experience h1 em {
+  font-weight: 400;
   color: #f0b545;
+  font-style: normal;
 }
-.optical-card h2 {
-  font-size: clamp(36px, 3.4vw, 51px);
-  max-width: 13ch;
+.light-experience h2 {
+  font-size: clamp(38px, 3.8vw, 58px);
+  max-width: 16ch;
 }
-.optical-body {
-  font-size: 16px;
-  line-height: 1.7;
-  color: #c2c3c5;
-  max-width: 35ch;
-  margin-top: 20px;
+.experience-body {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #cccac5;
+  max-width: 40ch;
+  margin-top: 23px;
 }
-.optical-name {
-  font-size: 15px;
-  line-height: 1.6;
-  max-width: 38ch;
-  color: #e3e0d9;
-  margin-top: 25px;
+.experience-photo {
+  margin: 26px 0 0;
+  width: min(100%, 440px);
 }
-.optical-panel-0 .optical-body {
-  display: none;
-}
-.optical-photo {
-  margin: 24px 0 0;
-}
-.optical-photo img {
+.experience-photo img {
   display: block;
   width: 100%;
-  height: 230px;
-  object-fit: cover;
-  object-position: center 25%;
-  border-radius: 2px;
-}
-.optical-photo figcaption {
-  font-size: 12px;
-  line-height: 1.55;
-  color: #b0b1b4;
-  margin-top: 10px;
-  font-family: var(--font-geist-mono), monospace;
-}
-.optical-photo-0 img,
-.optical-photo-1 img {
-  height: 220px;
-  object-position: center 30%;
-}
-.optical-photo-2 img {
   height: 280px;
-  object-position: 47% 20%;
+  object-fit: cover;
+  object-position: center 35%;
+  mask-image: linear-gradient(#000 85%, #000c);
 }
-.optical-photo-3 img {
-  height: 290px;
-  object-position: 20% center;
+.experience-photo figcaption {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #aeb0b6;
+  margin-top: 10px;
 }
-.optical-photo-4 img,
-.optical-photo-5 img {
-  height: 250px;
+.photo-0 {
+  width: 245px;
+  margin-top: 23px;
 }
-.optical-links {
+.photo-0 img {
+  height: 140px;
+  object-position: center 20%;
+}
+.photo-1 img {
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+  object-position: left center;
+}
+.photo-3 img {
+  object-position: center 20%;
+}
+.photo-5 img {
+  object-position: center 78%;
+}
+.experience-links {
   display: flex;
+  gap: 30px;
   align-items: center;
-  gap: 25px;
+  flex-wrap: wrap;
   margin-top: 23px;
   font-size: 14px;
+  color: #efeee8;
 }
-.optical-links .text-link {
-  font-size: 14px;
-}
-.optical-youtube {
-  display: inline-flex;
+.experience-links a {
+  display: flex;
+  gap: 20px;
   align-items: center;
-  gap: 8px;
-  color: #c7c8ca;
   min-height: 44px;
+  border-bottom: 1px solid #b9944d70;
 }
-.optical-follow {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #e0bd78;
-  font-size: 12px;
-  line-height: 1.5;
-  text-align: left;
-  margin-top: 18px;
-  min-height: 44px;
-  cursor: pointer;
+.experience-links a span {
+  color: #d9b778;
 }
-.optical-controls {
-  position: sticky;
-  bottom: 18px;
-  z-index: 6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
-  width: max-content;
-  max-width: calc(100% - 28px);
-  margin: 0 auto;
-  padding: 3px 18px;
-  background: #08090cf2;
-  border: 1px solid #ffffff1c;
-  border-radius: 40px;
-  backdrop-filter: blur(10px);
-}
-.optical-controls nav {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-.optical-controls nav button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-width: 42px;
-  min-height: 44px;
-  color: #999fa9;
+.experience-pause {
   font-family: var(--font-geist-mono), monospace;
+  display: block;
   font-size: 12px;
+  color: #aeb0b6;
+  min-height: 44px;
+  margin-top: 5px;
   cursor: pointer;
 }
-.optical-controls nav button[aria-current] {
-  color: #f0b545;
-}
-.optical-nav-name {
-  display: none;
-}
-.optical-pause,
-.optical-skip {
+.experience-replay {
+  display: flex;
+  gap: 18px;
+  align-items: center;
   font-size: 12px;
+  color: #b6c4b8;
   min-height: 44px;
+  margin-top: 12px;
+  cursor: pointer;
+}
+.experience-work-anchor {
+  position: absolute;
+  top: 0;
+  scroll-margin-top: 84px;
+}
+.experience-close {
+  position: relative;
+  padding: 140px max(60px, calc((100vw - 1280px) / 2)) 0;
+  min-height: 85svh;
+  background: linear-gradient(to bottom, transparent 0%, #08090c 220px, #08090c 100%);
+}
+.experience-close > div:first-child {
+  max-width: 650px;
+}
+.experience-close h2 {
+  font-size: clamp(46px, 5vw, 76px);
+  max-width: 15ch;
+}
+.experience-contact {
   display: inline-flex;
   align-items: center;
-  white-space: nowrap;
-  cursor: pointer;
-  color: #dedbd3;
+  gap: 60px;
+  font-size: 20px;
+  color: #f0b545;
+  min-height: 60px;
+  margin-top: 25px;
+  border-bottom: 1px solid #f0b54580;
 }
-.optical-skip {
-  color: #e5bd72;
-}
-.optical-physics {
-  position: relative;
-  z-index: 7;
-  padding: 35px 0 55px;
+.experience-physics {
+  margin-top: 80px;
   font-size: 13px;
-  color: #bec0c5;
+  color: #aeb0b6;
+  max-width: 80ch;
 }
-.optical-physics summary {
-  cursor: pointer;
-  color: #dedbd3;
+.experience-physics summary {
   min-height: 44px;
-  display: list-item;
+  cursor: pointer;
 }
-.optical-physics p {
-  max-width: 78ch;
+.experience-physics p {
   line-height: 1.8;
-  margin-top: 15px;
+  margin-top: 12px;
 }
-.optical-fallback-image {
-  position: absolute;
-  inset: 10% 8% 15% 43%;
-  opacity: 0.75;
+.experience-footer {
+  padding: 55px 0 32px;
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  align-items: center;
+  border-top: 1px solid #fff1;
+  margin-top: 35px;
+  font-size: 12px;
+  color: #aaaeb4;
 }
-.optical-fallback-image > p {
-  position: absolute;
-  bottom: 0;
-  background: #08090cf2;
-  padding: 20px;
-  font-size: 14px;
-  color: #dedbd3;
+.experience-footer > p {
+  font-family: var(--font-jost), sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 15px;
+  color: #f2efe8;
 }
-.optical-fallback .optical-stage-caption {
-  display: none;
+.experience-footer nav {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
 }
-.optical-story button:focus-visible,
-.optical-story input:focus-visible {
+.experience-footer a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+.light-experience a:focus-visible,
+.light-experience button:focus-visible,
+.light-experience summary:focus-visible {
   outline: 2px solid #f0b545;
   outline-offset: 5px;
 }
-@media (min-width: 1650px) {
-  .optical-controls nav button[aria-current] .optical-nav-name {
-    display: inline;
+@media (min-width: 1600px) {
+  .experience-copy {
+    width: 40%;
   }
-  .optical-card {
-    width: 430px;
-  }
-  .optical-card h1 {
-    font-size: 72px;
+  .light-experience h1 {
+    font-size: 90px;
   }
 }
 @media (max-width: 1100px) and (min-width: 900px) {
-  .optical-panel-width {
-    width: calc(100% - 50px);
+  .experience-composition {
+    width: calc(100% - 80px);
   }
-  .optical-card h1 {
-    font-size: 50px;
+  .light-experience h1 {
+    font-size: 60px;
   }
-  .optical-card h2 {
-    font-size: 40px;
+  .light-experience h2 {
+    font-size: 43px;
   }
-  .optical-card {
-    width: 34vw;
+  .experience-body {
+    font-size: 16px;
   }
-  .optical-stage-caption {
-    left: 43%;
-    right: 3%;
-    gap: 10px;
+  .experience-photo img {
+    height: 245px;
   }
-  .optical-stage-caption > p {
-    max-width: 25ch;
+  .photo-0 img {
+    height: 130px;
   }
-  .optical-photo img {
-    height: 210px;
-  }
-  .optical-photo-2 img,
-  .optical-photo-3 img {
-    height: 240px;
+  .photo-1 img {
+    height: auto;
   }
 }
 @media (max-width: 899px) {
-  .optical-story {
-    padding-top: 70px;
-    --optical-height: 45svh;
+  .experience-chapter {
+    min-height: 135svh;
+    align-items: flex-start;
+    padding: 125px 0 90px;
+    scroll-margin-top: 70px;
   }
-  .optical-stage {
-    top: 70px;
-    height: var(--optical-height);
-    min-height: 260px;
-    z-index: 5;
-    border-bottom: 1px solid #ffffff0d;
-  }
-  .optical-track {
-    margin-top: 0;
-    z-index: 2;
-  }
-  .optical-panel {
-    min-height: 85svh;
-    padding-top: 30px;
-    padding-bottom: 55px;
-    scroll-margin-top: calc(45svh + 70px);
-  }
-  .optical-panel-0 {
-    min-height: 88svh;
-    padding-top: 26px;
-  }
-  .optical-panel-width {
+  .experience-composition {
     width: calc(100% - 40px);
   }
-  .optical-card {
+  .experience-copy {
     width: 100%;
-    max-width: 580px;
-    margin-inline: auto;
   }
-  .optical-card h1 {
-    font-size: 42px;
-    line-height: 1.04;
+  .experience-eyebrow {
+    font-size: 12px;
+    margin-bottom: 20px;
   }
-  .optical-card h2 {
-    font-size: 35px;
+  .light-experience h1 {
+    font-size: clamp(41px, 9vw, 65px);
+    white-space: normal;
+  }
+  .light-experience h2 {
+    font-size: clamp(34px, 7vw, 48px);
     max-width: 18ch;
   }
-  .optical-card .eyebrow {
-    font-size: 12px;
-    margin-bottom: 15px;
-  }
-  .optical-name {
-    font-size: 15px;
-    line-height: 1.65;
-    margin-top: 20px;
-    max-width: 44ch;
-  }
-  .optical-body {
-    max-width: 43ch;
+  .experience-body {
     font-size: 16px;
-    margin-top: 17px;
-  }
-  .optical-photo {
+    line-height: 1.75;
+    max-width: 42ch;
     margin-top: 22px;
   }
-  .optical-photo img {
-    height: 225px;
-    object-position: center 25%;
+  .experience-photo {
+    width: 62%;
+    margin-top: 40svh;
+    margin-left: 0;
   }
-  .optical-photo-0 img,
-  .optical-photo-1 img {
-    height: 250px;
+  .is-reversed .experience-photo {
+    margin-left: auto;
+  }
+  .experience-photo img {
+    height: 230px;
     object-position: center 30%;
   }
-  .optical-photo-2 img {
-    height: 300px;
-    object-position: 47% 20%;
+  .photo-1 img {
+    height: auto;
   }
-  .optical-photo-3 img {
-    height: 270px;
-    object-position: 20% center;
-  }
-  .optical-stage-caption {
-    left: 18px;
-    right: 18px;
-    bottom: 8px;
-    gap: 10px;
-    align-items: center;
-  }
-  .optical-stage-caption > p {
-    font-size: 12px;
-    line-height: 1.45;
-    padding-left: 10px;
-    max-width: 26ch;
-  }
-  .optical-stage-input {
-    min-width: 0;
-    flex-shrink: 0;
-  }
-  .optical-stage-input label {
-    font-size: 12px;
-    gap: 6px;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  .optical-stage-input input {
-    width: 74px;
-    min-height: 25px;
-  }
-  .optical-stage-input button {
-    font-size: 12px;
-    max-width: 12ch;
-    line-height: 1.4;
-  }
-  .optical-loading {
-    left: 50%;
-    font-size: 12px;
-  }
-  .optical-controls {
-    gap: 8px;
-    bottom: 10px;
-    padding: 0 9px;
-  }
-  .optical-controls nav {
-    gap: 0;
-  }
-  .optical-controls nav button {
-    min-width: 32px;
-    min-height: 44px;
-    font-size: 12px;
-  }
-  .optical-skip {
-    display: none;
-  }
-  .optical-pause {
-    font-size: 12px;
-    min-width: 80px;
-    justify-content: center;
-  }
-  .optical-physics {
-    padding: 30px 0 45px;
-    font-size: 13px;
-  }
-  .optical-fallback-image {
-    inset: 0 0 45px 0;
-  }
-  .optical-fallback-image img {
+  .photo-3 img {
     object-position: center 20%;
   }
-  .optical-fallback-image > p {
-    font-size: 12px;
-    padding: 10px;
+  .photo-5 img {
+    object-position: center 78%;
   }
-  .optical-follow {
-    margin-top: 15px;
+  .photo-0 {
+    width: 180px;
+    margin-top: 43svh;
   }
-  .optical-links {
+  .photo-0 img {
+    height: 135px;
+    object-position: center 20%;
+  }
+  .experience-links {
+    font-size: 14px;
+    gap: 25px;
     margin-top: 18px;
+  }
+  .experience-pause {
+    margin-top: 5px;
+  }
+  .experience-copy:before {
+    inset: -25px -15px;
+    background: linear-gradient(#08090c88, transparent 48%);
+  }
+  .experience-close {
+    padding: 100px 20px 0;
+    min-height: 90svh;
+  }
+  .experience-close h2 {
+    font-size: 44px;
+  }
+  .experience-close .experience-body {
+    max-width: 35ch;
+  }
+  .experience-contact {
+    font-size: 19px;
+  }
+  .experience-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .experience-footer nav {
+    gap: 22px;
+  }
+  .experience-physics {
+    margin-top: 60px;
+  }
+  .experience-world {
+    height: 100svh;
   }
 }
 @media (max-width: 360px) {
-  .optical-card h1 {
-    font-size: 36px;
+  .experience-chapter {
+    padding-top: 110px;
   }
-  .optical-card h2 {
-    font-size: 31px;
+  .light-experience h1 {
+    font-size: 40px;
   }
-  .optical-panel-width {
-    width: calc(100% - 34px);
+  .experience-eyebrow {
+    max-width: 28ch;
   }
-  .optical-stage-caption {
-    left: 12px;
-    right: 12px;
+  .experience-photo {
+    width: 65%;
   }
-  .optical-stage-caption > p {
-    max-width: 23ch;
-  }
-  .optical-photo-0 img {
-    height: 220px;
-  }
-  .optical-controls nav button {
-    min-width: 29px;
-  }
-  .optical-pause {
-    min-width: 76px;
-  }
-  .optical-controls {
-    gap: 4px;
+  .experience-body {
+    font-size: 16px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .optical-canvas {
+  .experience-canvas {
     transition: none;
   }
-  .optical-story * {
+  .light-experience * {
     scroll-behavior: auto !important;
   }
 }
 
-.optical-canvas {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 67%;
-  height: 100%;
-}
-.optical-photo-0 img,
-.optical-photo-1 img {
-  object-position: center top;
-}
-@media (max-width: 899px) {
-  .optical-canvas {
-    width: 100%;
-  }
-}
+.experience-copy{z-index:2;isolation:isolate}.experience-copy:before{background:radial-gradient(ellipse,#08090c 25%,#08090ce8 58%,transparent 76%)}
 
-@media (min-width: 900px) {
-  .optical-canvas {
-    mask-image: linear-gradient(90deg, transparent, #000 6%, #000);
-  }
-}
+body:has(.light-experience) .site-header{background:linear-gradient(#08090c 70%,#08090cf0 93%,#08090c00)}
 
-.optical-physics {
-  pointer-events: none;
-}
-.optical-physics summary,
-.optical-physics p {
-  pointer-events: auto;
-}
+@media(max-width:899px){.experience-copy:before{display:block;inset:-20px -16px;background:radial-gradient(ellipse at center,#08090cf2 30%,#08090cbd 68%,transparent 100%);border-radius:12px;pointer-events:none}.photo-0{margin-top:30svh}}
+.is-fallback .experience-world{visibility:hidden}.is-fallback .experience-chapter{min-height:0;padding-block:100px 30px}.is-fallback .experience-photo{margin-top:25px;width:100%;max-width:440px}.is-fallback .photo-0{width:245px}

@@ -267,10 +267,10 @@ export function createOpticalWorld(
   const bench = new THREE.Group();
   scene.add(bench);
   const darkMetal = new THREE.MeshStandardMaterial({
-    color: 0x070a10,
-    metalness: 0.2,
-    roughness: 0.35,
-    envMapIntensity: 0.25,
+    color: 0x20252c,
+    metalness: 0,
+    roughness: 0.7,
+    envMapIntensity: 0,
   });
   const edgeMetal = new THREE.MeshStandardMaterial({
     color: 0x4b4232,
