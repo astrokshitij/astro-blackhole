@@ -72,20 +72,40 @@ def reset():
     try:
         prefs = bpy.context.preferences
         cprefs = prefs.addons["cycles"].preferences
-        cprefs.compute_device_type = "CUDA"
-        cprefs.get_devices()
-        has_gpu = False
-        for dev in cprefs.devices:
-            if dev.type in {"CUDA", "OPTIX"}:
-                dev.use = True
-                has_gpu = True
-                print(f"[Blender] Using GPU: {dev.name}")
-        sc.cycles.device = "GPU" if has_gpu else "CPU"
+        chosen_backend = None
+        for backend in ("OPTIX", "CUDA"):
+            try:
+                cprefs.compute_device_type = backend
+                cprefs.get_devices()
+                gpu_devs = [d for d in cprefs.devices if d.type == backend]
+                if gpu_devs:
+                    for d in cprefs.devices:
+                        d.use = (d.type == backend)
+                    chosen_backend = backend
+                    for d in gpu_devs:
+                        print(f"[Blender] Using GPU ({backend}): {d.name}")
+                    break
+            except Exception:
+                continue
+        sc.cycles.device = "GPU" if chosen_backend else "CPU"
     except Exception as e:
         print("[Blender] GPU fallback to CPU:", e)
+        chosen_backend = None
         sc.cycles.device = "CPU"
 
     sc.cycles.use_denoising = True
+    if chosen_backend == "OPTIX":
+        try:
+            sc.cycles.denoiser = "OPTIX"
+        except Exception:
+            pass
+    sc.cycles.use_adaptive_sampling = True
+    sc.cycles.adaptive_threshold = 0.025
+    sc.render.use_persistent_data = True
+    try:
+        sc.render.compositor_device = "GPU" if chosen_backend else "CPU"
+    except Exception:
+        pass
     sc.cycles.max_bounces = 12
     sc.cycles.transmission_bounces = 12
     sc.cycles.transparent_max_bounces = 18
@@ -1057,6 +1077,8 @@ if __name__ == "__main__":
     H = int(argv[3]) if len(argv) > 3 else 1260
     S = int(argv[4]) if len(argv) > 4 else 20
     STEP = max(1, int(argv[5])) if len(argv) > 5 else 1
+    START_IDX = int(argv[6]) if len(argv) > 6 else 0
+    END_IDX = int(argv[7]) if len(argv) > 7 else None
 
     os.makedirs(outdir, exist_ok=True)
     sc = setup(W, H, S)
@@ -1078,10 +1100,12 @@ if __name__ == "__main__":
             frame_list.append(TOTAL)
         with open(os.path.join(outdir, "manifest.json"), "w") as mf:
             json.dump({"count": len(frame_list), "step": STEP, "width": W, "height": H}, mf)
-        print(f"[Render] FULL MODE: {len(frame_list)} frames (step={STEP}) -> {outdir} ({W}x{H}, {S} samples)")
-        for idx, f in enumerate(frame_list):
+        end_bound = len(frame_list) if END_IDX is None else min(len(frame_list), END_IDX + 1)
+        print(f"[Render] FULL MODE: {len(frame_list)} frames (step={STEP}, range={START_IDX}..{end_bound - 1}) -> {outdir} ({W}x{H}, {S} samples)")
+        for idx in range(max(0, START_IDX), end_bound):
+            f = frame_list[idx]
             target = os.path.join(outdir, f"f_{idx:03d}.png")
-            if os.path.exists(target):
+            if os.path.exists(target) and os.path.getsize(target) > 4096:
                 continue
             sc.frame_set(f)
             sc.render.filepath = target
