@@ -580,6 +580,8 @@ def setup(W, H, samples):
 
 if __name__ == "__main__":
     argv = sys.argv[1:]
+    if "--" in argv:
+        argv = argv[argv.index("--") + 1:]
     mode = argv[0] if len(argv) > 0 else "all"
     outdir = argv[1] if len(argv) > 1 else "out/frames"
     W = int(argv[2]) if len(argv) > 2 else 960
