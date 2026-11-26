@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LIGHT_JOURNEY } from "@/lib/content";
 import { ArrowGlyph } from "@/components/site/icons";
+import { JourneyCanvas } from "@/components/site/journey-canvas";
 
 function SmartLink({
   href,
@@ -52,8 +53,34 @@ function SmartLink({
 
 export function LightJourneyStage() {
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
   const chapters = LIGHT_JOURNEY.chapters;
   const currentChapter = chapters[activeChapterIndex] || chapters[0];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const windowH = window.innerHeight;
+
+      // Calculate continuous progress 0..1 across the chapters section
+      const totalScroll = rect.height - windowH * 0.65;
+      const currentScroll = -rect.top + windowH * 0.25;
+
+      const p = Math.max(0, Math.min(1, currentScroll / totalScroll));
+      setProgress(p);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const chapterEls = document.querySelectorAll<HTMLElement>(".journey-chapter");
@@ -116,19 +143,15 @@ export function LightJourneyStage() {
       </section>
 
       {/* Main Split-Stage Section */}
-      <section className="relative px-6 sm:px-8 lg:px-12 max-w-[1440px] mx-auto pb-24">
-        {/* On Mobile: Sticky Video Stage pinned at the top */}
+      <section
+        ref={sectionRef}
+        id="journey-start"
+        className="relative px-6 sm:px-8 lg:px-12 max-w-[1440px] mx-auto pb-24"
+      >
+        {/* On Mobile: Sticky Canvas Stage pinned at the top */}
         <div className="block lg:hidden mb-12 sticky top-20 z-20">
           <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-black">
-            <video
-              src="/videos/journey/hero-gemini.mp4"
-              poster="/images/journey/hero-gemini-poster.jpg"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover scale-[1.04]"
-            />
+            <JourneyCanvas progress={progress} className="w-full h-full" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/80 via-transparent to-transparent pointer-events-none" />
             <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-xs font-mono tracking-wider text-[#f0b545]">
               {String(activeChapterIndex + 1).padStart(2, "0")} · {currentChapter.label}
@@ -228,16 +251,8 @@ export function LightJourneyStage() {
           {/* Right Column (cols 7-12): The Anchored Cinematic Stage (Desktop) */}
           <div className="hidden lg:block lg:col-span-6 sticky top-28 h-[calc(100vh-8.5rem)]">
             <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
-              {/* Cinematic Video */}
-              <video
-                src="/videos/journey/hero-gemini.mp4"
-                poster="/images/journey/hero-gemini-poster.jpg"
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover scale-[1.04]"
-              />
+              {/* Interactive 120 FPS Image Sequence Canvas */}
+              <JourneyCanvas progress={progress} className="w-full h-full" />
 
               {/* Edge Vignette & Watermark Mask */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/90 via-transparent to-[#08090c]/30 pointer-events-none" />
