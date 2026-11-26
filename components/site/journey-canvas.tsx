@@ -2,132 +2,206 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const TOTAL_FRAMES = 289; // f_000.webp to f_288.webp
+const DEFAULT_TOTAL_FRAMES = 289;
+const DEFAULT_WIDTH = 1440;
+const DEFAULT_HEIGHT = 1260;
 
-interface JourneyCanvasProps {
-  progress: number; // 0.0 to 1.0
-  className?: string;
+interface JourneyManifest {
+  count?: number;
+  width?: number;
+  height?: number;
 }
 
-export function JourneyCanvas({ progress, className = "" }: JourneyCanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
-  const [loadedCount, setLoadedCount] = useState(0);
-  const currentFrameRef = useRef<number>(0);
-  const targetFrameRef = useRef<number>(0);
-  const animFrameIdRef = useRef<number | null>(null);
+interface JourneyCanvasProps {
+  progress: number;
+  className?: string;
+  totalFrames?: number;
+}
 
-  // Preload images
-  useEffect(() => {
-    let isCancelled = false;
-    const images: HTMLImageElement[] = [];
-
-    // Prioritize frame 0 for instant initial display
-    const firstImg = new Image();
-    firstImg.src = "/frames/journey/f_000.webp";
-    firstImg.onload = () => {
-      if (!isCancelled) {
-        images[0] = firstImg;
-        setLoadedCount((c) => c + 1);
-        drawFrame(0);
-      }
-    };
-    images[0] = firstImg;
-
-    // Load remaining frames
-    let loaded = 1;
-    for (let i = 1; i < TOTAL_FRAMES; i++) {
-      const img = new Image();
-      const numStr = String(i).padStart(3, "0");
-      img.src = `/frames/journey/f_${numStr}.webp`;
-      img.onload = () => {
-        if (!isCancelled) {
-          loaded++;
-          if (loaded % 20 === 0 || loaded === TOTAL_FRAMES) {
-            setLoadedCount(loaded);
-          }
-        }
-      };
-      images[i] = img;
-    }
-
-    imagesRef.current = images;
-
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-
-  const drawFrame = (frameIndex: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const img = imagesRef.current[frameIndex];
-    if (img && img.complete && img.naturalWidth > 0) {
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    } else {
-      // Find nearest loaded frame if current frame is still loading
-      for (let offset = 1; offset < 20; offset++) {
-        const prev = imagesRef.current[frameIndex - offset];
-        if (prev && prev.complete && prev.naturalWidth > 0) {
-          ctx.drawImage(prev, 0, 0, canvas.width, canvas.height);
-          break;
-        }
-        const next = imagesRef.current[frameIndex + offset];
-        if (next && next.complete && next.naturalWidth > 0) {
-          ctx.drawImage(next, 0, 0, canvas.width, canvas.height);
-          break;
-        }
-      }
+function buildPriorityOrder(count: number): number[] {
+  const seen = new Set<number>();
+  const order: number[] = [];
+  const push = (idx: number) => {
+    if (idx >= 0 && idx < count && !seen.has(idx)) {
+      seen.add(idx);
+      order.push(idx);
     }
   };
 
-  // Update target frame when progress changes
+  push(0);
+  push(count - 1);
+  for (let stride = 8; stride >= 1; stride = Math.floor(stride / 2)) {
+    for (let i = 0; i < count; i += stride) {
+      push(i);
+    }
+  }
+  return order;
+}
+
+function findClosestLoaded(
+  frames: (HTMLImageElement | null)[],
+  target: number
+): HTMLImageElement | null {
+  const direct = frames[target];
+  if (direct && direct.complete && direct.naturalWidth > 0) {
+    return direct;
+  }
+  for (let offset = 1; offset < frames.length; offset++) {
+    const down = frames[target - offset];
+    if (down && down.complete && down.naturalWidth > 0) return down;
+    const up = frames[target + offset];
+    if (up && up.complete && up.naturalWidth > 0) return up;
+  }
+  return null;
+}
+
+export function JourneyCanvas({
+  progress,
+  className = "",
+  totalFrames = DEFAULT_TOTAL_FRAMES,
+}: JourneyCanvasProps) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const framesRef = useRef<(HTMLImageElement | null)[]>([]);
+  const progressRef = useRef(progress);
+  const lastRenderedIdxRef = useRef<number>(-1);
+  const [frameCount, setFrameCount] = useState(totalFrames);
+  const [dimensions, setDimensions] = useState({
+    width: DEFAULT_WIDTH,
+    height: DEFAULT_HEIGHT,
+  });
+  const [loadedCount, setLoadedCount] = useState(0);
+
+  progressRef.current = progress;
+
   useEffect(() => {
-    const clampedProgress = Math.max(0, Math.min(1, progress));
-    targetFrameRef.current = Math.min(
-      TOTAL_FRAMES - 1,
-      Math.floor(clampedProgress * (TOTAL_FRAMES - 1))
-    );
-  }, [progress]);
-
-  // Smooth render loop with requestAnimationFrame
-  useEffect(() => {
-    const renderLoop = () => {
-      const target = targetFrameRef.current;
-      const current = currentFrameRef.current;
-
-      if (current !== target) {
-        // Direct assignment for instantaneous 0ms response, or 1-step lerp if jump is small
-        const diff = target - current;
-        const step = Math.abs(diff) > 4 ? Math.round(diff * 0.45) : diff > 0 ? 1 : -1;
-        const nextFrame = current + step;
-
-        currentFrameRef.current = nextFrame;
-        drawFrame(nextFrame);
-      }
-
-      animFrameIdRef.current = requestAnimationFrame(renderLoop);
-    };
-
-    animFrameIdRef.current = requestAnimationFrame(renderLoop);
+    let active = true;
+    fetch("/frames/journey/manifest.json", { cache: "no-store" })
+      .then((res) => (res.ok ? (res.json() as Promise<JourneyManifest>) : null))
+      .then((manifest) => {
+        if (!active || !manifest) return;
+        if (typeof manifest.count === "number" && manifest.count > 0) {
+          setFrameCount(manifest.count);
+        }
+        if (
+          typeof manifest.width === "number" &&
+          typeof manifest.height === "number" &&
+          manifest.width > 0 &&
+          manifest.height > 0
+        ) {
+          setDimensions({ width: manifest.width, height: manifest.height });
+        }
+      })
+      .catch(() => {
+        // Fallback to default frame count when manifest is unavailable.
+      });
     return () => {
-      if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
+      active = false;
     };
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    const frames: (HTMLImageElement | null)[] = new Array(frameCount).fill(null);
+    framesRef.current = frames;
+    lastRenderedIdxRef.current = -1;
+    setLoadedCount(0);
+
+    const priority = buildPriorityOrder(frameCount);
+    let loaded = 0;
+    let cursor = 0;
+    const concurrency = 6;
+
+    const loadNext = () => {
+      if (cancelled || cursor >= priority.length) return;
+      const idx = priority[cursor++];
+      const img = new Image();
+      const numStr = String(idx).padStart(3, "0");
+      img.decoding = "async";
+      img.src = `/frames/journey/f_${numStr}.webp`;
+
+      const done = () => {
+        if (cancelled) return;
+        if (img.naturalWidth > 0) {
+          frames[idx] = img;
+          loaded += 1;
+          setLoadedCount(loaded);
+          if (idx === 0 || lastRenderedIdxRef.current === -1) {
+            lastRenderedIdxRef.current = -1;
+          }
+        }
+        loadNext();
+      };
+
+      img.onload = done;
+      img.onerror = () => {
+        if (!cancelled) loadNext();
+      };
+    };
+
+    for (let w = 0; w < concurrency; w++) {
+      loadNext();
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [frameCount]);
+
+  useEffect(() => {
+    let rafId = 0;
+
+    const renderFrame = () => {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const clamped = Math.max(0, Math.min(1, progressRef.current));
+        const maxIdx = Math.max(0, frameCount - 1);
+        const targetIdx = Math.round(clamped * maxIdx);
+        const img = findClosestLoaded(framesRef.current, targetIdx);
+
+        if (img) {
+          const idxChanged = lastRenderedIdxRef.current !== targetIdx;
+          const sizeChanged =
+            canvas.width !== img.naturalWidth || canvas.height !== img.naturalHeight;
+
+          if (idxChanged || sizeChanged || lastRenderedIdxRef.current === -1) {
+            if (sizeChanged) {
+              canvas.width = img.naturalWidth;
+              canvas.height = img.naturalHeight;
+            }
+            const ctx = canvas.getContext("2d");
+            if (ctx) {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              lastRenderedIdxRef.current = framesRef.current[targetIdx] ? targetIdx : -2;
+            }
+          }
+        }
+      }
+      rafId = requestAnimationFrame(renderFrame);
+    };
+
+    rafId = requestAnimationFrame(renderFrame);
+    return () => cancelAnimationFrame(rafId);
+  }, [frameCount]);
+
   return (
-    <div className={`relative w-full h-full bg-black overflow-hidden ${className}`}>
+    <div
+      className={`relative w-full h-full bg-transparent overflow-hidden ${className}`}
+      style={{
+        maskImage:
+          "radial-gradient(ellipse 94% 92% at 50% 50%, #000 72%, rgba(0,0,0,0.65) 88%, transparent 100%)",
+        WebkitMaskImage:
+          "radial-gradient(ellipse 94% 92% at 50% 50%, #000 72%, rgba(0,0,0,0.65) 88%, transparent 100%)",
+      }}
+    >
       <canvas
         ref={canvasRef}
-        width={960}
-        height={840}
-        className="w-full h-full object-cover"
+        width={dimensions.width}
+        height={dimensions.height}
+        className="w-full h-full object-contain mix-blend-lighten"
       />
-      {loadedCount < 10 && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/60 pointer-events-none transition-opacity">
+      {loadedCount < 1 && (
+        <div className="absolute inset-0 flex items-center justify-center bg-transparent pointer-events-none transition-opacity">
           <div className="w-6 h-6 border-2 border-[#f0b545] border-t-transparent rounded-full animate-spin" />
         </div>
       )}

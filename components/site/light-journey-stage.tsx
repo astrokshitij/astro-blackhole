@@ -150,10 +150,9 @@ export function LightJourneyStage() {
       >
         {/* On Mobile: Sticky Canvas Stage pinned at the top */}
         <div className="block lg:hidden mb-12 sticky top-20 z-20">
-          <div className="relative w-full aspect-video rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+          <div className="relative w-full aspect-[8/7] overflow-hidden bg-transparent">
             <JourneyCanvas progress={progress} className="w-full h-full" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/80 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-xs font-mono tracking-wider text-[#f0b545]">
+            <div className="absolute top-3 right-3 text-xs font-mono tracking-wider text-[#f0b545]">
               {String(activeChapterIndex + 1).padStart(2, "0")} · {currentChapter.label}
             </div>
           </div>
@@ -176,7 +175,7 @@ export function LightJourneyStage() {
                     isActive ? "opacity-100" : "opacity-85 lg:opacity-65 hover:opacity-100"
                   }`}
                 >
-                  <div className="bg-[#08090c]/90 border border-white/10 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl hover:border-white/20 transition-all">
+                  <div className="py-4 sm:py-6 lg:py-8 transition-opacity">
                     {/* Chapter Eyebrow */}
                     <div className="flex items-center justify-between mb-3">
                       <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#f0b545]">
@@ -249,8 +248,8 @@ export function LightJourneyStage() {
           </div>
 
           {/* Right Column (cols 7-12): The Anchored Cinematic Stage (Desktop) */}
-          <div className="hidden lg:block lg:col-span-6 sticky top-28 h-[calc(100vh-8.5rem)]">
-            <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+          <div className="hidden lg:block lg:col-span-6 sticky top-24 h-[calc(100vh-7rem)]">
+            <div className="relative w-full h-full overflow-hidden bg-transparent">
               {/* Interactive 120 FPS Image Sequence Canvas */}
               <JourneyCanvas progress={progress} className="w-full h-full" />
 
@@ -258,7 +257,7 @@ export function LightJourneyStage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/90 via-transparent to-[#08090c]/30 pointer-events-none" />
 
               {/* Top-Right HUD Badge */}
-              <div className="absolute top-5 right-5 z-20 px-4 py-2 rounded-full bg-black/75 backdrop-blur-md border border-white/15 text-xs font-mono tracking-wider text-white flex items-center gap-3 shadow-lg pointer-events-none">
+              <div className="absolute top-5 right-5 z-20 text-xs font-mono tracking-wider text-white/80 flex items-center gap-3 pointer-events-none">
                 <span className="w-2 h-2 rounded-full bg-[#f0b545] animate-pulse" />
                 <span className="text-[#f0b545] font-semibold">
                   {String(activeChapterIndex + 1).padStart(2, "0")}
@@ -270,13 +269,13 @@ export function LightJourneyStage() {
               </div>
 
               {/* Bottom-Left Information Strip */}
-              <div className="absolute bottom-5 left-5 right-5 z-20 flex items-center justify-between text-xs font-mono text-white/70 bg-black/60 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 pointer-events-none">
+              <div className="absolute bottom-5 left-5 right-5 z-20 flex items-center justify-between text-xs font-mono text-white/70 pointer-events-none">
                 <div className="flex items-center gap-2">
                   <span className="text-[#f0b545]">ASTRO KSHITIJ</span>
                   <span className="text-white/30">|</span>
                   <span>PHYSICS & STORY</span>
                 </div>
-                <span className="text-white/50 text-[11px] uppercase tracking-wider">
+                <span className="text-white/60 text-xs uppercase tracking-wider">
                   LIGHT JOURNEY
                 </span>
               </div>
