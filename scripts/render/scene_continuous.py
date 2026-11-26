@@ -92,6 +92,8 @@ def reset():
     sc.cycles.glossy_bounces = 6
     sc.cycles.diffuse_bounces = 2
     sc.cycles.volume_bounces = 0
+    sc.cycles.volume_step_rate = 0.25
+    sc.cycles.volume_max_steps = 256
     sc.cycles.caustics_reflective = False
     sc.cycles.caustics_refractive = False
     sc.cycles.blur_glossy = 0.35
@@ -110,7 +112,7 @@ def reset():
     bg_cam.inputs[1].default_value = 0.0  # Camera sees pure obsidian void!
     bg_refl = wn.new("ShaderNodeBackground")
     bg_refl.inputs[0].default_value = (0.11, 0.12, 0.15, 1.0)
-    bg_refl.inputs[1].default_value = 0.65  # Glossy metals & glass reflect soft dark studio dome!
+    bg_refl.inputs[1].default_value = 0.38  # Soft dark studio reflection dome for metals & glass
     w_mix = wn.new("ShaderNodeMixShader")
     wl.new(lp.outputs["Is Camera Ray"], w_mix.inputs["Fac"])
     wl.new(bg_refl.outputs["Background"], w_mix.inputs[1])
@@ -228,19 +230,35 @@ def glass():
 
 
 def floor_mat():
-    """Satin-brushed infinite obsidian optical bench catching directional specular streaks."""
+    """Satin-brushed infinite obsidian optical bench with radial horizon fade into pure #08090c void."""
     m, n, l = mat("Floor")
     p = n["Principled BSDF"]
-    p.inputs["Base Color"].default_value = (0.0032, 0.0036, 0.0048, 1.0)
-    p.inputs["Metallic"].default_value = 0.22
-    if "Specular IOR Level" in p.inputs:
-        p.inputs["Specular IOR Level"].default_value = 0.72
-    elif "Specular" in p.inputs:
-        p.inputs["Specular"].default_value = 0.72
+    p.inputs["Base Color"].default_value = (0.0024, 0.0027, 0.0038, 1.0)
 
     tc = n.new("ShaderNodeTexCoord")
+
+    # Radial distance fade from bench center (0,0,0 in Floor object space, which is placed at (2.5,0,0))
+    dist = n.new("ShaderNodeVectorMath")
+    dist.operation = "LENGTH"
+    l.new(tc.outputs["Object"], dist.inputs[0])
+
+    fade = n.new("ShaderNodeMapRange")
+    fade.interpolation_type = "SMOOTHSTEP"
+    fade.inputs["From Min"].default_value = 9.0
+    fade.inputs["From Max"].default_value = 4.2
+    fade.inputs["To Min"].default_value = 0.0
+    fade.inputs["To Max"].default_value = 1.0
+    l.new(dist.outputs["Value"], fade.inputs["Value"])
+
+    # Metallic & specular drop smoothly to 0 beyond 9m so there is NEVER a grey horizon line!
+    l.new(m_op(n, l, "MULTIPLY", fade.outputs["Result"], val=0.22), p.inputs["Metallic"])
+    spec_val = m_op(n, l, "MULTIPLY", fade.outputs["Result"], val=0.78)
+    if "Specular IOR Level" in p.inputs:
+        l.new(spec_val, p.inputs["Specular IOR Level"])
+    elif "Specular" in p.inputs:
+        l.new(spec_val, p.inputs["Specular"])
+
     mp = n.new("ShaderNodeMapping")
-    # Stretch along X (optical rail axis) to create brushed satin streaks
     mp.inputs["Scale"].default_value = (1.8, 38.0, 1.0)
     l.new(tc.outputs["Object"], mp.inputs["Vector"])
 
@@ -396,10 +414,10 @@ def prism():
     o.data.shade_smooth()
     o.modifiers.new("WN", "WEIGHTED_NORMAL").keep_sharp = True
 
-    # Machined pedestal support tucked beneath the prism base vertex (lowest y = 0.24)
+    # Machined pedestal support flush against the prism underside at cx
     cx = (v[0][0] + v[1][0] + v[2][0]) / 3.0
-    cyl("PrismCollar", 0.22, 0.035, (cx, 0.0, 0.225), metal(), verts=48)
-    cyl("PrismPost", 0.042, 0.20, (cx, 0.0, 0.12), metal(), verts=32)
+    cyl("PrismCollar", 0.20, 0.032, (cx, 0.0, 0.425), metal(), verts=48)
+    cyl("PrismPost", 0.042, 0.39, (cx, 0.0, 0.235), metal(), verts=32)
     box("PrismCarriage", (0.36, 0.40, 0.036), (cx, 0.0, 0.056), metal(), bevel=0.006)
     cyl("PrismKnob", 0.026, 0.045, (cx, 0.22, 0.058), brass_gold(), verts=24, rot=(math.radians(90), 0, 0))
 
@@ -479,9 +497,9 @@ def card(stripe_keys):
     """Matte carbon-black aperture baffle turned toward the room with genuine pinhole cutout."""
     m, n, l = mat("Card")
     p = n["Principled BSDF"]
-    p.inputs["Base Color"].default_value = (0.020, 0.021, 0.024, 1.0)
-    p.inputs["Roughness"].default_value = 0.72
-    p.inputs["Metallic"].default_value = 0.25
+    p.inputs["Base Color"].default_value = (0.008, 0.009, 0.011, 1.0)
+    p.inputs["Roughness"].default_value = 0.80
+    p.inputs["Metallic"].default_value = 0.0
 
     tc = n.new("ShaderNodeTexCoord")
     sep = n.new("ShaderNodeSeparateXYZ")
@@ -794,8 +812,8 @@ def detector():
 
 
 def wave_planes(field_keys, phase_keys):
-    """True 3D mid-air volumetric wave crests & Young's double-slit interference ribbons."""
-    def sheet(name, x0, x1, half_w, kind):
+    """True 3D volumetric wave crests & Young's double-slit interference field (zero layered pancakes)."""
+    def vol_box(name, x0, x1, half_w, half_z, kind):
         L = x1 - x0
         m, n, l = mat(name)
         n.remove(n["Principled BSDF"])
@@ -804,18 +822,19 @@ def wave_planes(field_keys, phase_keys):
         sep = n.new("ShaderNodeSeparateXYZ")
         l.new(tc.outputs["Object"], sep.inputs[0])
 
-        k = 2.0 * math.pi / 0.085
+        k = 2.0 * math.pi / 0.088
         ph = keyed_value(n, "phase", phase_keys, linear=True)
         amp = keyed_value(n, "field", field_keys)
 
         if kind == "plane":
             arg = m_op(n, l, "SUBTRACT", m_op(n, l, "MULTIPLY", sep.outputs[0], val=k), ph.outputs[0])
             c = m_op(n, l, "COSINE", arg)
-            v = m_op(n, l, "POWER", m_op(n, l, "MAXIMUM", c, val=0.0), val=3.0)
+            v = m_op(n, l, "POWER", m_op(n, l, "MAXIMUM", c, val=0.0), val=3.2)
             wmask = n.new("ShaderNodeMapRange"); wmask.interpolation_type = "SMOOTHSTEP"
-            wmask.inputs["From Min"].default_value = 0.24; wmask.inputs["From Max"].default_value = 0.11
+            wmask.inputs["From Min"].default_value = 0.22; wmask.inputs["From Max"].default_value = 0.10
             l.new(m_op(n, l, "ABSOLUTE", sep.outputs[1]), wmask.inputs["Value"])
-            s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", v, wmask.outputs["Result"]), val=2.8)
+            zg = m_op(n, l, "EXPONENT", m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", sep.outputs[2], sep.outputs[2]), val=-1.0 / 0.055 ** 2))
+            s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", v, wmask.outputs["Result"]), zg), val=14.0)
         else:
             a = B["slitHalfSep"]
 
@@ -827,49 +846,50 @@ def wave_planes(field_keys, phase_keys):
                 cos_val = m_op(n, l, "COSINE", m_op(n, l, "SUBTRACT", m_op(n, l, "MULTIPLY", r, val=k), ph.outputs[0]))
                 return m_op(n, l, "DIVIDE", cos_val, m_op(n, l, "SQRT", m_op(n, l, "ADD", r, val=0.05)))
 
-            # Superposition of spherical wavelets from Slit 1 (+a) and Slit 2 (-a)
             v = m_op(n, l, "ADD", amp_from(a), amp_from(-a))
-            v = m_op(n, l, "POWER", m_op(n, l, "MAXIMUM", m_op(n, l, "MULTIPLY", v, val=0.38), val=0.0), val=2.2)
+            v = m_op(n, l, "POWER", m_op(n, l, "MAXIMUM", m_op(n, l, "MULTIPLY", v, val=0.40), val=0.0), val=2.4)
 
-            # Smooth lateral taper so interference wings look airy, not clipped at mesh boundary
             lat = n.new("ShaderNodeMapRange"); lat.interpolation_type = "SMOOTHSTEP"
-            lat.inputs["From Min"].default_value = half_w; lat.inputs["From Max"].default_value = half_w * 0.45
+            lat.inputs["From Min"].default_value = half_w; lat.inputs["From Max"].default_value = half_w * 0.48
             l.new(m_op(n, l, "ABSOLUTE", sep.outputs[1]), lat.inputs["Value"])
 
-            # Gentle distance fade while remaining bright all the way into detector
-            fade = m_op(n, l, "EXPONENT", m_op(n, l, "MULTIPLY", sep.outputs[0], val=-0.42))
-            # Gaussian height fade across Z slices (-0.18..+0.18) -> 3D volumetric mid-air ribbon!
+            fade = m_op(n, l, "EXPONENT", m_op(n, l, "MULTIPLY", sep.outputs[0], val=-0.38))
             zg = m_op(n, l, "EXPONENT", m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", sep.outputs[2], sep.outputs[2]), val=-1.0 / 0.11 ** 2))
+            # Soft X fade at edges of box
+            x0_fade = n.new("ShaderNodeMapRange"); x0_fade.interpolation_type = "SMOOTHSTEP"
+            x0_fade.inputs["From Min"].default_value = 0.0; x0_fade.inputs["From Max"].default_value = 0.06
+            l.new(sep.outputs[0], x0_fade.inputs["Value"])
             s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", v, fade), lat.outputs["Result"]), zg)
-            s = m_op(n, l, "MULTIPLY", s, val=7.5)
+            s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", s, x0_fade.outputs["Result"]), val=22.0)
 
         s = m_op(n, l, "MULTIPLY", s, amp.outputs[0])
         em = n.new("ShaderNodeEmission")
         em.inputs["Color"].default_value = (*GREEN, 1.0)
         l.new(s, em.inputs["Strength"])
-
-        tr = n.new("ShaderNodeBsdfTransparent")
-        add = n.new("ShaderNodeAddShader")
-        l.new(em.outputs[0], add.inputs[0])
-        l.new(tr.outputs[0], add.inputs[1])
-        l.new(add.outputs[0], out.inputs["Surface"])
+        l.new(em.outputs[0], out.inputs["Volume"])
 
         bm = bmesh.new()
-        z_layers = [0.0] if kind == "plane" else [-0.15, -0.075, 0.0, 0.075, 0.15]
-        for zoff in z_layers:
-            vs = [
-                bm.verts.new((0.0, -half_w, zoff)), bm.verts.new((L, -half_w, zoff)),
-                bm.verts.new((L, half_w, zoff)), bm.verts.new((0.0, half_w, zoff)),
-            ]
-            bm.faces.new(vs)
+        vs = [
+            bm.verts.new((0.0, -half_w, -half_z)), bm.verts.new((L, -half_w, -half_z)),
+            bm.verts.new((L, half_w, -half_z)), bm.verts.new((0.0, half_w, -half_z)),
+            bm.verts.new((0.0, -half_w, half_z)), bm.verts.new((L, -half_w, half_z)),
+            bm.verts.new((L, half_w, half_z)), bm.verts.new((0.0, half_w, half_z)),
+        ]
+        bm.faces.new((vs[0], vs[3], vs[2], vs[1]))
+        bm.faces.new((vs[4], vs[5], vs[6], vs[7]))
+        bm.faces.new((vs[0], vs[1], vs[5], vs[4]))
+        bm.faces.new((vs[2], vs[3], vs[7], vs[6]))
+        bm.faces.new((vs[1], vs[2], vs[6], vs[5]))
+        bm.faces.new((vs[3], vs[0], vs[4], vs[7]))
+        bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
 
         o = link_obj(name, bm, m)
         o.location = (x0, 0.0, PIN)
         o.visible_shadow = False
         return o
 
-    sheet("PlaneWave", B["lens"] + 0.12, B["slit"] - 0.03, 0.28, "plane")
-    sheet("SlitWaves", B["slit"] + 0.035, B["detector"] - 0.06, B["detHalf"] * 1.02, "slits")
+    vol_box("PlaneWave", B["lens"] + 0.12, B["slit"] - 0.03, 0.25, 0.14, "plane")
+    vol_box("SlitWaves", B["slit"] + 0.030, B["detector"] - 0.055, B["detHalf"] * 1.02, 0.24, "slits")
 
 
 def dust_haze_box():
@@ -934,8 +954,8 @@ def build():
     beam("InBeam", entry, gexit, (1.0, 0.94, 0.85), 0.016, 0.02, 24.0, 0.65, [(int(F * 0.58), 0.0), (int(F * 0.64), 1.0)], radius=0.16)
     fan([(int(F * 0.64), 0.0), (int(F * 1.0), 0.58), (int(F * 1.6), 1.0)])
     card([(int(F * 1.50), 0.0), (int(F * 1.75), 1.0)])
-    beam("GreenCone", pin, lensp, GREEN, 0.012, 0.16, 16.0, 0.22, [(int(F * 2.10), 0.0), (int(F * 2.58), 1.0)], radius=0.65)
-    beam("GreenBand", lensp, slitp, GREEN, 0.18, 0.18, 2.4, 0.06, [(int(F * 2.58), 0.0), (int(F * 3.05), 1.0)], radius=0.60)
+    beam("GreenCone", pin, lensp, GREEN, 0.012, 0.16, 10.5, 0.10, [(int(F * 2.10), 0.0), (int(F * 2.58), 1.0)], radius=0.65)
+    beam("GreenBand", lensp, slitp, GREEN, 0.18, 0.18, 1.8, 0.04, [(int(F * 2.58), 0.0), (int(F * 3.05), 1.0)], radius=0.60)
     wave_planes([(int(F * 2.85), 0.0), (int(F * 3.25), 1.0), (int(F * 5.2), 1.0), (int(F * 5.75), 0.65)],
                 [(0, 0.0), (TOTAL, TOTAL * 0.40)])
     prism()
