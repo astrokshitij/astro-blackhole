@@ -379,22 +379,16 @@ def card(stripe_keys):
 
 
 def lens():
-    R, r, d = 0.52, 0.22, 0.06
+    R, r = 0.52, 0.22
     h = R - math.sqrt(R * R - r * r)
-    center_sep = 2 * (R - h)
-    bm1 = bmesh.new()
-    bmesh.ops.create_uvsphere(bm1, u_segments=48, v_segments=32, radius=R)
-    bmesh.ops.translate(bm1, vec=(-center_sep / 2, 0, 0), verts=bm1.verts)
-    bm2 = bmesh.new()
-    bmesh.ops.create_uvsphere(bm2, u_segments=48, v_segments=32, radius=R)
-    bmesh.ops.translate(bm2, vec=(center_sep / 2, 0, 0), verts=bm2.verts)
-    bmesh.ops.intersect_boolean(bm1, geom_a=list(bm1.faces) + list(bm1.verts) + list(bm1.edges),
-                                geom_b=list(bm2.faces) + list(bm2.verts) + list(bm2.edges),
-                                operation="INTERSECT")
-    bm2.free()
-    bmesh.ops.recalc_face_normals(bm1, faces=bm1.faces)
-    o = link_obj("LensGlass", bm1, glass())
-    o.location = (B["lens"], 0, PIN)
+    thickness = 2 * h
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=64, ring_count=32, radius=r, location=(B["lens"], 0, PIN))
+    o = bpy.context.object
+    o.name = "LensGlass"
+    o.scale = (thickness / (2 * r), 1.0, 1.0)
+    bpy.ops.object.transform_apply(scale=True)
+    o.data.materials.append(glass())
+    o.data.shade_smooth()
     cyl("LensRim", r + 0.035, 0.045, (B["lens"], 0, PIN), metal(), rot=(math.radians(90), 0, 0))
 
 
