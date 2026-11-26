@@ -128,7 +128,10 @@ def principled(name, color, metallic=0.0, rough=0.3, **extra):
     p.inputs["Metallic"].default_value = metallic
     p.inputs["Roughness"].default_value = rough
     for k, v in extra.items():
-        p.inputs[k].default_value = v
+        if k in p.inputs:
+            p.inputs[k].default_value = v
+        elif k == "Transmission Weight" and "Transmission" in p.inputs:
+            p.inputs["Transmission"].default_value = v
     return m
 
 
@@ -144,7 +147,10 @@ def floor_mat():
     m, n, l = mat("Floor")
     p = n["Principled BSDF"]
     p.inputs["Base Color"].default_value = (0.004, 0.0045, 0.006, 1)
-    p.inputs["Specular IOR Level"].default_value = 0.55
+    if "Specular IOR Level" in p.inputs:
+        p.inputs["Specular IOR Level"].default_value = 0.55
+    elif "Specular" in p.inputs:
+        p.inputs["Specular"].default_value = 0.55
     noise = n.new("ShaderNodeTexNoise")
     noise.inputs["Scale"].default_value = 1.6
     mr = n.new("ShaderNodeMapRange")
