@@ -101,9 +101,22 @@ def reset():
     w = bpy.data.worlds.new("World")
     sc.world = w
     w.use_nodes = True
-    # Pure #08090c obsidian base feel (very near zero so floor feathers invisibly into void)
-    w.node_tree.nodes["Background"].inputs[0].default_value = (0.002, 0.0024, 0.0032, 1.0)
-    w.node_tree.nodes["Background"].inputs[1].default_value = 0.0
+    wn = w.node_tree.nodes
+    wl = w.node_tree.links
+    wn.clear()
+    lp = wn.new("ShaderNodeLightPath")
+    bg_cam = wn.new("ShaderNodeBackground")
+    bg_cam.inputs[0].default_value = (0.0024, 0.0027, 0.0038, 1.0)
+    bg_cam.inputs[1].default_value = 0.0  # Camera sees pure obsidian void!
+    bg_refl = wn.new("ShaderNodeBackground")
+    bg_refl.inputs[0].default_value = (0.11, 0.12, 0.15, 1.0)
+    bg_refl.inputs[1].default_value = 0.65  # Glossy metals & glass reflect soft dark studio dome!
+    w_mix = wn.new("ShaderNodeMixShader")
+    wl.new(lp.outputs["Is Camera Ray"], w_mix.inputs["Fac"])
+    wl.new(bg_refl.outputs["Background"], w_mix.inputs[1])
+    wl.new(bg_cam.outputs["Background"], w_mix.inputs[2])
+    w_out = wn.new("ShaderNodeOutputWorld")
+    wl.new(w_mix.outputs["Shader"], w_out.inputs["Surface"])
 
     sc.frame_start, sc.frame_end = 0, TOTAL
     sc.render.fps = 120
@@ -112,7 +125,7 @@ def reset():
 
 
 def setup_compositor(sc):
-    """Add cinema Fog Glow + subtle horizontal anamorphic streaks + soft edge vignette."""
+    """Add cinema Fog Glow + subtle horizontal anamorphic streaks directly to Composite."""
     sc.use_nodes = True
     tree = sc.node_tree
     nodes = tree.nodes
@@ -125,9 +138,9 @@ def setup_compositor(sc):
     glow = nodes.new("CompositorNodeGlare")
     glow.glare_type = "FOG_GLOW"
     glow.quality = "HIGH"
-    glow.threshold = 0.85
+    glow.threshold = 0.68
     glow.size = 8
-    glow.mix = -0.35
+    glow.mix = -0.32
     links.new(rl.outputs["Image"], glow.inputs["Image"])
 
     # 2. Subtle horizontal 70mm anamorphic lens streak on bright laser points
@@ -136,33 +149,13 @@ def setup_compositor(sc):
     streaks.quality = "HIGH"
     streaks.streaks = 2
     streaks.angle_offset = 0.0
-    streaks.threshold = 2.4
-    streaks.fade = 0.90
-    streaks.mix = -0.78
+    streaks.threshold = 2.2
+    streaks.fade = 0.89
+    streaks.mix = -0.76
     links.new(glow.outputs["Image"], streaks.inputs["Image"])
 
-    # 3. Soft elliptical vignette fading edges smoothly toward obsidian #08090c
-    mask = nodes.new("CompositorNodeEllipseMask")
-    mask.width = 0.94
-    mask.height = 0.94
-    blur = nodes.new("CompositorNodeBlur")
-    blur.size_x = 120
-    blur.size_y = 120
-    blur.use_relative = False
-    links.new(mask.outputs["Mask"], blur.inputs["Image"])
-
-    bg = nodes.new("CompositorNodeRGB")
-    # Linear equivalent of sRGB #08090c
-    bg.outputs[0].default_value = (0.0024, 0.0027, 0.0038, 1.0)
-
-    mix = nodes.new("CompositorNodeMixRGB")
-    mix.blend_type = "MIX"
-    links.new(blur.outputs["Image"], mix.inputs["Fac"])
-    links.new(bg.outputs[0], mix.inputs[1])
-    links.new(streaks.outputs["Image"], mix.inputs[2])
-
     comp = nodes.new("CompositorNodeComposite")
-    links.new(mix.outputs["Image"], comp.inputs["Image"])
+    links.new(streaks.outputs["Image"], comp.inputs["Image"])
 
 
 def mat(name):
@@ -272,7 +265,7 @@ BRASS_GOLD = None
 def metal():
     global METAL
     if METAL is None:
-        METAL = principled("Anodised", (0.022, 0.024, 0.028), metallic=0.95, rough=0.28)
+        METAL = principled("Anodised", (0.048, 0.052, 0.060), metallic=0.92, rough=0.25)
     return METAL
 
 
@@ -281,8 +274,8 @@ def brushed_titanium():
     if BRUSHED_TI is None:
         m, n, l = mat("BrushedTitanium")
         p = n["Principled BSDF"]
-        p.inputs["Base Color"].default_value = (0.11, 0.115, 0.125, 1.0)
-        p.inputs["Metallic"].default_value = 0.96
+        p.inputs["Base Color"].default_value = (0.21, 0.22, 0.24, 1.0)
+        p.inputs["Metallic"].default_value = 0.94
         tc = n.new("ShaderNodeTexCoord")
         mp = n.new("ShaderNodeMapping")
         mp.inputs["Scale"].default_value = (1.0, 40.0, 1.0)
@@ -292,8 +285,8 @@ def brushed_titanium():
         ns.inputs["Detail"].default_value = 5.0
         l.new(mp.outputs["Vector"], ns.inputs["Vector"])
         mr = n.new("ShaderNodeMapRange")
-        mr.inputs["To Min"].default_value = 0.18
-        mr.inputs["To Max"].default_value = 0.30
+        mr.inputs["To Min"].default_value = 0.20
+        mr.inputs["To Max"].default_value = 0.34
         l.new(ns.outputs["Fac"], mr.inputs["Value"])
         l.new(mr.outputs["Result"], p.inputs["Roughness"])
         BRUSHED_TI = m
@@ -668,15 +661,15 @@ def slit_plate():
     o.modifiers.new("WN", "WEIGHTED_NORMAL").keep_sharp = True
 
     # Subtle glowing emerald rim light inside BOTH carved slits (triggered when laser reaches slit)
-    slit_glow = principled("SlitEdgeGlow", GREEN, rough=0.1, **{"Emission Color": (*GREEN, 1), "Emission Strength": 12.0})
+    slit_glow = principled("SlitEdgeGlow", GREEN, rough=0.1, **{"Emission Color": (*GREEN, 1), "Emission Strength": 3.5})
     s_on = keyed_value(slit_glow.node_tree.nodes, "slit_on", [(int(F * 2.85), 0.0), (int(F * 3.15), 1.0)])
     slit_glow.node_tree.links.new(
-        m_op(slit_glow.node_tree.nodes, slit_glow.node_tree.links, "MULTIPLY", s_on.outputs[0], val=11.0),
+        m_op(slit_glow.node_tree.nodes, slit_glow.node_tree.links, "MULTIPLY", s_on.outputs[0], val=3.8),
         slit_glow.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"]
     )
     for sign in (-1, 1):
         for edge_off in (-sw, sw):
-            box(f"SlitEdge_{sign}_{edge_off}", (0.030, 0.004, 2 * sh), (c.x, sign * a + edge_off, c.z), slit_glow, bevel=0.001)
+            box(f"SlitEdge_{sign}_{edge_off}", (0.022, 0.0025, 2 * sh), (c.x, sign * a + edge_off, c.z), slit_glow, bevel=0.0005)
 
     # Machined optical carriage + pedestal + brass knobs
     post_h = PIN - hh + 0.02
@@ -913,8 +906,9 @@ def lights():
     area("GoldRimTop", (3.8, -2.5, 2.9), (math.radians(52), 0, 0), (10.5, 0.22), 520, (1.0, 0.71, 0.25))
     area("GoldRimSlit", (5.2, 2.1, 2.6), (math.radians(-48), 0, math.radians(155)), (3.2, 0.16), 240, (1.0, 0.72, 0.27))
 
-    # Crisp cool rim highlight on glass prism edges
+    # Crisp cool rim highlight on glass prism edges & front-camera brushed metal key
     area("StripPrism", (-2.8, -2.4, 1.8), (math.radians(82), 0, math.radians(-48)), (0.35, 2.8), 480, (0.86, 0.93, 1.0))
+    area("FrontGoldKey", (2.6, 3.6, 2.5), (math.radians(-52), 0, math.radians(180)), (9.5, 0.65), 360, (1.0, 0.78, 0.36))
 
 
 def build():
@@ -1018,7 +1012,7 @@ if __name__ == "__main__":
 
     if mode == "test":
         # 6 key station hero test frames: Mirror/Sun, Rainbow, Pinhole+Lens, Double-Slit Waves, Detector, Pull-Back
-        test_frames = [26, 76, 130, 176, 224, 272]
+        test_frames = [34, 86, 142, 192, 232, 286]
         print(f"[Render] TEST MODE: rendering 6 look-dev stills {test_frames} -> {outdir} ({W}x{H}, {S} samples)")
         for f in test_frames:
             target = os.path.join(outdir, f"test_{f:03d}.png")
