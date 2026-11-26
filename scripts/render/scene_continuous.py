@@ -111,8 +111,8 @@ def reset():
     bg_cam.inputs[0].default_value = (0.0024, 0.0027, 0.0038, 1.0)
     bg_cam.inputs[1].default_value = 0.0  # Camera sees pure obsidian void!
     bg_refl = wn.new("ShaderNodeBackground")
-    bg_refl.inputs[0].default_value = (0.11, 0.12, 0.15, 1.0)
-    bg_refl.inputs[1].default_value = 0.38  # Soft dark studio reflection dome for metals & glass
+    bg_refl.inputs[0].default_value = (0.08, 0.09, 0.12, 1.0)
+    bg_refl.inputs[1].default_value = 0.06  # Minimal dome so area rim lights carve hardware cleanly without floor shelf
     w_mix = wn.new("ShaderNodeMixShader")
     wl.new(lp.outputs["Is Camera Ray"], w_mix.inputs["Fac"])
     wl.new(bg_refl.outputs["Background"], w_mix.inputs[1])
@@ -239,12 +239,16 @@ def floor_mat():
     sep = n.new("ShaderNodeSeparateXYZ")
     l.new(tc.outputs["Object"], sep.inputs[0])
 
-    # Corridor lateral fade |Y| -> 0 past 3.2m, and longitudinal fade |X| -> 0 past 8.5m
+    # Asymmetric corridor fade: foreground (Y < 0) shiny to -3.2m; background (Y > 0) fades by +1.15m -> zero horizon!
+    y_abs = m_op(n, l, "ABSOLUTE", sep.outputs[1])
+    y_back = m_op(n, l, "MULTIPLY", sep.outputs[1], val=2.8)
+    y_metric = m_op(n, l, "MAXIMUM", y_abs, y_back)
+
     fade_y = n.new("ShaderNodeMapRange")
     fade_y.interpolation_type = "SMOOTHSTEP"
     fade_y.inputs["From Min"].default_value = 3.2
-    fade_y.inputs["From Max"].default_value = 0.65
-    l.new(m_op(n, l, "ABSOLUTE", sep.outputs[1]), fade_y.inputs["Value"])
+    fade_y.inputs["From Max"].default_value = 0.55
+    l.new(y_metric, fade_y.inputs["Value"])
 
     fade_x = n.new("ShaderNodeMapRange")
     fade_x.interpolation_type = "SMOOTHSTEP"
@@ -489,7 +493,7 @@ def fan(reveal_keys):
 def mirror():
     """Upright U-yoke gimbaled circular mirror aligned along the exact SunBeam->UpBeam bisector."""
     x = B["mirror"][0]
-    mz = 0.32
+    mz = 0.36
     m0_bench = Vector((B["mirror"][0], mz))
     v_in = (Vector(B["sun"]) - m0_bench).normalized()
     v_out = (Vector(B["entry"]) - m0_bench).normalized()
@@ -497,31 +501,33 @@ def mirror():
     n_bl = Vector((n_mir.x, 0.0, n_mir.y))
     q_mir = Vector((0.0, 0.0, 1.0)).rotation_difference(n_bl)
 
-    box("MirrorCarriage", (0.44, 0.56, 0.038), (x, 0.0, 0.054), metal(), bevel=0.008)
-    box("MirrorYokeBase", (0.08, 0.56, 0.032), (x, 0.0, 0.095), brushed_titanium(), bevel=0.006)
-    box("MirrorYokeArmL", (0.08, 0.038, 0.26), (x, -0.26, 0.22), brushed_titanium(), bevel=0.006)
-    box("MirrorYokeArmR", (0.08, 0.038, 0.26), (x, 0.26, 0.22), brushed_titanium(), bevel=0.006)
+    box("MirrorCarriage", (0.46, 0.64, 0.038), (x, 0.0, 0.054), metal(), bevel=0.008)
+    box("MirrorYokeBase", (0.08, 0.64, 0.032), (x, 0.0, 0.095), brushed_titanium(), bevel=0.006)
+    box("MirrorYokeArmL", (0.08, 0.038, 0.30), (x, -0.30, 0.24), brushed_titanium(), bevel=0.006)
+    box("MirrorYokeArmR", (0.08, 0.038, 0.30), (x, 0.30, 0.24), brushed_titanium(), bevel=0.006)
 
-    cyl("MirrorKnobL", 0.025, 0.045, (x, -0.30, mz), brass_gold(), verts=24, rot=(math.radians(90), 0, 0))
-    cyl("MirrorKnobR", 0.025, 0.045, (x, 0.30, mz), brass_gold(), verts=24, rot=(math.radians(90), 0, 0))
+    cyl("MirrorKnobL", 0.025, 0.045, (x, -0.34, mz), brass_gold(), verts=16, rot=(math.radians(90), 0, 0))
+    cyl("MirrorKnobR", 0.025, 0.045, (x, 0.34, mz), brass_gold(), verts=16, rot=(math.radians(90), 0, 0))
 
-    rim = cyl("MirrorRim", 0.225, 0.032, (x, 0.0, mz), brushed_titanium(), verts=64)
+    rim = cyl("MirrorRim", 0.275, 0.036, (x, 0.0, mz), brushed_titanium(), verts=64)
     rim.rotation_mode = "QUATERNION"
     rim.rotation_quaternion = q_mir
 
-    face = cyl("Mirror", 0.205, 0.008, (x + n_bl.x * 0.015, 0.0, mz + n_bl.z * 0.015),
+    face = cyl("Mirror", 0.250, 0.008, (x + n_bl.x * 0.017, 0.0, mz + n_bl.z * 0.017),
                principled("MirrorFace", (0.94, 0.94, 0.96), metallic=1.0, rough=0.015), verts=64)
     face.rotation_mode = "QUATERNION"
     face.rotation_quaternion = q_mir
 
 
 def card(stripe_keys):
-    """Matte carbon-black aperture baffle turned toward the room with genuine pinhole cutout."""
+    """Light-absorbing matte carbon-black optical baffle with genuine pinhole cutout."""
     m, n, l = mat("Card")
     p = n["Principled BSDF"]
-    p.inputs["Base Color"].default_value = (0.004, 0.005, 0.006, 1.0)
-    p.inputs["Roughness"].default_value = 0.45
-    p.inputs["Metallic"].default_value = 0.25
+    p.inputs["Base Color"].default_value = (0.002, 0.0025, 0.003, 1.0)
+    p.inputs["Roughness"].default_value = 0.88
+    p.inputs["Metallic"].default_value = 0.0
+    if "Specular IOR Level" in p.inputs:
+        p.inputs["Specular IOR Level"].default_value = 0.08
 
     tc = n.new("ShaderNodeTexCoord")
     sep = n.new("ShaderNodeSeparateXYZ")
@@ -567,7 +573,7 @@ def card(stripe_keys):
 
     on = keyed_value(n, "stripe", stripe_keys)
     s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", inband.outputs["Result"], vin), front_face), hole)
-    s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", s, on.outputs[0]), val=2.4)
+    s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", s, on.outputs[0]), val=1.10)
 
     if "Emission Color" in p.inputs:
         l.new(ramp.outputs["Color"], p.inputs["Emission Color"])
@@ -700,16 +706,16 @@ def slit_plate():
     o.data.shade_smooth()
     o.modifiers.new("WN", "WEIGHTED_NORMAL").keep_sharp = True
 
-    # Subtle glowing emerald rim light inside BOTH carved slits (triggered when laser reaches slit)
-    slit_glow = principled("SlitEdgeGlow", GREEN, rough=0.1, **{"Emission Color": (*GREEN, 1), "Emission Strength": 1.5})
+    # Subtle glowing emerald rim light recessed slightly inside BOTH carved slits
+    slit_glow = principled("SlitEdgeGlow", GREEN, rough=0.1, **{"Emission Color": (*GREEN, 1), "Emission Strength": 0.9})
     s_on = keyed_value(slit_glow.node_tree.nodes, "slit_on", [(int(F * 2.85), 0.0), (int(F * 3.15), 1.0)])
     slit_glow.node_tree.links.new(
-        m_op(slit_glow.node_tree.nodes, slit_glow.node_tree.links, "MULTIPLY", s_on.outputs[0], val=1.5),
+        m_op(slit_glow.node_tree.nodes, slit_glow.node_tree.links, "MULTIPLY", s_on.outputs[0], val=0.9),
         slit_glow.node_tree.nodes["Principled BSDF"].inputs["Emission Strength"]
     )
     for sign in (-1, 1):
         for edge_off in (-sw, sw):
-            box(f"SlitEdge_{sign}_{edge_off}", (0.022, 0.0022, 2 * sh), (c.x, sign * a + edge_off, c.z), slit_glow, bevel=0.0005)
+            box(f"SlitEdge_{sign}_{edge_off}", (0.016, 0.0020, 2 * sh), (c.x + 0.005, sign * a + edge_off, c.z), slit_glow, bevel=0.0005)
 
     # Machined optical carriage + pedestal + brass knobs
     post_h = PIN - hh + 0.02
@@ -775,17 +781,32 @@ def detector():
     sh = 0.56
     c = tb((x, PIN, 0))
 
-    # Clean overlap-free gimbaled frame + brass knobs (top/bottom cap the sides cleanly)
-    box("DetTopBar", (0.09, 2 * hw + 0.14, 0.06), (c.x, c.y, c.z + sh + 0.03), brushed_titanium(), bevel=0.012)
-    box("DetBotBar", (0.09, 2 * hw + 0.14, 0.06), (c.x, c.y, c.z - sh - 0.03), brushed_titanium(), bevel=0.012)
-    box("DetSideL", (0.09, 0.06, 2 * sh), (c.x, c.y - hw - 0.04, c.z), brushed_titanium(), bevel=0.012)
-    box("DetSideR", (0.09, 0.06, 2 * sh), (c.x, c.y + hw + 0.04, c.z), brushed_titanium(), bevel=0.012)
-    box("DetBack", (0.04, 2 * hw + 0.04, 2 * sh + 0.04), (c.x + 0.025, c.y, c.z), metal(), bevel=0.01)
+    # Seamless CNC extruded hollow titanium bezel frame (zero stepped corner joints)
+    dys = [-(hw + 0.07), -hw, hw, (hw + 0.07)]
+    dzs = [-(sh + 0.06), -sh, sh, (sh + 0.06)]
+    fbm = bmesh.new()
+    fgrid = [[fbm.verts.new((-0.045, dy, dz)) for dz in dzs] for dy in dys]
+    for iy in range(3):
+        for iz in range(3):
+            if iy == 1 and iz == 1:
+                continue
+            fbm.faces.new((fgrid[iy][iz], fgrid[iy + 1][iz], fgrid[iy + 1][iz + 1], fgrid[iy][iz + 1]))
+    ext = bmesh.ops.extrude_face_region(fbm, geom=list(fbm.faces))
+    bmesh.ops.translate(fbm, vec=(0.09, 0.0, 0.0), verts=[g for g in ext["geom"] if isinstance(g, bmesh.types.BMVert)])
+    bmesh.ops.recalc_face_normals(fbm, faces=fbm.faces)
+    fo = link_obj("DetFrame", fbm, brushed_titanium())
+    fo.location = c
+    fbv = fo.modifiers.new("Bevel", "BEVEL")
+    fbv.width = 0.010
+    fbv.segments = 4
+    fo.data.shade_smooth()
+    fo.modifiers.new("WN", "WEIGHTED_NORMAL").keep_sharp = True
+    box("DetBack", (0.035, 2 * hw + 0.04, 2 * sh + 0.04), (c.x + 0.030, c.y, c.z), metal(), bevel=0.008)
 
-    # Outer yoke arms + knobs
-    cyl("DetTopKnob", 0.032, 0.055, (c.x, c.y, c.z + sh + 0.088), brass_gold(), verts=28)
-    cyl("DetKnobL", 0.036, 0.06, (c.x, c.y - hw - 0.10, c.z), brass_gold(), verts=28, rot=(math.radians(90), 0, 0))
-    cyl("DetKnobR", 0.036, 0.06, (c.x, c.y + hw + 0.10, c.z), brass_gold(), verts=28, rot=(math.radians(90), 0, 0))
+    # Outer yoke knobs (16-sided machined profile)
+    cyl("DetTopKnob", 0.030, 0.052, (c.x, c.y, c.z + sh + 0.084), brass_gold(), verts=16)
+    cyl("DetKnobL", 0.034, 0.056, (c.x, c.y - hw - 0.095, c.z), brass_gold(), verts=16, rot=(math.radians(90), 0, 0))
+    cyl("DetKnobR", 0.034, 0.056, (c.x, c.y + hw + 0.095, c.z), brass_gold(), verts=16, rot=(math.radians(90), 0, 0))
 
     post_h = c.z - sh - 0.06
     cyl("DetPost", 0.048, post_h, (c.x, c.y, post_h / 2 + 0.03), metal(), verts=32)
@@ -842,7 +863,7 @@ def wave_planes(field_keys, phase_keys):
         sep = n.new("ShaderNodeSeparateXYZ")
         l.new(tc.outputs["Object"], sep.inputs[0])
 
-        k = 2.0 * math.pi / 0.068
+        k = 2.0 * math.pi / 0.082
         ph = keyed_value(n, "phase", phase_keys, linear=True)
         amp = keyed_value(n, "field", field_keys)
 
@@ -857,20 +878,19 @@ def wave_planes(field_keys, phase_keys):
             return m_op(n, l, "DIVIDE", cos_val, m_op(n, l, "SQRT", m_op(n, l, "ADD", r, val=0.04)))
 
         v = m_op(n, l, "ADD", amp_from(a), amp_from(-a))
-        v = m_op(n, l, "POWER", m_op(n, l, "MAXIMUM", m_op(n, l, "MULTIPLY", v, val=0.38), val=0.0), val=4.4)
+        v = m_op(n, l, "POWER", m_op(n, l, "MAXIMUM", m_op(n, l, "MULTIPLY", v, val=0.44), val=0.0), val=2.4)
 
         lat = n.new("ShaderNodeMapRange"); lat.interpolation_type = "SMOOTHSTEP"
-        lat.inputs["From Min"].default_value = half_w; lat.inputs["From Max"].default_value = half_w * 0.48
+        lat.inputs["From Min"].default_value = half_w; lat.inputs["From Max"].default_value = half_w * 0.45
         l.new(m_op(n, l, "ABSOLUTE", sep.outputs[1]), lat.inputs["Value"])
 
-        fade = m_op(n, l, "EXPONENT", m_op(n, l, "MULTIPLY", sep.outputs[0], val=-0.45))
-        # Tight Gaussian Z-ribbon (0.026m) keeps circular arcs razor-sharp from oblique hero angles!
-        zg = m_op(n, l, "EXPONENT", m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", sep.outputs[2], sep.outputs[2]), val=-1.0 / 0.026 ** 2))
+        fade = m_op(n, l, "EXPONENT", m_op(n, l, "MULTIPLY", sep.outputs[0], val=-0.14))
+        zg = m_op(n, l, "EXPONENT", m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", sep.outputs[2], sep.outputs[2]), val=-1.0 / 0.046 ** 2))
         x0_fade = n.new("ShaderNodeMapRange"); x0_fade.interpolation_type = "SMOOTHSTEP"
         x0_fade.inputs["From Min"].default_value = 0.0; x0_fade.inputs["From Max"].default_value = 0.025
         l.new(sep.outputs[0], x0_fade.inputs["Value"])
         s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", v, fade), lat.outputs["Result"]), zg)
-        s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", s, x0_fade.outputs["Result"]), val=9.5)
+        s = m_op(n, l, "MULTIPLY", m_op(n, l, "MULTIPLY", s, x0_fade.outputs["Result"]), val=8.5)
 
         s = m_op(n, l, "MULTIPLY", s, amp.outputs[0])
         em = n.new("ShaderNodeEmission")
@@ -898,7 +918,7 @@ def wave_planes(field_keys, phase_keys):
         o.visible_shadow = False
         return o
 
-    vol_box("SlitWaves", B["slit"] + 0.008, B["detector"] - 0.055, B["detHalf"] * 1.02, 0.12)
+    vol_box("SlitWaves", B["slit"] + 0.006, B["detector"] - 0.055, B["detHalf"] * 1.02, 0.16)
 
 
 def dust_haze_box():
@@ -948,7 +968,7 @@ def build():
 
     rays = B["rays"]
     green = min(rays, key=lambda r: abs(r["nm"] - 530))
-    m0 = (B["mirror"][0], 0.32, 0.0)
+    m0 = (B["mirror"][0], 0.36, 0.0)
     sunv = Vector((m0[0] - B["sun"][0], m0[1] - B["sun"][1])).normalized()
     sunA = (m0[0] - sunv.x * 9.5, m0[1] - sunv.y * 9.5, 0.0)
     entry = (*B["entry"], 0.0)
@@ -985,7 +1005,7 @@ POSES = [
     ((2.05, 1.32, 2.65), (3.18, 1.16, 0.0), 40),   # 3 emerald pinhole cone through lens
     ((3.75, 2.10, 1.85), (5.15, 1.05, 0.0), 38),   # 4 raised 3/4 view showing twin-source curved arcs + floor reflection
     ((4.85, 1.48, 2.15), (6.58, 1.18, 0.0), 42),   # 5 photon detections on OLED glass screen
-    ((2.40, 2.25, 8.95), (2.40, 0.88, 0.0), 28),   # 6 wide pull-back fitting Mirror -> Detector cleanly!
+    ((-0.45, 2.25, 7.65), (2.40, 0.92, 0.0), 28),   # 6 sweeping 3/4 diagonal bench pull-back (Mirror -> Detector)!
 ]
 HOLD = ((5.38, 1.32, 1.65), (6.68, 1.18, 0.0), 42)
 
