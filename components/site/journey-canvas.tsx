@@ -186,7 +186,7 @@ export function JourneyCanvas({
 
   return (
     <div
-      className={`relative w-full h-full bg-transparent overflow-hidden ${className}`}
+      className={`relative w-full h-full bg-transparent overflow-hidden mix-blend-lighten ${className}`}
       style={{
         maskImage:
           "radial-gradient(ellipse 94% 92% at 50% 50%, #000 72%, rgba(0,0,0,0.65) 88%, transparent 100%)",
@@ -198,7 +198,7 @@ export function JourneyCanvas({
         ref={canvasRef}
         width={dimensions.width}
         height={dimensions.height}
-        className="w-full h-full object-contain mix-blend-lighten"
+        className="w-full h-full object-contain"
       />
       {loadedCount < 1 && (
         <div className="absolute inset-0 flex items-center justify-center bg-transparent pointer-events-none transition-opacity">
