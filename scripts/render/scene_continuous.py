@@ -1053,9 +1053,10 @@ if __name__ == "__main__":
         argv = argv[argv.index("--") + 1:]
     mode = argv[0] if len(argv) > 0 else "all"
     outdir = argv[1] if len(argv) > 1 else "out/frames"
-    W = int(argv[2]) if len(argv) > 2 else 1600
-    H = int(argv[3]) if len(argv) > 3 else 1400
-    S = int(argv[4]) if len(argv) > 4 else 32
+    W = int(argv[2]) if len(argv) > 2 else 1440
+    H = int(argv[3]) if len(argv) > 3 else 1260
+    S = int(argv[4]) if len(argv) > 4 else 20
+    STEP = max(1, int(argv[5])) if len(argv) > 5 else 1
 
     os.makedirs(outdir, exist_ok=True)
     sc = setup(W, H, S)
@@ -1072,14 +1073,19 @@ if __name__ == "__main__":
             print(f"[Render] Saved test still: {target}")
         print("[Render] TEST STILLS COMPLETE")
     else:
-        print(f"[Render] FULL MODE: frames 0..{TOTAL} -> {outdir} ({W}x{H}, {S} samples)")
-        for f in range(TOTAL + 1):
-            target = os.path.join(outdir, f"f_{f:03d}.png")
+        frame_list = list(range(0, TOTAL + 1, STEP))
+        if frame_list[-1] != TOTAL:
+            frame_list.append(TOTAL)
+        with open(os.path.join(outdir, "manifest.json"), "w") as mf:
+            json.dump({"count": len(frame_list), "step": STEP, "width": W, "height": H}, mf)
+        print(f"[Render] FULL MODE: {len(frame_list)} frames (step={STEP}) -> {outdir} ({W}x{H}, {S} samples)")
+        for idx, f in enumerate(frame_list):
+            target = os.path.join(outdir, f"f_{idx:03d}.png")
             if os.path.exists(target):
                 continue
             sc.frame_set(f)
             sc.render.filepath = target
             bpy.ops.render.render(write_still=True)
-            if f % 10 == 0:
-                print(f"[Render] Frame {f}/{TOTAL} done")
+            if idx % 10 == 0:
+                print(f"[Render] Frame {idx}/{len(frame_list) - 1} (timeline {f}/{TOTAL}) done")
         print("[Render] ALL FRAMES COMPLETE")
