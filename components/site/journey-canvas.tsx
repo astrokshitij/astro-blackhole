@@ -6,6 +6,7 @@ import type { RefObject } from "react";
 const DEFAULT_TOTAL_FRAMES = 145;
 const DEFAULT_WIDTH = 1440;
 const DEFAULT_HEIGHT = 1260;
+const STATION_1_RATIO = 17 / 144; // Luminous crystal prism & beam entry
 
 interface JourneyManifest {
   count?: number;
@@ -18,6 +19,7 @@ interface JourneyCanvasProps {
   progressRef?: RefObject<number>;
   className?: string;
   totalFrames?: number;
+  introSweep?: boolean;
 }
 
 function buildPriorityOrder(count: number): number[] {
@@ -30,8 +32,8 @@ function buildPriorityOrder(count: number): number[] {
     }
   };
 
-  push(0);
-  push(count - 1);
+  // Prioritize station hero frames and key sweep frames first
+  [17, 0, 43, 71, 96, 116, 143, count - 1].forEach(push);
   for (let stride = 8; stride >= 1; stride = Math.floor(stride / 2)) {
     for (let i = 0; i < count; i += stride) {
       push(i);
@@ -58,20 +60,23 @@ function findClosestLoaded(
 }
 
 export function JourneyCanvas({
-  progress = 0,
+  progress = STATION_1_RATIO,
   progressRef,
   className = "",
   totalFrames = DEFAULT_TOTAL_FRAMES,
+  introSweep = true,
 }: JourneyCanvasProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const framesRef = useRef<(HTMLImageElement | null)[]>([]);
   const fallbackProgressRef = useRef(progress);
   const smoothedProgressRef = useRef<number | null>(null);
-  const lastRenderedFloatRef = useRef<number>(-1);
+  const lastDrawnIdxRef = useRef<number>(-1);
   const boxWidthRef = useRef<number>(720);
   const dirtyRef = useRef(true);
-  const hasFirstRef = useRef(false);
+  const hasDrawnRef = useRef(false);
+  const wakeRef = useRef<(() => void) | null>(null);
 
   const [frameCount, setFrameCount] = useState(totalFrames);
   const [manifestReady, setManifestReady] = useState(false);
@@ -82,6 +87,9 @@ export function JourneyCanvas({
   const [hasFirstFrame, setHasFirstFrame] = useState(false);
 
   fallbackProgressRef.current = progress;
+  useEffect(() => {
+    wakeRef.current?.();
+  }, [progress]);
 
   useEffect(() => {
     let active = true;
@@ -102,7 +110,7 @@ export function JourneyCanvas({
         }
       })
       .catch(() => {
-        // Fallback to default frame count when manifest is unavailable.
+        // Fallback to defaults when manifest is unavailable.
       })
       .finally(() => {
         if (active) setManifestReady(true);
@@ -120,6 +128,7 @@ export function JourneyCanvas({
       if (w > 0) {
         boxWidthRef.current = w;
         dirtyRef.current = true;
+        wakeRef.current?.();
       }
     };
     updateWidth();
@@ -133,10 +142,8 @@ export function JourneyCanvas({
     let cancelled = false;
     const frames: (HTMLImageElement | null)[] = new Array(frameCount).fill(null);
     framesRef.current = frames;
-    lastRenderedFloatRef.current = -1;
+    lastDrawnIdxRef.current = -1;
     dirtyRef.current = true;
-    hasFirstRef.current = false;
-    setHasFirstFrame(false);
 
     const priority = buildPriorityOrder(frameCount);
     let cursor = 0;
@@ -154,15 +161,16 @@ export function JourneyCanvas({
         if (cancelled) return;
         if (img.naturalWidth > 0) {
           frames[idx] = img;
-          if (!hasFirstRef.current) {
-            hasFirstRef.current = true;
-            setHasFirstFrame(true);
-            dirtyRef.current = true;
-          } else if (
-            lastRenderedFloatRef.current < 0 ||
-            Math.abs(idx - Math.round(lastRenderedFloatRef.current)) <= 1
+          const currentTargetIdx = Math.round(
+            (smoothedProgressRef.current ?? STATION_1_RATIO) *
+              Math.max(0, frameCount - 1)
+          );
+          if (
+            lastDrawnIdxRef.current < 0 ||
+            Math.abs(idx - currentTargetIdx) <= 2
           ) {
             dirtyRef.current = true;
+            wakeRef.current?.();
           }
         }
         loadNext();
@@ -191,19 +199,38 @@ export function JourneyCanvas({
 
   useEffect(() => {
     let rafId = 0;
+    let running = false;
     let lastTime = performance.now();
+    const introStart = performance.now();
     const reducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const shouldSweepIntro = introSweep && !reducedMotion;
 
-    const renderFrame = (now: number) => {
+    const tick = (now: number) => {
+      rafId = 0;
       const dt = Math.min(0.05, Math.max(0.001, (now - lastTime) / 1000));
       lastTime = now;
 
-      const rawTarget = progressRef ? progressRef.current : fallbackProgressRef.current;
-      const target = Math.max(0, Math.min(1, rawTarget));
+      const rawTarget = progressRef
+        ? progressRef.current
+        : fallbackProgressRef.current;
+      let target = Math.max(0, Math.min(1, rawTarget));
+
+      // On first arrival near top of page, play frames 0 -> f_017 smoothly so light refracts live
+      let introActive = false;
+      if (shouldSweepIntro && window.scrollY < 48) {
+        const elapsed = (now - introStart) / 1350;
+        if (elapsed < 1) {
+          const easeOut = 1 - Math.pow(1 - elapsed, 3);
+          target = Math.max(target, easeOut * STATION_1_RATIO);
+          introActive = true;
+        }
+      }
 
       if (smoothedProgressRef.current === null || reducedMotion) {
+        smoothedProgressRef.current = target;
+      } else if (introActive) {
         smoothedProgressRef.current = target;
       } else {
         const diff = target - smoothedProgressRef.current;
@@ -218,80 +245,107 @@ export function JourneyCanvas({
       const canvas = canvasRef.current;
       if (canvas) {
         const maxIdx = Math.max(0, frameCount - 1);
-        const floatIdx = smoothedProgressRef.current * maxIdx;
-        const loIdx = Math.floor(floatIdx);
-        const hiIdx = Math.min(maxIdx, loIdx + 1);
-        const frac = floatIdx - loIdx;
+        const targetIdx = Math.round(smoothedProgressRef.current * maxIdx);
+        const img = findClosestLoaded(framesRef.current, targetIdx);
 
-        const imgLo = findClosestLoaded(framesRef.current, loIdx);
-        const exactHi = framesRef.current[hiIdx];
-        const imgHi =
-          exactHi && exactHi.complete && exactHi.naturalWidth > 0 ? exactHi : null;
-
-        if (imgLo) {
+        if (img) {
           const dpr = Math.min(window.devicePixelRatio || 1, 2);
           const targetW = Math.max(
             320,
-            Math.min(imgLo.naturalWidth, Math.round(boxWidthRef.current * dpr))
+            Math.min(img.naturalWidth, Math.round(boxWidthRef.current * dpr))
           );
           const targetH = Math.round(
-            targetW * (imgLo.naturalHeight / imgLo.naturalWidth)
+            targetW * (img.naturalHeight / img.naturalWidth)
           );
 
           const sizeChanged =
             canvas.width !== targetW || canvas.height !== targetH;
-          const floatMoved =
-            Math.abs(lastRenderedFloatRef.current - floatIdx) > 0.002;
+          const idxChanged = lastDrawnIdxRef.current !== targetIdx;
 
-          if (dirtyRef.current || sizeChanged || floatMoved) {
+          if (dirtyRef.current || sizeChanged || idxChanged) {
             if (sizeChanged) {
               canvas.width = targetW;
               canvas.height = targetH;
+              ctxRef.current = null;
             }
-            const ctx = canvas.getContext("2d", {
-              alpha: false,
-              desynchronized: true,
-            });
+            if (!ctxRef.current) {
+              ctxRef.current = canvas.getContext("2d", {
+                alpha: false,
+                desynchronized: true,
+              });
+            }
+            const ctx = ctxRef.current;
             if (ctx) {
-              ctx.globalAlpha = 1;
-              ctx.drawImage(imgLo, 0, 0, canvas.width, canvas.height);
-
-              if (
-                imgHi &&
-                imgHi !== imgLo &&
-                frac > 0.04 &&
-                frac < 0.96 &&
-                !reducedMotion
-              ) {
-                ctx.globalAlpha = frac;
-                ctx.drawImage(imgHi, 0, 0, canvas.width, canvas.height);
-                ctx.globalAlpha = 1;
-              }
-
-              lastRenderedFloatRef.current = floatIdx;
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              lastDrawnIdxRef.current = framesRef.current[targetIdx]
+                ? targetIdx
+                : -2;
               dirtyRef.current = false;
+              if (!hasDrawnRef.current) {
+                hasDrawnRef.current = true;
+                setHasFirstFrame(true);
+              }
             }
           }
         }
       }
 
-      rafId = requestAnimationFrame(renderFrame);
+      const stillMoving =
+        introActive ||
+        dirtyRef.current ||
+        (!reducedMotion &&
+          smoothedProgressRef.current !== null &&
+          Math.abs(target - smoothedProgressRef.current) >= 0.00025);
+
+      if (stillMoving) {
+        rafId = requestAnimationFrame(tick);
+      } else {
+        running = false;
+      }
     };
 
-    rafId = requestAnimationFrame(renderFrame);
-    return () => cancelAnimationFrame(rafId);
-  }, [frameCount, progressRef]);
+    const wake = () => {
+      if (running) return;
+      running = true;
+      lastTime = performance.now();
+      rafId = requestAnimationFrame(tick);
+    };
+
+    wakeRef.current = wake;
+    wake();
+
+    window.addEventListener("scroll", wake, { passive: true });
+    window.addEventListener("resize", wake, { passive: true });
+
+    return () => {
+      running = false;
+      wakeRef.current = null;
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", wake);
+      window.removeEventListener("resize", wake);
+    };
+  }, [frameCount, progressRef, introSweep]);
 
   return (
     <div
       ref={containerRef}
       className={`relative w-full h-full bg-[#08090c] overflow-hidden ${className}`}
     >
+      {/* SSR instant hero poster eliminates spinner flash before WebPs decode */}
+      <img
+        src="/frames/journey/f_017.webp"
+        alt=""
+        aria-hidden="true"
+        fetchPriority="high"
+        className={`pointer-events-none absolute inset-0 w-full h-full object-contain transition-opacity duration-200 ${
+          hasFirstFrame ? "opacity-0" : "opacity-100"
+        }`}
+      />
       <canvas
         ref={canvasRef}
         width={dimensions.width}
         height={dimensions.height}
-        className={`w-full h-full object-contain transition-opacity duration-150 ${
+        className={`relative w-full h-full object-contain transition-opacity duration-150 ${
           hasFirstFrame ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -302,11 +356,6 @@ export function JourneyCanvas({
             "radial-gradient(ellipse 90% 88% at 50% 50%, transparent 64%, rgba(8, 9, 12, 0.5) 84%, #08090c 100%)",
         }}
       />
-      {!hasFirstFrame && (
-        <div className="absolute inset-0 flex items-center justify-center bg-transparent pointer-events-none transition-opacity">
-          <div className="w-6 h-6 border-2 border-[#f0b545] border-t-transparent rounded-full animate-spin" />
-        </div>
-      )}
     </div>
   );
 }

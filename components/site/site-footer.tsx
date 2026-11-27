@@ -18,7 +18,13 @@ export function SiteFooter() {
             <p className="font-display text-xs font-light uppercase tracking-[0.3em] text-white">
               {SITE.name}
             </p>
-            <div className="mt-7">
+            <a
+              href={`mailto:${SITE.email}`}
+              className="mt-4 inline-flex min-h-11 items-center text-sm text-[#f0b545] transition-colors hover:text-[#f8cd78]"
+            >
+              {SITE.email}
+            </a>
+            <div className="mt-4">
               <SocialLinks compact />
             </div>
           </div>
