@@ -149,12 +149,12 @@ export function LightJourneyStage() {
         className="relative px-6 sm:px-8 lg:px-12 max-w-[1440px] mx-auto pb-24"
       >
         {/* On Mobile: Sticky Canvas Stage pinned at the top */}
-        <div className="block lg:hidden mb-12 sticky top-20 z-20">
+        <div className="block lg:hidden mb-10 sticky top-20 z-20 bg-gradient-to-b from-[#08090c] via-[#08090c]/95 to-transparent pb-3">
+          <div className="mb-1.5 flex justify-end text-xs font-mono tracking-wider text-[#f0b545]">
+            {String(activeChapterIndex + 1).padStart(2, "0")} · {currentChapter.label}
+          </div>
           <div className="relative w-full aspect-[8/7] overflow-hidden bg-transparent">
             <JourneyCanvas progress={progress} className="w-full h-full" />
-            <div className="absolute top-3 right-3 text-xs font-mono tracking-wider text-[#f0b545]">
-              {String(activeChapterIndex + 1).padStart(2, "0")} · {currentChapter.label}
-            </div>
           </div>
         </div>
 

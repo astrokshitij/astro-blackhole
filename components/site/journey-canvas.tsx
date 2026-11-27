@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const DEFAULT_TOTAL_FRAMES = 289;
+const DEFAULT_TOTAL_FRAMES = 145;
 const DEFAULT_WIDTH = 1440;
 const DEFAULT_HEIGHT = 1260;
+const VOID_BG = "#08090c";
 
 interface JourneyManifest {
   count?: number;
@@ -65,6 +66,7 @@ export function JourneyCanvas({
   const progressRef = useRef(progress);
   const lastRenderedIdxRef = useRef<number>(-1);
   const [frameCount, setFrameCount] = useState(totalFrames);
+  const [manifestReady, setManifestReady] = useState(false);
   const [dimensions, setDimensions] = useState({
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT,
@@ -93,6 +95,9 @@ export function JourneyCanvas({
       })
       .catch(() => {
         // Fallback to default frame count when manifest is unavailable.
+      })
+      .finally(() => {
+        if (active) setManifestReady(true);
       });
     return () => {
       active = false;
@@ -100,6 +105,7 @@ export function JourneyCanvas({
   }, []);
 
   useEffect(() => {
+    if (!manifestReady) return;
     let cancelled = false;
     const frames: (HTMLImageElement | null)[] = new Array(frameCount).fill(null);
     framesRef.current = frames;
@@ -145,7 +151,7 @@ export function JourneyCanvas({
     return () => {
       cancelled = true;
     };
-  }, [frameCount]);
+  }, [frameCount, manifestReady]);
 
   useEffect(() => {
     let rafId = 0;
@@ -170,8 +176,12 @@ export function JourneyCanvas({
             }
             const ctx = canvas.getContext("2d");
             if (ctx) {
-              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.globalCompositeOperation = "source-over";
+              ctx.fillStyle = VOID_BG;
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              ctx.globalCompositeOperation = "lighten";
               ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              ctx.globalCompositeOperation = "source-over";
               lastRenderedIdxRef.current = framesRef.current[targetIdx] ? targetIdx : -2;
             }
           }
@@ -186,7 +196,7 @@ export function JourneyCanvas({
 
   return (
     <div
-      className={`relative w-full h-full bg-transparent overflow-hidden mix-blend-lighten ${className}`}
+      className={`relative w-full h-full bg-transparent overflow-hidden ${className}`}
       style={{
         maskImage:
           "radial-gradient(ellipse 94% 92% at 50% 50%, #000 72%, rgba(0,0,0,0.65) 88%, transparent 100%)",
