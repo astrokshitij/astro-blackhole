@@ -35,30 +35,15 @@ redirect to `/` (see `next.config.ts`).
   source of vertical rhythm), `SectionHeading`, `Eyebrow`, `NextPage`. Use these
   rather than writing new inline spacing or button styles.
 - `components/site/site-header.tsx` — nav, with the mobile panel.
-- **Home page = the light journey** (`components/site/light-journey.tsx`,
-  `app/light-journey.css`, copy in `LIGHT_JOURNEY`). Six rows: words + photo
-  in one cell, a pre-rendered Blender clip in the other, alternating sides,
-  never overlapping. Read `docs/light-journey/README.md` before changing it;
-  the clips are rebuilt with `scripts/render/`. Copy house style: no full
-  stops in headlines or lines.
-- `components/ui/prism-hero.tsx` — the previous home hero. Each frame bends 20
-  wavelengths through the glass with Snell's law (dispersion exaggerated ~10x
-  so the fan is visible). `components/site/hero-visual.tsx` loads it. It caps
-  DPR, backing pixels and frame rate, pauses off-screen, and shows a finished
-  still under reduced motion. The glass, its side face, the surface and the
-  reflection are shaded in the same fragment shader; a Three.js version was
-  tried and rejected (dark glass reads as a grey ghost on black, and it adds
-  ~180 KB). Below 900px the prism sits in its own band under
-  the hero copy (see `.hero-art` in `app/editorial.css`).
-- `components/ui/black-hole-hero-section.tsx` — the previous hero (black-hole
-  ray marcher). No longer mounted; kept so it can be swapped back in
-  `hero-visual.tsx`.
-- `components/site/spectrum-scroll.tsx` — home only: a dim fixed fan of
-  spectrum light that widens and turns as you scroll (transform/opacity only,
-  driven by two CSS variables). Home sections are made transparent for it via
-  `main:has(.spectrum-scroll)`. Measured worst-case text contrast over it is
-  6.3:1; re-measure (text hidden, brightest pixel under each text box) if you
-  brighten it.
+- **Home page = the Observatory light journey** (`components/site/light-journey-stage.tsx`,
+  `components/site/journey-canvas.tsx`, copy in `LIGHT_JOURNEY` & `EDITORIAL.explorations`).
+  Left column tells the 6-station optical story alongside darkroom-graded photos and an inline
+  Selected Work (`#work`) showcase; desktop (`>= 1024px`) mounts a sticky pre-rendered Blender
+  Cycles canvas (`public/frames/journey/`) locked deterministically to chapter milestones, while
+  mobile renders crisp inline station stills with zero background frame downloads. Rebuilt via
+  `scripts/render/scene_continuous.py`. Copy house style: no full stops in headlines or lines.
+- `components/ui/prism-hero.tsx` — the earlier WebGL prism hero (`components/site/hero-visual.tsx`
+  and `components/ui/black-hole-hero-section.tsx` kept in repo for swappability).
 - `app/editorial.css` — editorial layouts, palette and responsive rules.
 - `components/site/enquiry-form.tsx` — Contact enquiry form.
 - `content/blog/*.md` — one file per post.
@@ -114,16 +99,12 @@ redirect to `/` (see `next.config.ts`).
    variable only if email notifications are wanted.
 2. **Contact is a gmail address.** Set up mail on the domain, then change
    `SITE.email` in one place.
-3. **`public/images/home/tedx/3.jpg` is now the opening photo; 1 and 2 are unused** since the speaking section
-   was removed. Delete them if the repository size matters.
-4. **Credential years need owner review.** The legacy content list says 2023,
+3. **Credential years need owner review.** The legacy content list says 2023,
    while an About photo caption says 2024. New summaries omit years.
-5. **Individual video URLs are not in the repository.** The selected work
-   section links to the existing YouTube channel rather than inventing a video.
-6. **About and blog copy are AI drafts in Kshitij's voice**, not his writing.
-7. **A `/work` portfolio section** was agreed but never built. Before it goes
-   public, settle whether employer numbers belong on an indexed page.
-8. **Run PageSpeed Insights** on the live site; real FCP/LCP were never measured.
+4. **About and blog copy are AI drafts in Kshitij's voice**, not his writing.
+5. **A dedicated `/work` route** can expand the current `#work` showcase into
+   full native PM case studies once employer-metrics policy is settled.
+6. **Run PageSpeed Insights** on the live site; real FCP/LCP were never measured.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

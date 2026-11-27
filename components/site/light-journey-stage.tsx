@@ -3,13 +3,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { EDITORIAL, LIGHT_JOURNEY, SITE, STATS } from "@/lib/content";
+import { EDITORIAL, LIGHT_JOURNEY, STATS } from "@/lib/content";
 import { ArrowGlyph } from "@/components/site/icons";
 import { JourneyCanvas } from "@/components/site/journey-canvas";
 
+const ANCHOR_RATIO = 0.34;
+
 // Exact optical milestone indices aligned 1:1 with the 6 journey stations
 const STATION_MILESTONES = [
-  17 / 144, // 01 · Sunlight (warm beam + crystal prism)
+  26 / 144, // 01 · Sunlight (warm beam dispersing into crystal spectrum)
   43 / 144, // 02 · Many colours (spectrum dispersion on pinhole card)
   71 / 144, // 03 · One colour gets through (530nm cone through lens)
   96 / 144, // 04 · Two slits (open double slits + 3D wave interference)
@@ -18,7 +20,7 @@ const STATION_MILESTONES = [
 ];
 
 const STATION_STILLS = [
-  "/frames/journey/f_017.webp",
+  "/frames/journey/f_026.webp",
   "/frames/journey/f_043.webp",
   "/frames/journey/f_071.webp",
   "/frames/journey/f_096.webp",
@@ -26,20 +28,49 @@ const STATION_STILLS = [
   "/frames/journey/f_143.webp",
 ];
 
-function SmartLink({
+const STATION_TELEMETRY = [
+  { metric: "Snell dispersion", detail: "white beam -> spectrum" },
+  { metric: "400–700 nm", detail: "aperture slit selection" },
+  { metric: "λ = 530 nm", detail: "collimated emerald wave" },
+  { metric: "d = 180 µm", detail: "slit width 35 µm" },
+  { metric: "P(y) ∝ cos²(π d y / λ L)", detail: "L = 1.0 m" },
+  { metric: "Single-photon buildup", detail: "full optical bench" },
+];
+
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return isDesktop;
+}
+
+function ActionLink({
   href,
+  variant = "text",
   children,
 }: {
   href: string;
+  variant?: "primary" | "text";
   children: React.ReactNode;
 }) {
   const isExternal = href.startsWith("http");
   const isHash = href.startsWith("#");
+  const classes =
+    variant === "primary"
+      ? "group inline-flex min-h-11 items-center gap-2 rounded-full bg-[#f0b545] px-5 py-2.5 text-sm font-medium text-[#08090c] transition-colors hover:bg-[#f8cd78]"
+      : "group inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-medium text-[#f0b545] transition-colors hover:text-[#f8cd78]";
 
   if (isExternal) {
     return (
       <a
-        className="inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-medium text-[#f0b545] hover:text-[#f8cd78] hover:gap-3 transition-all duration-200"
+        className={classes}
         href={href}
         target="_blank"
         rel="noopener noreferrer"
@@ -51,32 +82,55 @@ function SmartLink({
 
   if (isHash) {
     return (
-      <a
-        className="inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-medium text-[#f0b545] hover:text-[#f8cd78] hover:gap-3 transition-all duration-200"
-        href={href}
-      >
+      <a className={classes} href={href}>
         {children}
       </a>
     );
   }
 
   return (
-    <Link
-      className="inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-medium text-[#f0b545] hover:text-[#f8cd78] hover:gap-3 transition-all duration-200"
-      href={href}
-    >
+    <Link className={classes} href={href}>
       {children}
     </Link>
   );
 }
 
+function MobileOpticalCard({
+  index,
+  label,
+}: {
+  index: number;
+  label: string;
+}) {
+  return (
+    <div className="lg:hidden relative w-full aspect-[16/10] overflow-hidden bg-[#08090c] my-4">
+      <img
+        src={STATION_STILLS[index]}
+        alt={`Optical stage ${String(index + 1).padStart(2, "0")}: ${label}`}
+        loading={index === 0 ? "eager" : "lazy"}
+        className="w-full h-full object-contain"
+      />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 90% 88% at 50% 50%, transparent 60%, rgba(8, 9, 12, 0.55) 84%, #08090c 100%)",
+        }}
+      />
+    </div>
+  );
+}
+
 export function LightJourneyStage() {
+  const isDesktop = useIsDesktop();
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
   const progressRef = useRef(STATION_MILESTONES[0]);
   const sectionRef = useRef<HTMLElement>(null);
   const chapterMidsRef = useRef<number[]>([]);
   const chapters = LIGHT_JOURNEY.chapters;
   const currentChapter = chapters[activeChapterIndex] || chapters[0];
+  const currentTelemetry =
+    STATION_TELEMETRY[activeChapterIndex] || STATION_TELEMETRY[0];
 
   const measureChapters = useCallback(() => {
     const els = Array.from(
@@ -85,7 +139,7 @@ export function LightJourneyStage() {
     if (!els.length) return;
     chapterMidsRef.current = els.map((el) => {
       const r = el.getBoundingClientRect();
-      return r.top + window.scrollY + r.height * 0.42;
+      return r.top + window.scrollY + Math.min(180, Math.round(r.height * 0.28));
     });
   }, []);
 
@@ -94,7 +148,7 @@ export function LightJourneyStage() {
       const mids = chapterMidsRef.current;
       if (!mids.length) return;
 
-      const anchorY = window.scrollY + window.innerHeight * 0.44;
+      const anchorY = window.scrollY + Math.round(window.innerHeight * ANCHOR_RATIO);
 
       if (anchorY <= mids[0]) {
         progressRef.current = STATION_MILESTONES[0];
@@ -149,15 +203,15 @@ export function LightJourneyStage() {
   }, [measureChapters]);
 
   const jumpToChapter = (index: number) => {
-    const els = document.querySelectorAll<HTMLElement>(".journey-chapter");
-    const target = els[index];
-    if (!target) return;
-    const rect = target.getBoundingClientRect();
+    measureChapters();
+    const targetMid = chapterMidsRef.current[index];
+    if (typeof targetMid !== "number") return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const top = Math.max(
       0,
-      rect.top + window.scrollY - Math.round(window.innerHeight * 0.24)
+      targetMid - Math.round(window.innerHeight * ANCHOR_RATIO)
     );
-    window.scrollTo({ top, behavior: "smooth" });
+    window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
   };
 
   return (
@@ -165,11 +219,11 @@ export function LightJourneyStage() {
       {/* Primary Split-Stage Section */}
       <section
         ref={sectionRef}
-        className="relative pt-24 sm:pt-28 pb-16 sm:pb-24 px-6 sm:px-8 lg:px-12 max-w-[1440px] mx-auto"
+        className="relative pt-20 sm:pt-24 pb-14 sm:pb-20 px-6 sm:px-8 lg:px-12 max-w-[1440px] mx-auto"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          {/* Left Column: Narrative Chapters + Inline Mobile Optics */}
-          <div className="lg:col-span-6 space-y-20 lg:space-y-36">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
+          {/* Left Column: Narrative Chapters + Mobile Inline Optics */}
+          <div className="lg:col-span-6 space-y-14 sm:space-y-20 lg:space-y-28">
             {chapters.map((c, i) => {
               const Heading = i === 0 ? "h1" : "h2";
               const isActive = i === activeChapterIndex;
@@ -179,15 +233,15 @@ export function LightJourneyStage() {
                   key={c.id}
                   id={c.id}
                   data-index={i}
-                  className={`journey-chapter scroll-mt-28 transition-opacity duration-500 ease-out ${
+                  className={`journey-chapter scroll-mt-24 transition-opacity duration-500 ease-out ${
                     isActive
                       ? "opacity-100"
-                      : "opacity-95 lg:opacity-70 hover:opacity-100"
+                      : "opacity-95 lg:opacity-75 hover:opacity-100"
                   }`}
                 >
-                  <div className="py-2 sm:py-4">
+                  <div className="py-1 sm:py-2">
                     {/* Chapter Eyebrow & Optical Label */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
                       <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#f0b545]">
                         {c.eyebrow}
                       </p>
@@ -197,7 +251,7 @@ export function LightJourneyStage() {
                     </div>
 
                     {/* Headline */}
-                    <Heading className="font-display font-medium text-3xl sm:text-4xl lg:text-[2.75rem] text-[#f2efe8] tracking-tight leading-[1.06] mb-4 text-balance">
+                    <Heading className="font-display font-medium text-3xl sm:text-4xl lg:text-[2.65rem] text-[#f2efe8] tracking-tight leading-[1.06] mb-3.5 text-balance">
                       {c.titleLines.length
                         ? c.titleLines.map((line, n) => (
                             <span
@@ -215,23 +269,34 @@ export function LightJourneyStage() {
                     </Heading>
 
                     {/* Body Line */}
-                    <p className="text-white/75 text-sm sm:text-base leading-relaxed mb-5 max-w-lg">
+                    <p className="text-white/75 text-sm sm:text-base leading-relaxed mb-4 max-w-lg">
                       {c.line}
                     </p>
 
                     {/* Action Links */}
-                    <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6">
-                      {c.links.map((link) => (
-                        <SmartLink key={link.href} href={link.href}>
-                          {link.label}
-                          <ArrowGlyph className="h-4 w-4" />
-                        </SmartLink>
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-4">
+                      {c.links.map((link, linkIdx) => (
+                        <ActionLink
+                          key={link.href}
+                          href={link.href}
+                          variant={i === 0 && linkIdx === 0 ? "primary" : "text"}
+                        >
+                          <span>{link.label}</span>
+                          {i === 0 && linkIdx === 0 ? (
+                            <span aria-hidden="true">↓</span>
+                          ) : (
+                            <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                          )}
+                        </ActionLink>
                       ))}
                     </div>
 
-                    {/* Minimalist Proof Strip right after opening identity */}
+                    {/* Mobile Fold 1 Prism Visual right above Proof Strip */}
+                    {i === 0 && <MobileOpticalCard index={i} label={c.label} />}
+
+                    {/* Minimalist Proof Strip cleanly inside Opening Chapter */}
                     {i === 0 && (
-                      <div className="border-y border-white/10 py-4 mb-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                      <div className="border-y border-white/10 py-3.5 mb-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
                         {STATS.map((stat) => (
                           <div key={stat.label}>
                             <p className="font-display text-lg sm:text-xl font-medium text-[#f2efe8]">
@@ -262,22 +327,8 @@ export function LightJourneyStage() {
                       </div>
                     )}
 
-                    {/* Mobile-only Inline Optical Render (zero sticky viewport occlusion) */}
-                    <div className="lg:hidden relative w-full aspect-[8/7] overflow-hidden bg-[#08090c] mb-5">
-                      <img
-                        src={STATION_STILLS[i]}
-                        alt={`Optical stage ${String(i + 1).padStart(2, "0")}: ${c.label}`}
-                        loading={i === 0 ? "eager" : "lazy"}
-                        className="w-full h-full object-contain"
-                      />
-                      <div
-                        className="pointer-events-none absolute inset-0"
-                        style={{
-                          background:
-                            "radial-gradient(ellipse 90% 88% at 50% 50%, transparent 62%, rgba(8, 9, 12, 0.55) 85%, #08090c 100%)",
-                        }}
-                      />
-                    </div>
+                    {/* Mobile Inline Optics on Chapters 02-06 */}
+                    {i > 0 && <MobileOpticalCard index={i} label={c.label} />}
 
                     {/* Personal Story Photograph with Observatory Darkroom Grading */}
                     <div
@@ -303,21 +354,13 @@ export function LightJourneyStage() {
             })}
           </div>
 
-          {/* Right Column (Desktop): Sticky Synchronized Optical Bench Canvas */}
-          <div className="hidden lg:block lg:col-span-6 sticky top-24 h-[calc(100vh-7rem)]">
-            <div className="relative w-full h-full overflow-hidden bg-[#08090c]">
-              <JourneyCanvas
-                progressRef={progressRef}
-                className="w-full h-full"
-              />
-
-              {/* Subtle Vertical Vignette */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/85 via-transparent to-[#08090c]/30 pointer-events-none" />
-
-              {/* Top-Right Clickable Optical Chapter Selector */}
+          {/* Right Column (Desktop only — avoids downloading 145 desktop frames on mobile) */}
+          <div className="hidden lg:flex lg:col-span-6 sticky top-20 h-[calc(100vh-5.5rem)] flex-col justify-center">
+            <div className="flex flex-col w-full">
+              {/* Clickable Optical Chapter Selector directly above Stage */}
               <nav
                 aria-label="Optical journey stations"
-                className="absolute top-4 right-4 z-20 flex items-center gap-1.5"
+                className="flex items-center justify-end gap-1 mb-2"
               >
                 {chapters.map((c, idx) => {
                   const active = idx === activeChapterIndex;
@@ -328,9 +371,9 @@ export function LightJourneyStage() {
                       onClick={() => jumpToChapter(idx)}
                       aria-label={`Jump to station ${idx + 1}: ${c.label}`}
                       aria-current={active ? "step" : undefined}
-                      className={`px-2.5 py-1.5 font-mono text-xs tracking-wider transition-colors cursor-pointer ${
+                      className={`inline-flex min-h-11 min-w-10 items-center justify-center px-2 font-mono text-xs tracking-wider transition-colors cursor-pointer ${
                         active
-                          ? "text-[#f0b545] font-semibold border-b border-[#f0b545]"
+                          ? "text-[#f0b545] font-semibold border-b-2 border-[#f0b545]"
                           : "text-white/55 hover:text-white/90"
                       }`}
                     >
@@ -343,10 +386,21 @@ export function LightJourneyStage() {
                 </span>
               </nav>
 
-              {/* Bottom Optical Telemetry Readout */}
-              <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between text-xs font-mono text-white/60 pointer-events-none">
+              {/* Proportioned 8:7 Optical Bench Canvas */}
+              <div className="relative w-full aspect-[8/7] max-h-[calc(100vh-13rem)] mx-auto overflow-hidden bg-[#08090c]">
+                {isDesktop && (
+                  <JourneyCanvas
+                    progressRef={progressRef}
+                    className="w-full h-full"
+                  />
+                )}
+              </div>
+
+              {/* Dynamic Per-Station Telemetry Readout */}
+              <div className="mt-2.5 flex items-center justify-between text-xs font-mono text-white/60">
                 <span>
-                  <span className="text-[#f0b545]">λ = 530 nm</span> · d = 180 µm
+                  <span className="text-[#f0b545]">{currentTelemetry.metric}</span>{" "}
+                  · {currentTelemetry.detail}
                 </span>
                 <span className="uppercase tracking-wider">
                   OPTICAL BENCH · SCROLL TO SCRUB
@@ -373,10 +427,10 @@ export function LightJourneyStage() {
           </div>
           <Link
             href="/contact"
-            className="inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-medium text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
+            className="group inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-medium text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
           >
-            <span>Get in touch · {SITE.email}</span>
-            <ArrowGlyph className="h-4 w-4" />
+            <span>Book a talk or collaborate</span>
+            <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
 
@@ -407,12 +461,26 @@ export function LightJourneyStage() {
               <p className="text-sm sm:text-base text-white/70 leading-relaxed mb-2">
                 {item.description}
               </p>
-              <SmartLink href={item.href}>
+              <ActionLink href={item.href}>
                 <span>{item.cta}</span>
-                <ArrowGlyph className="h-4 w-4" />
-              </SmartLink>
+                <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </ActionLink>
             </article>
           ))}
+        </div>
+
+        {/* Understated Closing Invite directly before SiteFooter */}
+        <div className="mt-16 pt-10 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <p className="text-sm sm:text-base text-white/70">
+            Have a question about the physics, a speaking invitation, or an AI product collaboration?
+          </p>
+          <Link
+            href="/contact"
+            className="group inline-flex min-h-11 items-center gap-2 text-base font-medium text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
+          >
+            <span>Start a conversation</span>
+            <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+          </Link>
         </div>
       </section>
     </div>
