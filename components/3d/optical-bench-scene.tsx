@@ -412,17 +412,17 @@ export function OpticalBenchScene({
     // --- Camera Track & Waypoints ---
     // Smooth Catmull-Rom spline path through the 6 chapters
     const cameraWaypoints = [
-      // Chapter 0: Sunlight — close on prism face
+      // Chapter 0: Sunlight, close on prism face
       { pos: new THREE.Vector3(1.6, 0.85, 2.3), look: new THREE.Vector3(0, 0.45, 0.1) },
-      // Chapter 1: Many Colours — rainbow fan emerges
+      // Chapter 1: Many Colours, rainbow fan emerges
       { pos: new THREE.Vector3(1.2, 1.4, 2.8), look: new THREE.Vector3(0.8, 0.45, -0.3) },
-      // Chapter 2: One Hard Question — aperture slit isolating green
+      // Chapter 2: One Hard Question, aperture slit isolating green
       { pos: new THREE.Vector3(2.3, 1.1, 1.0), look: new THREE.Vector3(2.4, 0.45, -0.8) },
-      // Chapter 3: Two Slits — collimating lens & double-slit plate
+      // Chapter 3: Two Slits, collimating lens & double-slit plate
       { pos: new THREE.Vector3(3.3, 1.2, 0.0), look: new THREE.Vector3(3.8, 0.45, -2.2) },
-      // Chapter 4: One Photon at a Time — wave interference propagation
+      // Chapter 4: One Photon at a Time, wave interference propagation
       { pos: new THREE.Vector3(4.1, 1.6, -1.2), look: new THREE.Vector3(4.7, 0.45, -3.2) },
-      // Chapter 5: Where It's Likely to Land — detector fringes
+      // Chapter 5: Where It's Likely to Land, detector fringes
       { pos: new THREE.Vector3(4.7, 1.0, -2.5), look: new THREE.Vector3(5.2, 0.45, -3.8) },
     ];
 

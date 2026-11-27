@@ -15,12 +15,12 @@ export function SiteFooter() {
       <div className="site-width">
         <div className="flex flex-col gap-10 py-14 sm:flex-row sm:justify-between sm:gap-16">
           <div className="max-w-xs">
-            <p className="font-display text-xs font-light uppercase tracking-[0.3em] text-white">
+            <p className="font-display text-sm font-light uppercase tracking-[0.28em] text-white">
               {SITE.name}
             </p>
             <a
               href={`mailto:${SITE.email}`}
-              className="mt-4 inline-flex min-h-11 items-center text-sm text-[#f0b545] transition-colors hover:text-[#f8cd78]"
+              className="mt-4 inline-flex min-h-11 items-center text-base text-[#f0b545] transition-colors hover:text-[#f8cd78]"
             >
               {SITE.email}
             </a>
@@ -30,7 +30,7 @@ export function SiteFooter() {
           </div>
 
           <nav aria-label="Footer" className="shrink-0">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/55">
+            <p className="font-mono text-sm uppercase tracking-[0.2em] text-white/60">
               Pages
             </p>
             <ul className="mt-3">
@@ -38,7 +38,7 @@ export function SiteFooter() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="inline-flex min-h-11 items-center text-sm text-white/60 transition-colors hover:text-white"
+                    className="inline-flex min-h-11 items-center text-base text-white/70 transition-colors hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -48,7 +48,7 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="border-t border-white/10 py-8 text-xs text-white/55">
+        <div className="border-t border-white/10 py-8 text-sm text-white/60">
           &copy; {new Date().getFullYear()} {SITE.person}
         </div>
       </div>

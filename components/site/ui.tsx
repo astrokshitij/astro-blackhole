@@ -19,8 +19,8 @@ export const buttonStyles = cva(
         ghost: "text-white/70 hover:text-white",
       },
       size: {
-        sm: "px-5 py-2.5 text-sm",
-        md: "px-6 py-3 text-sm",
+        sm: "px-5 py-2.5 text-base",
+        md: "px-6 py-3 text-base",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },
@@ -109,7 +109,7 @@ export function SectionHeading({
         {title}
       </h2>
       {dek ? (
-        <p className="mt-4 text-sm leading-relaxed text-white/60 sm:text-base">{dek}</p>
+        <p className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg">{dek}</p>
       ) : null}
     </header>
   );
@@ -123,10 +123,10 @@ export function NextPage({ href, title }: { href: string; title: string }) {
       className="group mt-20 flex items-center justify-between gap-6 border-t border-white/10 pt-8 transition-colors hover:border-white/40"
     >
       <span>
-        <span className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
+        <span className="font-mono text-sm uppercase tracking-[0.2em] text-white/60">
           Next
         </span>
-        <span className="font-display mt-2 block text-xl font-light text-white sm:text-2xl">
+        <span className="font-display mt-2 block text-2xl font-light text-white sm:text-3xl">
           {title}
         </span>
       </span>

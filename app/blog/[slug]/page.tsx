@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   // Search results cut titles at about 60 characters. When the brand suffix
   // would push a title past that, show the title alone.
-  const fullTitle = `${post.title} — ${SITE.name}`;
+  const fullTitle = `${post.title} | ${SITE.name}`;
 
   return {
     title: fullTitle.length > 60 ? { absolute: post.title } : post.title,
@@ -158,18 +158,18 @@ export default async function PostPage({ params }: Params) {
           <div className="mx-auto max-w-3xl px-5 pb-14 sm:px-8">
             <Link
               href="/blog"
-              className="font-mono inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-white/55 transition-colors hover:text-white"
+              className="font-mono inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white"
             >
               <ArrowGlyph className="h-3.5 w-3.5 rotate-180" />
               All writing
             </Link>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2">
-              <span className="font-mono rounded-full border border-white/20 px-3 py-1 text-xs uppercase tracking-[0.16em] text-white/75">
+              <span className="font-mono rounded-full border border-white/20 px-3.5 py-1 text-sm uppercase tracking-[0.14em] text-white/80">
                 {post.category}
               </span>
               {post.readTime ? (
-                <span className="font-mono text-xs uppercase tracking-[0.16em] text-white/55">
+                <span className="font-mono text-sm uppercase tracking-[0.14em] text-white/60">
                   {post.readTime}
                 </span>
               ) : null}
@@ -178,7 +178,7 @@ export default async function PostPage({ params }: Params) {
                   <span aria-hidden className="h-px w-4 bg-white/20" />
                   <time
                     dateTime={post.date}
-                    className="font-mono text-xs uppercase tracking-[0.16em] text-white/55"
+                    className="font-mono text-sm uppercase tracking-[0.14em] text-white/60"
                   >
                     {post.dateLabel}
                   </time>
@@ -186,7 +186,7 @@ export default async function PostPage({ params }: Params) {
               ) : null}
             </div>
 
-            <h1 className="font-display mt-6 text-[clamp(1.9rem,5vw,3.25rem)] font-light leading-[1.1] tracking-[0.01em] text-white">
+            <h1 className="font-display mt-6 text-[clamp(2rem,5vw,3.35rem)] font-light leading-[1.1] tracking-[0.01em] text-white">
               {post.title}
             </h1>
 
@@ -198,7 +198,7 @@ export default async function PostPage({ params }: Params) {
               <p className="article-lede mt-6 leading-relaxed">{post.excerpt}</p>
             )}
 
-            <p className="font-mono mt-8 text-xs uppercase tracking-[0.18em] text-white/55">
+            <p className="font-mono mt-8 text-sm uppercase tracking-[0.18em] text-white/60">
               {SITE.person}
             </p>
           </div>
@@ -231,7 +231,7 @@ export default async function PostPage({ params }: Params) {
               className="article-summary mx-auto max-w-[68ch] px-5 pt-14 sm:px-8 sm:pt-16"
             >
               <div className="article-summary__box">
-                <p className="font-mono text-xs uppercase tracking-[0.2em]">
+                <p className="font-mono text-sm uppercase tracking-[0.2em]">
                   In short
                 </p>
                 <ul className="article-summary__list">
@@ -252,7 +252,7 @@ export default async function PostPage({ params }: Params) {
       {others.length ? (
         <section className="article-related border-t border-white/10 bg-black">
           <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
+            <p className="font-mono text-sm uppercase tracking-[0.2em] text-white/60">
               Read next
             </p>
             <ul className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -274,14 +274,14 @@ export default async function PostPage({ params }: Params) {
                       </div>
                     ) : null}
                     <span className="block p-5">
-                      <span className="font-mono text-xs uppercase tracking-[0.18em] text-white/55">
+                      <span className="font-mono text-sm uppercase tracking-[0.16em] text-white/60">
                         {other.category}
                         {other.readTime ? ` · ${other.readTime}` : ""}
                       </span>
-                      <span className="font-display mt-2 block text-lg font-light text-white sm:text-xl">
+                      <span className="font-display mt-2 block text-xl font-light text-white sm:text-2xl">
                         {other.title}
                       </span>
-                      <ArrowGlyph className="mt-5 h-4 w-4 text-white/55 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-white" />
+                      <ArrowGlyph className="mt-5 h-4 w-4 text-white/60 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-white" />
                     </span>
                   </Link>
                 </li>
@@ -289,7 +289,7 @@ export default async function PostPage({ params }: Params) {
             </ul>
             <Link
               href="/blog"
-              className="font-mono mt-10 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/55 transition-colors hover:text-white"
+              className="font-mono mt-10 inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] text-white/60 transition-colors hover:text-white"
             >
               <ArrowGlyph className="h-4 w-4 rotate-180" />
               Back to all writing

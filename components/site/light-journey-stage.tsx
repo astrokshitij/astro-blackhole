@@ -30,7 +30,7 @@ const STATION_STILLS = [
 
 const STATION_TELEMETRY = [
   { metric: "Snell dispersion", detail: "white beam -> spectrum" },
-  { metric: "400–700 nm", detail: "aperture slit selection" },
+  { metric: "400-700 nm", detail: "aperture slit selection" },
   { metric: "λ = 530 nm", detail: "collimated emerald wave" },
   { metric: "d = 180 µm", detail: "slit width 35 µm" },
   { metric: "P(y) ∝ cos²(π d y / λ L)", detail: "L = 1.0 m" },
@@ -64,8 +64,8 @@ function ActionLink({
   const isHash = href.startsWith("#");
   const classes =
     variant === "primary"
-      ? "group inline-flex min-h-11 items-center gap-2 rounded-full bg-[#f0b545] px-5 py-2.5 text-sm font-medium text-[#08090c] transition-colors hover:bg-[#f8cd78]"
-      : "group inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-medium text-[#f0b545] transition-colors hover:text-[#f8cd78]";
+      ? "group inline-flex min-h-11 items-center gap-2 rounded-full bg-[#f0b545] px-6 py-3 text-base font-medium text-[#08090c] transition-colors hover:bg-[#f8cd78]"
+      : "group inline-flex min-h-11 items-center gap-2 text-base sm:text-[17px] font-medium text-[#f0b545] transition-colors hover:text-[#f8cd78]";
 
   if (isExternal) {
     return (
@@ -241,17 +241,17 @@ export function LightJourneyStage() {
                 >
                   <div className="py-1 sm:py-2">
                     {/* Chapter Eyebrow & Optical Label */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                      <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#f0b545]">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                      <p className="font-mono text-sm uppercase tracking-[0.18em] text-[#f0b545]">
                         {c.eyebrow}
                       </p>
-                      <span className="font-mono text-xs uppercase tracking-wider text-white/55">
+                      <span className="font-mono text-sm uppercase tracking-wider text-white/60">
                         {c.label}
                       </span>
                     </div>
 
                     {/* Headline */}
-                    <Heading className="font-display font-medium text-3xl sm:text-4xl lg:text-[2.65rem] text-[#f2efe8] tracking-tight leading-[1.06] mb-3.5 text-balance">
+                    <Heading className="font-display font-medium text-3xl sm:text-4xl lg:text-[2.85rem] text-[#f2efe8] tracking-tight leading-[1.06] mb-4 text-balance">
                       {c.titleLines.length
                         ? c.titleLines.map((line, n) => (
                             <span
@@ -269,7 +269,7 @@ export function LightJourneyStage() {
                     </Heading>
 
                     {/* Body Line */}
-                    <p className="text-white/75 text-sm sm:text-base leading-relaxed mb-4 max-w-lg">
+                    <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-5 max-w-lg">
                       {c.line}
                     </p>
 
@@ -299,28 +299,28 @@ export function LightJourneyStage() {
                       <div className="border-y border-white/10 py-3.5 mb-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
                         {STATS.map((stat) => (
                           <div key={stat.label}>
-                            <p className="font-display text-lg sm:text-xl font-medium text-[#f2efe8]">
+                            <p className="font-display text-xl sm:text-2xl font-medium text-[#f2efe8]">
                               {stat.to}
                               <span className="text-[#f0b545]">{stat.suffix}</span>
                             </p>
-                            <p className="font-mono text-xs text-white/60 uppercase tracking-wider">
+                            <p className="font-mono text-sm text-white/65 uppercase tracking-wider">
                               {stat.label}
                             </p>
                           </div>
                         ))}
                         <div>
-                          <p className="font-display text-lg sm:text-xl font-medium text-[#f2efe8]">
+                          <p className="font-display text-xl sm:text-2xl font-medium text-[#f2efe8]">
                             TEDx
                           </p>
-                          <p className="font-mono text-xs text-white/60 uppercase tracking-wider">
+                          <p className="font-mono text-sm text-white/65 uppercase tracking-wider">
                             &amp; Perimeter
                           </p>
                         </div>
                         <div>
-                          <p className="font-display text-lg sm:text-xl font-medium text-[#f2efe8]">
+                          <p className="font-display text-xl sm:text-2xl font-medium text-[#f2efe8]">
                             MSc
                           </p>
-                          <p className="font-mono text-xs text-white/60 uppercase tracking-wider">
+                          <p className="font-mono text-sm text-white/65 uppercase tracking-wider">
                             Astrophysics
                           </p>
                         </div>
@@ -354,7 +354,7 @@ export function LightJourneyStage() {
             })}
           </div>
 
-          {/* Right Column (Desktop only — avoids downloading 145 desktop frames on mobile) */}
+          {/* Right Column (Desktop only, avoids downloading 145 desktop frames on mobile) */}
           <div className="hidden lg:flex lg:col-span-6 sticky top-20 h-[calc(100vh-5.5rem)] flex-col justify-center">
             <div className="flex flex-col w-full">
               {/* Clickable Optical Chapter Selector directly above Stage */}
@@ -371,17 +371,17 @@ export function LightJourneyStage() {
                       onClick={() => jumpToChapter(idx)}
                       aria-label={`Jump to station ${idx + 1}: ${c.label}`}
                       aria-current={active ? "step" : undefined}
-                      className={`inline-flex min-h-11 min-w-10 items-center justify-center px-2 font-mono text-xs tracking-wider transition-colors cursor-pointer ${
+                      className={`inline-flex min-h-11 min-w-10 items-center justify-center px-2 font-mono text-sm tracking-wider transition-colors cursor-pointer ${
                         active
                           ? "text-[#f0b545] font-semibold border-b-2 border-[#f0b545]"
-                          : "text-white/55 hover:text-white/90"
+                          : "text-white/60 hover:text-white/90"
                       }`}
                     >
                       {String(idx + 1).padStart(2, "0")}
                     </button>
                   );
                 })}
-                <span className="ml-2 font-mono text-xs text-white/80">
+                <span className="ml-2 font-mono text-sm text-white/85">
                   · {currentChapter.label}
                 </span>
               </nav>
@@ -397,7 +397,7 @@ export function LightJourneyStage() {
               </div>
 
               {/* Dynamic Per-Station Telemetry Readout */}
-              <div className="mt-2.5 flex items-center justify-between text-xs font-mono text-white/60">
+              <div className="mt-2.5 flex items-center justify-between text-sm font-mono text-white/65">
                 <span>
                   <span className="text-[#f0b545]">{currentTelemetry.metric}</span>{" "}
                   · {currentTelemetry.detail}
@@ -418,7 +418,7 @@ export function LightJourneyStage() {
       >
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#f0b545] mb-3">
+            <p className="font-mono text-sm uppercase tracking-[0.2em] text-[#f0b545] mb-3">
               Selected work &amp; writing
             </p>
             <h2 className="font-display font-medium text-2xl sm:text-3xl lg:text-4xl text-[#f2efe8] tracking-tight text-balance">
@@ -427,7 +427,7 @@ export function LightJourneyStage() {
           </div>
           <Link
             href="/contact"
-            className="group inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-medium text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
+            className="group inline-flex min-h-11 items-center gap-2 text-base sm:text-[17px] font-medium text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
           >
             <span>Book a talk or collaborate</span>
             <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -448,17 +448,17 @@ export function LightJourneyStage() {
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#08090c]/60 via-transparent to-transparent" />
               </div>
               <div className="flex items-center justify-between gap-2 mb-2">
-                <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#f0b545]">
+                <span className="font-mono text-sm uppercase tracking-[0.16em] text-[#f0b545]">
                   {item.category}
                 </span>
-                <span className="font-mono text-xs text-white/55">
+                <span className="font-mono text-sm text-white/60">
                   {item.type}
                 </span>
               </div>
-              <h3 className="font-display font-medium text-xl sm:text-2xl text-[#f2efe8] tracking-tight mb-2">
+              <h3 className="font-display font-medium text-2xl sm:text-[1.75rem] text-[#f2efe8] tracking-tight mb-2">
                 {item.title}
               </h3>
-              <p className="text-sm sm:text-base text-white/70 leading-relaxed mb-2">
+              <p className="text-base sm:text-lg text-white/75 leading-relaxed mb-2">
                 {item.description}
               </p>
               <ActionLink href={item.href}>
@@ -471,12 +471,12 @@ export function LightJourneyStage() {
 
         {/* Understated Closing Invite directly before SiteFooter */}
         <div className="mt-16 pt-10 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <p className="text-sm sm:text-base text-white/70">
+          <p className="text-base sm:text-lg text-white/75">
             Have a question about the physics, a speaking invitation, or an AI product collaboration?
           </p>
           <Link
             href="/contact"
-            className="group inline-flex min-h-11 items-center gap-2 text-base font-medium text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
+            className="group inline-flex min-h-11 items-center gap-2 text-base sm:text-[17px] font-medium text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
           >
             <span>Start a conversation</span>
             <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />

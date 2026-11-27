@@ -11,7 +11,7 @@ import { useEffect, useRef } from "react";
 /*  Nothing here is a picture of a ring laid over a disc. Every pixel fires    */
 /*  one ray out of the camera and walks it backwards through curved space      */
 /*  until the ray either falls through the horizon, leaves for the stars, or   */
-/*  cuts the gas disc — often three or four times over, because a ray can      */
+/*  cuts the gas disc, often three or four times over, because a ray can      */
 /*  loop the hole and come back. The disc is drawn once. The halo above it,    */
 /*  the halo below it, and the hard thin ring hugging the shadow are the same  */
 /*  disc seen again through bent light. That is why they line up: nobody       */
@@ -19,7 +19,7 @@ import { useEffect, useRef } from "react";
 /*                                                                            */
 /*  Units are set by the horizon: r = 1 is the event horizon. Then the photon  */
 /*  sphere sits at 1.5, the shadow the camera sees is 2.6 across the radius,   */
-/*  and the disc starts at 3 — the innermost orbit gas can hold in this        */
+/*  and the disc starts at 3, the innermost orbit gas can hold in this        */
 /*  geometry. Those numbers are not tuned. They fall out of the metric.        */
 /* -------------------------------------------------------------------------- */
 
@@ -29,7 +29,7 @@ export interface BlackHoleHeroSectionProps
   distance?: number;
   /**
    * How far the camera sits above the disc, in degrees. Near 0 the disc is
-   * edge-on and the far side arches over the shadow as a halo — the shot
+   * edge-on and the far side arches over the shadow as a halo, the shot
    * everyone knows. Past about 25 the halo folds away and you are looking
    * down at a ring instead.
    */
@@ -58,7 +58,7 @@ export interface BlackHoleHeroSectionProps
   brightness?: number;
   /**
    * Turns of the inner rim per second. The rest of the disc follows Kepler, so
-   * it lags — hard. This is where nearly all the movement in the picture comes
+   * it lags, hard. This is where nearly all the movement in the picture comes
    * from: the rim is imaged over and over into the rings that hug the shadow,
    * and those rings carry the fastest gas in the frame.
    */
@@ -68,7 +68,7 @@ export interface BlackHoleHeroSectionProps
   /**
    * Relativistic beaming, 0 to 1. The gas at the inner rim runs at 0.4c, so
    * the side coming at you is thrown brighter and bluer and the receding side
-   * is dimmed — physically it is g³, and this dials the exponent. The film
+   * is dimmed, physically it is g³, and this dials the exponent. The film
    * everyone has seen set this to 0 to keep the ring even; 1 is the truth.
    */
   doppler?: number;
@@ -80,7 +80,7 @@ export interface BlackHoleHeroSectionProps
   coolColor?: string;
   /**
    * Background stars, 0 to 2. Off by default. They are lensed along with
-   * everything else, so near the rim they smear into arcs — which looks right
+   * everything else, so near the rim they smear into arcs, which looks right
    * in a still and busy in motion, and the gas is what should be moving.
    */
   starBrightness?: number;
@@ -148,7 +148,7 @@ precision highp float;
 /**
  * Seconds before the wound-up gas pattern hands over to a fresh copy. What
  * matters is how far the gas winds in one of these, which is this times the
- * spin — so a slow disc can afford a long cycle, and a long cycle is what you
+ * spin, so a slow disc can afford a long cycle, and a long cycle is what you
  * want: every handover costs a little contrast while the two copies overlap.
  */
 #define WIND_CYCLE 46.0
@@ -228,7 +228,7 @@ float fbm(vec3 p, float lod) {
  * The gas runs on Kepler orbits, so the inner rim laps the outer edge many
  * times over. Reading the turbulence in a frame that turns with the gas, at
  * each radius its own rate, is what shears the clouds into the trailing
- * spirals — nothing draws a spiral.
+ * spirals, nothing draws a spiral.
  */
 void gasAt(vec3 p, float rd, float dt, out float dens, out vec3 tint, out float heat) {
   float rn = clamp((rd - uDiskIn) / max(0.001, uDiskOut - uDiskIn), 0.0, 1.0);
@@ -240,7 +240,7 @@ void gasAt(vec3 p, float rd, float dt, out float dens, out vec3 tint, out float 
 
   // Detail the ray cannot resolve is detail it should not be asking for. A ray
   // running the length of the disc steps about a tenth of a unit at a time,
-  // and the finest octave is finer than that — sampled once each, those cells
+  // and the finest octave is finer than that, sampled once each, those cells
   // do not average out, they beat, and the arms come out combed with dashes.
   // So the last octave fades out as the step grows.
   float lod = clamp(1.0 - dt * uGrain * 14.0, 0.0, 1.0);
@@ -248,7 +248,7 @@ void gasAt(vec3 p, float rd, float dt, out float dens, out vec3 tint, out float 
   float phi = atan(p.z, p.x);
   // Kepler: omega goes as r^-3/2, so every radius turns at its own rate and
   // the clouds are read in a frame that turns with them. That shear is what
-  // draws the trailing spirals — nothing here draws a spiral.
+  // draws the trailing spirals, nothing here draws a spiral.
   float omega = uSpin * pow(uDiskIn / rd, 1.5);
   // A third axis, so two radii turning at their own rates do not read the same
   // cloud, plus a slow creep inward so the gas falls as well as turns.
@@ -285,7 +285,7 @@ void gasAt(vec3 p, float rd, float dt, out float dens, out vec3 tint, out float 
 
   dens = max(0.0, filaments * 1.5 - 0.30) * sheet * prof * uDensity * 4.6;
 
-  // Shakura–Sunyaev: T falls as r^-3/4. The colour ramp rides it.
+  // Shakura-Sunyaev: T falls as r^-3/4. The colour ramp rides it.
   heat = pow(uDiskIn / rd, 0.8) * (0.72 + 0.55 * clouds);
   tint = mix(uCool, uMid, smoothstep(0.10, 0.52, heat));
   tint = mix(tint, uHot, smoothstep(0.52, 1.05, heat));
@@ -363,7 +363,7 @@ void main() {
   bool captured = false;
 
   // Where inside its step each ray reads the gas. Always reading the middle
-  // beats the step pattern against the disc into rings — worst in the halo,
+  // beats the step pattern against the disc into rings, worst in the halo,
   // where lensing packs a hundred radii into a few pixels. So each pixel
   // starts somewhere else, and then walks the read on by the golden ratio at
   // every step: one fixed offset per pixel is not enough, because the steps
@@ -398,11 +398,11 @@ void main() {
     // copy of the disc against the shadow. Those copies are real, and they are
     // faint: every extra turn costs a factor of about e^2pi. Given full
     // brightness they instead pile into a hairline ring which no single ray
-    // per pixel can resolve — past the photon sphere the arrival angle swings
+    // per pixel can resolve, past the photon sphere the arrival angle swings
     // wildly between neighbouring pixels, so the ring comes out as a broken
     // string of sparks that crawl as the gas turns. Charging each turn its
     // proper cost puts it back in its place: a soft rim, not a dotted circle.
-    // Half a turn is free, which leaves the halo — that one only bends.
+    // Half a turn is free, which leaves the halo, that one only bends.
     float deep = exp(-1.3 * max(0.0, swept - 4.6));
 
     jitter = fract(jitter + 0.6180339887);
@@ -469,7 +469,7 @@ void main() {
  * Folds the new frame into the running average. The camera does not move, so
  * every frame lines up with the last one and there is nothing to reproject:
  * the same pixel is the same piece of sky, frame after frame. The gas does
- * move, and `uAlpha` is the price of that — the more weight the history keeps,
+ * move, and `uAlpha` is the price of that, the more weight the history keeps,
  * the cleaner the still and the more the moving gas smears behind itself.
  */
 const BLEND_FRAG = `
@@ -686,7 +686,7 @@ export function BlackHoleHeroSection({
      * Take the canvas out of the picture and leave the black background and
      * whatever copy sits on it. A canvas whose context has died does not go
      * quietly: it paints white, or the browser's broken-image mark, straight
-     * over the background — which is worse than showing nothing at all.
+     * over the background, which is worse than showing nothing at all.
      */
     function giveUp(why: string) {
       host!.dataset.webgl = why;
@@ -698,8 +698,8 @@ export function BlackHoleHeroSection({
       return;
     }
 
-    // Software renderers — a machine with no GPU, a virtual desktop, the
-    // sandbox a component gallery previews in — run this shader at seconds per
+    // Software renderers, a machine with no GPU, a virtual desktop, the
+    // sandbox a component gallery previews in, run this shader at seconds per
     // frame, and the browser kills the context for hanging. Spotting one and
     // dropping to a cheap setting is the difference between a picture and a
     // dead canvas.
@@ -722,7 +722,7 @@ export function BlackHoleHeroSection({
         // Short and once per shader. When a context dies every shader fails at
         // the same moment with an empty log, and dumping five listings of GLSL
         // into the console buries whatever the real problem was.
-        console.error("blackhole: shader failed —", gl!.getShaderInfoLog(sh) || "no log (context lost?)");
+        console.error("blackhole: shader failed , ", gl!.getShaderInfoLog(sh) || "no log (context lost?)");
         gl!.deleteShader(sh);
         return null;
       }
@@ -758,7 +758,7 @@ export function BlackHoleHeroSection({
 
     // Half floats keep the gas bright enough to bloom properly. Where they are
     // missing the scene is packed with Reinhard into 8 bits instead and
-    // unpacked on the way out — coarser, but it holds the highlights.
+    // unpacked on the way out, coarser, but it holds the highlights.
     let hdr = true;
     let texType: number = gl.UNSIGNED_BYTE;
     let internal: number = gl.RGBA;
@@ -1072,8 +1072,8 @@ export function BlackHoleHeroSection({
     }
 
     /**
-     * Draws one still, properly. Nothing is animating in these cases — a
-     * resize while paused, or a reader who has asked for no motion — so the
+     * Draws one still, properly. Nothing is animating in these cases, a
+     * resize while paused, or a reader who has asked for no motion, so the
      * frames the average would normally be given over time are taken all at
      * once instead. Each pass aims at a different point inside the pixel, so
      * what lands on screen is settled rather than speckled.
@@ -1161,7 +1161,7 @@ export function BlackHoleHeroSection({
       }
       // The context is deliberately left alive. Killing it here with
       // WEBGL_lose_context looks tidy and is a trap: React's StrictMode runs
-      // every effect twice on the same DOM — setup, cleanup, setup — and a
+      // every effect twice on the same DOM, setup, cleanup, setup, and a
       // canvas whose context has been lost hands the same dead context back to
       // the next getContext call. Every shader then fails to compile with an
       // empty log, which is a miserable thing to debug. Deleting what was

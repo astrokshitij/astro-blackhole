@@ -195,8 +195,8 @@
   display: block;
   border-left: 1px solid rgb(255 255 255 / 15%);
   padding-left: 0.75rem;
-  font-size: 0.75rem;
-  line-height: 1.4;
+  font-size: 0.875rem;
+  line-height: 1.45;
   transition: color 160ms, border-color 160ms;
 }
 .article-toc a:hover,
@@ -219,7 +219,7 @@
 .article-mobile-tools a {
   color: inherit;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }

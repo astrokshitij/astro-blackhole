@@ -1,4 +1,4 @@
-/* Astro Kshitij — a contemporary observatory, built around the work. */
+/* Astro Kshitij, a contemporary observatory, built around the work. */
 .reach-layout { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); align-items:center; gap:clamp(40px,7vw,100px); }
 .reach-photo { position:relative; aspect-ratio:3/4; margin:0; overflow:hidden; border-radius:4px; }
 .reach-copy { min-width:0; }
@@ -93,7 +93,7 @@ img {
 .eyebrow {
   font-family: var(--font-geist-mono), monospace;
   color: #f0b545;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -116,13 +116,13 @@ img {
 }
 .section-aside {
   color: #a8adb7;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
   max-width: 310px;
 }
 .body-copy {
   color: #a8adb7;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.85;
   margin-top: 26px;
   max-width: 580px;
@@ -132,7 +132,7 @@ img {
   min-height: 44px;
   align-items: center;
   gap: 16px;
-  font-size: 14px;
+  font-size: 16px;
   color: #f2efe8;
   border-bottom: 1px solid rgba(240, 181, 69, 0.55);
   padding-block: 10px;
@@ -202,7 +202,7 @@ img {
   display: flex;
   align-items: center;
   min-height: 44px;
-  font-size: 13px;
+  font-size: 15px;
   color: #a8adb7;
 }
 .desktop-nav a:hover,
@@ -582,7 +582,7 @@ figcaption {
   margin-top: 14px;
   color: #a8adb7;
   font-family: var(--font-geist-mono);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
 }
 .writing-band {
@@ -601,7 +601,7 @@ figcaption {
   gap: 12px;
   font-family: var(--font-geist-mono);
   color: #a8adb7;
-  font-size: 12px;
+  font-size: 14px;
 }
 .writing-meta span {
   color: #f0b545;
@@ -771,7 +771,7 @@ figcaption {
 .essay-feature p {
   color: #a8adb7;
   line-height: 1.8;
-  font-size: 15px;
+  font-size: 17px;
 }
 .essay-grid {
   display: grid;
@@ -841,7 +841,7 @@ figcaption {
 }
 .contact-reason p {
   color: #a8adb7;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
 }
 .enquiry-form {
@@ -865,7 +865,7 @@ figcaption {
 .enquiry-form label {
   display: block;
   color: #a8adb7;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
 }
 .enquiry-form input,
@@ -881,7 +881,7 @@ figcaption {
   margin-top: 8px;
   border-radius: 0;
   font:
-    14px/1.5 var(--font-geist-sans),
+    16px/1.5 var(--font-geist-sans),
     sans-serif;
 }
 .enquiry-form textarea {
@@ -889,7 +889,7 @@ figcaption {
 }
 .form-note {
   color: #a8adb7;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
   margin-top: 20px;
 }
@@ -903,7 +903,7 @@ figcaption {
 }
 .email-draft p {
   color: #a8adb7;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
 }
 .article-hero {
@@ -1118,7 +1118,7 @@ footer {
     height: 72px;
   }
   .wordmark {
-    font-size: 15px;
+    font-size: 16px;
   }
   .desktop-nav {
     display: none;
@@ -1225,7 +1225,7 @@ footer {
     aspect-ratio: 4/4.5;
   }
   .body-copy {
-    font-size: 15px;
+    font-size: 16px;
   }
   .writing-feature {
     grid-template-columns: 1fr;
@@ -1275,7 +1275,7 @@ footer {
     font-size: 43px;
   }
   .page-hero > .site-width > p:last-child:not(.eyebrow) {
-    font-size: 15px;
+    font-size: 16px;
   }
   .credential-summary {
     grid-template-columns: 1fr;
@@ -1344,7 +1344,7 @@ footer {
 }
 .essay-feature .eyebrow {
   color: #f0b545;
-  font-size: 12px;
+  font-size: 14px;
 }
 body[data-reading-theme="light"] .article-body,
 body[data-reading-theme="light"] .article-hero {

@@ -405,7 +405,7 @@ export default function AboutPage() {
             </div>
 
             <div className="mt-16">
-              <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/55">
+              <p className="font-mono text-sm uppercase tracking-[0.2em] text-white/60">
                 Where the work lives
               </p>
               <div className="mt-5">

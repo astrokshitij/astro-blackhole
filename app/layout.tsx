@@ -116,7 +116,7 @@ const structuredData = {
       },
       award: [
         "Science Communicator Award",
-        "Silver Medal — University Physics Competition",
+        "Silver Medal, University Physics Competition",
       ],
       knowsAbout: [
         "Physics",

@@ -19,7 +19,7 @@ import { useEffect, useRef } from "react";
 /*  Two honest liberties. Real crown glass spreads the spectrum over about    */
 /*  two degrees, which at hero size is a white line with coloured edges, so   */
 /*  the dispersion (B) is turned up roughly eight times. And the beam is      */
-/*  visible in empty air, as if the room were faintly dusty — which is how    */
+/*  visible in empty air, as if the room were faintly dusty, which is how    */
 /*  every photograph of this experiment is actually taken.                    */
 /*                                                                            */
 /*  On load the light is switched on and travels in from the left. It slows   */
