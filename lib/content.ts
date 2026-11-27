@@ -208,11 +208,11 @@ export const LIGHT_JOURNEY = {
   chapters: [
     {
       id: "journey-opener",
-      eyebrow: "01 · Physicist · Sci-Comm · AI Builder",
+      eyebrow: "01 · Growth · Sci-Comm · AI Builder",
       title: "Kshitij means horizon, welcome to mine",
       // How the opening headline breaks; the last line is gold.
       titleLines: ["Kshitij means horizon", "Welcome to mine"],
-      line: "MSc Astrophysicist, TEDx speaker (137k+ reached), and AI product builder, following light from curiosity to creation",
+      line: "",
       photo: "/images/home/tedx/3.jpg",
       alt: "Kshitij Pandey speaking on the TEDx stage in a grey blazer",
       ratio: 16 / 10,

@@ -316,14 +316,16 @@ export function LightJourneyStage() {
                         : c.title}
                     </Heading>
 
-                    {/* Body Line */}
-                    <p
-                      className={`text-white/80 text-[15px] sm:text-[17px] leading-[1.48] sm:leading-[1.65] max-w-lg ${
-                        i === 0 ? "mb-2.5 sm:mb-5" : "mb-5"
-                      }`}
-                    >
-                      {c.line}
-                    </p>
+                    {/* Body Line (omit completely when empty so Hero avoids empty vertical gap) */}
+                    {c.line ? (
+                      <p
+                        className={`text-white/80 text-[15px] sm:text-[17px] leading-[1.48] sm:leading-[1.65] max-w-lg ${
+                          i === 0 ? "mb-2.5 sm:mb-5" : "mb-5"
+                        }`}
+                      >
+                        {c.line}
+                      </p>
+                    ) : null}
 
                     {/* Action Links */}
                     <div
