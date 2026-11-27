@@ -53,7 +53,7 @@ function SmartLink({
 
 export function LightJourneyStage() {
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const progressRef = useRef(0);
   const sectionRef = useRef<HTMLElement>(null);
   const chapters = LIGHT_JOURNEY.chapters;
   const currentChapter = chapters[activeChapterIndex] || chapters[0];
@@ -63,13 +63,13 @@ export function LightJourneyStage() {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const windowH = window.innerHeight;
+      const sectionTop = rect.top + window.scrollY;
 
-      // Calculate continuous progress 0..1 across the chapters section
-      const totalScroll = rect.height - windowH * 0.65;
-      const currentScroll = -rect.top + windowH * 0.25;
+      // Map scroll cleanly from top of page (0) through bottom of the last chapter (1)
+      const totalScroll = Math.max(1, rect.height - windowH * 0.72);
+      const currentScroll = Math.max(0, window.scrollY - Math.max(0, sectionTop - 96));
 
-      const p = Math.max(0, Math.min(1, currentScroll / totalScroll));
-      setProgress(p);
+      progressRef.current = Math.max(0, Math.min(1, currentScroll / totalScroll));
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -109,44 +109,11 @@ export function LightJourneyStage() {
 
   return (
     <div className="relative w-full bg-[#08090c] text-[#f2efe8] selection:bg-[#f0b545]/20 selection:text-[#f0b545]">
-      {/* Hero Opening Header */}
-      <section className="relative pt-32 pb-16 px-6 sm:px-8 lg:px-12 max-w-[1440px] mx-auto">
-        <div className="max-w-3xl">
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#f0b545] mb-4">
-            Kshitij Pandey / Astro Kshitij
-          </p>
-          <h1 className="font-display font-medium text-4xl sm:text-5xl lg:text-6xl text-[#f2efe8] tracking-tight leading-[1.04] mb-6 text-balance">
-            The universe is stranger than <span className="text-[#f0b545]">you think</span>.
-          </h1>
-          <p className="text-white/75 text-base sm:text-lg leading-relaxed max-w-2xl mb-8">
-            I’m a physicist, TEDx speaker and science communicator exploring the ideas that reshape reality. Follow the light down.
-          </p>
-          <div className="flex flex-wrap items-center gap-4">
-            <a
-              href="#journey-start"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#f0b545] text-[#08090c] font-medium text-sm hover:bg-[#f8cd78] transition-colors"
-            >
-              <span>Explore the story</span>
-              <span className="text-base">↓</span>
-            </a>
-            <a
-              href="https://www.youtube.com/@astrokshitij"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white hover:border-white/50 hover:bg-white/[0.04] transition-all text-sm font-medium"
-            >
-              <span>Watch on YouTube</span>
-              <ArrowGlyph className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Main Split-Stage Section */}
       <section
         ref={sectionRef}
         id="journey-start"
-        className="relative px-6 sm:px-8 lg:px-12 max-w-[1440px] mx-auto pb-24"
+        className="relative pt-24 sm:pt-28 pb-20 sm:pb-28 px-6 sm:px-8 lg:px-12 max-w-[1440px] mx-auto"
       >
         {/* On Mobile: Sticky Canvas Stage pinned at the top */}
         <div className="block lg:hidden mb-10 sticky top-20 z-20 bg-gradient-to-b from-[#08090c] via-[#08090c]/95 to-transparent pb-3">
@@ -154,16 +121,16 @@ export function LightJourneyStage() {
             {String(activeChapterIndex + 1).padStart(2, "0")} · {currentChapter.label}
           </div>
           <div className="relative w-full aspect-[8/7] overflow-hidden bg-transparent">
-            <JourneyCanvas progress={progress} className="w-full h-full" />
+            <JourneyCanvas progressRef={progressRef} className="w-full h-full" />
           </div>
         </div>
 
         {/* 12-Column Grid on Desktop */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
           {/* Left Column (cols 1-6): Narrative Chapters */}
-          <div className="lg:col-span-6 space-y-24 lg:space-y-36">
+          <div className="lg:col-span-6 space-y-24 lg:space-y-40">
             {chapters.map((c, i) => {
-              const Heading = i === 0 ? "h2" : "h2";
+              const Heading = i === 0 ? "h1" : "h2";
               const isActive = i === activeChapterIndex;
 
               return (
@@ -171,17 +138,17 @@ export function LightJourneyStage() {
                   key={c.id}
                   id={c.id}
                   data-index={i}
-                  className={`journey-chapter transition-opacity duration-300 ${
-                    isActive ? "opacity-100" : "opacity-85 lg:opacity-65 hover:opacity-100"
+                  className={`journey-chapter transition-opacity duration-500 ease-out ${
+                    isActive ? "opacity-100" : "opacity-85 lg:opacity-60 hover:opacity-100"
                   }`}
                 >
-                  <div className="py-4 sm:py-6 lg:py-8 transition-opacity">
+                  <div className="py-4 sm:py-6 lg:py-8 transition-opacity duration-500">
                     {/* Chapter Eyebrow */}
                     <div className="flex items-center justify-between mb-3">
                       <p className="font-mono text-xs uppercase tracking-[0.22em] text-[#f0b545]">
                         {c.eyebrow}
                       </p>
-                      <span className="font-mono text-xs uppercase tracking-wider text-white/40">
+                      <span className="font-mono text-xs uppercase tracking-wider text-white/55">
                         {c.label}
                       </span>
                     </div>
@@ -250,10 +217,10 @@ export function LightJourneyStage() {
           {/* Right Column (cols 7-12): The Anchored Cinematic Stage (Desktop) */}
           <div className="hidden lg:block lg:col-span-6 sticky top-24 h-[calc(100vh-7rem)]">
             <div className="relative w-full h-full overflow-hidden bg-transparent">
-              {/* Interactive 120 FPS Image Sequence Canvas */}
-              <JourneyCanvas progress={progress} className="w-full h-full" />
+              {/* Interactive 120 FPS Smoothly-Interpolated Image Sequence Canvas */}
+              <JourneyCanvas progressRef={progressRef} className="w-full h-full" />
 
-              {/* Edge Vignette & Watermark Mask */}
+              {/* Edge Vignette Mask */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#08090c]/90 via-transparent to-[#08090c]/30 pointer-events-none" />
 
               {/* Top-Right HUD Badge */}
@@ -262,9 +229,9 @@ export function LightJourneyStage() {
                 <span className="text-[#f0b545] font-semibold">
                   {String(activeChapterIndex + 1).padStart(2, "0")}
                 </span>
-                <span className="text-white/40">/</span>
+                <span className="text-white/50">/</span>
                 <span className="text-white/60">06</span>
-                <span className="text-white/40">·</span>
+                <span className="text-white/50">·</span>
                 <span className="font-semibold">{currentChapter.label}</span>
               </div>
 
@@ -272,7 +239,7 @@ export function LightJourneyStage() {
               <div className="absolute bottom-5 left-5 right-5 z-20 flex items-center justify-between text-xs font-mono text-white/70 pointer-events-none">
                 <div className="flex items-center gap-2">
                   <span className="text-[#f0b545]">ASTRO KSHITIJ</span>
-                  <span className="text-white/30">|</span>
+                  <span className="text-white/50">|</span>
                   <span>PHYSICS & STORY</span>
                 </div>
                 <span className="text-white/60 text-xs uppercase tracking-wider">
@@ -281,29 +248,6 @@ export function LightJourneyStage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Closer Section */}
-      <section className="relative z-20 border-t border-white/10 bg-[#08090c] py-24 px-6 sm:px-8 lg:px-12">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <Link
-            href={LIGHT_JOURNEY.closer.href}
-            className="group inline-flex items-center gap-4 text-3xl sm:text-4xl md:text-5xl font-display font-light text-[#f2efe8] hover:text-[#f0b545] transition-colors"
-          >
-            <span>{LIGHT_JOURNEY.closer.title}</span>
-            <ArrowGlyph className="h-8 w-8 text-[#f0b545] transition-transform duration-200 group-hover:translate-x-2" />
-          </Link>
-          <p className="text-white/60 text-base sm:text-lg max-w-xl mx-auto">
-            {LIGHT_JOURNEY.closer.line}
-          </p>
-
-          <details className="mt-12 text-left max-w-2xl mx-auto p-6 rounded-xl bg-white/[0.03] border border-white/10 text-xs sm:text-sm text-white/60 leading-relaxed cursor-pointer hover:border-white/20 transition-colors">
-            <summary className="font-mono uppercase tracking-[0.16em] text-[#f0b545] font-semibold mb-3">
-              {LIGHT_JOURNEY.notesLabel}
-            </summary>
-            <p className="mt-2 text-white/70">{LIGHT_JOURNEY.notes}</p>
-          </details>
         </div>
       </section>
     </div>
