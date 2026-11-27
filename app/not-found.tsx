@@ -10,10 +10,10 @@ export default function NotFound() {
   return (
     <section className="flex min-h-[70svh] items-center bg-black pt-16">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-        <p className="font-mono text-sm uppercase tracking-[0.28em] text-white/60">
+        <p className="font-sans text-sm font-bold uppercase tracking-[0.1em] text-[#f0b545]">
           404
         </p>
-        <h1 className="font-display mt-5 text-[clamp(2rem,5.5vw,3.5rem)] font-light uppercase leading-[1.08] tracking-[0.1em] text-white">
+        <h1 className="font-display mt-4 text-[clamp(2rem,4.5vw,3.2rem)] font-black leading-[1.1] tracking-tight text-white">
           Past the horizon
         </h1>
         <p className="mt-5 max-w-md text-base leading-relaxed text-white/70 sm:text-lg">

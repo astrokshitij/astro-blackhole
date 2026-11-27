@@ -15,12 +15,12 @@ export function SiteFooter() {
       <div className="site-width">
         <div className="flex flex-col gap-10 py-14 sm:flex-row sm:justify-between sm:gap-16">
           <div className="max-w-xs">
-            <p className="font-display text-sm font-light uppercase tracking-[0.28em] text-white">
+            <p className="font-display text-base font-black uppercase tracking-[0.06em] text-white">
               {SITE.name}
             </p>
             <a
               href={`mailto:${SITE.email}`}
-              className="mt-4 inline-flex min-h-11 items-center text-base text-[#f0b545] transition-colors hover:text-[#f8cd78]"
+              className="mt-4 inline-flex min-h-11 items-center text-base font-bold text-[#f0b545] transition-colors hover:text-[#f8cd78]"
             >
               {SITE.email}
             </a>
@@ -30,7 +30,7 @@ export function SiteFooter() {
           </div>
 
           <nav aria-label="Footer" className="shrink-0">
-            <p className="font-mono text-sm uppercase tracking-[0.2em] text-white/60">
+            <p className="font-sans text-sm font-bold uppercase tracking-[0.08em] text-white/65">
               Pages
             </p>
             <ul className="mt-3">

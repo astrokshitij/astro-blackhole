@@ -47,13 +47,15 @@ redirect to `/` (see `next.config.ts`).
 - `app/editorial.css` — editorial layouts, palette and responsive rules.
 - `components/site/enquiry-form.tsx` — Contact enquiry form.
 - `content/blog/*.md` — one file per post.
-- `fonts/` — Jost, self-hosted, loaded via `next/font/local` in `app/layout.tsx`.
+- **Typography & layout hierarchy**: Lato (`400` / `700` / `900` via `next/font/google` in
+  `app/layout.tsx`) across display headings (`900`), UI/card subheads (`700`), compact `64px` sticky
+  underline header with gradient pill CTA, elevated `10px`-radius cards, and body copy (`400`).
 
 ## Conventions
 
-- Display face is Jost (`font-display`), body is Geist Sans, small labels are
-  Geist Mono. Large headings use sentence case and tight tracking.
-- **No text below 12px anywhere.** Light strokes on black bloom optically.
+- Unified typography is Lato (`--font-lato` for `font-display` and `font-sans`); `GeistMono` is reserved
+  for code blocks only. Headings use bold `700`/`900` hierarchy and sentence case with tight tracking.
+- **No text below 14px in active UI** (all labels, eyebrows, buttons, and body copy stay readable).
 - Mono UI labels ("IN SHORT", "PREVIOUSLY") are `<p>`, never headings. Heading
   levels are for real section titles only.
 - Every text colour must clear 4.5:1 on black. White at 50% or more is safe.

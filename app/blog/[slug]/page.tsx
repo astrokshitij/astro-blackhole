@@ -158,18 +158,18 @@ export default async function PostPage({ params }: Params) {
           <div className="mx-auto max-w-3xl px-5 pb-14 sm:px-8">
             <Link
               href="/blog"
-              className="font-mono inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white/60 transition-colors hover:text-white"
+              className="font-sans inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.08em] text-white/70 transition-colors hover:text-[#f0b545]"
             >
               <ArrowGlyph className="h-3.5 w-3.5 rotate-180" />
               All writing
             </Link>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2">
-              <span className="font-mono rounded-full border border-white/20 px-3.5 py-1 text-sm uppercase tracking-[0.14em] text-white/80">
+              <span className="font-sans rounded-full border border-[#f0b545]/40 bg-[#f0b545]/10 px-3.5 py-1 text-sm font-bold uppercase tracking-[0.08em] text-[#f0b545]">
                 {post.category}
               </span>
               {post.readTime ? (
-                <span className="font-mono text-sm uppercase tracking-[0.14em] text-white/60">
+                <span className="font-sans text-sm font-bold uppercase tracking-[0.06em] text-white/70">
                   {post.readTime}
                 </span>
               ) : null}
@@ -178,7 +178,7 @@ export default async function PostPage({ params }: Params) {
                   <span aria-hidden className="h-px w-4 bg-white/20" />
                   <time
                     dateTime={post.date}
-                    className="font-mono text-sm uppercase tracking-[0.14em] text-white/60"
+                    className="font-sans text-sm font-bold uppercase tracking-[0.06em] text-white/70"
                   >
                     {post.dateLabel}
                   </time>
@@ -186,19 +186,19 @@ export default async function PostPage({ params }: Params) {
               ) : null}
             </div>
 
-            <h1 className="font-display mt-6 text-[clamp(2rem,5vw,3.35rem)] font-light leading-[1.1] tracking-[0.01em] text-white">
+            <h1 className="font-display mt-5 text-[clamp(2rem,4.2vw,3rem)] font-black leading-[1.12] tracking-tight text-white">
               {post.title}
             </h1>
 
             {post.quote ? (
-              <blockquote className="article-lede mt-6 border-l-2 border-white/55 pl-5 italic leading-relaxed text-white/90">
+              <blockquote className="article-lede mt-6 border-l-2 border-[#f0b545] pl-5 italic leading-relaxed text-white/90">
                 {post.quote}
               </blockquote>
             ) : (
               <p className="article-lede mt-6 leading-relaxed">{post.excerpt}</p>
             )}
 
-            <p className="font-mono mt-8 text-sm uppercase tracking-[0.18em] text-white/60">
+            <p className="font-sans mt-7 text-sm font-bold uppercase tracking-[0.08em] text-white/70">
               {SITE.person}
             </p>
           </div>
@@ -231,7 +231,7 @@ export default async function PostPage({ params }: Params) {
               className="article-summary mx-auto max-w-[68ch] px-5 pt-14 sm:px-8 sm:pt-16"
             >
               <div className="article-summary__box">
-                <p className="font-mono text-sm uppercase tracking-[0.2em]">
+                <p className="font-sans text-sm font-bold uppercase tracking-[0.08em]">
                   In short
                 </p>
                 <ul className="article-summary__list">
@@ -252,7 +252,7 @@ export default async function PostPage({ params }: Params) {
       {others.length ? (
         <section className="article-related border-t border-white/10 bg-black">
           <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
-            <p className="font-mono text-sm uppercase tracking-[0.2em] text-white/60">
+            <p className="font-sans text-sm font-bold uppercase tracking-[0.08em] text-[#f0b545]">
               Read next
             </p>
             <ul className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -260,7 +260,7 @@ export default async function PostPage({ params }: Params) {
                 <li key={other.slug}>
                   <Link
                     href={`/blog/${other.slug}`}
-                    className="group block overflow-hidden rounded-xl border border-white/12 bg-white/[0.02] transition-[background-color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.05]"
+                    className="group block overflow-hidden rounded-[10px] border border-white/12 bg-[#111319] shadow-[0_3px_24px_rgba(0,0,0,0.45)] transition-[background-color,border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-[#f0b545]/50"
                   >
                     {other.cover ? (
                       <div className="relative aspect-[16/7] overflow-hidden border-b border-white/10">
@@ -269,19 +269,19 @@ export default async function PostPage({ params }: Params) {
                           alt={other.coverAlt ?? ""}
                           fill
                           sizes="(min-width: 640px) 384px, 100vw"
-                          className="object-cover opacity-80 transition-opacity duration-300 group-hover:opacity-100"
+                          className="object-cover opacity-85 transition-opacity duration-300 group-hover:opacity-100"
                         />
                       </div>
                     ) : null}
                     <span className="block p-5">
-                      <span className="font-mono text-sm uppercase tracking-[0.16em] text-white/60">
+                      <span className="font-sans text-sm font-bold uppercase tracking-[0.06em] text-[#f0b545]">
                         {other.category}
                         {other.readTime ? ` · ${other.readTime}` : ""}
                       </span>
-                      <span className="font-display mt-2 block text-xl font-light text-white sm:text-2xl">
+                      <span className="font-display mt-2 block text-xl font-bold text-white sm:text-2xl">
                         {other.title}
                       </span>
-                      <ArrowGlyph className="mt-5 h-4 w-4 text-white/60 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-white" />
+                      <ArrowGlyph className="mt-5 h-4 w-4 text-[#f0b545] transition-transform duration-200 group-hover:translate-x-1" />
                     </span>
                   </Link>
                 </li>
@@ -289,7 +289,7 @@ export default async function PostPage({ params }: Params) {
             </ul>
             <Link
               href="/blog"
-              className="font-mono mt-10 inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] text-white/60 transition-colors hover:text-white"
+              className="font-sans mt-10 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.08em] text-white/75 transition-colors hover:text-[#f0b545]"
             >
               <ArrowGlyph className="h-4 w-4 rotate-180" />
               Back to all writing

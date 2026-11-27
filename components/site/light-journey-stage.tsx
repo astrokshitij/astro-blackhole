@@ -61,11 +61,11 @@ function PrismControls({
   onToggleLoop: () => void;
 }) {
   return (
-    <div className="flex items-center gap-2 font-mono text-sm">
+    <div className="flex items-center gap-2 font-sans text-sm font-bold">
       <button
         type="button"
         onClick={onReplay}
-        className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/15 px-3.5 py-1.5 text-[#f0b545] transition-colors hover:border-[#f0b545]/60 hover:bg-white/[0.04] cursor-pointer"
+        className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/15 bg-[#111319] px-4 py-1.5 text-[#f0b545] transition-colors hover:border-[#f0b545]/60 hover:bg-white/[0.06] cursor-pointer"
       >
         <span aria-hidden="true">↻</span>
         <span>Replay light</span>
@@ -74,10 +74,10 @@ function PrismControls({
         type="button"
         onClick={onToggleLoop}
         aria-pressed={looping}
-        className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-3.5 py-1.5 transition-colors cursor-pointer ${
+        className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 py-1.5 transition-colors cursor-pointer ${
           looping
             ? "border-[#f0b545] bg-[#f0b545]/15 text-[#f0b545]"
-            : "border-white/15 text-white/70 hover:border-white/35 hover:text-white"
+            : "border-white/15 bg-[#111319] text-white/75 hover:border-white/35 hover:text-white"
         }`}
       >
         <span>{looping ? "Looping" : "Loop"}</span>
@@ -99,8 +99,8 @@ function ActionLink({
   const isHash = href.startsWith("#");
   const classes =
     variant === "primary"
-      ? "group inline-flex min-h-11 items-center gap-2 rounded-full bg-[#f0b545] px-6 py-3 text-base font-medium text-[#08090c] transition-colors hover:bg-[#f8cd78]"
-      : "group inline-flex min-h-11 items-center gap-2 text-base sm:text-[17px] font-medium text-[#f0b545] transition-colors hover:text-[#f8cd78]";
+      ? "group inline-flex min-h-11 items-center gap-2 rounded-full bg-[linear-gradient(93deg,#f8cd78_0%,#f0b545_55%,#d9951e_100%)] px-6 py-3 text-base font-black tracking-[0.03em] text-[#08090c] shadow-[0_4px_16px_rgba(240,181,69,0.28)] transition-all hover:brightness-105 hover:shadow-[0_6px_22px_rgba(240,181,69,0.38)]"
+      : "group inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-bold uppercase tracking-[0.04em] text-[#f0b545] transition-colors hover:text-[#f8cd78]";
 
   if (isExternal) {
     return (
@@ -253,12 +253,12 @@ export function LightJourneyStage() {
 
   return (
     <div className="relative w-full bg-[#08090c] text-[#f2efe8] selection:bg-[#f0b545]/20 selection:text-[#f0b545]">
-      {/* Primary Split-Stage Section */}
+      {/* Primary Split-Stage Section aligned with 1200px MakeMyTrip grid */}
       <section
         ref={sectionRef}
-        className="relative pt-20 sm:pt-24 pb-14 sm:pb-20 px-6 sm:px-8 lg:px-12 max-w-[1440px] mx-auto"
+        className="site-width relative pt-[88px] sm:pt-[96px] pb-14 sm:pb-20"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Narrative Chapters + Mobile Inline Optics */}
           <div className="lg:col-span-6 space-y-14 sm:space-y-20 lg:space-y-28">
             {chapters.map((c, i) => {
@@ -270,7 +270,7 @@ export function LightJourneyStage() {
                   key={c.id}
                   id={c.id}
                   data-index={i}
-                  className={`journey-chapter scroll-mt-24 transition-opacity duration-500 ease-out ${
+                  className={`journey-chapter scroll-mt-20 transition-opacity duration-500 ease-out ${
                     isActive
                       ? "opacity-100"
                       : "opacity-95 lg:opacity-75 hover:opacity-100"
@@ -279,16 +279,22 @@ export function LightJourneyStage() {
                   <div className="py-1 sm:py-2">
                     {/* Chapter Eyebrow & Optical Label */}
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                      <p className="font-mono text-sm uppercase tracking-[0.18em] text-[#f0b545]">
+                      <p className="font-sans text-sm font-bold uppercase tracking-[0.08em] text-[#f0b545]">
                         {c.eyebrow}
                       </p>
-                      <span className="font-mono text-sm uppercase tracking-wider text-white/60">
+                      <span className="rounded-full border border-white/12 bg-[#111319] px-3 py-0.5 font-sans text-sm font-bold uppercase tracking-[0.06em] text-white/75">
                         {c.label}
                       </span>
                     </div>
 
-                    {/* Headline */}
-                    <Heading className="font-display font-medium text-3xl sm:text-4xl lg:text-[2.85rem] text-[#f2efe8] tracking-tight leading-[1.06] mb-4 text-balance">
+                    {/* Headline (Lato Black 900 hierarchy) */}
+                    <Heading
+                      className={
+                        i === 0
+                          ? "font-display font-black text-[2.1rem] sm:text-4xl lg:text-[2.75rem] text-[#f2efe8] tracking-[-0.02em] leading-[1.08] mb-3.5 text-balance"
+                          : "font-display font-black text-2xl sm:text-3xl lg:text-[2.25rem] text-[#f2efe8] tracking-[-0.02em] leading-[1.12] mb-3.5 text-balance"
+                      }
+                    >
                       {c.titleLines.length
                         ? c.titleLines.map((line, n) => (
                             <span
@@ -306,12 +312,12 @@ export function LightJourneyStage() {
                     </Heading>
 
                     {/* Body Line */}
-                    <p className="text-white/80 text-base sm:text-lg leading-relaxed mb-5 max-w-lg">
+                    <p className="text-white/80 text-base sm:text-[17px] leading-[1.65] mb-5 max-w-lg">
                       {c.line}
                     </p>
 
                     {/* Action Links */}
-                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-4">
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mb-5">
                       {c.links.map((link, linkIdx) => (
                         <ActionLink
                           key={link.href}
@@ -359,33 +365,33 @@ export function LightJourneyStage() {
                       </div>
                     )}
 
-                    {/* Minimalist Proof Strip cleanly inside Opening Chapter */}
+                    {/* Structured MakeMyTrip-style Proof Strip Card inside Opening Chapter */}
                     {i === 0 && (
-                      <div className="border-y border-white/10 py-3.5 mb-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                      <div className="rounded-[10px] border border-white/12 bg-[#111319] p-4 shadow-[0_3px_28px_rgba(0,0,0,0.45)] mb-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
                         {STATS.map((stat) => (
                           <div key={stat.label}>
-                            <p className="font-display text-xl sm:text-2xl font-medium text-[#f2efe8]">
+                            <p className="font-display text-xl sm:text-2xl font-black text-[#f2efe8] tracking-tight">
                               {stat.to}
                               <span className="text-[#f0b545]">{stat.suffix}</span>
                             </p>
-                            <p className="font-mono text-sm text-white/65 uppercase tracking-wider">
+                            <p className="font-sans text-sm font-bold text-white/65 uppercase tracking-[0.05em]">
                               {stat.label}
                             </p>
                           </div>
                         ))}
                         <div>
-                          <p className="font-display text-xl sm:text-2xl font-medium text-[#f2efe8]">
+                          <p className="font-display text-xl sm:text-2xl font-black text-[#f2efe8] tracking-tight">
                             TEDx
                           </p>
-                          <p className="font-mono text-sm text-white/65 uppercase tracking-wider">
+                          <p className="font-sans text-sm font-bold text-white/65 uppercase tracking-[0.05em]">
                             &amp; Perimeter
                           </p>
                         </div>
                         <div>
-                          <p className="font-display text-xl sm:text-2xl font-medium text-[#f2efe8]">
+                          <p className="font-display text-xl sm:text-2xl font-black text-[#f2efe8] tracking-tight">
                             MSc
                           </p>
-                          <p className="font-mono text-sm text-white/65 uppercase tracking-wider">
+                          <p className="font-sans text-sm font-bold text-white/65 uppercase tracking-[0.05em]">
                             Astrophysics
                           </p>
                         </div>
@@ -395,9 +401,9 @@ export function LightJourneyStage() {
                     {/* Mobile Inline Optics on Chapters 02-06 */}
                     {i > 0 && <MobileOpticalCard index={i} label={c.label} />}
 
-                    {/* Personal Story Photograph with Observatory Darkroom Grading */}
+                    {/* Personal Story Photograph in elevated 10px-radius frame */}
                     <div
-                      className="relative w-full overflow-hidden rounded-sm bg-[#111318] border border-white/10"
+                      className="relative w-full overflow-hidden rounded-[10px] bg-[#111319] border border-white/12 shadow-[0_3px_28px_rgba(0,0,0,0.45)]"
                       style={{
                         aspectRatio: c.ratio || 4 / 3,
                       }}
@@ -407,11 +413,11 @@ export function LightJourneyStage() {
                         alt={c.alt}
                         fill
                         priority={i === 0}
-                        sizes="(min-width: 1024px) 44vw, 92vw"
-                        className="object-cover saturate-[0.75] contrast-[1.06] brightness-90"
+                        sizes="(min-width: 1024px) 42vw, 92vw"
+                        className="object-cover saturate-[0.82] contrast-[1.04] brightness-95"
                         style={{ objectPosition: c.focus }}
                       />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#08090c]/60 via-transparent to-transparent" />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#08090c]/55 via-transparent to-transparent" />
                     </div>
                   </div>
                 </article>
@@ -420,10 +426,10 @@ export function LightJourneyStage() {
           </div>
 
           {/* Right Column (Desktop only, avoids downloading 145 desktop frames on mobile) */}
-          <div className="hidden lg:flex lg:col-span-6 sticky top-20 h-[calc(100vh-5.5rem)] flex-col justify-center">
+          <div className="hidden lg:flex lg:col-span-6 sticky top-[76px] h-[calc(100vh-5rem)] flex-col justify-center">
             <div className="flex flex-col w-full">
-              {/* Top Bar: Beam Replay Controls + Clickable Optical Chapter Selector */}
-              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+              {/* Top Bar: Beam Replay Controls + MakeMyTrip-style Underline Station Tabs */}
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2 mb-3">
                 {activeChapterIndex === 0 ? (
                   <PrismControls
                     onReplay={() => setReplayNonce((n) => n + 1)}
@@ -437,7 +443,7 @@ export function LightJourneyStage() {
                       jumpToChapter(0);
                       setReplayNonce((n) => n + 1);
                     }}
-                    className="inline-flex min-h-11 items-center gap-1.5 font-mono text-sm text-white/60 hover:text-[#f0b545] transition-colors cursor-pointer"
+                    className="inline-flex min-h-11 items-center gap-1.5 font-sans text-sm font-bold text-white/70 hover:text-[#f0b545] transition-colors cursor-pointer"
                   >
                     <span aria-hidden="true">↻</span>
                     <span>Replay prism</span>
@@ -457,17 +463,17 @@ export function LightJourneyStage() {
                         onClick={() => jumpToChapter(idx)}
                         aria-label={`Jump to station ${idx + 1}: ${c.label}`}
                         aria-current={active ? "step" : undefined}
-                        className={`inline-flex min-h-11 min-w-10 items-center justify-center px-2 font-mono text-sm tracking-wider transition-colors cursor-pointer ${
+                        className={`inline-flex min-h-11 min-w-10 items-center justify-center px-2 font-sans text-sm font-bold tracking-[0.04em] transition-colors cursor-pointer ${
                           active
-                            ? "text-[#f0b545] font-semibold border-b-2 border-[#f0b545]"
-                            : "text-white/60 hover:text-white/90"
+                            ? "text-[#f0b545] border-b-[3px] border-[#f0b545]"
+                            : "text-white/60 hover:text-white/95 border-b-[3px] border-transparent"
                         }`}
                       >
                         {String(idx + 1).padStart(2, "0")}
                       </button>
                     );
                   })}
-                  <span className="ml-2 font-mono text-sm text-white/85">
+                  <span className="ml-2 font-sans text-sm font-bold text-white/85">
                     · {currentChapter.label}
                   </span>
                 </nav>
@@ -486,12 +492,12 @@ export function LightJourneyStage() {
               </div>
 
               {/* Dynamic Per-Station Telemetry Readout */}
-              <div className="mt-2.5 flex items-center justify-between gap-4 text-sm font-mono text-white/65">
+              <div className="mt-2.5 flex items-center justify-between gap-4 text-sm font-sans font-bold text-white/70">
                 <span className="truncate">
                   <span className="text-[#f0b545]">{currentTelemetry.metric}</span>{" "}
                   · {currentTelemetry.detail}
                 </span>
-                <span className="uppercase tracking-wider shrink-0">
+                <span className="uppercase tracking-[0.08em] shrink-0">
                   SCROLL TO SCRUB
                 </span>
               </div>
@@ -500,76 +506,83 @@ export function LightJourneyStage() {
         </div>
       </section>
 
-      {/* Native Selected Work Grid (#work) */}
+      {/* Selected Work (#work) styled in MakeMyTrip Elevated Card + Horizontal Split Layout */}
       <section
         id="work"
-        className="scroll-mt-24 border-t border-white/10 px-6 sm:px-8 lg:px-12 py-16 sm:py-24 max-w-[1440px] mx-auto"
+        className="site-width scroll-mt-20 py-14 sm:py-20"
       >
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
-          <div>
-            <p className="font-mono text-sm uppercase tracking-[0.2em] text-[#f0b545] mb-3">
-              Selected work &amp; writing
-            </p>
-            <h2 className="font-display font-medium text-2xl sm:text-3xl lg:text-4xl text-[#f2efe8] tracking-tight text-balance">
-              Physics, investigations &amp; products built in public
-            </h2>
-          </div>
-          <Link
-            href="/contact"
-            className="group inline-flex min-h-11 items-center gap-2 text-base sm:text-[17px] font-medium text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
-          >
-            <span>Book a talk or collaborate</span>
-            <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
-          {EDITORIAL.explorations.map((item) => (
-            <article key={item.title} className="group min-w-0">
-              <div className="relative w-full aspect-[16/10] overflow-hidden rounded-sm bg-[#111318] border border-white/10 mb-4">
-                <Image
-                  src={item.image}
-                  alt={item.alt}
-                  fill
-                  sizes="(min-width: 768px) 44vw, 92vw"
-                  className="object-cover saturate-[0.75] contrast-[1.05] brightness-90 group-hover:saturate-90 transition-all duration-300"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#08090c]/60 via-transparent to-transparent" />
-              </div>
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <span className="font-mono text-sm uppercase tracking-[0.16em] text-[#f0b545]">
-                  {item.category}
-                </span>
-                <span className="font-mono text-sm text-white/60">
-                  {item.type}
-                </span>
-              </div>
-              <h3 className="font-display font-medium text-2xl sm:text-[1.75rem] text-[#f2efe8] tracking-tight mb-2">
-                {item.title}
-              </h3>
-              <p className="text-base sm:text-lg text-white/75 leading-relaxed mb-2">
-                {item.description}
+        <div className="rounded-[10px] border border-white/12 bg-[#111319] p-6 sm:p-8 lg:p-10 shadow-[0_3px_30px_rgba(0,0,0,0.5)]">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6 mb-7">
+            <div>
+              <p className="font-sans text-sm font-bold uppercase tracking-[0.08em] text-[#f0b545] mb-2">
+                Selected work &amp; writing
               </p>
-              <ActionLink href={item.href}>
-                <span>{item.cta}</span>
-                <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-              </ActionLink>
-            </article>
-          ))}
+              <h2 className="font-display font-black text-2xl sm:text-[32px] text-[#f2efe8] tracking-[-0.02em] leading-tight text-balance">
+                Physics, investigations &amp; products built in public
+              </h2>
+            </div>
+            <Link
+              href="/contact"
+              className="group inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-bold uppercase tracking-[0.04em] text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
+            >
+              <span>Book a talk or collaborate</span>
+              <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            {EDITORIAL.explorations.map((item) => (
+              <article
+                key={item.title}
+                className="group min-w-0 rounded-[10px] border border-white/12 bg-[#0a0c10] p-4 sm:p-5 shadow-[0_2px_14px_rgba(0,0,0,0.35)] transition-all hover:border-[#f0b545]/50"
+              >
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 h-full">
+                  <div className="relative w-full sm:w-[150px] shrink-0 aspect-[16/10] sm:aspect-square overflow-hidden rounded-[8px] bg-[#161922] border border-white/10">
+                    <Image
+                      src={item.image}
+                      alt={item.alt}
+                      fill
+                      sizes="(min-width: 640px) 150px, 90vw"
+                      className="object-cover saturate-[0.85] contrast-[1.04] brightness-95 group-hover:saturate-100 transition-all duration-300"
+                    />
+                  </div>
+                  <div className="flex flex-col flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                      <span className="font-sans text-sm font-bold uppercase tracking-[0.06em] text-[#f0b545]">
+                        {item.category}
+                      </span>
+                      <span className="font-sans text-sm font-bold text-white/60 uppercase tracking-[0.04em]">
+                        {item.type}
+                      </span>
+                    </div>
+                    <h3 className="font-display font-bold text-xl text-[#f2efe8] leading-snug tracking-tight mb-1.5">
+                      {item.title}
+                    </h3>
+                    <p className="text-base text-white/75 leading-relaxed mb-3 flex-1">
+                      {item.description}
+                    </p>
+                    <div className="flex justify-start sm:justify-end">
+                      <ActionLink href={item.href}>
+                        <span>{item.cta}</span>
+                        <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                      </ActionLink>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
 
         {/* Understated Closing Invite directly before SiteFooter */}
-        <div className="mt-16 pt-10 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <p className="text-base sm:text-lg text-white/75">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <p className="text-base sm:text-lg text-white/80">
             Have a question about the physics, a speaking invitation, or an AI product collaboration?
           </p>
-          <Link
-            href="/contact"
-            className="group inline-flex min-h-11 items-center gap-2 text-base sm:text-[17px] font-medium text-[#f0b545] hover:text-[#f8cd78] transition-colors shrink-0"
-          >
+          <ActionLink href="/contact" variant="primary">
             <span>Start a conversation</span>
             <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </Link>
+          </ActionLink>
         </div>
       </section>
     </div>

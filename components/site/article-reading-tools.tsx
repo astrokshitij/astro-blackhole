@@ -135,7 +135,7 @@ export function ArticleReadingTools({
 
       <aside ref={toolsRef} className="article-tools" aria-label="Article tools">
         <div className="article-tools__group article-toc">
-          <p className="font-mono text-sm uppercase tracking-[0.18em] text-white/65">
+          <p className="font-sans text-sm font-bold uppercase tracking-[0.08em] text-white/70">
             In this piece
           </p>
           <nav aria-label="Table of contents">
@@ -155,7 +155,7 @@ export function ArticleReadingTools({
         </div>
 
         <div className="article-tools__group article-share">
-          <p className="font-mono text-sm uppercase tracking-[0.18em] text-white/65">
+          <p className="font-sans text-sm font-bold uppercase tracking-[0.08em] text-white/70">
             Share
           </p>
           <a

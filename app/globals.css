@@ -73,10 +73,10 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  /* Display face for the wordmark and section headings. */
-  --font-display: var(--font-jost), var(--font-geist-sans), sans-serif;
+  --font-sans: var(--font-lato), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+  /* Display face across the wordmark and section headings (Lato 700/900 hierarchy). */
+  --font-display: var(--font-lato), system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 @layer base {
@@ -90,7 +90,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 
   /* Keyboard users need to see where they are. Mouse users never see this. */
@@ -218,10 +218,11 @@
 .article-mobile-tools button,
 .article-mobile-tools a {
   color: inherit;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-weight: 700;
   font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
 .article-share a:hover,
 .article-share button:hover {
@@ -410,9 +411,10 @@ body[data-reading-theme="light"] .reading-theme-toggle {
 }
 .prose-astro h2 {
   font-family: var(--font-display);
-  font-weight: 300;
+  font-weight: 900;
   font-size: 1.5rem;
-  line-height: 1.3;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
   color: white;
   margin-top: 3.5rem;
   padding-top: 2rem;
@@ -425,14 +427,14 @@ body[data-reading-theme="light"] .reading-theme-toggle {
 }
 .prose-astro h3 {
   font-family: var(--font-display);
-  font-weight: 300;
+  font-weight: 700;
   font-size: 1.25rem;
   color: white;
   margin-top: 2.5rem;
 }
 .prose-astro strong {
   color: white;
-  font-weight: 500;
+  font-weight: 700;
 }
 .prose-astro em {
   font-style: italic;
@@ -545,9 +547,10 @@ body[data-reading-theme="light"] .prose-astro .callout {
   cursor: pointer;
   list-style: none;
   color: #f0b545;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.14em;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .prose-astro details.fold > summary::-webkit-details-marker {

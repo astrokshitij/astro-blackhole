@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { GeistSans } from "geist/font/sans";
+import { Lato } from "next/font/google";
 import { GeistMono } from "geist/font/mono";
-import localFont from "next/font/local";
 import "./globals.css";
 import "./editorial.css";
 import { SiteHeader } from "@/components/site/site-header";
@@ -13,19 +12,16 @@ import { siteUrl } from "@/lib/site-url";
 import { FEED_ALTERNATE, socialMeta } from "@/lib/seo";
 
 /**
- * The display face carries the wordmark and every heading, so it is almost
- * always the largest thing painted. Loaded through the CSS graph it was
- * discovered late and the brand name visibly reflowed on first paint; declared
- * here it is self-hosted, subsetted to latin and preloaded.
+ * Primary MakeMyTrip-inspired typographic voice: Lato across display,
+ * headings, UI navigation, and body copy with crisp 400 / 700 / 900 hierarchy.
  */
-const jost = localFont({
-  src: "../fonts/jost-latin-variable.woff2",
-  weight: "100 900",
-  style: "normal",
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-jost",
+  variable: "--font-lato",
   preload: true,
-  fallback: ["system-ui", "sans-serif"],
 });
 
 const TITLE =
@@ -160,7 +156,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${GeistSans.variable} ${GeistMono.variable} ${jost.variable} h-full scroll-smooth antialiased`}
+      className={`dark ${lato.variable} ${GeistMono.variable} h-full scroll-smooth antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full bg-background text-foreground">

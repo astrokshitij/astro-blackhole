@@ -71,7 +71,7 @@ export function RevealPhoto({
       }`}
     >
       <div
-        className={`relative w-full overflow-hidden border border-white/10 bg-white/[0.02] ${aspectClassName}`}
+        className={`relative w-full overflow-hidden rounded-[10px] border border-white/12 bg-[#111319] shadow-[0_3px_24px_rgba(0,0,0,0.45)] ${aspectClassName}`}
       >
         <Image
           src={src}
@@ -80,11 +80,11 @@ export function RevealPhoto({
           sizes={sizes}
           priority={eager}
           className={`object-cover ${drift ? "animate-slow-drift" : ""} ${imageClassName}`}
-          style={{ filter: "saturate(0.55) contrast(1.04)" }}
+          style={{ filter: "saturate(0.7) contrast(1.04)" }}
         />
       </div>
       {caption ? (
-        <figcaption className="font-mono mt-3 text-sm uppercase tracking-[0.16em] text-white/60">
+        <figcaption className="font-sans mt-3 text-sm font-bold uppercase tracking-[0.08em] text-white/65">
           {caption}
         </figcaption>
       ) : null}

@@ -49,13 +49,13 @@ export function SocialLinks({ compact = false }: { compact?: boolean }) {
               </span>
 
               <span className="min-w-0 flex-1">
-                <span className="font-display flex flex-wrap items-baseline gap-x-3 text-base font-light uppercase tracking-[0.18em] text-white">
+                <span className="font-display flex flex-wrap items-baseline gap-x-3 text-base font-bold uppercase tracking-[0.06em] text-white">
                   {social.label}
-                  <span className="font-mono break-all text-sm normal-case tracking-normal text-white/60">
+                  <span className="font-sans break-all text-sm font-bold normal-case tracking-normal text-white/65">
                     {social.handle}
                   </span>
                 </span>
-                <span className="mt-1.5 block text-sm leading-relaxed text-white/65">
+                <span className="mt-1.5 block text-sm leading-relaxed text-white/75">
                   {social.note}
                 </span>
               </span>

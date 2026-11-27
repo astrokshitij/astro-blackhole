@@ -49,7 +49,7 @@ export function SiteHeader() {
             {SITE.name}
           </Link>
           <ul className="desktop-nav">
-            {NAV.map((item) => (
+            {NAV.slice(0, 3).map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
@@ -59,6 +59,15 @@ export function SiteHeader() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/contact"
+                className="header-cta"
+                aria-current={active("/contact") ? "page" : undefined}
+              >
+                Contact
+              </Link>
+            </li>
           </ul>
           <button
             className="menu-toggle"

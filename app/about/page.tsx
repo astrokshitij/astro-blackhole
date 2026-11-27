@@ -153,7 +153,7 @@ export default function AboutPage() {
           {/* Story column */}
           <div className="max-w-2xl">
             <div>
-              <p className="font-display text-xl font-light leading-[1.35] text-white sm:text-2xl">
+              <p className="font-display text-xl font-bold leading-[1.35] text-white sm:text-2xl">
                 Science communicator. TEDx speaker. Physics nerd. Researcher.
                 Marketer. And, apparently, someone who has never been very good
                 at following a conventional path.
@@ -163,7 +163,7 @@ export default function AboutPage() {
 
             <div className="story-chapters mt-14 space-y-14">
               <section data-story-section="obsession">
-                <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
+                <h2 className="font-display text-2xl font-black leading-snug text-white sm:text-3xl">
                   It started with a weird obsession with science.
                 </h2>
                 <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
@@ -190,12 +190,12 @@ export default function AboutPage() {
               </section>
 
               <section data-story-section="finding-my-way">
-                <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
+                <h2 className="font-display text-2xl font-black leading-snug text-white sm:text-3xl">
                   Finding my way into physics
                 </h2>
                 <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   I went on to study{" "}
-                  <strong className="font-normal text-white/85">
+                  <strong className="font-bold text-white">
                     B.Sc. Physics (Hons.) at The ICFAI University, Jaipur
                   </strong>
                   . By my first year, I already knew that I wanted to do more
@@ -213,20 +213,20 @@ export default function AboutPage() {
                 <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   One experience stands out. In my second year, I participated
                   in the{" "}
-                  <strong className="font-normal text-white/85">
+                  <strong className="font-bold text-white">
                     University Physics Competition
                   </strong>
                   , where undergraduate students from around the world work on a
                   challenging physics problem and turn their solution into a
                   research-style paper over 48 hours. I ended up winning a{" "}
-                  <strong className="font-normal text-white/85">
+                  <strong className="font-bold text-white">
                     Silver Medal
                   </strong>
                   .
                 </p>
                 <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   During my final year, I was also elected{" "}
-                  <strong className="font-normal text-white/85">
+                  <strong className="font-bold text-white">
                     Student Council President
                   </strong>{" "}
                   while working on WIMP dark matter for my research
@@ -236,14 +236,14 @@ export default function AboutPage() {
               </section>
 
               <section data-story-section="before-msc">
-                <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
+                <h2 className="font-display text-2xl font-black leading-snug text-white sm:text-3xl">
                   Before my master&apos;s, I got a taste of the bigger research
                   world.
                 </h2>
                 <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   After completing my B.Sc., I had the opportunity to
                   participate in the{" "}
-                  <strong className="font-normal text-white/85">
+                  <strong className="font-bold text-white">
                     SLAC Summer Institute
                   </strong>
                   , organised by Stanford. It gave me further exposure to
@@ -260,12 +260,12 @@ export default function AboutPage() {
 
               <div className="space-y-5">
                 <div data-story-section="research-degree">
-                  <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
+                  <h2 className="font-display text-2xl font-black leading-snug text-white sm:text-3xl">
                     From competitions to research
                   </h2>
                   <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                     I went on to pursue an{" "}
-                    <strong className="font-normal text-white/85">
+                    <strong className="font-bold text-white">
                       M.Sc. in Physics with a focus on Astrophysics and
                       Cosmology
                     </strong>
@@ -278,11 +278,11 @@ export default function AboutPage() {
                   <p className="text-base leading-[1.8] text-white/80 sm:text-[17px]">
                     My master&apos;s changed the scale of the questions I was
                     working on. I got the opportunity to work with{" "}
-                    <strong className="font-normal text-white/85">
+                    <strong className="font-bold text-white">
                       Prof. Kaushik Bhattacharya at IIT Kanpur
                     </strong>{" "}
                     on scalar-field dark matter, and with{" "}
-                    <strong className="font-normal text-white/85">
+                    <strong className="font-bold text-white">
                       Prof. Pankaj S. Joshi
                     </strong>{" "}
                     on high-energy particle collisions in the vicinity of naked
@@ -321,7 +321,7 @@ export default function AboutPage() {
               </div>
 
               <section data-story-section="detour">
-                <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
+                <h2 className="font-display text-2xl font-black leading-snug text-white sm:text-3xl">
                   Then I took an unexpected detour.
                 </h2>
                 <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
@@ -336,11 +336,11 @@ export default function AboutPage() {
                 </p>
                 <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   Today, I work in{" "}
-                  <strong className="font-normal text-white/85">
+                  <strong className="font-bold text-white">
                     marketing automation and strategy
                   </strong>
                   , increasingly at the intersection of{" "}
-                  <strong className="font-normal text-white/85">
+                  <strong className="font-bold text-white">
                     AI, data and marketing
                   </strong>
                   , helping companies make better decisions and build stronger
@@ -365,7 +365,7 @@ export default function AboutPage() {
               </section>
 
               <section data-story-section="point">
-                <h2 className="font-display text-2xl font-light leading-snug text-white sm:text-3xl">
+                <h2 className="font-display text-2xl font-black leading-snug text-white sm:text-3xl">
                   Maybe the detour was the point.
                 </h2>
                 <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
@@ -376,7 +376,7 @@ export default function AboutPage() {
                 </p>
                 <p className="mt-5 text-base leading-[1.8] text-white/80 sm:text-[17px]">
                   And that brings me back to{" "}
-                  <strong className="font-normal text-white/85">
+                  <strong className="font-bold text-white">
                     Astro Kshitij
                   </strong>
                   .
@@ -405,7 +405,7 @@ export default function AboutPage() {
             </div>
 
             <div className="mt-16">
-              <p className="font-mono text-sm uppercase tracking-[0.2em] text-white/60">
+              <p className="font-sans text-sm font-bold uppercase tracking-[0.08em] text-[#f0b545]">
                 Where the work lives
               </p>
               <div className="mt-5">
@@ -415,7 +415,7 @@ export default function AboutPage() {
           </div>
 
           {/* Sticky photo panel, desktop only. Mobile shows inline photos. */}
-          <aside className="hidden lg:sticky lg:top-28 lg:block lg:self-start">
+          <aside className="hidden lg:sticky lg:top-24 lg:block lg:self-start">
             <StoryPhotoPanel photos={STORY_PHOTOS} initialId="obsession" />
           </aside>
         </div>
