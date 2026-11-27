@@ -6,7 +6,9 @@ import type { RefObject } from "react";
 const DEFAULT_TOTAL_FRAMES = 145;
 const DEFAULT_WIDTH = 1440;
 const DEFAULT_HEIGHT = 1260;
-const STATION_1_RATIO = 26 / 144; // Prism actively dispersing white beam into spectrum
+const STATION_1_FRAME_IDX = 26;
+const INTRO_DURATION_MS = 2400;
+const LOOP_HOLD_MS = 1000;
 
 interface JourneyManifest {
   count?: number;
@@ -19,7 +21,11 @@ interface JourneyCanvasProps {
   progressRef?: RefObject<number>;
   className?: string;
   totalFrames?: number;
+  maxFrameCount?: number;
   introSweep?: boolean;
+  replayNonce?: number;
+  loopIntro?: boolean;
+  skipScrollControl?: boolean;
 }
 
 function buildPriorityOrder(count: number): number[] {
@@ -32,8 +38,16 @@ function buildPriorityOrder(count: number): number[] {
     }
   };
 
-  // Decode frame 0 first for clean intro start, then station key milestones
-  [0, 26, 43, 71, 96, 116, 143, count - 1].forEach(push);
+  // Load intro sweep frames (0..26) first so light->mirror->prism->rainbow plays smoothly
+  for (let i = 0; i <= Math.min(STATION_1_FRAME_IDX, count - 1); i += 2) {
+    push(i);
+  }
+  for (let i = 1; i <= Math.min(STATION_1_FRAME_IDX, count - 1); i += 2) {
+    push(i);
+  }
+
+  // Then load remaining station key milestones and fill in intermediate frames
+  [43, 71, 96, 116, 143, count - 1].forEach(push);
   for (let stride = 8; stride >= 1; stride = Math.floor(stride / 2)) {
     for (let i = 0; i < count; i += stride) {
       push(i);
@@ -60,17 +74,21 @@ function findClosestLoaded(
 }
 
 export function JourneyCanvas({
-  progress = STATION_1_RATIO,
+  progress,
   progressRef,
   className = "",
   totalFrames = DEFAULT_TOTAL_FRAMES,
+  maxFrameCount,
   introSweep = true,
+  replayNonce = 0,
+  loopIntro = false,
+  skipScrollControl = false,
 }: JourneyCanvasProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const framesRef = useRef<(HTMLImageElement | null)[]>([]);
-  const fallbackProgressRef = useRef(progress);
+  const fallbackProgressRef = useRef(progress ?? 0);
   const smoothedProgressRef = useRef<number | null>(null);
   const lastDrawnImgRef = useRef<HTMLImageElement | null>(null);
   const boxSizeRef = useRef<{ w: number; h: number }>({ w: 720, h: 630 });
@@ -78,20 +96,43 @@ export function JourneyCanvas({
   const hasDrawnRef = useRef(false);
   const wakeRef = useRef<(() => void) | null>(null);
 
-  const [frameCount, setFrameCount] = useState(totalFrames);
-  const [manifestReady, setManifestReady] = useState(false);
+  const introReadyRef = useRef(false);
+  const introActiveRef = useRef(false);
+  const introStartRef = useRef(0);
+  const loopIntroRef = useRef(loopIntro);
+  loopIntroRef.current = loopIntro;
+
+  const [frameCount, setFrameCount] = useState(maxFrameCount ?? totalFrames);
+  const [manifestReady, setManifestReady] = useState(Boolean(maxFrameCount));
   const [dimensions, setDimensions] = useState({
     width: DEFAULT_WIDTH,
     height: DEFAULT_HEIGHT,
   });
   const [hasFirstFrame, setHasFirstFrame] = useState(false);
 
-  fallbackProgressRef.current = progress;
-  useEffect(() => {
-    wakeRef.current?.();
-  }, [progress]);
+  if (typeof progress === "number") {
+    fallbackProgressRef.current = progress;
+  }
 
   useEffect(() => {
+    wakeRef.current?.();
+  }, [progress, loopIntro]);
+
+  useEffect(() => {
+    if (replayNonce <= 0) return;
+    introActiveRef.current = true;
+    introStartRef.current = performance.now();
+    smoothedProgressRef.current = 0;
+    dirtyRef.current = true;
+    wakeRef.current?.();
+  }, [replayNonce]);
+
+  useEffect(() => {
+    if (maxFrameCount) {
+      setFrameCount(maxFrameCount);
+      setManifestReady(true);
+      return;
+    }
     let active = true;
     fetch("/frames/journey/manifest.json")
       .then((res) => (res.ok ? (res.json() as Promise<JourneyManifest>) : null))
@@ -118,7 +159,7 @@ export function JourneyCanvas({
     return () => {
       active = false;
     };
-  }, []);
+  }, [maxFrameCount]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -144,11 +185,28 @@ export function JourneyCanvas({
     const frames: (HTMLImageElement | null)[] = new Array(frameCount).fill(null);
     framesRef.current = frames;
     lastDrawnImgRef.current = null;
+    introReadyRef.current = false;
     dirtyRef.current = true;
 
+    const checkpoints = [0, 8, 16, Math.min(STATION_1_FRAME_IDX, frameCount - 1)];
     const priority = buildPriorityOrder(frameCount);
     let cursor = 0;
     const concurrency = 6;
+
+    const checkIntroReady = () => {
+      if (introReadyRef.current) return;
+      const allCheckpointsLoaded = checkpoints.every(
+        (idx) => frames[idx] && frames[idx]!.naturalWidth > 0
+      );
+      if (allCheckpointsLoaded) {
+        introReadyRef.current = true;
+        if (introActiveRef.current) {
+          introStartRef.current = performance.now();
+        }
+        dirtyRef.current = true;
+        wakeRef.current?.();
+      }
+    };
 
     const loadNext = () => {
       if (cancelled || cursor >= priority.length) return;
@@ -162,14 +220,11 @@ export function JourneyCanvas({
         if (cancelled) return;
         if (img.naturalWidth > 0) {
           frames[idx] = img;
+          checkIntroReady();
           const currentTargetIdx = Math.round(
-            (smoothedProgressRef.current ?? STATION_1_RATIO) *
-              Math.max(0, frameCount - 1)
+            (smoothedProgressRef.current ?? 0) * Math.max(0, frameCount - 1)
           );
-          if (
-            !hasDrawnRef.current ||
-            Math.abs(idx - currentTargetIdx) <= 2
-          ) {
+          if (!hasDrawnRef.current || Math.abs(idx - currentTargetIdx) <= 2) {
             dirtyRef.current = true;
             wakeRef.current?.();
           }
@@ -202,45 +257,80 @@ export function JourneyCanvas({
     let rafId = 0;
     let running = false;
     let lastTime = performance.now();
-    const introStart = performance.now();
     const reducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Latch intro sweep once at initial top load; cancel permanently if user scrolls
-    let introLatched =
+    const station1Ratio =
+      Math.min(STATION_1_FRAME_IDX, Math.max(0, frameCount - 1)) /
+      Math.max(1, frameCount - 1);
+
+    if (
       introSweep &&
       !reducedMotion &&
-      typeof window !== "undefined" &&
-      window.scrollY < 48;
+      (skipScrollControl || (typeof window !== "undefined" && window.scrollY < 48))
+    ) {
+      introActiveRef.current = true;
+      introStartRef.current = performance.now();
+      smoothedProgressRef.current = 0;
+    } else {
+      introActiveRef.current = false;
+      smoothedProgressRef.current = station1Ratio;
+    }
 
     const tick = (now: number) => {
       rafId = 0;
       const dt = Math.min(0.05, Math.max(0.001, (now - lastTime) / 1000));
       lastTime = now;
 
-      if (introLatched && window.scrollY >= 48) {
-        introLatched = false;
+      const userScrolledAway = !skipScrollControl && window.scrollY >= 48;
+      if (userScrolledAway && introActiveRef.current) {
+        introActiveRef.current = false;
       }
 
       const rawTarget = progressRef
         ? progressRef.current
         : fallbackProgressRef.current;
       let target = Math.max(0, Math.min(1, rawTarget));
+      if (reducedMotion && target < station1Ratio) {
+        target = station1Ratio;
+      }
 
-      let introActive = false;
-      if (introLatched) {
-        const elapsed = (now - introStart) / 1350;
-        if (elapsed < 1) {
-          const easeOut = 1 - Math.pow(1 - elapsed, 3);
-          target = Math.max(target, easeOut * STATION_1_RATIO);
-          introActive = true;
-        } else {
-          introLatched = false;
+      let introAnimating = false;
+      if (!userScrolledAway && !reducedMotion) {
+        if (!introReadyRef.current && introActiveRef.current) {
+          // Hold frame 0 while the first intro batch decodes so the light sweep starts from dark
+          target = 0;
+          introAnimating = true;
+        } else if (introActiveRef.current) {
+          const elapsedMs = now - introStartRef.current;
+          if (elapsedMs < INTRO_DURATION_MS) {
+            const p = elapsedMs / INTRO_DURATION_MS;
+            const eased = p * p * (3 - 2 * p);
+            target = eased * station1Ratio;
+            introAnimating = true;
+          } else if (loopIntroRef.current) {
+            if (elapsedMs < INTRO_DURATION_MS + LOOP_HOLD_MS) {
+              target = station1Ratio;
+              introAnimating = true;
+            } else {
+              introStartRef.current = now;
+              target = 0;
+              introAnimating = true;
+            }
+          } else {
+            introActiveRef.current = false;
+            target = station1Ratio;
+          }
+        } else if (loopIntroRef.current) {
+          introActiveRef.current = true;
+          introStartRef.current = now;
+          target = 0;
+          introAnimating = true;
         }
       }
 
-      if (smoothedProgressRef.current === null || reducedMotion || introActive) {
+      if (smoothedProgressRef.current === null || reducedMotion || introAnimating) {
         smoothedProgressRef.current = target;
       } else {
         const diff = target - smoothedProgressRef.current;
@@ -300,7 +390,7 @@ export function JourneyCanvas({
       }
 
       const stillMoving =
-        introActive ||
+        introAnimating ||
         dirtyRef.current ||
         (!reducedMotion &&
           smoothedProgressRef.current !== null &&
@@ -323,26 +413,30 @@ export function JourneyCanvas({
     wakeRef.current = wake;
     wake();
 
-    window.addEventListener("scroll", wake, { passive: true });
+    if (!skipScrollControl) {
+      window.addEventListener("scroll", wake, { passive: true });
+    }
     window.addEventListener("resize", wake, { passive: true });
 
     return () => {
       running = false;
       wakeRef.current = null;
       if (rafId) cancelAnimationFrame(rafId);
-      window.removeEventListener("scroll", wake);
+      if (!skipScrollControl) {
+        window.removeEventListener("scroll", wake);
+      }
       window.removeEventListener("resize", wake);
     };
-  }, [frameCount, progressRef, introSweep]);
+  }, [frameCount, progressRef, introSweep, skipScrollControl]);
 
   return (
     <div
       ref={containerRef}
       className={`relative w-full h-full bg-[#08090c] overflow-hidden ${className}`}
     >
-      {/* SSR instant prism spectrum poster avoids flash before WebPs decode */}
+      {/* Initial dark prism silhouette poster until 0->26 intro frames decode */}
       <img
-        src="/frames/journey/f_026.webp"
+        src="/frames/journey/f_000.webp"
         alt=""
         aria-hidden="true"
         fetchPriority="high"

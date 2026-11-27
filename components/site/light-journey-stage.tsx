@@ -37,18 +37,53 @@ const STATION_TELEMETRY = [
   { metric: "Single-photon buildup", detail: "full optical bench" },
 ];
 
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(false);
+function useViewportMode(): "unknown" | "desktop" | "mobile" {
+  const [mode, setMode] = useState<"unknown" | "desktop" | "mobile">("unknown");
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
-    const update = () => setIsDesktop(mq.matches);
+    const update = () => setMode(mq.matches ? "desktop" : "mobile");
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  return isDesktop;
+  return mode;
+}
+
+function PrismControls({
+  onReplay,
+  looping,
+  onToggleLoop,
+}: {
+  onReplay: () => void;
+  looping: boolean;
+  onToggleLoop: () => void;
+}) {
+  return (
+    <div className="flex items-center gap-2 font-mono text-sm">
+      <button
+        type="button"
+        onClick={onReplay}
+        className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-white/15 px-3.5 py-1.5 text-[#f0b545] transition-colors hover:border-[#f0b545]/60 hover:bg-white/[0.04] cursor-pointer"
+      >
+        <span aria-hidden="true">↻</span>
+        <span>Replay light</span>
+      </button>
+      <button
+        type="button"
+        onClick={onToggleLoop}
+        aria-pressed={looping}
+        className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-3.5 py-1.5 transition-colors cursor-pointer ${
+          looping
+            ? "border-[#f0b545] bg-[#f0b545]/15 text-[#f0b545]"
+            : "border-white/15 text-white/70 hover:border-white/35 hover:text-white"
+        }`}
+      >
+        <span>{looping ? "Looping" : "Loop"}</span>
+      </button>
+    </div>
+  );
 }
 
 function ActionLink({
@@ -122,8 +157,10 @@ function MobileOpticalCard({
 }
 
 export function LightJourneyStage() {
-  const isDesktop = useIsDesktop();
+  const viewportMode = useViewportMode();
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
+  const [replayNonce, setReplayNonce] = useState(0);
+  const [loopPrism, setLoopPrism] = useState(false);
   const progressRef = useRef(STATION_MILESTONES[0]);
   const sectionRef = useRef<HTMLElement>(null);
   const chapterMidsRef = useRef<number[]>([]);
@@ -291,8 +328,36 @@ export function LightJourneyStage() {
                       ))}
                     </div>
 
-                    {/* Mobile Fold 1 Prism Visual right above Proof Strip */}
-                    {i === 0 && <MobileOpticalCard index={i} label={c.label} />}
+                    {/* Mobile Fold 1 Live Prism Light Animation right above Proof Strip */}
+                    {i === 0 && (
+                      <div className="lg:hidden my-4">
+                        <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#08090c]">
+                          {viewportMode === "mobile" ? (
+                            <JourneyCanvas
+                              maxFrameCount={27}
+                              replayNonce={replayNonce}
+                              loopIntro={loopPrism}
+                              skipScrollControl
+                              introSweep
+                              className="w-full h-full"
+                            />
+                          ) : (
+                            <img
+                              src="/frames/journey/f_000.webp"
+                              alt={`Optical stage 01: ${c.label}`}
+                              className="w-full h-full object-contain"
+                            />
+                          )}
+                        </div>
+                        <div className="mt-2 flex items-center justify-between gap-2">
+                          <PrismControls
+                            onReplay={() => setReplayNonce((n) => n + 1)}
+                            looping={loopPrism}
+                            onToggleLoop={() => setLoopPrism((v) => !v)}
+                          />
+                        </div>
+                      </div>
+                    )}
 
                     {/* Minimalist Proof Strip cleanly inside Opening Chapter */}
                     {i === 0 && (
@@ -357,40 +422,64 @@ export function LightJourneyStage() {
           {/* Right Column (Desktop only, avoids downloading 145 desktop frames on mobile) */}
           <div className="hidden lg:flex lg:col-span-6 sticky top-20 h-[calc(100vh-5.5rem)] flex-col justify-center">
             <div className="flex flex-col w-full">
-              {/* Clickable Optical Chapter Selector directly above Stage */}
-              <nav
-                aria-label="Optical journey stations"
-                className="flex items-center justify-end gap-1 mb-2"
-              >
-                {chapters.map((c, idx) => {
-                  const active = idx === activeChapterIndex;
-                  return (
-                    <button
-                      key={c.id}
-                      type="button"
-                      onClick={() => jumpToChapter(idx)}
-                      aria-label={`Jump to station ${idx + 1}: ${c.label}`}
-                      aria-current={active ? "step" : undefined}
-                      className={`inline-flex min-h-11 min-w-10 items-center justify-center px-2 font-mono text-sm tracking-wider transition-colors cursor-pointer ${
-                        active
-                          ? "text-[#f0b545] font-semibold border-b-2 border-[#f0b545]"
-                          : "text-white/60 hover:text-white/90"
-                      }`}
-                    >
-                      {String(idx + 1).padStart(2, "0")}
-                    </button>
-                  );
-                })}
-                <span className="ml-2 font-mono text-sm text-white/85">
-                  · {currentChapter.label}
-                </span>
-              </nav>
+              {/* Top Bar: Beam Replay Controls + Clickable Optical Chapter Selector */}
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                {activeChapterIndex === 0 ? (
+                  <PrismControls
+                    onReplay={() => setReplayNonce((n) => n + 1)}
+                    looping={loopPrism}
+                    onToggleLoop={() => setLoopPrism((v) => !v)}
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      jumpToChapter(0);
+                      setReplayNonce((n) => n + 1);
+                    }}
+                    className="inline-flex min-h-11 items-center gap-1.5 font-mono text-sm text-white/60 hover:text-[#f0b545] transition-colors cursor-pointer"
+                  >
+                    <span aria-hidden="true">↻</span>
+                    <span>Replay prism</span>
+                  </button>
+                )}
+
+                <nav
+                  aria-label="Optical journey stations"
+                  className="flex items-center justify-end gap-1"
+                >
+                  {chapters.map((c, idx) => {
+                    const active = idx === activeChapterIndex;
+                    return (
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => jumpToChapter(idx)}
+                        aria-label={`Jump to station ${idx + 1}: ${c.label}`}
+                        aria-current={active ? "step" : undefined}
+                        className={`inline-flex min-h-11 min-w-10 items-center justify-center px-2 font-mono text-sm tracking-wider transition-colors cursor-pointer ${
+                          active
+                            ? "text-[#f0b545] font-semibold border-b-2 border-[#f0b545]"
+                            : "text-white/60 hover:text-white/90"
+                        }`}
+                      >
+                        {String(idx + 1).padStart(2, "0")}
+                      </button>
+                    );
+                  })}
+                  <span className="ml-2 font-mono text-sm text-white/85">
+                    · {currentChapter.label}
+                  </span>
+                </nav>
+              </div>
 
               {/* Proportioned 8:7 Optical Bench Canvas */}
               <div className="relative w-full aspect-[8/7] max-h-[calc(100vh-13rem)] mx-auto overflow-hidden bg-[#08090c]">
-                {isDesktop && (
+                {viewportMode === "desktop" && (
                   <JourneyCanvas
                     progressRef={progressRef}
+                    replayNonce={replayNonce}
+                    loopIntro={loopPrism}
                     className="w-full h-full"
                   />
                 )}
