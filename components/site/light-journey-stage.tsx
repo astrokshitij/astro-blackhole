@@ -397,13 +397,13 @@ export function LightJourneyStage() {
               </div>
 
               {/* Dynamic Per-Station Telemetry Readout */}
-              <div className="mt-2.5 flex items-center justify-between text-sm font-mono text-white/65">
-                <span>
+              <div className="mt-2.5 flex items-center justify-between gap-4 text-sm font-mono text-white/65">
+                <span className="truncate">
                   <span className="text-[#f0b545]">{currentTelemetry.metric}</span>{" "}
                   · {currentTelemetry.detail}
                 </span>
-                <span className="uppercase tracking-wider">
-                  OPTICAL BENCH · SCROLL TO SCRUB
+                <span className="uppercase tracking-wider shrink-0">
+                  SCROLL TO SCRUB
                 </span>
               </div>
             </div>
