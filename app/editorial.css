@@ -1397,8 +1397,9 @@ footer {
     font-size: 16px;
   }
   .article-mobile-tools {
-    gap: 6px;
-    padding-inline: 12px;
+    gap: 4px;
+    padding-inline: 14px;
+    justify-content: space-around;
   }
 }
 @media (prefers-reduced-motion: reduce) {

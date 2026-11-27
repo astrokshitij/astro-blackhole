@@ -143,7 +143,7 @@ function MobileOpticalCard({
       <img
         src={STATION_STILLS[index]}
         alt={`Optical stage ${String(index + 1).padStart(2, "0")}: ${label}`}
-        loading={index === 0 ? "eager" : "lazy"}
+        loading="eager"
         className="w-full h-full object-contain"
       />
       <div
@@ -257,7 +257,7 @@ export function LightJourneyStage() {
       {/* Primary Split-Stage Section aligned with 1200px MakeMyTrip grid */}
       <section
         ref={sectionRef}
-        className="site-width relative pt-[78px] sm:pt-[96px] pb-14 sm:pb-20"
+        className="site-width relative pt-[70px] sm:pt-[96px] pb-14 sm:pb-20"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Narrative Chapters + Mobile Inline Optics */}
@@ -277,10 +277,10 @@ export function LightJourneyStage() {
                       : "opacity-95 lg:opacity-75 hover:opacity-100"
                   }`}
                 >
-                  <div className="py-1 sm:py-2">
+                  <div className="py-0.5 sm:py-2">
                     {/* Chapter Eyebrow & Optical Label */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-2 sm:mb-3">
-                      <p className="font-sans text-sm font-bold uppercase tracking-[0.06em] sm:tracking-[0.08em] text-[#f0b545]">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5 sm:mb-3">
+                      <p className="font-sans text-sm font-bold uppercase tracking-[0.04em] sm:tracking-[0.08em] text-[#f0b545]">
                         {c.eyebrow}
                       </p>
                       <span
@@ -292,11 +292,11 @@ export function LightJourneyStage() {
                       </span>
                     </div>
 
-                    {/* Headline (Lato Black 900 hierarchy; compact on 320px Fold 1 so prism stays above the fold) */}
+                    {/* Headline (Lato Black 900 hierarchy; compact on 320px Fold 1 so prism + controls stay above fold) */}
                     <Heading
                       className={
                         i === 0
-                          ? "font-display font-black text-[1.72rem] sm:text-4xl lg:text-[2.75rem] text-[#f2efe8] tracking-[-0.02em] leading-[1.08] mb-2.5 sm:mb-3.5 text-balance"
+                          ? "font-display font-black text-[1.68rem] sm:text-4xl lg:text-[2.75rem] text-[#f2efe8] tracking-[-0.02em] leading-[1.06] mb-2 sm:mb-3.5 text-balance"
                           : "font-display font-black text-2xl sm:text-3xl lg:text-[2.25rem] text-[#f2efe8] tracking-[-0.02em] leading-[1.12] mb-3.5 text-balance"
                       }
                     >
@@ -318,8 +318,8 @@ export function LightJourneyStage() {
 
                     {/* Body Line */}
                     <p
-                      className={`text-white/80 text-[15px] sm:text-[17px] leading-[1.52] sm:leading-[1.65] max-w-lg ${
-                        i === 0 ? "mb-3 sm:mb-5" : "mb-5"
+                      className={`text-white/80 text-[15px] sm:text-[17px] leading-[1.48] sm:leading-[1.65] max-w-lg ${
+                        i === 0 ? "mb-2.5 sm:mb-5" : "mb-5"
                       }`}
                     >
                       {c.line}
@@ -327,8 +327,8 @@ export function LightJourneyStage() {
 
                     {/* Action Links */}
                     <div
-                      className={`flex flex-wrap items-center gap-x-5 gap-y-1 ${
-                        i === 0 ? "mb-2.5 sm:mb-5" : "mb-5"
+                      className={`flex flex-wrap items-center gap-x-5 gap-y-0.5 ${
+                        i === 0 ? "mb-2 sm:mb-5" : "mb-5"
                       }`}
                     >
                       {c.links.map((link, linkIdx) => (
@@ -349,8 +349,8 @@ export function LightJourneyStage() {
 
                     {/* Mobile Fold 1 Live Prism Light Animation cleanly framed inside 320x640 */}
                     {i === 0 && (
-                      <div className="lg:hidden my-2 sm:my-4">
-                        <div className="relative w-full max-w-[260px] mx-auto aspect-[8/7] overflow-hidden bg-[#08090c]">
+                      <div className="lg:hidden my-1.5 sm:my-4">
+                        <div className="relative w-full max-w-[228px] mx-auto aspect-[8/7] overflow-hidden bg-[#08090c]">
                           {viewportMode === "mobile" ? (
                             <JourneyCanvas
                               maxFrameCount={27}
@@ -555,6 +555,7 @@ export function LightJourneyStage() {
                       src={item.image}
                       alt={item.alt}
                       fill
+                      loading="eager"
                       sizes="(min-width: 640px) 176px, 90vw"
                       className="object-cover saturate-[0.85] contrast-[1.04] brightness-95 group-hover:saturate-100 transition-all duration-300"
                       style={{ objectPosition: item.focus || "center" }}

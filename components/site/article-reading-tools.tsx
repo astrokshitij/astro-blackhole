@@ -213,8 +213,12 @@ export function ArticleReadingTools({
           type="button"
           onClick={() => setLight((value) => !value)}
           aria-pressed={light}
+          aria-label={
+            light ? "Switch to dark reading mode" : "Switch to light reading mode"
+          }
+          className="min-w-11 justify-center whitespace-nowrap px-1.5"
         >
-          {light ? "Dark reading" : "Light reading"}
+          {light ? "Dark" : "Light"}
         </button>
         {items.length ? (
           <button
@@ -222,6 +226,7 @@ export function ArticleReadingTools({
             onClick={() => setTocOpen((open) => !open)}
             aria-expanded={tocOpen}
             aria-controls="article-mobile-toc"
+            className="min-w-11 justify-center whitespace-nowrap px-1.5"
           >
             Contents
           </button>
@@ -230,10 +235,15 @@ export function ArticleReadingTools({
           href={`https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}`}
           target="_blank"
           rel="noreferrer"
+          className="min-w-11 justify-center whitespace-nowrap px-1.5"
         >
           Share
         </a>
-        <button type="button" onClick={copyLink}>
+        <button
+          type="button"
+          onClick={copyLink}
+          className="min-w-11 justify-center whitespace-nowrap px-1.5"
+        >
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
