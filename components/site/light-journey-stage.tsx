@@ -204,7 +204,7 @@ export function LightJourneyStage() {
                         fill
                         priority={i === 0}
                         sizes="(min-width: 900px) 45vw, 90vw"
-                        className="object-cover filter contrast-[1.04] brightness-95"
+                        className="object-cover"
                         style={{ objectPosition: c.focus }}
                       />
                     </div>
