@@ -38,8 +38,10 @@ export function SiteHeader() {
       trigger?.focus();
     };
   }, [open]);
-  const active = (href: string) =>
-    pathname === href || pathname.startsWith(href + "/");
+  const active = (href: string) => {
+    if (href === "/#work") return false;
+    return pathname === href || pathname.startsWith(href + "/");
+  };
   return (
     <>
       <header className="site-header">
@@ -95,7 +97,7 @@ export function SiteHeader() {
             {SITE.name}
           </Link>
           <button
-            className="menu-close"
+            className="menu-close focus:outline-none focus-visible:outline-2 focus-visible:outline-[#f0b545] rounded-full"
             aria-label="Close menu"
             onClick={() => setOpen(false)}
           >

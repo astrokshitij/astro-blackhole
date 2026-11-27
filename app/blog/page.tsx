@@ -66,9 +66,12 @@ export default function BlogPage() {
                 {featured.readTime} read
               </div>
               <p className="mt-6">{featured.excerpt}</p>
-              <Link href={`/blog/${featured.slug}`} className="text-link">
-                Read the essay
-                <ArrowGlyph className="h-4 w-4" />
+              <Link
+                href={`/blog/${featured.slug}`}
+                className="group mt-6 inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-bold uppercase tracking-[0.04em] text-[#f0b545] transition-colors hover:text-[#f8cd78]"
+              >
+                <span>Read the essay</span>
+                <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
             </div>
           </article>
@@ -88,9 +91,12 @@ export default function BlogPage() {
                     <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                   </h2>
                   <p className="body-copy">{post.excerpt}</p>
-                  <Link href={`/blog/${post.slug}`} className="text-link">
-                    Read the essay
-                    <ArrowGlyph className="h-4 w-4" />
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="group mt-5 inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-bold uppercase tracking-[0.04em] text-[#f0b545] transition-colors hover:text-[#f8cd78]"
+                  >
+                    <span>Read the essay</span>
+                    <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                   </Link>
                 </div>
                 {post.cover && (
@@ -123,9 +129,12 @@ export default function BlogPage() {
         <div className="mt-20 border-t border-white/15 pt-10">
           <Eyebrow>Prefer to watch?</Eyebrow>
           <p className="body-copy">{PAGE_COPY.writing.videoIntro}</p>
-          <a href={SOCIALS[0].href} className="text-link">
-            Visit Astro Kshitij on YouTube
-            <ArrowGlyph className="h-4 w-4" />
+          <a
+            href={SOCIALS[0].href}
+            className="group mt-5 inline-flex min-h-11 items-center gap-2 text-sm sm:text-base font-bold uppercase tracking-[0.04em] text-[#f0b545] transition-colors hover:text-[#f8cd78]"
+          >
+            <span>Visit Astro Kshitij on YouTube</span>
+            <ArrowGlyph className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </a>
         </div>
         <NextPage href="/about" title="The story so far" />

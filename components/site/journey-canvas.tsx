@@ -6,9 +6,11 @@ import type { RefObject } from "react";
 const DEFAULT_TOTAL_FRAMES = 145;
 const DEFAULT_WIDTH = 1440;
 const DEFAULT_HEIGHT = 1260;
-const STATION_1_FRAME_IDX = 26;
+const STATION_1_RATIO = 26 / 144;
+const STATION_KEY_RATIOS = [43 / 144, 71 / 144, 96 / 144, 116 / 144, 143 / 144];
 const INTRO_DURATION_MS = 2400;
 const LOOP_HOLD_MS = 1000;
+const REPLAY_SCROLL_GRACE_MS = 1400;
 
 interface JourneyManifest {
   count?: number;
@@ -28,7 +30,13 @@ interface JourneyCanvasProps {
   skipScrollControl?: boolean;
 }
 
-function buildPriorityOrder(count: number): number[] {
+function getStation1Index(count: number, hasMaxCap: boolean): number {
+  const maxIdx = Math.max(0, count - 1);
+  if (hasMaxCap) return maxIdx;
+  return Math.min(maxIdx, Math.round(STATION_1_RATIO * maxIdx));
+}
+
+function buildPriorityOrder(count: number, hasMaxCap: boolean): number[] {
   const seen = new Set<number>();
   const order: number[] = [];
   const push = (idx: number) => {
@@ -38,16 +46,21 @@ function buildPriorityOrder(count: number): number[] {
     }
   };
 
-  // Load intro sweep frames (0..26) first so light->mirror->prism->rainbow plays smoothly
-  for (let i = 0; i <= Math.min(STATION_1_FRAME_IDX, count - 1); i += 2) {
+  const station1Idx = getStation1Index(count, hasMaxCap);
+
+  // Load intro sweep frames (0..station1Idx) first so light->mirror->prism->rainbow plays smoothly
+  for (let i = 0; i <= station1Idx; i += 2) {
     push(i);
   }
-  for (let i = 1; i <= Math.min(STATION_1_FRAME_IDX, count - 1); i += 2) {
+  for (let i = 1; i <= station1Idx; i += 2) {
     push(i);
   }
 
-  // Then load remaining station key milestones and fill in intermediate frames
-  [43, 71, 96, 116, 143, count - 1].forEach(push);
+  // Then load remaining station key milestones (ratio-normalized for 145 or 289 frames)
+  const maxIdx = Math.max(1, count - 1);
+  STATION_KEY_RATIOS.map((r) => Math.round(r * maxIdx)).forEach(push);
+  push(count - 1);
+
   for (let stride = 8; stride >= 1; stride = Math.floor(stride / 2)) {
     for (let i = 0; i < count; i += stride) {
       push(i);
@@ -99,6 +112,7 @@ export function JourneyCanvas({
   const introReadyRef = useRef(false);
   const introActiveRef = useRef(false);
   const introStartRef = useRef(0);
+  const replayGraceUntilRef = useRef(0);
   const loopIntroRef = useRef(loopIntro);
   loopIntroRef.current = loopIntro;
 
@@ -120,8 +134,10 @@ export function JourneyCanvas({
 
   useEffect(() => {
     if (replayNonce <= 0) return;
+    const now = performance.now();
+    replayGraceUntilRef.current = now + REPLAY_SCROLL_GRACE_MS;
     introActiveRef.current = true;
-    introStartRef.current = performance.now();
+    introStartRef.current = now;
     smoothedProgressRef.current = 0;
     dirtyRef.current = true;
     wakeRef.current?.();
@@ -188,8 +204,14 @@ export function JourneyCanvas({
     introReadyRef.current = false;
     dirtyRef.current = true;
 
-    const checkpoints = [0, 8, 16, Math.min(STATION_1_FRAME_IDX, frameCount - 1)];
-    const priority = buildPriorityOrder(frameCount);
+    const station1Idx = getStation1Index(frameCount, Boolean(maxFrameCount));
+    const checkpoints = [
+      0,
+      Math.round(station1Idx * 0.31),
+      Math.round(station1Idx * 0.62),
+      station1Idx,
+    ];
+    const priority = buildPriorityOrder(frameCount, Boolean(maxFrameCount));
     let cursor = 0;
     const concurrency = 6;
 
@@ -261,9 +283,8 @@ export function JourneyCanvas({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const station1Ratio =
-      Math.min(STATION_1_FRAME_IDX, Math.max(0, frameCount - 1)) /
-      Math.max(1, frameCount - 1);
+    const station1Idx = getStation1Index(frameCount, Boolean(maxFrameCount));
+    const station1Ratio = station1Idx / Math.max(1, frameCount - 1);
 
     if (
       introSweep &&
@@ -283,7 +304,10 @@ export function JourneyCanvas({
       const dt = Math.min(0.05, Math.max(0.001, (now - lastTime) / 1000));
       lastTime = now;
 
-      const userScrolledAway = !skipScrollControl && window.scrollY >= 48;
+      const userScrolledAway =
+        !skipScrollControl &&
+        window.scrollY >= 48 &&
+        now >= replayGraceUntilRef.current;
       if (userScrolledAway && introActiveRef.current) {
         introActiveRef.current = false;
       }

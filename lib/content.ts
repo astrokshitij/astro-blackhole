@@ -95,6 +95,7 @@ export const EDITORIAL = {
       href: "/blog/the-trouble-with-making-science-simple",
       image: "/images/blog/trouble-simple-perimeter.webp",
       alt: "Scientists and science communicators at Perimeter Institute SciComm Collider 2026 with Kshitij on screen",
+      focus: "center 25%",
       cta: "Read the Perimeter essay",
     },
     {
@@ -106,6 +107,7 @@ export const EDITORIAL = {
       href: "https://www.sciencedirect.com/science/article/abs/pii/S2212686425002948",
       image: "/images/story/msc-poster.jpg",
       alt: "Kshitij presenting his astrophysics research poster",
+      focus: "20% 22%",
       cta: "Read the paper",
     },
     {
@@ -117,6 +119,7 @@ export const EDITORIAL = {
       href: "/blog/did-an-ancient-text-know-the-speed-of-light",
       image: "/images/blog/sayana-audit/cover.webp",
       alt: "Light beam passing measurement scales toward an ancient palm-leaf manuscript",
+      focus: "center center",
       cta: "Read the investigation",
     },
     {
@@ -126,8 +129,9 @@ export const EDITORIAL = {
         "How I approach users, first-principles discovery, retention, and building useful AI products.",
       type: "Product portfolio",
       href: "https://nextleap.app/portfolio/kshitij-pandey",
-      image: "/images/blog/ai-science-black-box.webp",
-      alt: "Diagram showing light passing through a prism from a neural network to physical laws",
+      image: "/images/work-product-wireframe.webp",
+      alt: "Dark-mode glassmorphic wireframe cards and golden AI workflow nodes on an obsidian studio desk",
+      focus: "center center",
       cta: "See product case studies",
     },
   ],
