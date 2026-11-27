@@ -94,11 +94,11 @@ def reset():
         sc.cycles.device = "CPU"
 
     sc.cycles.use_denoising = True
-    if chosen_backend == "OPTIX":
-        try:
-            sc.cycles.denoiser = "OPTIX"
-        except Exception:
-            pass
+    try:
+        sc.cycles.denoiser = "OPENIMAGEDENOISE"
+        sc.cycles.denoising_use_gpu = False
+    except Exception:
+        pass
     sc.cycles.use_adaptive_sampling = True
     sc.cycles.adaptive_threshold = 0.025
     sc.render.use_persistent_data = True
